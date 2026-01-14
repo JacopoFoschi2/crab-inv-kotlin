@@ -1,18 +1,30 @@
 plugins {
-    id("java")
+    java
+    application
 }
-
-group = "org.example"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
+val javaFXModules = listOf("base","controls","fxml","swing","graphics")
+
+java { // Useful to set Java version for Gradle tasks
+    toolchain { languageVersion.set(JavaLanguageVersion.of(25)) }
+}
+
+val javaFxVersion = 25
+val supportedPlatforms = listOf("linux", "mac", "win")
+
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+        }
+    }
 }
 
 tasks.test {
