@@ -1,4 +1,4 @@
-package it.unibo.crabinv;
+package it.unibo.crabinv.Model;
 
 public interface Level {
     public void handleWaves();
