@@ -1,8 +1,14 @@
 package it.unibo.crabinv;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class App {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class App extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
+
     static void main() {
     }
 }
