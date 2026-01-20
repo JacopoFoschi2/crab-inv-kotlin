@@ -5,12 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 public class TestLocalization {
-    private Localization loc;
-
-    @BeforeEach
-    void setUp() {
-        loc = new Localization(Localization.SUPPORTED_LOCALES.ENGLISH);
-    }
+    private final Localization loc = Localization.getInstance();
 
     @Test
     void testCorrectKeyFetch() {
