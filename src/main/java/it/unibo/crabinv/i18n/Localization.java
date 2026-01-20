@@ -1,9 +1,11 @@
 package it.unibo.crabinv.i18n;
+
 import java.util.Locale;
 import java.util.Locale.*;
 import java.util.ResourceBundle;
 
 public class Localization {
+    private static Localization localization;
     private ResourceBundle messages;
     private Locale currentLocale;
     /**
@@ -13,14 +15,21 @@ public class Localization {
     public static final class SUPPORTED_LOCALES {
             public static final Locale ENGLISH = new Builder().setLanguage("en").setRegion("US").build();
             public static final Locale ITALIAN = new Builder().setLanguage("it").setRegion("IT").build();
-    };
+    }
 
     /**
      * Creates new Localization instance based on input locale
      * @param locale is to be chosen from SUPPORTED_LOCALES
      */
-    public Localization(Locale locale) {
+    private Localization(Locale locale) {
         setLocale(locale);
+    }
+
+    public static Localization getInstance() {
+        if (localization == null) {
+            localization = new Localization(Locale.ENGLISH);
+        }
+        return localization;
     }
 
     /**
@@ -34,7 +43,7 @@ public class Localization {
 
     /**
      * Gets string based on the current locale
-     * @param key the key of the wanted string
+     * @param key the key of the wanted string. Take it from TextKeys
      * @return the wanted string
      */
     public String get(String key) {
