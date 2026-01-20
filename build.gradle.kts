@@ -7,7 +7,7 @@ repositories {
     mavenCentral()
 }
 
-val javaFXModules = listOf("base","controls","fxml","swing","graphics")
+val javaFXModules = listOf("base","controls","fxml","swing","graphics", "media")
 
 java { // Useful to set Java version for Gradle tasks
     toolchain { languageVersion.set(JavaLanguageVersion.of(25)) }
