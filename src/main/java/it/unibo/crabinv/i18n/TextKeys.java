@@ -1,5 +1,15 @@
 package it.unibo.crabinv.i18n;
 
-public class TextKeys {
-    public static final String PLAY = "play";
+public enum TextKeys {
+    PLAY("play");
+
+    private final String key;
+
+    TextKeys(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
 }
