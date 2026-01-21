@@ -25,6 +25,7 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
+    implementation("com.fasterxml.jackson.core/jackson-databind")
 }
 
 tasks.test {
