@@ -1,17 +1,25 @@
 package it.unibo.crabinv.Model.audio;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class JavaFXSoundManager implements SoundService {
     private static final JavaFXSoundManager instance = new JavaFXSoundManager();
-    private int bgmVolume;
-    private int sfxVolume;
-    private boolean isBGMuted;
+    private double bgmVolume;
+    private double sfxVolume;
+    private boolean isBGMMuted;
     private boolean isSFXMuted;
+    private MediaPlayer musicPlayer;
+    private String currentTrack;
+    private Map<String, Media> bgmCache;
 
     private JavaFXSoundManager() {
         setBGMVolume(100);
         setSFXVolume(100);
-        isBGMuted = false;
+        isBGMMuted = false;
         isSFXMuted = false;
     }
 
@@ -20,7 +28,35 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void playBGM(String musicName) {
+    public void playBGM(BGMTracks music) {
+        String musicName = music.getPath();
+        if (musicPlayer != null) {
+            if (Objects.equals(currentTrack, musicName)) {
+                return;
+            }
+            musicPlayer.stop();
+            musicPlayer.dispose();
+            musicPlayer = null;
+        }
+        if (!bgmCache.containsKey(musicName)) {
+            var resource = getClass().getResource(musicName);
+            if (resource == null) {
+                throw new IllegalArgumentException("Resource not found: " + musicName);
+            }
+            Media media = new Media(resource.toExternalForm());
+            bgmCache.put(musicName, media);
+
+        }
+        musicPlayer = new MediaPlayer(bgmCache.get(musicName));
+        currentTrack = musicName;
+        musicPlayer.setVolume(bgmVolume);
+        musicPlayer.setMute(isBGMMuted);
+        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        musicPlayer.play();
+    }
+
+    @Override
+    public void startBGM() {
 
     }
 
@@ -30,9 +66,9 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void setBGMVolume(int volume) {
-        if (volume < 0 || volume > 100) {
-            throw new IllegalArgumentException("Volume must be between 0 and 100");
+    public void setBGMVolume(double volume) {
+        if (volume < 0.0 || volume > 1.0) {
+            throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
         }
         this.bgmVolume = volume;
     }
@@ -44,23 +80,23 @@ public class JavaFXSoundManager implements SoundService {
 
     @Override
     public void toggleMuteBGM() {
-        isBGMuted = !isBGMuted;
+        isBGMMuted = !isBGMMuted;
     }
 
     @Override
     public boolean isBGMMuted() {
-        return isBGMuted;
+        return isBGMMuted;
     }
 
     @Override
-    public void playSfx(String effectName) {
+    public void playSfx(SFXTracks effectName) {
 
     }
 
     @Override
-    public void setSFXVolume(int volume) {
-        if (volume < 0 || volume > 100) {
-            throw new IllegalArgumentException("Volume must be between 0 and 100");
+    public void setSFXVolume(double volume) {
+        if (volume < 0.0 || volume > 1.0) {
+            throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
         }
         this.sfxVolume = volume;
     }
