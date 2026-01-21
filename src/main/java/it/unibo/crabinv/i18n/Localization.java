@@ -9,6 +9,9 @@ public class Localization {
     private ResourceBundle messages;
     private SUPPORTED_LOCALES currentLocale;
 
+    /**
+     * Lists all currently supported locales to ensure correct usage
+     */
     public enum SUPPORTED_LOCALES {
         ENGLISH(new Builder().setLanguage("en").setRegion("US").build()),
         ITALIAN(new Builder().setLanguage("it").setRegion("IT").build());
@@ -53,7 +56,7 @@ public class Localization {
      * @param key the key of the wanted string. Take it from TextKeys
      * @return the wanted string
      */
-    public String getString(String key) {
-        return messages.getString(key);
+    public String getString(TextKeys key) {
+        return messages.getString(key.getKey());
     }
 }
