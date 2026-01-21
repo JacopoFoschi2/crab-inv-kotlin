@@ -10,13 +10,13 @@ public class TestLocalization {
     @Test
     void testCorrectKeyFetch() {
         String expectedResult = "PLAY";
-        Assertions.assertEquals(expectedResult, loc.get(TextKeys.PLAY));
+        Assertions.assertEquals(expectedResult, loc.getString(TextKeys.PLAY));
     }
 
     @Test
     void testCorrectLocaleSwap() {
         String expectedResult = "GIOCA";
         loc.setLocale(Localization.SUPPORTED_LOCALES.ITALIAN);
-        Assertions.assertEquals(expectedResult, loc.get(TextKeys.PLAY));
+        Assertions.assertEquals(expectedResult, loc.getString(TextKeys.PLAY));
     }
 }
