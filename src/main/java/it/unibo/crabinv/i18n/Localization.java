@@ -5,7 +5,7 @@ import java.util.Locale.Builder;
 import java.util.ResourceBundle;
 
 public class Localization {
-    private static Localization localization;
+    private static final Localization localization = new Localization(SUPPORTED_LOCALES.ENGLISH);
     private ResourceBundle messages;
     private SUPPORTED_LOCALES currentLocale;
 
@@ -36,9 +36,6 @@ public class Localization {
     }
 
     public static Localization getInstance() {
-        if (localization == null) {
-            localization = new Localization(SUPPORTED_LOCALES.ENGLISH);
-        }
         return localization;
     }
 
