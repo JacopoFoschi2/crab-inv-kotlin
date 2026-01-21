@@ -1,5 +1,9 @@
 package it.unibo.crabinv.i18n;
 
+/**
+ * Lists all currently supported keys of localization.
+ * These keys are to be used with getKey of localization.
+ */
 public enum TextKeys {
     PLAY("play");
 
