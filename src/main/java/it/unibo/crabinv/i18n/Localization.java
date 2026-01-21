@@ -5,6 +5,20 @@ import java.util.Locale.Builder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * {@code Localization} is engineered to handle all localization cases across the application.
+ * <p>To have a functioning instance of it write
+ * {@code Localization loc = Localization.getInstance()}
+ * On top of your source file</p>
+ *
+ * <h1>Changing localization</h1>
+ * <p>Localization changes are to be made with {@code loc.setLocale(locale)} selecting locale from
+ * supported list</p>
+ *
+ * <h1>String fetching</h1>
+ * <p>To fetch a string from current locale use {@code loc.getString(key)} selecting key
+ * from {@link TextKeys} enum</p>
+ */
 public class Localization {
     private static final Localization localization = new Localization(SUPPORTED_LOCALES.ENGLISH);
     private ResourceBundle messages;
@@ -36,6 +50,10 @@ public class Localization {
         setLocale(locale);
     }
 
+    /**
+     * Gets instance of singleton Localization
+     * @return localization instance
+     */
     public static Localization getInstance() {
         return localization;
     }
