@@ -5,6 +5,7 @@ package it.unibo.crabinv.Model.audio;
  */
 public interface SoundService {
     void playBGM(BGMTracks musicName);
+    void startBGM();
     void stopBGM();
     void setBGMVolume(double volume);
     double getBGMVolume();
