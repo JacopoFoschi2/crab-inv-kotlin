@@ -6,12 +6,12 @@ package it.unibo.crabinv.Model.audio;
 public interface SoundService {
     void playBGM(String musicName);
     void stopBGM();
-    void setBGMVolume(double volume);
+    void setBGMVolume(int volume);
     double getBGMVolume();
     void toggleMuteBGM();
     boolean isBGMMuted();
     void playSfx(String effectName);
-    void setSFXVolume(double volume);
+    void setSFXVolume(int volume);
     double getSFXVolume();
     void toggleMuteSFX();
     boolean isSFXMuted();
