@@ -2,6 +2,7 @@ package it.unibo.crabinv.i18n;
 
 import java.util.Locale;
 import java.util.Locale.Builder;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Localization {
@@ -54,6 +55,10 @@ public class Localization {
      * @return the wanted string
      */
     public String getString(TextKeys key) {
-        return messages.getString(key.getKey());
+        try {
+            return messages.getString(key.getKey());
+        } catch (MissingResourceException e) {
+            return "KEY_" + key.getKey() + " MISSING FROM SELECTED LOCALE";
+        }
     }
 }
