@@ -79,4 +79,12 @@ public class Localization {
             return "KEY_" + key.getKey() + " MISSING FROM SELECTED LOCALE";
         }
     }
+
+    /**
+     * Gets currently set Locale
+     * @return currently set Locale
+     */
+    public SUPPORTED_LOCALES getCurrentLocale() {
+        return currentLocale;
+    }
 }
