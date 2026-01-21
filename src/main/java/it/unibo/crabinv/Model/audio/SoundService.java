@@ -5,7 +5,15 @@ package it.unibo.crabinv.Model.audio;
  */
 public interface SoundService {
     void playBGM(BGMTracks musicName);
+
+    /**
+     * Starts playing the song if it was stopped
+     */
     void startBGM();
+
+    /**
+     * Stops the current song
+     */
     void stopBGM();
     void setBGMVolume(double volume);
     double getBGMVolume();
