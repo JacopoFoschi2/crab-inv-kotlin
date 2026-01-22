@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Model.audio;
 
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -15,6 +16,7 @@ public class JavaFXSoundManager implements SoundService {
     private MediaPlayer musicPlayer;
     private String currentTrack;
     private Map<String, Media> bgmCache;
+    private Map<String, AudioClip> sfxCache;
 
     private JavaFXSoundManager() {
         setBGMVolume(1.0);
@@ -99,8 +101,20 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void playSfx(SFXTracks effectName) {
-
+    public void playSfx(SFXTracks effect) {
+        String effectName = effect.getPath();
+        if (!sfxCache.containsKey(effectName)) {
+            var resource = getClass().getResource(effectName);
+            if (resource == null) {
+                throw new IllegalArgumentException("Resource not found: " + effectName);
+            }
+            AudioClip sfx = new AudioClip(resource.toExternalForm());
+            sfxCache.put(effectName, sfx);
+        }
+        if(!isSFXMuted) {
+            AudioClip sfx = sfxCache.get(effectName);
+            sfx.play(sfxVolume);
+        }
     }
 
     @Override
