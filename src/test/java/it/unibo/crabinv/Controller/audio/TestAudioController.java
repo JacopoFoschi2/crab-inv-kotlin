@@ -67,7 +67,7 @@ public class TestAudioController {
         controller.playBGM(BGMTracks.LEVEL);
         controller.pauseBGM();
         controller.resumeBGM();
-        Mockito.verify(mockSound).startBGM();
+        Mockito.verify(mockSound).resumeBGM();
     }
 
     @Test

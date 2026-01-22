@@ -42,7 +42,7 @@ public class AudioController {
      * Use it in instances such as when you resume the game after it was paused.
      */
     public void resumeBGM() {
-        soundManager.startBGM();
+        soundManager.resumeBGM();
     }
 
     /**

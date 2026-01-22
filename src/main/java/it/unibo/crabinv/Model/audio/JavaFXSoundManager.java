@@ -50,7 +50,7 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void startBGM() {
+    public void resumeBGM() {
         if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
             musicPlayer.play();
         }

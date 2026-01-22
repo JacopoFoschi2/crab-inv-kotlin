@@ -15,7 +15,7 @@ public interface SoundService {
     /**
      * Starts playing the song if it was stopped
      */
-    void startBGM();
+    void resumeBGM();
 
     /**
      * Pauses the current song
