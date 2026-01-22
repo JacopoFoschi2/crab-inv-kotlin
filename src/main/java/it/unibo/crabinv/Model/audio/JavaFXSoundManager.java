@@ -4,8 +4,10 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class JavaFXSoundManager implements SoundService {
     private static final JavaFXSoundManager instance = new JavaFXSoundManager();
@@ -15,8 +17,8 @@ public class JavaFXSoundManager implements SoundService {
     private boolean isSFXMuted;
     private MediaPlayer musicPlayer;
     private String currentTrack;
-    private Map<String, Media> bgmCache;
-    private Map<String, AudioClip> sfxCache;
+    private final Map<String, Media> bgmCache = new HashMap<>();
+    private final Map<String, AudioClip> sfxCache = new HashMap<>();
 
     private JavaFXSoundManager() {
         setBGMVolume(1.0);
@@ -40,15 +42,7 @@ public class JavaFXSoundManager implements SoundService {
             musicPlayer.dispose();
             musicPlayer = null;
         }
-        if (!bgmCache.containsKey(musicName)) {
-            var resource = getClass().getResource(musicName);
-            if (resource == null) {
-                throw new IllegalArgumentException("Resource not found: " + musicName);
-            }
-            Media media = new Media(resource.toExternalForm());
-            bgmCache.put(musicName, media);
-
-        }
+        handleCache(musicName, bgmCache, Media::new);
         musicPlayer = new MediaPlayer(bgmCache.get(musicName));
         currentTrack = musicName;
         musicPlayer.setVolume(bgmVolume);
@@ -103,14 +97,7 @@ public class JavaFXSoundManager implements SoundService {
     @Override
     public void playSfx(SFXTracks effect) {
         String effectName = effect.getPath();
-        if (!sfxCache.containsKey(effectName)) {
-            var resource = getClass().getResource(effectName);
-            if (resource == null) {
-                throw new IllegalArgumentException("Resource not found: " + effectName);
-            }
-            AudioClip sfx = new AudioClip(resource.toExternalForm());
-            sfxCache.put(effectName, sfx);
-        }
+        handleCache(effectName, sfxCache, AudioClip::new);
         if(!isSFXMuted) {
             AudioClip sfx = sfxCache.get(effectName);
             sfx.play(sfxVolume);
@@ -138,5 +125,16 @@ public class JavaFXSoundManager implements SoundService {
     @Override
     public boolean isSFXMuted() {
         return isSFXMuted;
+    }
+
+    private <T> void handleCache(String effectName, Map<String, T> cache, Function<String, T> create) {
+        if (!cache.containsKey(effectName)) {
+            var resource = getClass().getResource(effectName);
+            if (resource == null) {
+                throw new IllegalArgumentException("Resource not found: " + effectName);
+            }
+            T effect = create.apply(resource.toExternalForm());
+            cache.put(effectName, effect);
+        }
     }
 }
