@@ -14,7 +14,7 @@ public interface SoundService {
     /**
      * Stops the current song
      */
-    void stopBGM();
+    void pauseBGM();
     void setBGMVolume(double volume);
     double getBGMVolume();
     void toggleMuteBGM();
