@@ -56,7 +56,7 @@ public class AudioController {
 
     public int getBGMVolume() {
         double volume = soundManager.getBGMVolume();
-        return (int) volume * 100;
+        return (int) (volume * 100);
     }
 
     /**
@@ -95,7 +95,7 @@ public class AudioController {
 
     public int getSFXVolume() {
         double volume = soundManager.getSFXVolume();
-        return (int) volume * 100;
+        return (int) (volume * 100);
     }
 
     /**
