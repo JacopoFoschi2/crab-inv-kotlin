@@ -19,17 +19,10 @@ public class AudioController {
     }
 
     /**
-     * Plays the music in the main menu
+     * Plays the music
      */
-    public void startMenuMusic() {
-        soundManager.playBGM(BGMTracks.MENU);
-    }
-
-    /**
-     * Plays the music of the main game
-     */
-    public void startGameMusic() {
-        soundManager.playBGM(BGMTracks.LEVEL);
+    public void playBGM(BGMTracks bgm) {
+        soundManager.playBGM(bgm);
     }
 
     /**
@@ -72,38 +65,10 @@ public class AudioController {
     }
 
     /**
-     * Plays the menu open sound effect
+     * Plays sound effects
      */
-    public void playMenuOpen() {
-        soundManager.playSfx(SFXTracks.MENU_OPEN);
-    }
-
-    /**
-     * Plays the menu close sound effect
-     */
-    public void playMenuClose() {
-        soundManager.playSfx(SFXTracks.MENU_CLOSE);
-    }
-
-    /**
-     * Plays the menu select sound effect
-     */
-    public void playMenuSelect() {
-        soundManager.playSfx(SFXTracks.MENU_SELECT);
-    }
-
-    /**
-     * Plays the player shot sound effect
-     */
-    public void playPlayerShot() {
-        soundManager.playSfx(SFXTracks.SHOT_PLAYER);
-    }
-
-    /**
-     * Plays the enemy shot sound effect
-     */
-    public void playEnemyShot() {
-        soundManager.playSfx(SFXTracks.SHOT_ENEMY);
+    public void playSFX(SFXTracks sfx) {
+        soundManager.playSfx(sfx);
     }
 
     /**
