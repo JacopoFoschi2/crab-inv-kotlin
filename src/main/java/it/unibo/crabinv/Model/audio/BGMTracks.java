@@ -1,7 +1,8 @@
 package it.unibo.crabinv.Model.audio;
 
 public enum BGMTracks {
-    LEVEL("/audio/BGM/main_bgm.mp3");
+    LEVEL("/audio/BGM/main_bgm.mp3"),
+    MENU("/audio/BGM/menu_bgm.mp3"),;
 
     private final String path;
 
