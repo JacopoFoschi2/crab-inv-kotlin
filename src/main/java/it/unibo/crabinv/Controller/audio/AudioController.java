@@ -44,8 +44,12 @@ public class AudioController {
     /**
      * Sets the music volume to the desired value
      * @param volume spans from 0 to 100
+     * @throws IllegalArgumentException if the volume inputted is incorrect
      */
     public void setMusicVolume(int volume) {
+        if (volume < 0 || volume > 100) {
+            throw new IllegalArgumentException("Volume must be between 0 and 100");
+        }
         double realVolume = (double) volume / 100;
         soundManager.setBGMVolume(realVolume);
     }
@@ -74,8 +78,12 @@ public class AudioController {
     /**
      * Sets the sound effects volume to the desired value
      * @param volume spans from 0 to 100
+     * @throws IllegalArgumentException if the volume inputted is incorrect
      */
     public void setSFXVolume(int volume) {
+        if (volume < 0 || volume > 100) {
+            throw new IllegalArgumentException("Volume must be between 0 and 100");
+        }
         double realVolume = (double) volume / 100;
         soundManager.setSFXVolume(realVolume);
     }
