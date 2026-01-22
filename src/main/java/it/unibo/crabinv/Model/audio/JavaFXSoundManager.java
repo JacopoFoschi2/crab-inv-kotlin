@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
+/**
+ * Model written with a facade pattern that handles all of {@link SoundService} operations
+ */
 public class JavaFXSoundManager implements SoundService {
     private static final JavaFXSoundManager instance = new JavaFXSoundManager();
     private double bgmVolume;
