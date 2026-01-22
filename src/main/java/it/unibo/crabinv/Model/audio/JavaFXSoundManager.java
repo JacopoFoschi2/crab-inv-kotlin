@@ -17,8 +17,8 @@ public class JavaFXSoundManager implements SoundService {
     private Map<String, Media> bgmCache;
 
     private JavaFXSoundManager() {
-        setBGMVolume(100);
-        setSFXVolume(100);
+        setBGMVolume(1.0);
+        setSFXVolume(1.0);
         isBGMMuted = false;
         isSFXMuted = false;
     }
@@ -57,12 +57,16 @@ public class JavaFXSoundManager implements SoundService {
 
     @Override
     public void startBGM() {
-
+        if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            musicPlayer.play();
+        }
     }
 
     @Override
-    public void stopBGM() {
-
+    public void pauseBGM() {
+        if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            musicPlayer.pause();
+        }
     }
 
     @Override
