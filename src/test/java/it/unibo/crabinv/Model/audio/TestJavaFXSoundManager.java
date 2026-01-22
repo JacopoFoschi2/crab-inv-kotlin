@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TestJavaFXSoundManager {
-    private final JavaFXSoundManager soundManager = JavaFXSoundManager.getInstance();
+    private final SoundService soundManager = new JavaFXSoundManager();
     private final double DEFAULT_VOLUME = 1.0;
     private final double TEST_VOLUME = 0.5;
 
