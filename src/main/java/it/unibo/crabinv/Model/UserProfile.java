@@ -2,7 +2,7 @@ package it.unibo.crabinv.Model;
 
 public interface UserProfile {
     int getCurrency();
-    boolean hasPowerUp(powerUp PowUp);
+    boolean hasPowerUp(PowerUp PowUp);
     /**
      * Sums the amount to the stored currency
      * @param amount the amount of currency to add
