@@ -1,10 +1,16 @@
 package it.unibo.crabinv.i18n;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestLocalization {
-    private final Localization loc = Localization.getInstance();
+    private Localization loc;
+
+    @BeforeEach
+    public void setup() {
+        loc = new Localization(Localization.SUPPORTED_LOCALES.ENGLISH);
+    }
 
     @Test
     void testCorrectKeyFetch() {

@@ -29,7 +29,7 @@ public class AudioController {
      * Pauses the currently playing track for a later resume.
      * Use it in instances such as the pause menu to pause the main music
      */
-    public void pauseMusic() {
+    public void pauseBGM() {
         soundManager.pauseBGM();
     }
 
@@ -37,7 +37,7 @@ public class AudioController {
      * Resumes the currently playing track that was previously paused.
      * Use it in instances such as when you resume the game after it was paused.
      */
-    public void resumeMusic() {
+    public void resumeBGM() {
         soundManager.startBGM();
     }
 
@@ -46,7 +46,7 @@ public class AudioController {
      * @param volume spans from 0 to 100
      * @throws IllegalArgumentException if the volume inputted is incorrect
      */
-    public void setMusicVolume(int volume) {
+    public void setBGMVolume(int volume) {
         if (volume < 0 || volume > 100) {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
@@ -54,17 +54,22 @@ public class AudioController {
         soundManager.setBGMVolume(realVolume);
     }
 
+    public int getBGMVolume() {
+        double volume = soundManager.getBGMVolume();
+        return (int) (volume * 100);
+    }
+
     /**
      * Toggles if the music should be mute or not
      */
-    public void toggleMusicMute() {
+    public void toggleBGMMute() {
         soundManager.toggleMuteBGM();
     }
 
     /**
      * @return if the music is currently muted or not
      */
-    public boolean isMusicMuted() {
+    public boolean isBGMMuted() {
         return soundManager.isBGMMuted();
     }
 
@@ -86,6 +91,11 @@ public class AudioController {
         }
         double realVolume = (double) volume / 100;
         soundManager.setSFXVolume(realVolume);
+    }
+
+    public int getSFXVolume() {
+        double volume = soundManager.getSFXVolume();
+        return (int) (volume * 100);
     }
 
     /**

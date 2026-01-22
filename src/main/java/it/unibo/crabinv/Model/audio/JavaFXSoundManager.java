@@ -13,7 +13,6 @@ import java.util.function.Function;
  * Model written with a facade pattern that handles all of {@link SoundService} operations
  */
 public class JavaFXSoundManager implements SoundService {
-    private static final JavaFXSoundManager instance = new JavaFXSoundManager();
     private double bgmVolume;
     private double sfxVolume;
     private boolean isBGMMuted;
@@ -23,15 +22,11 @@ public class JavaFXSoundManager implements SoundService {
     private final Map<String, Media> bgmCache = new HashMap<>();
     private final Map<String, AudioClip> sfxCache = new HashMap<>();
 
-    private JavaFXSoundManager() {
+    public JavaFXSoundManager() {
         setBGMVolume(1.0);
         setSFXVolume(1.0);
         isBGMMuted = false;
         isSFXMuted = false;
-    }
-
-    public static JavaFXSoundManager getInstance() {
-        return instance;
     }
 
     @Override
