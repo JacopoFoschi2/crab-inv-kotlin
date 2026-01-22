@@ -75,6 +75,9 @@ public class JavaFXSoundManager implements SoundService {
             throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
         }
         this.bgmVolume = volume;
+        if (musicPlayer != null) {
+            musicPlayer.setVolume(volume);
+        }
     }
 
     @Override
@@ -85,6 +88,9 @@ public class JavaFXSoundManager implements SoundService {
     @Override
     public void toggleMuteBGM() {
         isBGMMuted = !isBGMMuted;
+        if (musicPlayer != null) {
+            musicPlayer.setMute(isBGMMuted);
+        }
     }
 
     @Override
