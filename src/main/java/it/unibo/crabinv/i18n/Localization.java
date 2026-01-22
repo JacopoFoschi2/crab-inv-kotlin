@@ -7,9 +7,6 @@ import java.util.ResourceBundle;
 
 /**
  * {@code Localization} is engineered to handle all localization cases across the application.
- * <p>To have a functioning instance of it write
- * {@code Localization loc = Localization.getInstance()}
- * On top of your source file</p>
  *
  * <h1>Changing localization</h1>
  * <p>Localization changes are to be made with {@code loc.setLocale(locale)} selecting locale from
@@ -20,7 +17,6 @@ import java.util.ResourceBundle;
  * from {@link TextKeys} enum</p>
  */
 public class Localization {
-    private static final Localization localization = new Localization(SUPPORTED_LOCALES.ENGLISH);
     private ResourceBundle messages;
     private SUPPORTED_LOCALES currentLocale;
 
@@ -46,16 +42,8 @@ public class Localization {
      * Creates new Localization instance based on input locale
      * @param locale is to be chosen from SUPPORTED_LOCALES
      */
-    private Localization(SUPPORTED_LOCALES locale) {
+    public Localization(SUPPORTED_LOCALES locale) {
         setLocale(locale);
-    }
-
-    /**
-     * Gets instance of singleton Localization
-     * @return localization instance
-     */
-    public static Localization getInstance() {
-        return localization;
     }
 
     /**
