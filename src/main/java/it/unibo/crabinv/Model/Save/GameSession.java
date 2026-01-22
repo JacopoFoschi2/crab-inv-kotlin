@@ -1,15 +1,20 @@
-package it.unibo.crabinv.Model;
+package it.unibo.crabinv.Model.Save;
 
 public interface GameSession {
-    /*Level managing*/
+
+    /* Level managing */
     int getCurrentLevel();
-    boolean isGameOver();
+
     int getNextLevel();
 
-    /*Active run player stats*/
+    boolean isGameOver();
+
+    /* Active run player stats */
     int getCurrency();
+
     int getPlayerHealth();
 
+    /* Logic */
     /**
      * Advances CurrentLevel and NextLevel
      */
@@ -37,6 +42,5 @@ public interface GameSession {
      * @param amount the amount to subtract
      */
     void subPlayerHealth(int amount);
-
 }
 

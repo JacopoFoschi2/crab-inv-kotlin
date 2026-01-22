@@ -1,5 +1,4 @@
 package it.unibo.crabinv.Controller;
-import it.unibo.crabinv.Model.Save;
 
 public interface SaveController {
     //pseudoCode:
