@@ -1,5 +1,7 @@
-package it.unibo.crabinv.i18n;
+package it.unibo.crabinv.Model.i18n;
 
+import it.unibo.crabinv.Model.i18n.Localization;
+import it.unibo.crabinv.Model.i18n.TextKeys;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

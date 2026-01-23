@@ -1,4 +1,4 @@
-package it.unibo.crabinv.i18n;
+package it.unibo.crabinv.Model.i18n;
 
 import java.util.Locale;
 import java.util.Locale.Builder;
@@ -45,6 +45,11 @@ public class Localization {
     public Localization(SUPPORTED_LOCALES locale) {
         setLocale(locale);
     }
+
+    /**
+     * Creates new clean Localization
+     */
+    public Localization() {}
 
     /**
      * Changes currently loaded locale
