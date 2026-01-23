@@ -1,0 +1,50 @@
+package it.unibo.crabinv.Model.PowerUpsShop;
+
+import it.unibo.crabinv.Model.PowerUp;
+import it.unibo.crabinv.Model.UserProfile;
+
+import java.io.Console;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserProfileLogic implements UserProfile {
+    private int currentPlayerCurrency;
+    private final Map<String, PowerUp> ownedPowerUps = new HashMap<>();
+
+    @Override
+    public int getCurrentPlayerCurrency() {
+        return this.currentPlayerCurrency;
+    }
+
+    @Override
+    public void subtractCurrency(int requiredCurrency) {
+        if (this.currentPlayerCurrency >= requiredCurrency) {
+            this.currentPlayerCurrency =- requiredCurrency;
+        }
+        else {
+            System.out.println("Not enough Currency! : " + this.currentPlayerCurrency );
+        }
+    }
+
+    @Override
+    public void increaseCurrency(int currency) {
+        this.currentPlayerCurrency =+ currency;
+    }
+
+    @Override
+    public boolean hasPowerUp(PowerUp powerUP) {
+        if (ownedPowerUps.containsKey(powerUP.getName()) &&
+                ownedPowerUps.get(powerUP.getName()).getLevel() > 0){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public void updatePowerUp(PowerUp powerUp) {
+        ownedPowerUps.put(powerUp.getName(),powerUp);
+    }
+}
