@@ -9,7 +9,7 @@ public class TestLocalization {
 
     @BeforeEach
     public void setup() {
-        loc = new Localization(SUPPORTED_LOCALES.ENGLISH);
+        loc = new Localization(SupportedLocales.ENGLISH);
     }
 
     @Test
@@ -21,17 +21,17 @@ public class TestLocalization {
     @Test
     void testCorrectLocaleSwap() {
         String expectedResult = "GIOCA";
-        loc.setLocale(SUPPORTED_LOCALES.ITALIAN);
+        loc.setLocale(SupportedLocales.ITALIAN);
         Assertions.assertEquals(expectedResult, loc.getString(TextKeys.PLAY));
     }
 
     @Test
     void testCorrectLocaleSwapped() {
-        var expectedResult = SUPPORTED_LOCALES.ITALIAN;
-        loc.setLocale(SUPPORTED_LOCALES.ITALIAN);
+        var expectedResult = SupportedLocales.ITALIAN;
+        loc.setLocale(SupportedLocales.ITALIAN);
         Assertions.assertEquals(expectedResult, loc.getCurrentLocale());
-        expectedResult = SUPPORTED_LOCALES.ENGLISH;
-        loc.setLocale(SUPPORTED_LOCALES.ENGLISH);
+        expectedResult = SupportedLocales.ENGLISH;
+        loc.setLocale(SupportedLocales.ENGLISH);
         Assertions.assertEquals(expectedResult, loc.getCurrentLocale());
     }
 }
