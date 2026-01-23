@@ -9,10 +9,16 @@ import java.util.Map;
 public class UserProfileLogic implements UserProfile {
     private int currentPlayerCurrency;
     private final Map<String, PowerUp> ownedPowerUps = new HashMap<>();
+    private final Map<String, Integer> powerUpLevel = new HashMap<>();
 
     @Override
     public int getCurrentPlayerCurrency() {
         return this.currentPlayerCurrency;
+    }
+
+    @Override
+    public void increaseCurrency(int currency) {
+        this.currentPlayerCurrency =+ currency;
     }
 
     @Override
@@ -26,19 +32,16 @@ public class UserProfileLogic implements UserProfile {
     }
 
     @Override
-    public void hasPowerUp(PowerUp powUp, int level) {
-
+    public int getPowerUpLevel(String powUpName) {
+        return this.powerUpLevel.getOrDefault(powUpName, 0);
     }
 
     @Override
-    public void updatePowerUp(PowerUp powUp, int level) {
-
+    public void updatePowerUp(String powUpName, int level) {
+        this.powerUpLevel.put(powUpName,level);
     }
 
-    @Override
-    public void increaseCurrency(int currency) {
-        this.currentPlayerCurrency =+ currency;
-    }
+
 /*
     @Override
     public boolean hasPowerUp(PowerUp powerUP) {
