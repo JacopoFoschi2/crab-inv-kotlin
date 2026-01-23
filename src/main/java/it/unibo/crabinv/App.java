@@ -4,6 +4,7 @@ import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.i18n.Localization;
+import it.unibo.crabinv.View.LanguageSelection;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -19,10 +20,11 @@ public class App extends Application {
         AudioController audio = new AudioController(new JavaFXSoundManager());
 
         StackPane root = new StackPane();
-        mainScene = new Scene(root, 800, 600);
+        mainScene = new Scene(root, 800, 500);
         mainStage.setScene(mainScene);
         mainStage.setTitle("Crab Invaders");
-
+        LanguageSelection l = new LanguageSelection();
+        root.getChildren().add(l.getView(loc));
         mainStage.show();
     }
 
