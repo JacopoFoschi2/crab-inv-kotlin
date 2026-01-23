@@ -1,7 +1,5 @@
 package it.unibo.crabinv.Model.i18n;
 
-import java.util.Locale;
-import java.util.Locale.Builder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -19,24 +17,6 @@ import java.util.ResourceBundle;
 public class Localization {
     private ResourceBundle messages;
     private SUPPORTED_LOCALES currentLocale;
-
-    /**
-     * Lists all currently supported locales to ensure correct usage
-     */
-    public enum SUPPORTED_LOCALES {
-        ENGLISH(new Builder().setLanguage("en").setRegion("US").build()),
-        ITALIAN(new Builder().setLanguage("it").setRegion("IT").build());
-
-        private final Locale locale;
-
-        SUPPORTED_LOCALES(Locale locale) {
-            this.locale = locale;
-        }
-
-        public Locale getLocale() {
-            return locale;
-        }
-    }
 
     /**
      * Creates new Localization instance based on input locale
