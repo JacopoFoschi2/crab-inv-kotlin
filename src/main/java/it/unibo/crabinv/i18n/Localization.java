@@ -47,6 +47,11 @@ public class Localization {
     }
 
     /**
+     * Creates new clean Localization
+     */
+    public Localization() {}
+
+    /**
      * Changes currently loaded locale
      * @param locale is to be chosen from SUPPORTED_LOCALES
      */
