@@ -1,12 +1,9 @@
 package it.unibo.crabinv.Model.Levels;
 
-import it.unibo.crabinv.Model.Level;
-
-public class LevelBuilder implements Level {
+public class LevelLogic implements Level {
 
     @Override
     public void handleWaves() {
-
     }
 
     @Override

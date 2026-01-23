@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model;
+package it.unibo.crabinv.Model.PowerUpsShop;
 
 public interface PowerUp {
     int getCost();

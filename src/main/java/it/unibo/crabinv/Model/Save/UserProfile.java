@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.Save;
 
-import it.unibo.crabinv.Model.PowerUp;
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
 
 
 public interface UserProfile {
