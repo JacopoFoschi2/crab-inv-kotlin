@@ -26,9 +26,8 @@ public class LanguageSelection {
         }
         languageSelection.setAlignment(Pos.CENTER);
         mainColumn.getChildren().addAll(title, languageSelection);
-        mainColumn.setAlignment(Pos.CENTER);
+        mainColumn.setAlignment(Pos.TOP_CENTER);
         pane.getChildren().add(mainColumn);
-        pane.setAlignment(Pos.TOP_CENTER);
         return pane;
     }
 
