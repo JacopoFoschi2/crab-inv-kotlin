@@ -1,4 +1,4 @@
-package it.unibo.crabinv.i18n;
+package it.unibo.crabinv.Model.i18n;
 
 import java.util.Locale;
 import java.util.Locale.Builder;
