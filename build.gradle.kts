@@ -32,3 +32,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass.set("it.unibo.crabinv.App\$Main")
+}
