@@ -20,18 +20,18 @@ public interface UserProfile {
     void subtractCurrency (int amount);
 
     /**
-     * Checks if a powerUp is already acquired
-     * @param powUp the PowUp to check
-     * @param level the level of the powerUp (0 = not yet unlocked)
+     * Used to get the level of a powerUp
+     * @param powUpName the name of the PowerUp to check
+     * @return the level of the powerUp (0 = not yet unlocked)
      */
-    void hasPowerUp(PowerUp powUp, int level);
+    int getPowerUpLevel(String powUpName);
 
 
     /**
      * Sets the selected powerUp to locked or unlocked
-     * @param powUp name of the power up
-     * @param level level to apply to the powerUp (0 = not yet unlocked)
+     * @param powUp the name of the power up
+     * @param level the level to apply to the powerUp (0 = not yet unlocked)
      * */
-    void updatePowerUp (PowerUp powUp, int level);
+    void updatePowerUp (String powUp, int level);
 
 }
