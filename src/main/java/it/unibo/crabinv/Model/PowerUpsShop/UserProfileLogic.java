@@ -3,7 +3,6 @@ package it.unibo.crabinv.Model.PowerUpsShop;
 import it.unibo.crabinv.Model.PowerUp;
 import it.unibo.crabinv.Model.UserProfile;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +32,8 @@ public class UserProfileLogic implements UserProfile {
 
     @Override
     public boolean hasPowerUp(PowerUp powerUP) {
-        if (ownedPowerUps.containsKey(powerUP.getName()) &&
-                ownedPowerUps.get(powerUP.getName()).getLevel() > 0){
+        if (ownedPowerUps.containsKey(powerUP.getPowerUpName()) &&
+                ownedPowerUps.get(powerUP.getPowerUpName()).getLevel() > 0){
             return true;
         }
         else
@@ -45,6 +44,6 @@ public class UserProfileLogic implements UserProfile {
 
     @Override
     public void updatePowerUp(PowerUp powerUp) {
-        ownedPowerUps.put(powerUp.getName(),powerUp);
+        ownedPowerUps.put(powerUp.getPowerUpName(),powerUp);
     }
 }

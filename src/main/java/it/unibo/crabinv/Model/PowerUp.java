@@ -1,9 +1,9 @@
 package it.unibo.crabinv.Model;
 
 public interface PowerUp {
-    public int getCost();
-    public int getLevel();
-    public int getMaxLevel();
-    public void incrementLevel();
-    public String getName();
+    int getCost();
+    int getLevel();
+    int getMaxLevel();
+    void incrementLevel();
+    String getPowerUpName();
 }
