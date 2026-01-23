@@ -29,8 +29,9 @@ public interface UserProfile {
 
     /**
      * Sets the selected powerUp to locked or unlocked
-     * @param powUp Id of the power up
+     * @param powUp name of the power up
      * @param level level to apply to the powerUp (0 = not yet unlocked)
      * */
     void updatePowerUp (PowerUp powUp, int level);
+
 }
