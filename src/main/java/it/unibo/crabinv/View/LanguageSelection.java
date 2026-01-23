@@ -9,13 +9,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.Objects;
 
 public class LanguageSelection {
     public Pane getView(LocalizationController loc) {
-        Pane pane = new Pane();
+        StackPane pane = new StackPane();
 
         VBox mainColumn = new VBox();
         Label title = new Label("Select Language");
@@ -23,9 +24,11 @@ public class LanguageSelection {
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
             languageSelection.getChildren().add(generateLanguageButton(200, loc, supportedLocale));
         }
+        languageSelection.setAlignment(Pos.CENTER);
         mainColumn.getChildren().addAll(title, languageSelection);
         mainColumn.setAlignment(Pos.CENTER);
         pane.getChildren().add(mainColumn);
+        pane.setAlignment(Pos.TOP_CENTER);
         return pane;
     }
 
