@@ -24,7 +24,7 @@ public class App extends Application {
         AudioController audio = new AudioController(new JavaFXSoundManager());
 
         StackPane root = new StackPane();
-        mainScene = new Scene(root, 800, 500);
+        mainScene = new Scene(root);
         mainScene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
         );
