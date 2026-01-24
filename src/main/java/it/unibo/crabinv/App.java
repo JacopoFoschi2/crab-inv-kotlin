@@ -9,18 +9,25 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.util.Objects;
 
 public class App extends Application {
 
     @Override
     public void start(Stage mainStage) throws Exception {
+        mainStage.initStyle(StageStyle.UNDECORATED); // rimuove barra e bordi
+        mainStage.setMaximized(true);
         Scene mainScene;
-
         LocalizationController loc = new LocalizationController(new Localization());
         AudioController audio = new AudioController(new JavaFXSoundManager());
 
         StackPane root = new StackPane();
-        mainScene = new Scene(root, 800, 500);
+        mainScene = new Scene(root);
+        mainScene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
+        );
         mainStage.setScene(mainScene);
         mainStage.setTitle("Crab Invaders");
         LanguageSelection l = new LanguageSelection();

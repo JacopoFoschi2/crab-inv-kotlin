@@ -17,10 +17,10 @@ import java.util.Objects;
 public class LanguageSelection {
     public Pane getView(LocalizationController loc) {
         StackPane pane = new StackPane();
-
-        VBox mainColumn = new VBox();
-        Label title = new Label("Select Language");
-        HBox languageSelection = new HBox();
+        VBox mainColumn = new VBox(20);
+        Label title = new Label("SELECT LANGUAGE");
+        title.getStyleClass().add("language-title");
+        HBox languageSelection = new HBox(10);
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
             languageSelection.getChildren().add(generateLanguageButton(200, loc, supportedLocale));
         }
@@ -31,18 +31,20 @@ public class LanguageSelection {
         return pane;
     }
 
-    private Button generateLanguageButton(int width, LocalizationController loc, SupportedLocales locale) {
+    private Button generateLanguageButton(double width, LocalizationController loc, SupportedLocales locale) {
         var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
         Image flag = new Image(path);
         ImageView flagImg = new ImageView(flag);
         flagImg.setFitWidth(width);
-        flagImg.setFitHeight((int) (width / 3) * 2);
+        flagImg.setFitHeight((width / 3) * 2);
         Label language = new Label(locale.getLocalizedName());
+        language.getStyleClass().add("language-label");
         VBox composition = new VBox(flagImg, language);
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
         languageButton.setGraphic(composition);
         languageButton.setOnAction(_ -> loc.setLanguage(locale));
+        languageButton.getStyleClass().add("language-button");
         return languageButton;
     }
 }
