@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.entity;
 
 public abstract class AbstractEntity implements Entity {
+    private final int DAMAGE = 1;
     private final int maxHealth;
     private int health;
     private double x;
@@ -18,7 +19,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     public void onCollisionWith(Entity other) {
-        health -= 1;
+        health -= DAMAGE;
     }
 
     public int getHealth() {
