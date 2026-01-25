@@ -2,6 +2,13 @@ package it.unibo.crabinv.Model.Save;
 
 import java.time.Instant;
 
+/**
+ * Implementation of {@link GameSession}
+ * Tracks the state of a single attempt (level, currency, player health and start timestamp).
+ *
+ * <p>The start timestamp is fixed at construction time; all updates to
+ * level, currency and health are constrained to non‑negative values.
+ */
 public class GameSessionImpl implements GameSession {
 
     private static final int STARTING_LEVEL = 1;
@@ -16,6 +23,9 @@ public class GameSessionImpl implements GameSession {
     private int playerHealth;
 
 
+    /**
+     * Constructor with default values
+     */
     public GameSessionImpl() {
         this.currentLevel = STARTING_LEVEL;
         this.gameOver = false;
@@ -24,74 +34,124 @@ public class GameSessionImpl implements GameSession {
         this.playerHealth = STARTING_PLAYER_HEALTH;
     }
 
+    /**
+     * Ensures that {@code amount} is non‑negative.
+     * @throws IllegalArgumentException if {@code amount} is negative
+     */
     private static void requireNonNegativeAmount(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative!: amount:" + amount);
         }
     }
 
+    /**
+     * Subtracts {@code amountToSub} from {@code currentAmount} but never
+     * goes below zero (clamped).
+     *
+     * @param currentAmount the current value
+     * @param amountToSub   the amount to subtract (must be ≥0)
+     * @return the result clamped to zero
+     */
     private static int subClampedToZero(int currentAmount, int amountToSub) {
         requireNonNegativeAmount(amountToSub);
         return Math.max(0, currentAmount - amountToSub);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCurrentLevel() {
         return this.currentLevel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNextLevel() {
         return this.currentLevel + 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isGameOver() {
         return this.gameOver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getStartingTimeStamp() {
         return this.startingTimeStamp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCurrency() {
         return this.currency;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getPlayerHealth() {
         return this.playerHealth;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void advanceLevel() {
         this.currentLevel++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void markGameOver() {
         this.gameOver = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addCurrency(int amount) {
         requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void subCurrency(int amount) {
         this.currency = subClampedToZero(this.currency, amount);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Also clamps the result to STARTING_PLAYER_HEALTH
+     */
     @Override
     public void addPlayerHealth(int amount) {
         requireNonNegativeAmount(amount);
-        this.playerHealth += amount;
+        this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount)
+        ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void subPlayerHealth(int amount) {
         this.playerHealth = subClampedToZero(this.playerHealth, amount);
