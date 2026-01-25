@@ -1,25 +1,44 @@
 package it.unibo.crabinv.Model.Save;
 
+/**
+ * Represents a single game session, exposing read‑only state and
+ * simple mutators for level progression, currency, and player health.
+ */
+
 public interface GameSession {
 
-    /* Level managing */
+    /**
+     * @return the current level index
+     */
     int getCurrentLevel();
 
+    /**
+     * @return the next level index
+     */
     int getNextLevel();
 
+    /**
+     * @return true if the session has ended
+     */
     boolean isGameOver();
 
-    /* Active run player stats */
-
+    /**
+     * @return timestamp (ms) when the session started
+     */
     long getStartingTimeStamp();
 
+    /**
+     * @return current amount of in‑game currency
+     */
     int getCurrency();
 
+    /**
+     * @return current player health
+     * */
     int getPlayerHealth();
 
-    /* Logic */
     /**
-     * Advances CurrentLevel and NextLevel
+     * Advances CurrentLevel and NextLevel counters
      */
     void advanceLevel();
 
@@ -36,7 +55,7 @@ public interface GameSession {
 
     /**
      * Subtracts an amount to current Currency
-     * @param amount the currency to add
+     * @param amount the currency to subtract
      */
     void subCurrency(int amount);
 
