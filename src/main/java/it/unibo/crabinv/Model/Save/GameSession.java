@@ -10,6 +10,7 @@ public interface GameSession {
     boolean isGameOver();
 
     /* Active run player stats */
+
     long getStartingTimeStamp();
 
     int getCurrency();
@@ -25,7 +26,7 @@ public interface GameSession {
     /**
      * Sets GameOver to true
      */
-    void setGameOver();
+    void markGameOver();
 
     /**
      * Adds an amount to current Currency
