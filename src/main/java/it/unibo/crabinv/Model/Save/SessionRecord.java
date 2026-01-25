@@ -1,10 +1,17 @@
 package it.unibo.crabinv.Model.Save;
 
+/**
+ * Represents a snapshot of a GameSession
+ */
+
 public interface SessionRecord {
 
-    long getTimeStamp();
+    /** @return the starting timeStamp of the gameSession */
+    long getStartingTimeStamp();
 
+    /** @return the currentLevel at the moment of the record */
     int getLastLevel();
 
+    /** @return the currency at the moment of the record */
     int getLastCurrency();
 }

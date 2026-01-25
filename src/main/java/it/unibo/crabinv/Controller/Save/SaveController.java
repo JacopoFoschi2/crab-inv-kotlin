@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Controller;
+package it.unibo.crabinv.Controller.Save;
 
 public interface SaveController {
     //pseudoCode:
