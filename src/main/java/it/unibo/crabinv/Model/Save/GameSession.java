@@ -1,8 +1,8 @@
 package it.unibo.crabinv.Model.Save;
 
 /**
- * Represents a single game session, exposing read‑only state and
- * simple mutators for level progression, currency, and player health.
+ * Represents a single game session,
+ * exposes level, currency, and player health.
  */
 
 public interface GameSession {

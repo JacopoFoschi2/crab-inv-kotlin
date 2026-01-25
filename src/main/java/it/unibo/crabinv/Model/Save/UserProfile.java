@@ -2,9 +2,16 @@ package it.unibo.crabinv.Model.Save;
 
 import it.unibo.crabinv.Model.PowerUp;
 
+/**
+ * Represents the meta-data of a single player's profile,
+ * exposes currency and powerUp's levels
+ */
 
 public interface UserProfile {
 
+    /**
+     * @return the current currency
+     */
     int getCurrentPlayerCurrency();
 
     /**
