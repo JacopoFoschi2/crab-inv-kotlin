@@ -2,6 +2,7 @@ package it.unibo.crabinv.View;
 
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.i18n.SupportedLocales;
+import it.unibo.crabinv.SceneManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,7 +16,15 @@ import javafx.scene.layout.VBox;
 import java.util.Objects;
 
 public class LanguageSelection {
-    public Pane getView(LocalizationController loc) {
+    private final LocalizationController loc;
+    private final SceneManager sceneManager;
+
+    public LanguageSelection(LocalizationController loc, SceneManager sceneManager) {
+        this.loc = loc;
+        this.sceneManager = sceneManager;
+    }
+
+    public Pane getView() {
         StackPane pane = new StackPane();
         VBox mainColumn = new VBox(20);
         Label title = new Label("SELECT LANGUAGE");
@@ -43,7 +52,10 @@ public class LanguageSelection {
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
         languageButton.setGraphic(composition);
-        languageButton.setOnAction(_ -> loc.setLanguage(locale));
+        languageButton.setOnAction(_ -> {
+            loc.setLanguage(locale);
+            sceneManager.showMainMenu();
+        });
         languageButton.getStyleClass().add("language-button");
         return languageButton;
     }

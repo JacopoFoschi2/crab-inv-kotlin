@@ -20,18 +20,18 @@ public class App extends Application {
         mainStage.initStyle(StageStyle.UNDECORATED); // rimuove barra e bordi
         mainStage.setMaximized(true);
         Scene mainScene;
-        LocalizationController loc = new LocalizationController(new Localization());
-        AudioController audio = new AudioController(new JavaFXSoundManager());
-
         StackPane root = new StackPane();
         mainScene = new Scene(root);
+        LocalizationController loc = new LocalizationController(new Localization());
+        AudioController audio = new AudioController(new JavaFXSoundManager());
+        SceneManager manager = new SceneManager(root, loc);
+
         mainScene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
         );
+        manager.showLanguageSelection();
         mainStage.setScene(mainScene);
         mainStage.setTitle("Crab Invaders");
-        LanguageSelection l = new LanguageSelection();
-        root.getChildren().add(l.getView(loc));
         mainStage.show();
     }
 
