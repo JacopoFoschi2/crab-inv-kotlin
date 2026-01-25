@@ -24,7 +24,7 @@ public class App extends Application {
         mainScene = new Scene(root);
         LocalizationController loc = new LocalizationController(new Localization());
         AudioController audio = new AudioController(new JavaFXSoundManager());
-        SceneManager manager = new SceneManager(root, loc);
+        SceneManager manager = new SceneManager(root, loc, audio);
 
         mainScene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
@@ -36,7 +36,7 @@ public class App extends Application {
     }
 
     public static class Main {
-        public static void main(String... args) {
+        static void main(String... args) {
             Application.launch(App.class, args);
         }
     }
