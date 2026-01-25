@@ -6,9 +6,6 @@ package it.unibo.crabinv.Model.Save;
 
 public final class SaveUtils {
 
-    private SaveUtils(){
-    }
-
     /**
      * Ensures that {@code amount} is non‑negative.
      * @throws IllegalArgumentException if {@code amount} is negative
@@ -18,6 +15,18 @@ public final class SaveUtils {
             throw new IllegalArgumentException("amount cannot be negative: amount:" + amount);
         }
     }
+
+    public static void requireNonNegativeResult(int initialAmount, int subAmount){
+        int result = initialAmount-subAmount;
+        if (result < 0){
+            throw new IllegalArgumentException("result would be negative: result:" + result);
+        }
+    }
+
+    private SaveUtils(){
+    }
+
+
     /**
      * Subtracts {@code amountToSub} from {@code currentAmount} but never
      * goes below zero (clamped).

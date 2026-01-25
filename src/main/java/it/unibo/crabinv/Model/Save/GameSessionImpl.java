@@ -92,7 +92,8 @@ public class GameSessionImpl implements GameSession {
     /** {@inheritDoc} */
     @Override
     public void subCurrency(int amount) {
-        this.currency = SaveUtils.subClampedToZero(this.currency, amount);
+        SaveUtils.requireNonNegativeResult(this.currency, amount);
+        this.currency -= amount;
     }
 
     /**
