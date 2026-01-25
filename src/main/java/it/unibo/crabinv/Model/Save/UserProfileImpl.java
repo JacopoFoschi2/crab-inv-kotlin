@@ -4,27 +4,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserProfileImpl implements UserProfile {
-    private int currentPlayerCurrency;
+
+    private static final int STARTING_CURRENCY = 0;
+
+    private int currency;
     private final Map<String, Integer> powerUpLevels = new HashMap<>();
 
-    @Override
-    public int getCurrentPlayerCurrency() {
-        return this.currentPlayerCurrency;
+    public UserProfileImpl(){
+        this.currency = STARTING_CURRENCY;
     }
 
     @Override
-    public void increaseCurrency(int currency) {
-        this.currentPlayerCurrency += currency;
+    public int getCurrency() {
+        return this.currency;
     }
 
     @Override
-    public void subtractCurrency(int requiredCurrency) {
-        if (this.currentPlayerCurrency >= requiredCurrency) {
-            this.currentPlayerCurrency =- requiredCurrency;
-        }
-        else {
-            System.out.println("Not enough Currency! : " + this.currentPlayerCurrency );
-        }
+    public void addCurrency(int amount) {
+        SaveUtils.requireNonNegativeAmount(amount);
+        this.currency += amount;
+    }
+
+    @Override
+    public void subCurrency(int amount) {
+        SaveUtils.requireNonNegativeAmount(amount);
+        this.currency = SaveUtils.subClampedToZero(this.currency, amount);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class UserProfileImpl implements UserProfile {
 
     @Override
     public void updatePowerUp(String powUpName, int level) {
+        SaveUtils.requireNonNegativeAmount(level);
         this.powerUpLevels.put(powUpName,level);
     }
-
 }

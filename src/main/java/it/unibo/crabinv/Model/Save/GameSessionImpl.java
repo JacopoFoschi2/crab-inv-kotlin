@@ -35,29 +35,6 @@ public class GameSessionImpl implements GameSession {
     }
 
     /**
-     * Ensures that {@code amount} is non‑negative.
-     * @throws IllegalArgumentException if {@code amount} is negative
-     */
-    private static void requireNonNegativeAmount(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("amount cannot be negative!: amount:" + amount);
-        }
-    }
-
-    /**
-     * Subtracts {@code amountToSub} from {@code currentAmount} but never
-     * goes below zero (clamped).
-     *
-     * @param currentAmount the current value
-     * @param amountToSub   the amount to subtract (must be ≥0)
-     * @return the result clamped to zero
-     */
-    private static int subClampedToZero(int currentAmount, int amountToSub) {
-        requireNonNegativeAmount(amountToSub);
-        return Math.max(0, currentAmount - amountToSub);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -126,7 +103,7 @@ public class GameSessionImpl implements GameSession {
      */
     @Override
     public void addCurrency(int amount) {
-        requireNonNegativeAmount(amount);
+        SaveUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
@@ -135,7 +112,7 @@ public class GameSessionImpl implements GameSession {
      */
     @Override
     public void subCurrency(int amount) {
-        this.currency = subClampedToZero(this.currency, amount);
+        this.currency = SaveUtils.subClampedToZero(this.currency, amount);
     }
 
     /**
@@ -144,7 +121,7 @@ public class GameSessionImpl implements GameSession {
      */
     @Override
     public void addPlayerHealth(int amount) {
-        requireNonNegativeAmount(amount);
+        SaveUtils.requireNonNegativeAmount(amount);
         this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount)
         ;
     }
@@ -154,6 +131,6 @@ public class GameSessionImpl implements GameSession {
      */
     @Override
     public void subPlayerHealth(int amount) {
-        this.playerHealth = subClampedToZero(this.playerHealth, amount);
+        this.playerHealth = SaveUtils.subClampedToZero(this.playerHealth, amount);
     }
 }

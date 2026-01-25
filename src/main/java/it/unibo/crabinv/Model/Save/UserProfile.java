@@ -12,19 +12,19 @@ public interface UserProfile {
     /**
      * @return the current currency
      */
-    int getCurrentPlayerCurrency();
+    int getCurrency();
 
     /**
      * Sums the amount to the stored currency
      * @param amount the amount of currency to add
      * */
-    void increaseCurrency (int amount);
+    void addCurrency (int amount);
 
     /**
      * Subtracts the amount to the stored currency
      * @param amount the amount of currency to subtract
      * */
-    void subtractCurrency (int amount);
+    void subCurrency (int amount);
 
     /**
      * Used to get the level of a powerUp
