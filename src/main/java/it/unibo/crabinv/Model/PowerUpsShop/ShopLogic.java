@@ -4,11 +4,18 @@ import it.unibo.crabinv.Model.Save.UserProfile;
 
 public class ShopLogic implements Shop {
     @Override
-    public void purchase(UserProfile profile, PowerUp item) {
-        // needed a better implementation with the level of UserProfile
-        if (profile.getCurrentPlayerCurrency() >= item.getCost()){
-            //need also the control of the currentLevel in UserProfile with item.getMaxLevel()
+    public boolean purchase(UserProfile profile, PowerUp item) {
+
+        if (profile.getCurrentPlayerCurrency() >= item.getCost() &&
+                profile.getPowerUpLevel(item.getPowerUpName()) < item.getMaxLevel()){
+            int powerupLevel = profile.getPowerUpLevel(item.getPowerUpName());
+            powerupLevel++;
             profile.subtractCurrency(item.getCost());
+            profile.updatePowerUp(item.getPowerUpName(), powerupLevel);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }

@@ -17,13 +17,13 @@ public class UserProfileLogic implements UserProfile {
 
     @Override
     public void increaseCurrency(int currency) {
-        this.currentPlayerCurrency =+ currency;
+        this.currentPlayerCurrency += currency;
     }
 
     @Override
     public void subtractCurrency(int requiredCurrency) {
         if (this.currentPlayerCurrency >= requiredCurrency) {
-            this.currentPlayerCurrency =- requiredCurrency;
+            this.currentPlayerCurrency -= requiredCurrency;
         }
         else {
             System.out.println("Not enough Currency! : " + this.currentPlayerCurrency );
