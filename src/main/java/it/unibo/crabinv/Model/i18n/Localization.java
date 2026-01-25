@@ -1,7 +1,5 @@
 package it.unibo.crabinv.Model.i18n;
 
-import java.util.Locale;
-import java.util.Locale.Builder;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -18,31 +16,13 @@ import java.util.ResourceBundle;
  */
 public class Localization {
     private ResourceBundle messages;
-    private SUPPORTED_LOCALES currentLocale;
-
-    /**
-     * Lists all currently supported locales to ensure correct usage
-     */
-    public enum SUPPORTED_LOCALES {
-        ENGLISH(new Builder().setLanguage("en").setRegion("US").build()),
-        ITALIAN(new Builder().setLanguage("it").setRegion("IT").build());
-
-        private final Locale locale;
-
-        SUPPORTED_LOCALES(Locale locale) {
-            this.locale = locale;
-        }
-
-        public Locale getLocale() {
-            return locale;
-        }
-    }
+    private SupportedLocales currentLocale;
 
     /**
      * Creates new Localization instance based on input locale
-     * @param locale is to be chosen from SUPPORTED_LOCALES
+     * @param locale is to be chosen from SupportedLocales
      */
-    public Localization(SUPPORTED_LOCALES locale) {
+    public Localization(SupportedLocales locale) {
         setLocale(locale);
     }
 
@@ -53,9 +33,9 @@ public class Localization {
 
     /**
      * Changes currently loaded locale
-     * @param locale is to be chosen from SUPPORTED_LOCALES
+     * @param locale is to be chosen from SupportedLocales
      */
-    public void setLocale(SUPPORTED_LOCALES locale) {
+    public void setLocale(SupportedLocales locale) {
         currentLocale = locale;
         messages = ResourceBundle.getBundle("i18n.messages", currentLocale.getLocale());
     }
@@ -77,7 +57,7 @@ public class Localization {
      * Gets currently set Locale
      * @return currently set Locale
      */
-    public SUPPORTED_LOCALES getCurrentLocale() {
+    public SupportedLocales getCurrentLocale() {
         return currentLocale;
     }
 
@@ -85,7 +65,7 @@ public class Localization {
      * Gets the currently supported Locales
      * @return an array of the currently supported Locales
      */
-    public SUPPORTED_LOCALES[] getSupportedLocales() {
-        return SUPPORTED_LOCALES.values();
+    public SupportedLocales[] getSupportedLocales() {
+        return SupportedLocales.values();
     }
 }
