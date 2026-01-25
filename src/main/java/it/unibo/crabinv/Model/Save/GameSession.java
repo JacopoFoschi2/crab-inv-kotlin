@@ -10,6 +10,8 @@ public interface GameSession {
     boolean isGameOver();
 
     /* Active run player stats */
+    long getStartingTimeStamp();
+
     int getCurrency();
 
     int getPlayerHealth();
@@ -30,6 +32,12 @@ public interface GameSession {
      * @param amount the currency to add
      */
     void addCurrency(int amount);
+
+    /**
+     * Subtracts an amount to current Currency
+     * @param amount the currency to add
+     */
+    void subCurrency(int amount);
 
     /**
      * Adds an amount to current PlayerHealth
