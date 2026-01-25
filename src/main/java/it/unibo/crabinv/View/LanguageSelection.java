@@ -56,6 +56,11 @@ public class LanguageSelection {
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
         languageButton.setGraphic(composition);
+        languageButton.focusedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                audio.playSFX(SFXTracks.MENU_SELECT);
+            }
+        });
         languageButton.setOnAction(_ -> {
             audio.playSFX(SFXTracks.MENU_SELECT);
             loc.setLanguage(locale);
