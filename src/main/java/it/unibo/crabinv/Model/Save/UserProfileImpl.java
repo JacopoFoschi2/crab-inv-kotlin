@@ -10,7 +10,7 @@ public class UserProfileImpl implements UserProfile {
     private int currency;
     private final Map<String, Integer> powerUpLevels = new HashMap<>();
 
-    public UserProfileImpl(){
+    public UserProfileImpl() {
         this.currency = STARTING_CURRENCY;
     }
 
@@ -39,6 +39,6 @@ public class UserProfileImpl implements UserProfile {
     @Override
     public void updatePowerUp(String powUpName, int level) {
         SaveUtils.requireNonNegativeAmount(level);
-        this.powerUpLevels.put(powUpName,level);
+        this.powerUpLevels.put(powUpName, level);
     }
 }

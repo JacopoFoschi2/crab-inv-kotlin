@@ -34,82 +34,62 @@ public class GameSessionImpl implements GameSession {
         this.playerHealth = STARTING_PLAYER_HEALTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getCurrentLevel() {
         return this.currentLevel;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getNextLevel() {
         return this.currentLevel + 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isGameOver() {
         return this.gameOver;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public long getStartingTimeStamp() {
         return this.startingTimeStamp;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getCurrency() {
         return this.currency;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int getPlayerHealth() {
         return this.playerHealth;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void advanceLevel() {
         this.currentLevel++;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void markGameOver() {
         this.gameOver = true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void addCurrency(int amount) {
         SaveUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void subCurrency(int amount) {
         this.currency = SaveUtils.subClampedToZero(this.currency, amount);
@@ -126,9 +106,7 @@ public class GameSessionImpl implements GameSession {
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void subPlayerHealth(int amount) {
         this.playerHealth = SaveUtils.subClampedToZero(this.playerHealth, amount);
