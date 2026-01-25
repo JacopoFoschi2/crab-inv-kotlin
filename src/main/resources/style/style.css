@@ -19,11 +19,11 @@
     -fx-background-radius: 0;
 }
 
-.language-button:hover, .language-button:focused {
+.language-button:focused {
     -fx-background-color: #3EA6FF;
 }
 
-.language-button:hover .label, .language-button:focused .label {
+.language-button:focused .label {
     -fx-text-fill: #121212;
 }
 

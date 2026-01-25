@@ -1,7 +1,10 @@
 package it.unibo.crabinv.View;
 
+import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.audio.SFXTracks;
 import it.unibo.crabinv.Model.i18n.SupportedLocales;
+import it.unibo.crabinv.SceneManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,14 +18,25 @@ import javafx.scene.layout.VBox;
 import java.util.Objects;
 
 public class LanguageSelection {
-    public Pane getView(LocalizationController loc) {
+    private final SceneManager sceneManager;
+    private final LocalizationController loc;
+    private final AudioController audio;
+
+    public LanguageSelection(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
+        this.sceneManager = sceneManager;
+        this.loc = loc;
+        this.audio = audio;
+    }
+
+    public Pane getView() {
         StackPane pane = new StackPane();
         VBox mainColumn = new VBox(20);
         Label title = new Label("SELECT LANGUAGE");
         title.getStyleClass().add("language-title");
         HBox languageSelection = new HBox(10);
+        double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 1);
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
-            languageSelection.getChildren().add(generateLanguageButton(200, loc, supportedLocale));
+            languageSelection.getChildren().add(generateLanguageButton(widthOfButton, loc, supportedLocale));
         }
         languageSelection.setAlignment(Pos.CENTER);
         mainColumn.getChildren().addAll(title, languageSelection);
@@ -43,7 +57,16 @@ public class LanguageSelection {
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
         languageButton.setGraphic(composition);
-        languageButton.setOnAction(_ -> loc.setLanguage(locale));
+        languageButton.focusedProperty().addListener((_, _, newValue) -> {
+            if (newValue) {
+                audio.playSFX(SFXTracks.MENU_HOVER);
+            }
+        });
+        languageButton.setOnAction(_ -> {
+            audio.playSFX(SFXTracks.MENU_SELECT);
+            loc.setLanguage(locale);
+            sceneManager.showMainMenu();
+        });
         languageButton.getStyleClass().add("language-button");
         return languageButton;
     }
