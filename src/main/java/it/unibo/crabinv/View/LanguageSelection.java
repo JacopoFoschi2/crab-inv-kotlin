@@ -58,7 +58,7 @@ public class LanguageSelection {
         languageButton.setGraphic(composition);
         languageButton.focusedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
-                audio.playSFX(SFXTracks.MENU_SELECT);
+                audio.playSFX(SFXTracks.MENU_HOVER);
             }
         });
         languageButton.setOnAction(_ -> {
