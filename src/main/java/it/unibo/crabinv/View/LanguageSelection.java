@@ -34,8 +34,9 @@ public class LanguageSelection {
         Label title = new Label("SELECT LANGUAGE");
         title.getStyleClass().add("language-title");
         HBox languageSelection = new HBox(10);
+        double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 2);
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
-            languageSelection.getChildren().add(generateLanguageButton(200, loc, supportedLocale));
+            languageSelection.getChildren().add(generateLanguageButton(widthOfButton, loc, supportedLocale));
         }
         languageSelection.setAlignment(Pos.CENTER);
         mainColumn.getChildren().addAll(title, languageSelection);
