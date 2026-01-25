@@ -4,7 +4,7 @@ package it.unibo.crabinv.Model.Save;
  * Helper methods for Save related classes
  */
 
-public final class SaveUtils {
+public final class DomainUtils {
 
     /**
      * Ensures that {@code amount} is non‑negative.
@@ -23,7 +23,7 @@ public final class SaveUtils {
         }
     }
 
-    private SaveUtils(){
+    private DomainUtils(){
     }
 
 
@@ -36,7 +36,7 @@ public final class SaveUtils {
      * @return the result clamped to zero
      */
     public static int subClampedToZero(int currentAmount, int amountToSub) {
-        SaveUtils.requireNonNegativeAmount(amountToSub);
+        DomainUtils.requireNonNegativeAmount(amountToSub);
         return Math.max(0, currentAmount - amountToSub);
     }
 }

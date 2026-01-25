@@ -21,14 +21,14 @@ public class UserProfileImpl implements UserProfile {
 
     @Override
     public void addCurrency(int amount) {
-        SaveUtils.requireNonNegativeAmount(amount);
+        DomainUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
     @Override
     public void subCurrency(int amount) {
-        SaveUtils.requireNonNegativeAmount(amount);
-        this.currency = SaveUtils.subClampedToZero(this.currency, amount);
+        DomainUtils.requireNonNegativeAmount(amount);
+        this.currency = DomainUtils.subClampedToZero(this.currency, amount);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UserProfileImpl implements UserProfile {
 
     @Override
     public void updatePowerUp(String powUpName, int level) {
-        SaveUtils.requireNonNegativeAmount(level);
+        DomainUtils.requireNonNegativeAmount(level);
         this.powerUpLevels.put(powUpName, level);
     }
 }

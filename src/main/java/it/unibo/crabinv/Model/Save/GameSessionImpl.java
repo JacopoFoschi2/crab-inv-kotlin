@@ -85,14 +85,14 @@ public class GameSessionImpl implements GameSession {
     /** {@inheritDoc} */
     @Override
     public void addCurrency(int amount) {
-        SaveUtils.requireNonNegativeAmount(amount);
+        DomainUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
     /** {@inheritDoc} */
     @Override
     public void subCurrency(int amount) {
-        SaveUtils.requireNonNegativeResult(this.currency, amount);
+        DomainUtils.requireNonNegativeResult(this.currency, amount);
         this.currency -= amount;
     }
 
@@ -102,7 +102,7 @@ public class GameSessionImpl implements GameSession {
      */
     @Override
     public void addPlayerHealth(int amount) {
-        SaveUtils.requireNonNegativeAmount(amount);
+        DomainUtils.requireNonNegativeAmount(amount);
         this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount)
         ;
     }
@@ -110,6 +110,6 @@ public class GameSessionImpl implements GameSession {
     /** {@inheritDoc} */
     @Override
     public void subPlayerHealth(int amount) {
-        this.playerHealth = SaveUtils.subClampedToZero(this.playerHealth, amount);
+        this.playerHealth = DomainUtils.subClampedToZero(this.playerHealth, amount);
     }
 }
