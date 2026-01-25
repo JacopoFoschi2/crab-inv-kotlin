@@ -10,6 +10,11 @@ public class UserProfileLogic implements UserProfile {
     private final Map<String, PowerUp> ownedPowerUps = new HashMap<>();
     private final Map<String, Integer> powerUpLevel = new HashMap<>();
 
+    public UserProfileLogic( int currentPlayerCurrency) {
+        this.currentPlayerCurrency = currentPlayerCurrency;
+
+    }
+
     @Override
     public int getCurrentPlayerCurrency() {
         return this.currentPlayerCurrency;
