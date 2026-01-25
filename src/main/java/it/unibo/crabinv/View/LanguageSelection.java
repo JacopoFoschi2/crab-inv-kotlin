@@ -1,6 +1,8 @@
 package it.unibo.crabinv.View;
 
+import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.audio.SFXTracks;
 import it.unibo.crabinv.Model.i18n.SupportedLocales;
 import it.unibo.crabinv.SceneManager;
 import javafx.geometry.Pos;
@@ -16,12 +18,14 @@ import javafx.scene.layout.VBox;
 import java.util.Objects;
 
 public class LanguageSelection {
-    private final LocalizationController loc;
     private final SceneManager sceneManager;
+    private final LocalizationController loc;
+    private final AudioController audio;
 
-    public LanguageSelection(LocalizationController loc, SceneManager sceneManager) {
-        this.loc = loc;
+    public LanguageSelection(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
         this.sceneManager = sceneManager;
+        this.loc = loc;
+        this.audio = audio;
     }
 
     public Pane getView() {
@@ -53,6 +57,7 @@ public class LanguageSelection {
         Button languageButton = new Button();
         languageButton.setGraphic(composition);
         languageButton.setOnAction(_ -> {
+            audio.playSFX(SFXTracks.MENU_SELECT);
             loc.setLanguage(locale);
             sceneManager.showMainMenu();
         });
