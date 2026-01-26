@@ -37,4 +37,9 @@ public abstract class AbstractEntity implements Entity {
     public double getY() {
         return y;
     }
+
+    protected void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 }
