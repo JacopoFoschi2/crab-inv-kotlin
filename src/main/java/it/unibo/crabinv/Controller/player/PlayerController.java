@@ -20,11 +20,11 @@ public class PlayerController {
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     public void update(boolean firePressed, Delta delta) {
+        tick();
         move(delta);
         if (firePressed) {
             shoot();
         }
-        tick();
     }
 
     /**
