@@ -19,12 +19,28 @@ public class SaveImpl implements Save{
      * Constructor, creates and assigns UUID and timeStamp
      * Creates all new save related Classes
      */
-    public SaveImpl(){
-        this.saveId = UUID.randomUUID();
-        this.creationTimeStamp = Instant.now().toEpochMilli();
-        this.saveGameSession = new GameSessionImpl();
-        this.saveUserProfile = new UserProfileImpl();
-        this.savePlayerMemorial = new PlayerMemorialImpl();
+
+    /* Factory */
+    private SaveImpl(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
+        this.saveId = sId;
+        this.creationTimeStamp = cts;
+        this.saveGameSession = gs;
+        this.saveUserProfile = up;
+        this.savePlayerMemorial = pm;
+    }
+
+    public static Save createNewSave(){
+        return new SaveImpl(
+                UUID.randomUUID(),
+                Instant.now().toEpochMilli(),
+                new GameSessionImpl(),
+                new UserProfileImpl(),
+                new PlayerMemorialImpl()
+        );
+    }
+
+    public static Save restoreSave(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
+        return new SaveImpl(sId, cts, gs, up, pm);
     }
 
     /** {@inheritDoc} */
@@ -32,16 +48,19 @@ public class SaveImpl implements Save{
     public UUID getSaveId() {
         return saveId;
     }
+
     /** {@inheritDoc} */
     @Override
     public long getCreationTimeStamp() {
         return creationTimeStamp;
     }
+
     /** {@inheritDoc} */
     @Override
     public GameSession getGameSession() {
         return saveGameSession;
     }
+
     /** {@inheritDoc} */
     @Override
     public UserProfile getUserProfile() {
