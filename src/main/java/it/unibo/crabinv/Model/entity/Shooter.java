@@ -12,4 +12,9 @@ public interface Shooter {
      * @return the amount of ticks needed between two shots
      */
     public int getFireRate();
+
+    /**
+     * Tells the model that it has shot, prompting it to handle the isAbleToShoot pipeline
+     */
+    public void shoot();
 }
