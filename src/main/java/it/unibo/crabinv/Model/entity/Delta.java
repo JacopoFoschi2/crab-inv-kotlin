@@ -1,12 +1,12 @@
 package it.unibo.crabinv.Model.entity;
 
-public enum DELTA {
+public enum Delta {
     DECREASE(-1),
     NO_ACTION(0),
     INCREASE(1);
 
     private final int value;
-    DELTA(int value) {
+    Delta(int value) {
         this.value = value;
     }
 
