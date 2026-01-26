@@ -28,4 +28,26 @@ public class TestPlayerController {
         Assertions.assertEquals(-1, player.getX());
         Assertions.assertFalse(player.isAbleToShoot());
     }
+
+    @Test
+    public void testMoveOutOfBounds() {
+        playerController.update(false, Delta.DECREASE);
+        playerController.update(false, Delta.DECREASE);
+        playerController.update(false, Delta.DECREASE);
+        Assertions.assertEquals(-2, player.getX()); // minBound
+        playerController.update(false, Delta.INCREASE);
+        playerController.update(false, Delta.INCREASE);
+        playerController.update(false, Delta.INCREASE);
+        playerController.update(false, Delta.INCREASE);
+        playerController.update(false, Delta.INCREASE);
+        Assertions.assertEquals(2, player.getX()); // maxBound
+    }
+
+    @Test
+    public void testShootCooldown() {
+        playerController.update(true, Delta.NO_ACTION);
+        Assertions.assertFalse(player.isAbleToShoot());
+        playerController.update(false, Delta.NO_ACTION);
+        Assertions.assertTrue(player.isAbleToShoot());
+    }
 }
