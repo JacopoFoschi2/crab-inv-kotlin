@@ -1,7 +1,10 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 import java.util.List;
 
+/**
+ * Represents the list of all saved SessionRecord
+ */
 public interface PlayerMemorial {
 
     /**

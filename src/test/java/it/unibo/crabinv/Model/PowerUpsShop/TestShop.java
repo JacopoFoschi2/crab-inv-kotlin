@@ -1,5 +1,5 @@
 package it.unibo.crabinv.Model.PowerUpsShop;
-import it.unibo.crabinv.Model.Save.UserProfile;
+import it.unibo.crabinv.Model.save.UserProfile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

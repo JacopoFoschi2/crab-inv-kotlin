@@ -26,7 +26,7 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
 tasks.test {
