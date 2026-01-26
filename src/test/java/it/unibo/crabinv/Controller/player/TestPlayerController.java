@@ -1,5 +1,31 @@
 package it.unibo.crabinv.Controller.player;
 
-public class TestPlayerController {
+import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.player.Player;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+public class TestPlayerController {
+    Player player;
+    PlayerController playerController;
+
+    @BeforeEach
+    public void setup() {
+        player = new Player(1,0,0,1,1);
+        playerController = new PlayerController(player, -2, 2);
+    }
+
+    @Test
+    public void TestMovement() {
+        playerController.update(false, Delta.INCREASE);
+        Assertions.assertEquals(1, player.getX());
+    }
+
+    @Test
+    public void TestMovementAndShot() {
+        playerController.update(true, Delta.DECREASE);
+        Assertions.assertEquals(-1, player.getX());
+        Assertions.assertFalse(player.isAbleToShoot());
+    }
 }
