@@ -4,9 +4,9 @@ import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.player.Player;
 
 public class PlayerController {
-    Player player;
-    double minBounds;
-    double maxBounds;
+    private final Player player;
+    private final double minBounds;
+    private final double maxBounds;
 
     public PlayerController(Player player, double minBounds, double maxBounds) {
         this.player = player;
