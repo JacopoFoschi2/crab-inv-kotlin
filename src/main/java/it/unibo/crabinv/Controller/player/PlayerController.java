@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Controller.player;
 
+import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.player.Player;
 
 public class PlayerController {
@@ -16,10 +17,10 @@ public class PlayerController {
     /**
      * Updates the status of the player, it needs to be called for every tick
      * @param firePressed tells the controller if the user requested to fire
-     * @param dt either -1, 0 or 1, the former moves to the left, the latter moves to the right
+     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    public void update(boolean firePressed, double dt) {
-        move(dt);
+    public void update(boolean firePressed, Delta delta) {
+        move(delta);
         if (firePressed) {
             shoot();
         }
@@ -28,10 +29,10 @@ public class PlayerController {
 
     /**
      * Tells the player to move in a certain direction for 1 tick
-     * @param dt either -1, 0 or 1, the former moves to the left, the latter moves to the right
+     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private void move(double dt) {
-        player.move(dt, minBounds, maxBounds);
+    private void move(Delta delta) {
+        player.move(delta, minBounds, maxBounds);
     }
 
     /**

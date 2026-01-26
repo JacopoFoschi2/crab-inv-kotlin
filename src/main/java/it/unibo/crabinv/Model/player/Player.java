@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.player;
 
 import it.unibo.crabinv.Model.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Movable;
 import it.unibo.crabinv.Model.entity.Shooter;
 
@@ -27,8 +28,8 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     }
 
     @Override
-    public void move(double dt, double minBound, double maxBound) {
-        double movement = dt * speed;
+    public void move(Delta delta, double minBound, double maxBound) {
+        double movement = delta.getValue() * speed;
         double newX = this.getX() + movement;
         if (newX <  minBound) {
             newX = minBound;
