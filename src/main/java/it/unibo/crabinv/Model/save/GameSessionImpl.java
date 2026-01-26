@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 import java.time.Instant;
 
@@ -92,7 +92,7 @@ public class GameSessionImpl implements GameSession {
     /** {@inheritDoc} */
     @Override
     public void subCurrency(int amount) {
-        DomainUtils.requireNonNegativeResult(this.currency, amount);
+        DomainUtils.requireNonNegativeSubtraction(this.currency, amount);
         this.currency -= amount;
     }
 
@@ -103,8 +103,7 @@ public class GameSessionImpl implements GameSession {
     @Override
     public void addPlayerHealth(int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
-        this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount)
-        ;
+        this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount);
     }
 
     /** {@inheritDoc} */

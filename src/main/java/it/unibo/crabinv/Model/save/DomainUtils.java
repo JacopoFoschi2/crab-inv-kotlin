@@ -1,7 +1,7 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 /**
- * Helper methods for Save related classes
+ * Helper methods for save related classes
  */
 
 public final class DomainUtils {
@@ -16,7 +16,7 @@ public final class DomainUtils {
         }
     }
 
-    public static void requireNonNegativeResult(int initialAmount, int subAmount){
+    public static void requireNonNegativeSubtraction(int initialAmount, int subAmount){
         int result = initialAmount-subAmount;
         if (result < 0){
             throw new IllegalArgumentException("result would be negative: result:" + result);

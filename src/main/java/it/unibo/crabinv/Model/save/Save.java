@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 import java.util.UUID;
 
@@ -10,16 +10,16 @@ public interface Save {
     /** @return UUID of the save */
     UUID getSaveId();
 
-    /** @return timeStamp produced at the creation of the Save */
+    /** @return timeStamp produced at the creation of the save */
     long getCreationTimeStamp();
 
-    /** @return GameSession bound to Save */
+    /** @return GameSession bound to save */
     GameSession getGameSession();
 
-    /** @return UserProfile bound to Save */
+    /** @return UserProfile bound to save */
     UserProfile getUserProfile();
 
-    /** @return PlayerMemorial bound to Save */
+    /** @return PlayerMemorial bound to save */
     PlayerMemorial getPlayerMemorial();
 }
 

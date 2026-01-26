@@ -1,6 +1,4 @@
-package it.unibo.crabinv.Model.Save;
-
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
+package it.unibo.crabinv.Model.save;
 
 /**
  * Represents the meta-data of a single player's profile,

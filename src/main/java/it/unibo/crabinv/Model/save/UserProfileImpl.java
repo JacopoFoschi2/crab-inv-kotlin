@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,8 @@ public class UserProfileImpl implements UserProfile {
     @Override
     public void subCurrency(int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
-        this.currency = DomainUtils.subClampedToZero(this.currency, amount);
+        DomainUtils.requireNonNegativeSubtraction(this.currency, amount);
+        this.currency -= amount;
     }
 
     @Override

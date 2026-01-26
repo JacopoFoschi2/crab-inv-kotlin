@@ -7,5 +7,5 @@ public interface SaveController {
     // - Carica il salvataggio
     // - Crea un nuovo salvataggio
     // - Cancella un salvataggio
-    // - Sovrascrive un salvataggio con i dati passati da Save
+    // - Sovrascrive un salvataggio con i dati passati da save
 }
