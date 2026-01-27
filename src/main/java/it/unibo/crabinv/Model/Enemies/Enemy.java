@@ -1,5 +1,11 @@
 package it.unibo.crabinv.Model.Enemies;
 
-public interface Enemy {
+import it.unibo.crabinv.Model.entity.Entity;
+
+public interface Enemy extends Entity {
+    /**
+     * Getter for the enemy Type that the enemy has
+     * @return the enemy type of that specific enemy
+     */
     public EnemyType getEnemyType();
 }

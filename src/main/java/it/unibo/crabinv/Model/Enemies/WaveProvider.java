@@ -11,6 +11,5 @@ public interface WaveProvider {
      *
      * @return when there are more waves, so that the level can check if it is finished or not
      */
-
     boolean hasMoreWaves();
 }
