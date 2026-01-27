@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.Save;
+package it.unibo.crabinv.Model.save;
 
 import java.util.UUID;
 
