@@ -3,7 +3,8 @@ package it.unibo.crabinv.config;
 import java.nio.file.Path;
 
 /**
- * Handles all the paths of the app centralizing path access
+ * Provides precompiled, OS independent ready to use paths.
+ * These paths are used to access the game folder in the user home
  */
 public final class AppPaths {
     private static final String GAME_DIR = ".crabinvaders";

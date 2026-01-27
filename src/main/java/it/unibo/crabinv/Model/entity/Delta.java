@@ -1,5 +1,9 @@
 package it.unibo.crabinv.Model.entity;
 
+/**
+ * Provides all the deltas that the entity that wishes to move should handle.
+ * The selected delta affects the movement by either decreasing or increasing its coordinate in the axis
+ */
 public enum Delta {
     DECREASE(-1),
     NO_ACTION(0),

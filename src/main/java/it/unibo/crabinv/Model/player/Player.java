@@ -5,6 +5,9 @@ import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Movable;
 import it.unibo.crabinv.Model.entity.Shooter;
 
+/**
+ * Provides the implementation of what a player is
+ */
 public class Player extends AbstractEntity implements Shooter, Movable {
     /**
      * The speed at witch the player moves in a tick
@@ -19,7 +22,11 @@ public class Player extends AbstractEntity implements Shooter, Movable {
      */
     private final int fireRate;
 
-
+    /**
+     * Creates a player
+     * @param speed the space covered in one tick
+     * @param fireRate the minimal amount of ticks needed between two shots
+     */
     public Player(int maxHealth, double x, double y, double speed, int fireRate) {
         super(maxHealth, x, y);
         this.speed = speed;

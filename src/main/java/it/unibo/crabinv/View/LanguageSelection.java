@@ -17,17 +17,26 @@ import javafx.scene.layout.VBox;
 
 import java.util.Objects;
 
+/**
+ * Provides the languageSelection GUI
+ */
 public class LanguageSelection {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
 
+    /**
+     * Ensures the GUI uses the global configuration
+     */
     public LanguageSelection(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
     }
 
+    /**
+     * @return the view ready to be set inside a stage
+     */
     public Pane getView() {
         StackPane pane = new StackPane();
         VBox mainColumn = new VBox(20);
@@ -45,6 +54,9 @@ public class LanguageSelection {
         return pane;
     }
 
+    /**
+     * @return a button that shows the flag it represents and it's localised name
+     */
     private Button generateLanguageButton(double width, LocalizationController loc, SupportedLocales locale) {
         var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
         Image flag = new Image(path);

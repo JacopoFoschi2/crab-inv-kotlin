@@ -60,12 +60,4 @@ public class Localization {
     public SupportedLocales getCurrentLocale() {
         return currentLocale;
     }
-
-    /**
-     * Gets the currently supported Locales
-     * @return an array of the currently supported Locales
-     */
-    public SupportedLocales[] getSupportedLocales() {
-        return SupportedLocales.values();
-    }
 }

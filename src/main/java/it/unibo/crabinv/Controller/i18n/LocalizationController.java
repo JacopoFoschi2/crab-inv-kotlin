@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.i18n.SupportedLocales;
 import it.unibo.crabinv.Model.i18n.TextKeys;
 
 /**
- * Handles all operations related to Localization
+ * Provides all the apis to control the localization
  */
 public class LocalizationController {
     Localization loc;
@@ -34,7 +34,7 @@ public class LocalizationController {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the string associated to the key in input in the set language
      */
     public String getString(TextKeys key) {
         return loc.getString(key);

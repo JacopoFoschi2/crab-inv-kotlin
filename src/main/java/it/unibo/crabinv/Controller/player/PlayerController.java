@@ -3,11 +3,20 @@ package it.unibo.crabinv.Controller.player;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.player.Player;
 
+/**
+ * Provides all the apis to control a {@link Player}
+ */
 public class PlayerController {
     private final Player player;
     private final double minBounds;
     private final double maxBounds;
 
+    /**
+     * Sets the controller linking it to a set player
+     * @param player the player
+     * @param minBounds the minimal bounds of the x-axis
+     * @param maxBounds the maximal bounds of the x-axis
+     */
     public PlayerController(Player player, double minBounds, double maxBounds) {
         this.player = player;
         this.minBounds = minBounds;

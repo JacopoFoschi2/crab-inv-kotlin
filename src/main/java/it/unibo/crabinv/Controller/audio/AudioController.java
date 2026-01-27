@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.audio.SFXTracks;
 import it.unibo.crabinv.Model.audio.SoundService;
 
 /**
- * Controls all music execution
+ * Provides a controller facade that lets you utilize any implementation of {@link SoundService} regardless of the library used.
  */
 public class AudioController {
     private final SoundService soundManager;
@@ -58,6 +58,9 @@ public class AudioController {
         soundManager.setBGMVolume(realVolume);
     }
 
+    /**
+     * @return the current BGM volume
+     */
     public int getBGMVolume() {
         double volume = soundManager.getBGMVolume();
         return (int) (volume * 100);
@@ -97,6 +100,9 @@ public class AudioController {
         soundManager.setSFXVolume(realVolume);
     }
 
+    /**
+     * @return the current SFX volume
+     */
     public int getSFXVolume() {
         double volume = soundManager.getSFXVolume();
         return (int) (volume * 100);
