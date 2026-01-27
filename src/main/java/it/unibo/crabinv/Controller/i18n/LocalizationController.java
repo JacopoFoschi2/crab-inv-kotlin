@@ -2,6 +2,7 @@ package it.unibo.crabinv.Controller.i18n;
 
 import it.unibo.crabinv.Model.i18n.Localization;
 import it.unibo.crabinv.Model.i18n.SupportedLocales;
+import it.unibo.crabinv.Model.i18n.TextKeys;
 
 /**
  * Handles all operations related to Localization
@@ -30,5 +31,12 @@ public class LocalizationController {
      */
     public SupportedLocales getLanguage() {
         return loc.getCurrentLocale();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getString(TextKeys key) {
+        return loc.getString(key);
     }
 }
