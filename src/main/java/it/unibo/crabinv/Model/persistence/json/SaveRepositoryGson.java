@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import it.unibo.crabinv.Model.persistence.repository.SaveRepository;
-import it.unibo.crabinv.Model.save.*;
+import it.unibo.crabinv.Model.Save.*;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.persistence.repository;
 
-import it.unibo.crabinv.Model.save.Save;
+import it.unibo.crabinv.Model.Save.*;
 
 import java.util.List;
 
