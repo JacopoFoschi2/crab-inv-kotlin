@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.save;
+package it.unibo.crabinv.Model.Save;
 
 /**
  * Helper methods for save related classes

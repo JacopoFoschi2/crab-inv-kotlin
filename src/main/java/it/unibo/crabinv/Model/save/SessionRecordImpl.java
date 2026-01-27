@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.save;
+package it.unibo.crabinv.Model.Save;
 
 /**
  * Record-Class Implementation of SessionRecord

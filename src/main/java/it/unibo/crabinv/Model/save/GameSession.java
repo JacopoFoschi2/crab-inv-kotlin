@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.save;
+package it.unibo.crabinv.Model.Save;
 
 /**
  * Represents a single game session,
