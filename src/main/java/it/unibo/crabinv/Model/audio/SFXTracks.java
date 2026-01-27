@@ -1,5 +1,8 @@
 package it.unibo.crabinv.Model.audio;
 
+/**
+ * Provides a set list of present SFX Tracks and their relative path in resources
+ */
 public enum SFXTracks {
     MENU_OPEN("/audio/SFX/menu_open.mp3"),
     MENU_CLOSE("/audio/SFX/menu_close.mp3"),

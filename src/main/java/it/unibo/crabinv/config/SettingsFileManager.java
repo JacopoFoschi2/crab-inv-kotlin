@@ -9,13 +9,13 @@ import java.io.Writer;
 import java.nio.file.Files;
 
 /**
- * Handles the file handling for the settings.json file inside the game folder
+ * Provides the apis to load or save the settings.json file ensuring state permanence
  */
 public final class SettingsFileManager {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * Ensures the class doesn't get instantiated in a wrong state
+     * Ensures the class doesn't get instantiated
      */
     private SettingsFileManager() {}
 

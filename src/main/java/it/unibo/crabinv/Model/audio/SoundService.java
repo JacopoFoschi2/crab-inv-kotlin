@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Model.audio;
 
 /**
- * Handles all the basic sound management operations
+ * Provides all the basic sound apis
  */
 public interface SoundService {
 

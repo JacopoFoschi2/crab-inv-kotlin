@@ -1,9 +1,11 @@
 package it.unibo.crabinv.Model.entity;
 
+/**
+ * Provides all the methods that an entity should implement
+ */
 public interface Entity {
 
     /**
-     * Returns the current amount of HP
      * @return the current amount of HP
      */
     public int getHealth();
@@ -15,14 +17,12 @@ public interface Entity {
     public boolean isAlive();
 
     /**
-     * Gets the X coordinate of the Entity
-     * @return the x coordinate
+     * @return the x coordinate of the entity
      */
     public double getX();
 
     /**
-     * Gets the Y coordinate of the Entity
-     * @return the y coordinate
+     * @return the y coordinate of the entity
      */
     public double getY();
 

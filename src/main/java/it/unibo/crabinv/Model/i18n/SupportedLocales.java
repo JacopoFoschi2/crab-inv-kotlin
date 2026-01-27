@@ -3,7 +3,8 @@ package it.unibo.crabinv.Model.i18n;
 import java.util.Locale;
 
 /**
- * Lists all currently supported locales to ensure correct usage
+ * Provides all currently supported locales to ensure correct usage.
+ * It also lists the path of the flag representing said language and it's localised name
  */
 public enum SupportedLocales {
     ENGLISH(new Locale.Builder().setLanguage("en").setRegion("US").build(), "/flags/flag_en.png", "ENGLISH"),

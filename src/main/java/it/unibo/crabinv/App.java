@@ -1,6 +1,5 @@
 package it.unibo.crabinv;
 
-import com.sun.scenario.Settings;
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.audio.JavaFXSoundManager;
@@ -18,23 +17,28 @@ import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
+/**
+ * Provides the application with the methods it needs to run
+ */
 public class App extends Application {
     private final LocalizationController loc = new LocalizationController(new Localization());
     private final AudioController audio = new AudioController(new JavaFXSoundManager());
 
     @Override
-    public void start(Stage mainStage) throws Exception {
-        mainStage.initStyle(StageStyle.UNDECORATED); // rimuove barra e bordi
+    public void start(Stage mainStage) {
+        //Tweaks the initial config of the stage
+        mainStage.initStyle(StageStyle.UNDECORATED);
         mainStage.setMaximized(true);
+        //The bounds of the screen
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
         Scene mainScene;
         StackPane root = new StackPane();
         mainScene = new Scene(root);
         SceneManager manager = new SceneManager(root, loc, audio, bounds);
-
         mainScene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
         );
+        //Attempts to read the settings.json file and handles setting them
         AppSettings settings = SettingsFileManager.load();
         if (settings != null) {
             loc.setLanguage(settings.locales());
@@ -61,6 +65,7 @@ public class App extends Application {
 
     @Override
     public void stop() throws Exception {
+        //used for saving the state of the settings before closing the app
         AppSettings settings = new AppSettings(
                 audio.getBGMVolume(),
                 audio.getSFXVolume(),
@@ -72,6 +77,9 @@ public class App extends Application {
         super.stop();
     }
 
+    /**
+     * Provides the launcher of the application
+     */
     public static class Main {
         static void main(String... args) {
             Application.launch(App.class, args);

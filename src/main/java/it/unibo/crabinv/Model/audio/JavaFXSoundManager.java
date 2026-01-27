@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * Model written with a facade pattern that handles all of {@link SoundService} operations
+ * Provides an implementation of {@link SoundService} using JavaFX.
  */
 public class JavaFXSoundManager implements SoundService {
     private double bgmVolume;
@@ -22,6 +22,9 @@ public class JavaFXSoundManager implements SoundService {
     private final Map<String, Media> bgmCache = new HashMap<>();
     private final Map<String, AudioClip> sfxCache = new HashMap<>();
 
+    /**
+     * Creates the SoundManager ensuring a coherent initial state.
+     */
     public JavaFXSoundManager() {
         setBGMVolume(1.0);
         setSFXVolume(1.0);
@@ -125,6 +128,13 @@ public class JavaFXSoundManager implements SoundService {
         return isSFXMuted;
     }
 
+    /**
+     * Handles the caching of either sound effects or music tracks
+     * @param effectName the key of the track
+     * @param cache a map used to cache all the tracks used at runtime
+     * @param <T> the type of JavaFx sound construct you wish to create
+     * @param create the method used to create the aforementioned construct
+     */
     private <T> void handleCache(String effectName, Map<String, T> cache, Function<String, T> create) {
         if (!cache.containsKey(effectName)) {
             var resource = getClass().getResource(effectName);

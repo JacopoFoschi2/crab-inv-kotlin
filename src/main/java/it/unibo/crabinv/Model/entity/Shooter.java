@@ -1,5 +1,8 @@
 package it.unibo.crabinv.Model.entity;
 
+/**
+ * Provides the basic methods that a shooter entity should implement
+ */
 public interface Shooter {
     /**
      * Checks if the entity is currently able to shoot
