@@ -17,17 +17,12 @@ public record AppSettings(
     /**
      * Constructs the record while ensuring that parameters are correct
      */
-    public AppSettings (int bgmVolume, int sfxVolume, boolean isBGMMuted, boolean isSFXMuted, SupportedLocales locales) {
+    public AppSettings {
         if (bgmVolume < 0 || bgmVolume > 100) {
             throw new IllegalArgumentException("bgmVolume must be between 0 and 100");
         }
         if (sfxVolume < 0 || sfxVolume > 100) {
             throw new IllegalArgumentException("sfxVolume must be between 0 and 100");
         }
-        this.bgmVolume = bgmVolume;
-        this.sfxVolume = sfxVolume;
-        this.isBGMMuted = isBGMMuted;
-        this.isSFXMuted = isSFXMuted;
-        this.locales = locales;
     }
 }
