@@ -5,7 +5,11 @@ package it.unibo.crabinv.Model.i18n;
  * These keys are to be used with {@code getKey()} method of {@link Localization} class.
  */
 public enum TextKeys {
-    PLAY("play");
+    PLAY("play"),
+    SHOP("shop"),
+    RUN_LOG("run_log"),
+    SETTINGS("settings"),
+    EXIT_GAME("exit_game"),;
 
     private final String key;
 
