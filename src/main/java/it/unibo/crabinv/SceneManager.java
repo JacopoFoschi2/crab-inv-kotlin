@@ -3,6 +3,7 @@ package it.unibo.crabinv;
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.View.LanguageSelection;
+import it.unibo.crabinv.View.MainMenu;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 
@@ -26,7 +27,7 @@ public class SceneManager {
     }
 
     public void showMainMenu() {
-        root.getChildren().setAll(new StackPane());
+        root.getChildren().setAll(new MainMenu(this,loc,audio).getView());
     }
 
     public double getWidth() {

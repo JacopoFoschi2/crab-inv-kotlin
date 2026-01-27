@@ -13,7 +13,7 @@ public class HardCodedWave implements Wave{
 
     @Override
     public boolean isWaveFinished() {
-        return enemies.stream().noneMatch(Entity::isAlive);
+        return enemies.stream().noneMatch(Enemy::isAlive);
     }
 
 }
