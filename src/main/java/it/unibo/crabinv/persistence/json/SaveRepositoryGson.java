@@ -1,9 +1,9 @@
-package it.unibo.crabinv.Model.persistence.json;
+package it.unibo.crabinv.persistence.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import it.unibo.crabinv.Model.persistence.repository.SaveRepository;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
 import it.unibo.crabinv.Model.save.*;
 
 import java.io.IOException;
@@ -38,6 +38,8 @@ public class SaveRepositoryGson implements SaveRepository {
                 context.deserialize(json, UserProfileImpl.class));
         builder.registerTypeAdapter(PlayerMemorial.class, (JsonDeserializer<PlayerMemorial>) (json, type, context) ->
                 context.deserialize(json, PlayerMemorialImpl.class));
+        builder.registerTypeAdapter(SessionRecord.class, (JsonDeserializer<SessionRecord>) (json, type, context) ->
+                context.deserialize(json, SessionRecordImpl.class));
         this.gson = builder.create();
     }
 

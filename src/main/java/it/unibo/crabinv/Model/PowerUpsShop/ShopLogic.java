@@ -6,11 +6,11 @@ public class ShopLogic implements Shop {
     @Override
     public boolean purchase(UserProfile profile, PowerUp item) {
 
-        if (profile.getCurrentPlayerCurrency() >= item.getCost() &&
+        if (profile.getCurrency() >= item.getCost() &&
                 profile.getPowerUpLevel(item.getPowerUpName()) < item.getMaxLevel()){
             int powerupLevel = profile.getPowerUpLevel(item.getPowerUpName());
             powerupLevel++;
-            profile.subtractCurrency(item.getCost());
+            profile.subCurrency(item.getCost());
             profile.updatePowerUp(item.getPowerUpName(), powerupLevel);
             return true;
         }
