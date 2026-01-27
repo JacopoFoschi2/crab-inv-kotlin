@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.persistence.repository;
+package it.unibo.crabinv.persistence.repository;
 
 import it.unibo.crabinv.Model.Save.*;
 

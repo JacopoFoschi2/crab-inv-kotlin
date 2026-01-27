@@ -17,7 +17,7 @@ public class GameSessionImpl implements GameSession {
     // manca logica di calcolo HP
 
     private int currentLevel;
-    private boolean gameOver; //quando diventa true viene salvato tutto da SessionRecord
+    private boolean gameOver;
     private final long startingTimeStamp;
     private int currency;
     private int playerHealth;
