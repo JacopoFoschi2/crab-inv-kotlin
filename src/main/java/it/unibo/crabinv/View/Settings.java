@@ -44,6 +44,9 @@ public class Settings {
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         mainColumn.getChildren().addAll(title, bgmVolume, sfxVolume, bgmMute, sfxMute, aReturn);
+        for (var child : mainColumn.getChildren()) {
+            child.focusedProperty().addListener(_ -> audio.playSFX(SFXTracks.MENU_HOVER));
+        }
         pane.getChildren().add(mainColumn);
         return pane;
     }

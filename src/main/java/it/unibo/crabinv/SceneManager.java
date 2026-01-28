@@ -2,6 +2,7 @@ package it.unibo.crabinv;
 
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.audio.BGMTracks;
 import it.unibo.crabinv.View.LanguageSelection;
 import it.unibo.crabinv.View.MainMenu;
 import it.unibo.crabinv.View.Settings;
@@ -45,6 +46,7 @@ public class SceneManager {
      */
     public void showMainMenu() {
         root.getChildren().setAll(new MainMenu(this,loc,audio).getView());
+        audio.playBGM(BGMTracks.MENU);
     }
 
     public void showSettings() {
