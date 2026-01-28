@@ -96,7 +96,7 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void playSfx(SFXTracks effect) {
+    public void playSFX(SFXTracks effect) {
         String effectName = effect.getPath();
         handleCache(effectName, sfxCache, AudioClip::new);
         if(!isSFXMuted) {

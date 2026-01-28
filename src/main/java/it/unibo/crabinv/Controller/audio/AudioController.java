@@ -84,7 +84,7 @@ public class AudioController {
      * Plays sound effects
      */
     public void playSFX(SFXTracks sfx) {
-        soundManager.playSfx(sfx);
+        soundManager.playSFX(sfx);
     }
 
     /**

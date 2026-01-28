@@ -48,7 +48,7 @@ public interface SoundService {
      * Plays the selected sound effect
      * @param effectName the sound effect you wish to play from {@link SFXTracks}
      */
-    void playSfx(SFXTracks effectName);
+    void playSFX(SFXTracks effectName);
 
     /**
      * sets the volume of sound effects

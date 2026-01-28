@@ -90,7 +90,7 @@ public class TestAudioController {
     @Test
     public void testPlaySFX() {
         controller.playSFX(SFXTracks.EXPLOSION);
-        Mockito.verify(mockSound).playSfx(SFXTracks.EXPLOSION);
+        Mockito.verify(mockSound).playSFX(SFXTracks.EXPLOSION);
     }
 
     @Test
