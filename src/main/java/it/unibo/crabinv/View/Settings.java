@@ -2,7 +2,11 @@ package it.unibo.crabinv.View;
 
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.audio.SFXTracks;
+import it.unibo.crabinv.Model.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -10,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.function.IntConsumer;
 
 public class Settings {
     private final SceneManager sceneManager;
@@ -25,19 +31,43 @@ public class Settings {
     public Pane getView() {
         Pane pane = new StackPane();
         VBox mainColumn = new VBox(20);
-        Label title = new Label("SETTINGS");
-        HBox bgmVolume = new HBox(20);
-        Slider bgmVolumeSlider = new Slider(0, 100, audio.getBGMVolume());
-        Label bgmTitle = new Label("BGM Volume");
-        bgmVolume.getChildren().addAll(bgmVolumeSlider, bgmTitle);
-        HBox sfxVolume = new HBox(20);
-        Slider sfxVolumeSlider = new Slider(0, 100, audio.getSFXVolume());
-        Label sfxTitle = new Label("SFX Volume");
-        sfxVolume.getChildren().addAll(sfxVolumeSlider, sfxTitle);
-        CheckBox bgmMute = new CheckBox("Mute BGM");
-        CheckBox sfxMute = new CheckBox("Mute SFX");
-        mainColumn.getChildren().addAll(title, bgmVolume, sfxVolume, bgmMute, sfxMute);
+        mainColumn.setAlignment(Pos.CENTER);
+        Label title = new Label(loc.getString(TextKeys.SETTINGS));
+        HBox bgmVolume = createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, TextKeys.SETTINGS);
+        HBox sfxVolume = createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, TextKeys.SETTINGS);
+        CheckBox bgmMute = createMute(TextKeys.SETTINGS, audio.isBGMMuted(), audio::toggleBGMMute);
+        CheckBox sfxMute = createMute(TextKeys.SETTINGS, audio.isSFXMuted(), audio::toggleSFXMute);
+        Button aReturn = new Button("RETURN");
+        aReturn.setOnAction(_ -> {
+            sceneManager.showMainMenu();
+            audio.playSFX(SFXTracks.MENU_SELECT);
+        });
+        mainColumn.getChildren().addAll(title, bgmVolume, sfxVolume, bgmMute, sfxMute, aReturn);
         pane.getChildren().addAll(mainColumn);
         return pane;
+    }
+
+    private HBox createVolumeSlider(int volume, IntConsumer setVolume, TextKeys key) {
+        HBox sliderBox = new HBox(20);
+        sliderBox.setAlignment(Pos.CENTER);
+        Slider slider = new Slider(0, 100, volume);
+        slider.setBlockIncrement(5);
+        slider.valueProperty().addListener((_,_,newValue) -> {
+            audio.playSFX(SFXTracks.MENU_HOVER);
+            setVolume.accept(newValue.intValue());
+        });
+        Label bgmTitle = new Label(loc.getString(key));
+        sliderBox.getChildren().addAll(bgmTitle, slider);
+        return sliderBox;
+    }
+
+    private CheckBox createMute(TextKeys key, boolean isMute, Runnable toggleMute) {
+        CheckBox mute = new CheckBox(loc.getString(key));
+        mute.setSelected(isMute);
+        mute.selectedProperty().addListener((_,_,_) -> {
+            toggleMute.run();
+            audio.playSFX(SFXTracks.MENU_SELECT);
+        });
+        return mute;
     }
 }
