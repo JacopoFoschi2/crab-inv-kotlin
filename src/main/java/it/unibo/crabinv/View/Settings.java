@@ -57,7 +57,7 @@ public class Settings {
         Slider slider = new Slider(0, 100, volume);
         slider.setBlockIncrement(5);
         slider.valueProperty().addListener((_,_,newValue) -> {
-            audio.playSFX(SFXTracks.MENU_HOVER);
+            audio.playSFX(SFXTracks.SLIDER);
             setVolume.accept(newValue.intValue());
         });
         Label bgmTitle = new Label(loc.getString(key));

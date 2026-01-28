@@ -10,7 +10,8 @@ public enum SFXTracks {
     MENU_HOVER("/audio/SFX/menu_hover.mp3"),
     SHOT_ENEMY("/audio/SFX/shot_enemy.mp3"),
     SHOT_PLAYER("/audio/SFX/shot_player.mp3"),
-    EXPLOSION("/audio/SFX/explosion.mp3"),;
+    EXPLOSION("/audio/SFX/explosion.mp3"),
+    SLIDER("/audio/SFX/slider.mp3"),;
 
     private final String path;
 
