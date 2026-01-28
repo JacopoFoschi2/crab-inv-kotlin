@@ -1,5 +1,6 @@
 package it.unibo.crabinv.View;
 
+import it.unibo.crabinv.App;
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.audio.SFXTracks;
@@ -37,24 +38,17 @@ public class MainMenu {
 
     public Pane getView() {
         Pane pane = new StackPane();
-        VBox mainColumn = new VBox(25);
+        VBox mainColumn = new VBox(20);
         mainColumn.setAlignment(Pos.CENTER);
 
-
-        mainColumn.getChildren().add(
-                createMenuButton(TextKeys.PLAY, () -> System.out.println("PLAY"))
+        mainColumn.getChildren().addAll(
+                createMenuButton(TextKeys.PLAY, () -> System.out.println("PLAY")),
+                createMenuButton(TextKeys.SHOP, () -> System.out.println("PLAY")),
+                createMenuButton(TextKeys.RUN_LOG, () -> System.out.println("PLAY")),
+                createMenuButton(TextKeys.SETTINGS, sceneManager::showSettings),
+                createMenuButton(TextKeys.EXIT_GAME, () -> System.out.println("PLAY"))
         );
-        /*
-        pane.getChildren().addAll(
-                ,
-                createMenuButton(TextKeys.SHOP),
-                createMenuButton(TextKeys.RUN_LOG),
-                createMenuButton(TextKeys.SETTINGS),
-                createMenuButton(TextKeys.EXIT_GAME)
-        );
-         */
         pane.getChildren().add(mainColumn);
-
         return pane;
     }
 
@@ -82,8 +76,9 @@ public class MainMenu {
             }
         });
 
-        menuButton.setOnAction(e -> {
+        menuButton.setOnAction(_ -> {
             audio.playSFX(SFXTracks.MENU_SELECT);
+            action.run();
         });
         return menuButton;
     }
