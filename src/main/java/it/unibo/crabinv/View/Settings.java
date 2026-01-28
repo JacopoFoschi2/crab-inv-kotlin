@@ -21,6 +21,7 @@ public class Settings {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
+    private final Pos settingsAlignment = Pos.CENTER;
 
     public Settings(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
         this.sceneManager = sceneManager;
@@ -31,7 +32,7 @@ public class Settings {
     public Pane getView() {
         Pane pane = new StackPane();
         VBox mainColumn = new VBox(20);
-        mainColumn.setAlignment(Pos.CENTER);
+        mainColumn.setAlignment(settingsAlignment);
         Label title = new Label(loc.getString(TextKeys.SETTINGS));
         HBox bgmVolume = createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, TextKeys.SETTINGS);
         HBox sfxVolume = createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, TextKeys.SETTINGS);
@@ -43,13 +44,13 @@ public class Settings {
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         mainColumn.getChildren().addAll(title, bgmVolume, sfxVolume, bgmMute, sfxMute, aReturn);
-        pane.getChildren().addAll(mainColumn);
+        pane.getChildren().add(mainColumn);
         return pane;
     }
 
     private HBox createVolumeSlider(int volume, IntConsumer setVolume, TextKeys key) {
         HBox sliderBox = new HBox(20);
-        sliderBox.setAlignment(Pos.CENTER);
+        sliderBox.setAlignment(settingsAlignment);
         Slider slider = new Slider(0, 100, volume);
         slider.setBlockIncrement(5);
         slider.valueProperty().addListener((_,_,newValue) -> {
