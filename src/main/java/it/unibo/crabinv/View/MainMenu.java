@@ -6,6 +6,7 @@ import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.audio.SFXTracks;
 import it.unibo.crabinv.Model.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -46,7 +47,7 @@ public class MainMenu {
                 createMenuButton(TextKeys.SHOP, () -> System.out.println("PLAY")),
                 createMenuButton(TextKeys.RUN_LOG, () -> System.out.println("PLAY")),
                 createMenuButton(TextKeys.SETTINGS, sceneManager::showSettings),
-                createMenuButton(TextKeys.EXIT_GAME, () -> System.out.println("PLAY"))
+                createMenuButton(TextKeys.EXIT_GAME, Platform::exit)
         );
         pane.getChildren().add(mainColumn);
         return pane;
