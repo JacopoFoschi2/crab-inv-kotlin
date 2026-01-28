@@ -9,7 +9,12 @@ public enum TextKeys {
     SHOP("shop"),
     RUN_LOG("run_log"),
     SETTINGS("settings"),
-    EXIT_GAME("exit_game"),;
+    RETURN("return"),
+    EXIT_GAME("exit_game"),
+    BGM_VOLUME("bgm_volume"),
+    SFX_VOLUME("sfx_volume"),
+    BGM_MUTE("bgm_mute"),
+    SFX_MUTE("sfx_mute"),;
 
     private final String key;
 

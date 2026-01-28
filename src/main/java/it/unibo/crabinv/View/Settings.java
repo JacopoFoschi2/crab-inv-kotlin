@@ -34,11 +34,11 @@ public class Settings {
         VBox mainColumn = new VBox(20);
         mainColumn.setAlignment(settingsAlignment);
         Label title = new Label(loc.getString(TextKeys.SETTINGS));
-        HBox bgmVolume = createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, TextKeys.SETTINGS);
-        HBox sfxVolume = createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, TextKeys.SETTINGS);
-        CheckBox bgmMute = createMute(TextKeys.SETTINGS, audio.isBGMMuted(), audio::toggleBGMMute);
-        CheckBox sfxMute = createMute(TextKeys.SETTINGS, audio.isSFXMuted(), audio::toggleSFXMute);
-        Button aReturn = new Button("RETURN");
+        HBox bgmVolume = createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, TextKeys.BGM_VOLUME);
+        HBox sfxVolume = createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, TextKeys.SFX_VOLUME);
+        CheckBox bgmMute = createMute(TextKeys.BGM_MUTE, audio.isBGMMuted(), audio::toggleBGMMute);
+        CheckBox sfxMute = createMute(TextKeys.SFX_MUTE, audio.isSFXMuted(), audio::toggleSFXMute);
+        Button aReturn = new Button(loc.getString(TextKeys.RETURN));
         aReturn.setOnAction(_ -> {
             sceneManager.showMainMenu();
             audio.playSFX(SFXTracks.MENU_SELECT);
