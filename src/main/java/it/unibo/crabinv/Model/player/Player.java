@@ -1,9 +1,12 @@
 package it.unibo.crabinv.Model.player;
 
+import it.unibo.crabinv.Model.Enemies.WaveProvider;
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
 import it.unibo.crabinv.Model.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Movable;
 import it.unibo.crabinv.Model.entity.Shooter;
+import it.unibo.crabinv.Model.save.UserProfile;
 
 /**
  * Provides the implementation of what a player is
@@ -32,6 +35,8 @@ public class Player extends AbstractEntity implements Shooter, Movable {
         this.speed = speed;
         this.fireRate = fireRate;
         this.shootingCounter = 0;
+
+        // applyPowerUps(profile);
     }
 
     @Override
@@ -69,4 +74,22 @@ public class Player extends AbstractEntity implements Shooter, Movable {
             shootingCounter--;
         }
     }
+//TODO: implement something that allows to cycle the power ups
+/*
+    private void applyPowerUps(UserProfile profile) {
+        for (PowerUp powerUp : ){
+            int level = profile.getPowerUpLevel(powerUp.getPowerUpName());
+            if (level > 0) {
+                switch (powerUp.getStatToModify()){
+                    case "damage": damage += powerUp.getStatModifier();
+                    case "speed": speed += powerUp.getStatModifier();
+                    case  "fireRate": fireRate += powerUp.getStatModifier();
+                }
+            }
+        }
+    }
+
+
+ */
+
 }
