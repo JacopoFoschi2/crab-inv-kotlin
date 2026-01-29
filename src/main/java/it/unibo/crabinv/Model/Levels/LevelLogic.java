@@ -10,7 +10,6 @@ public class LevelLogic implements Level {
 
     public LevelLogic(WaveProvider waveProvider) {
         this.waveProvider = waveProvider;
-        advanceWave();
     }
 
     @Override
