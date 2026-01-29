@@ -89,7 +89,12 @@ public class Settings {
                 new SpinnerValueFactory.ListSpinnerValueFactory<>(locales);
         factory.setWrapAround(true);
         Spinner<SupportedLocales> spinner = new Spinner<>(factory);
+        spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spinner.getValueFactory().setValue(loc.getLanguage());
+        spinner.getValueFactory().valueProperty().addListener(_->{
+            loc.setLanguage(spinner.getValueFactory().getValue());
+            sceneManager.showSettings();
+        });
         return spinner;
     }
 }
