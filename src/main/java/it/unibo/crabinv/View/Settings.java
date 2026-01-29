@@ -1,6 +1,5 @@
 package it.unibo.crabinv.View;
 
-import com.sun.javafx.collections.ImmutableObservableList;
 import com.sun.javafx.collections.ObservableListWrapper;
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
@@ -8,7 +7,6 @@ import it.unibo.crabinv.Model.audio.SFXTracks;
 import it.unibo.crabinv.Model.i18n.SupportedLocales;
 import it.unibo.crabinv.Model.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
-import javafx.collections.ObservableArrayBase;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -16,9 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
@@ -40,12 +35,13 @@ public class Settings {
         VBox mainColumn = new VBox(20);
         mainColumn.setAlignment(settingsAlignment);
         Label title = new Label(loc.getString(TextKeys.SETTINGS));
+        title.getStyleClass().add("title");
         HBox bgmVolume = createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, audio::playSFX, TextKeys.BGM_VOLUME);
         HBox sfxVolume = createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, audio::playSFX, TextKeys.SFX_VOLUME);
         CheckBox bgmMute = createMute(TextKeys.BGM_MUTE, audio.isBGMMuted(), audio::toggleBGMMute);
         CheckBox sfxMute = createMute(TextKeys.SFX_MUTE, audio.isSFXMuted(), audio::toggleSFXMute);
         Button aReturn = new Button(loc.getString(TextKeys.RETURN));
-        Spinner<SupportedLocales> languageSpinner = createSpinner(loc);
+        Spinner<SupportedLocales> languageSpinner = createSpinner();
         aReturn.setOnAction(_ -> {
             sceneManager.showMainMenu();
             audio.playSFX(SFXTracks.MENU_SELECT);
@@ -83,7 +79,7 @@ public class Settings {
         return mute;
     }
 
-    private Spinner<SupportedLocales> createSpinner(LocalizationController loc) {
+    private Spinner<SupportedLocales> createSpinner() {
         ObservableList<SupportedLocales> locales = new ObservableListWrapper<>(List.of(SupportedLocales.values()));
         SpinnerValueFactory<SupportedLocales> factory =
                 new SpinnerValueFactory.ListSpinnerValueFactory<>(locales);
