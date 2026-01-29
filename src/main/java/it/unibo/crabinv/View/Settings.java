@@ -65,12 +65,14 @@ public class Settings {
         });
         slider.focusedProperty().addListener(_ -> onFocused.accept(SFXTracks.MENU_HOVER));
         Label bgmTitle = new Label(loc.getString(key));
+        bgmTitle.getStyleClass().add("label");
         sliderBox.getChildren().addAll(bgmTitle, slider);
         return sliderBox;
     }
 
     private CheckBox createMute(TextKeys key, boolean isMute, Runnable toggleMute) {
         CheckBox mute = new CheckBox(loc.getString(key));
+        mute.getStyleClass().add("label");
         mute.setSelected(isMute);
         mute.selectedProperty().addListener(_ -> {
             toggleMute.run();

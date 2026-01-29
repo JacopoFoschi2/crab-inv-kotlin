@@ -9,7 +9,7 @@
     -fx-padding: 20 0 0 0;
 }
 
-.language-label {
+.label {
     -fx-font-weight: bold;
     -fx-text-fill: #E0E0E0;
 }

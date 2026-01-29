@@ -64,7 +64,7 @@ public class LanguageSelection {
         flagImg.setFitWidth(width);
         flagImg.setFitHeight((width / 3) * 2);
         Label language = new Label(locale.getLocalizedName());
-        language.getStyleClass().add("language-label");
+        language.getStyleClass().add("label");
         VBox composition = new VBox(flagImg, language);
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
