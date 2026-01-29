@@ -14,4 +14,9 @@ public class BasicCrab extends AbstractEntity implements Enemy {
     public EnemyType getEnemyType() {
         return this.type;
     }
+
+    @Override
+    public String getImagePath() {
+        return type.getImagePath();
+    }
 }

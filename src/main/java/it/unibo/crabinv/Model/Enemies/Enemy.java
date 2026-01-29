@@ -8,4 +8,10 @@ public interface Enemy extends Entity {
      * @return the enemy type of that specific enemy
      */
     public EnemyType getEnemyType();
+
+    /**
+     * Getter for the imagePath of the enemy
+     * @return the image path
+     */
+    String getImagePath();
 }

@@ -6,9 +6,11 @@ import it.unibo.crabinv.Model.Enemies.WaveSequence;
 
 public class LevelLogic implements Level {
     private  final WaveProvider waveProvider;
+    private Wave currentWave;
 
     public LevelLogic(WaveProvider waveProvider) {
         this.waveProvider = waveProvider;
+        advanceWave();
     }
 
     @Override
@@ -25,7 +27,7 @@ public class LevelLogic implements Level {
 
     @Override
     public boolean isLevelFinished() {
-        if (waveProvider.hasMoreWaves() == false) {
+        if (!waveProvider.hasMoreWaves() ) {
             return true;
         }
         else  {

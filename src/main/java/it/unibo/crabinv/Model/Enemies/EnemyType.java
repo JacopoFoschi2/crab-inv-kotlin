@@ -1,8 +1,18 @@
 package it.unibo.crabinv.Model.Enemies;
 
 public enum EnemyType {
-    SERVANT,
-    ELITECRAB,
+    SERVANT ("/enemies/crab_enemy.png");
+
+    private final String imagePath;
+
+    EnemyType(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
 }
 
-// TODO: add what is in the other Enums like SupportedLocales in i18n
+// TODO: modify based on type of enemies
