@@ -1,12 +1,13 @@
 package it.unibo.crabinv.Controller.player;
 
+import it.unibo.crabinv.Controller.Entity.EntityAbstractController;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.player.Player;
 
 /**
  * Provides all the apis to control a {@link Player}
  */
-public class PlayerController {
+public class PlayerController extends EntityAbstractController {
     private final Player player;
     private final double minBounds;
     private final double maxBounds;
@@ -28,6 +29,7 @@ public class PlayerController {
      * @param firePressed tells the controller if the user requested to fire
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
+    @Override
     public void update(boolean firePressed, Delta delta) {
         tick();
         move(delta);
