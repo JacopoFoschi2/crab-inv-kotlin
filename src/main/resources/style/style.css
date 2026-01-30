@@ -1,9 +1,10 @@
 .root {
     -fx-background-color: #121212;
+    -fx-font-size: 16px;
 }
 
 .title {
-    -fx-font-size: 24px;
+    -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-text-fill: #E0E0E0;
     -fx-padding: 20 0 0 0;
@@ -21,6 +22,9 @@
 .app-button {
     -fx-background-color: #888888;
     -fx-background-radius: 0;
+    -fx-font-size: 18px;
+    -fx-min-width: 250px;
+    -fx-min-height: 50px;
 }
 
 .app-button:focused {
