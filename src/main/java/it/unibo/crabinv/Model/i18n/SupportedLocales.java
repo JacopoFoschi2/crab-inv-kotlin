@@ -4,7 +4,7 @@ import java.util.Locale;
 
 /**
  * Provides all currently supported locales to ensure correct usage.
- * It also lists the path of the flag representing said language and it's localised name
+ * It also lists the path of the flag representing said language, and it's localised name
  */
 public enum SupportedLocales {
     ENGLISH(new Locale.Builder().setLanguage("en").setRegion("US").build(), "/flags/flag_en.png", "ENGLISH"),
@@ -30,5 +30,10 @@ public enum SupportedLocales {
 
     public String getLocalizedName() {
         return localizedName;
+    }
+
+    @Override
+    public String toString(){
+        return getLocalizedName();
     }
 }
