@@ -1,9 +1,12 @@
 package it.unibo.crabinv.Controller.input;
 
+import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.input.*;
 
 public interface InputMapper {
 
-    CommandMovement mapToMovement (int inputCode);
-    CommandAction mapToAction (int inputCode);
+    Delta mapToXDelta(int inputCode);
+    Delta mapToYDelta(int inputCode);
+    boolean mapToShoot(int inputCode);
+
 }
