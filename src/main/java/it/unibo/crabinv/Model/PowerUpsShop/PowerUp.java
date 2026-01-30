@@ -2,20 +2,20 @@ package it.unibo.crabinv.Model.PowerUpsShop;
 
 public interface PowerUp {
     /**
-     *
+     *Method to get the cost of the single powerUp
      * @return the cost of the powerUp
      */
     int getCost();
 
     /**
-     *
+     *Method to get to the maxLevel of the powerUp
      * @return the max level of the powerUp
      */
     int getMaxLevel();
 
     /**
-     *
-     * @return the powerUp
+     *Method to get the powerUp's name
+     * @return the powerUp name
      */
     String getPowerUpName();
 }

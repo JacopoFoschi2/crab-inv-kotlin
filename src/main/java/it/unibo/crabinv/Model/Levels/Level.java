@@ -10,7 +10,7 @@ public interface Level {
     Wave getCurrentWave();
 
     /**
-     * Makes the wave advance if possible
+     * It's a method that makes the wave advance
      */
     void advanceWave();
 
