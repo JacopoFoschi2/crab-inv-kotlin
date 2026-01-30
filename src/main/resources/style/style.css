@@ -56,11 +56,30 @@
 }
 
 .check-box:selected .mark {
-    -fx-background-color: #3EA6FF;
+    -fx-background-color: #121212;
 }
 
 .check-box:focused .box {
-    -fx-background-color: #999999;
+    -fx-background-color: #3EA6FF;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.slider {
+    -fx-control-inner-background: #555555;
+}
+
+.slider .track {
+    -fx-background-color: #888888;
+}
+
+.slider .thumb {
+    -fx-border-color: #121212;
+}
+
+.slider:focused .thumb {
+    -fx-background-color: #3EA6FF;
+    -fx-effect: none;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
@@ -77,8 +96,8 @@
 .app-button:focused {
     -fx-background-color: #3EA6FF;
     -fx-text-fill: #121212;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
 .button:pressed, .button:armed {
@@ -110,8 +129,8 @@
 }
 
 .menu-button:focused {
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
 .menu-button-label {
