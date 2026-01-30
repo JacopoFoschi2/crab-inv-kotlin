@@ -1,5 +1,7 @@
 package it.unibo.crabinv.Model.save;
 
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
+
 import java.time.Instant;
 
 /**
@@ -21,6 +23,9 @@ public class GameSessionImpl implements GameSession {
     private final long startingTimeStamp;
     private int currency;
     private int playerHealth;
+    private double speedMultiplier = 1.0;
+    private double fireRateMultiplier = 1.0;
+    private int bonusHealth = 0;
 
 
     /**
@@ -110,5 +115,23 @@ public class GameSessionImpl implements GameSession {
     @Override
     public void subPlayerHealth(int amount) {
         this.playerHealth = DomainUtils.subClampedToZero(this.playerHealth, amount);
+    }
+    
+
+    public  void applyPowerUps(UserProfile profile) {
+        speedMultiplier = 1.0;
+        fireRateMultiplier = 1.0;
+        bonusHealth = STARTING_PLAYER_HEALTH;
+        for (String powerUpName : profile.getPowerUpList()){
+            int powerUpLevel = profile.getPowerUpLevel(powerUpName);
+            PowerUpType type = PowerUpType.fromName(powerUpName);
+            if (powerUpLevel > 0 && type != null) {
+                switch (type) {
+                    case SPEED_UP ->  this.speedMultiplier *= type.getStatMultiplier();
+                    case HEALTH_UP ->   this.playerHealth *= (int) type.getStatMultiplier();
+                    case FIRERATE_UP ->   this.fireRateMultiplier *= type.getStatMultiplier();
+                }
+            }
+        }
     }
 }

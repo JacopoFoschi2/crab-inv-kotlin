@@ -74,22 +74,6 @@ public class Player extends AbstractEntity implements Shooter, Movable {
             shootingCounter--;
         }
     }
-//TODO: implement something that allows to cycle the power ups
-/*
-    private void applyPowerUps(UserProfile profile) {
-        for (PowerUp powerUp : ){
-            int level = profile.getPowerUpLevel(powerUp.getPowerUpName());
-            if (level > 0) {
-                switch (powerUp.getStatToModify()){
-                    case "damage": damage += powerUp.getStatModifier();
-                    case "speed": speed += powerUp.getStatModifier();
-                    case  "fireRate": fireRate += powerUp.getStatModifier();
-                }
-            }
-        }
-    }
 
-
- */
 
 }

@@ -10,7 +10,7 @@ public class TestShop {
     public void testSuccefulPurchase() {
         Shop shop = new ShopLogic();
         UserProfile profile = new UserProfileImpl();
-        PowerUp powerUp = new PowerUpLogic("shield",50, 3);
+        PowerUp powerUp = new PowerUpLogic("shield",50, 3, "damage", 1);
 
         profile.addCurrency(100);
         boolean result = shop.purchase(profile,powerUp);
@@ -25,7 +25,7 @@ public class TestShop {
     public void testFailPurchaseForCurrency() {
         Shop shop = new ShopLogic();
         UserProfile profile = new UserProfileImpl();
-        PowerUp powerUp = new PowerUpLogic("shield",50, 3);
+        PowerUp powerUp = new PowerUpLogic("shield",50, 3, "damage", 1);
 
         profile.addCurrency(20);
         boolean result = shop.purchase(profile,powerUp);
@@ -40,7 +40,7 @@ public class TestShop {
     public void testFailPurchaseForMaxLevel() {
         Shop shop = new ShopLogic();
         UserProfile profile = new UserProfileImpl();
-        PowerUp powerUp = new PowerUpLogic("shield",50, 3);
+        PowerUp powerUp = new PowerUpLogic("shield",50, 3,"damage", 1);
 
         profile.addCurrency(100);
         profile.updatePowerUp(powerUp.getPowerUpName(),3);

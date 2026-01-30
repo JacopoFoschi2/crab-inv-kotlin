@@ -18,9 +18,4 @@ public interface PowerUp {
      * @return the powerUp
      */
     String getPowerUpName();
-    /**
-    * Method needed to take the statistic to modify, that needs to be taken from the player
-     */
-    String getStatToModify();
-    int getStatModifier();
 }
