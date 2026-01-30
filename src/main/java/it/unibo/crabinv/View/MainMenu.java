@@ -37,11 +37,14 @@ public class MainMenu {
         Pane pane = new StackPane();
         VBox mainColumn = new VBox(30);
         mainColumn.setAlignment(Pos.CENTER);
+        mainColumn.getStyleClass().add("menu-box");
+
 
         Label title = new Label("Crab Invaders");
         title.getStyleClass().add("menu-title");
 
         mainColumn.getChildren().addAll(
+                title,
                 createMenuButton(TextKeys.PLAY, () -> System.out.println("PLAY")),
                 createMenuButton(TextKeys.SHOP, () -> System.out.println("SHOP")),
                 createMenuButton(TextKeys.RUN_LOG, () -> System.out.println("RUN_LOG")),
@@ -55,6 +58,8 @@ public class MainMenu {
     private Button createMenuButton(TextKeys key, Runnable action) {
         Button menuButton = new Button(loc.getString(key));
         menuButton.getStyleClass().add("menu-button");
+
+        menuButton.setMinWidth(220);
 
         menuButton.focusedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
