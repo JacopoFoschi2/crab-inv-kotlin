@@ -1,9 +1,12 @@
 package it.unibo.crabinv.Model.Enemies;
 
+import it.unibo.crabinv.Controller.Entity.EntityAbstractController;
+import it.unibo.crabinv.Model.entity.Delta;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HardCodedWave implements Wave{
+public class HardCodedWave extends EntityAbstractController implements Wave{
     private final List<EnemyType> enemyTypes;
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;
@@ -31,4 +34,10 @@ public class HardCodedWave implements Wave{
         return activeEnemies.stream().noneMatch(Enemy::isAlive);
     }
 
+    //TODO: Jhonny this is to make the movement, it comes from EntityAbstract controller try to implement it as it is
+    @Override
+    public void update(Delta delta) {
+        super.update(delta);
+
+    }
 }

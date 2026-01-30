@@ -8,8 +8,8 @@ public interface WaveProvider {
     Wave getNextWave();
 
     /**
-     *
-     * @return when there are more waves, so that the level can check if it is finished or not
+     *Method that checks if there are more waves
+     * @return true when there are more waves, so that the level can check if it is finished or not
      */
     boolean hasMoreWaves();
 }

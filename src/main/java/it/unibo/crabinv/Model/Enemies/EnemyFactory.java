@@ -2,8 +2,7 @@ package it.unibo.crabinv.Model.Enemies;
 
 public interface EnemyFactory {
     /**
-     * Function that creates the enemy
-     *
+     * Function that creates the enemy based on the type
      * @param type it's the types of the enemy
      * @param x is the horizontal axis position that you want the enemy at
      * @param y is the vertical axis position that you want the enemy at
