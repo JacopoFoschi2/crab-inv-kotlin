@@ -52,15 +52,8 @@
 }
 
 
-.menu-box {
-    -fx-padding: 30;
-    -fx-border-color: white;
-    -fx-border-width: 3;
-    -fx-border-radius: 5;
-}
-
 .menu-title {
-    -fx-font-size: 42px;
+    -fx-font-size: 92px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
@@ -76,12 +69,11 @@
     -fx-padding: 10 30 10 30;
 }
 
-
 .menu-button:hover {
     -fx-background-color: #e6e6e6;
 }
 
 .menu-button:focused {
-    -fx-border-color: #ffcc00;
+    -fx-border-color: black;
     -fx-border-width: 3;
 }

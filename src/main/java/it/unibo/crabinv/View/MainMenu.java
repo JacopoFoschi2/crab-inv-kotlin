@@ -15,14 +15,6 @@ import javafx.scene.control.Label;
 
 
 public class MainMenu {
-    /*
-    needs to contain:
-    -play
-    -shop
-    -Run Log
-    -settings  -> volume and language settings
-    -exit game
-     */
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
@@ -37,7 +29,6 @@ public class MainMenu {
         Pane pane = new StackPane();
         VBox mainColumn = new VBox(30);
         mainColumn.setAlignment(Pos.CENTER);
-        mainColumn.getStyleClass().add("menu-box");
 
 
         Label title = new Label("Crab Invaders");
