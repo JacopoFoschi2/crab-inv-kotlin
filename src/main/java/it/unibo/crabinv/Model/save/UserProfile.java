@@ -1,5 +1,9 @@
 package it.unibo.crabinv.Model.save;
 
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
+
+import java.util.List;
+
 /**
  * Represents the meta-data of a single player's profile,
  * exposes currency and powerUp's levels
@@ -39,4 +43,9 @@ public interface UserProfile {
      * */
     void updatePowerUp (String powUp, int level);
 
+    /**
+     * Lists the owned powerUps
+     * @return the list of the owned powerUps
+     */
+    List<String> getPowerUpList ();
 }
