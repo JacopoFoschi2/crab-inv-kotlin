@@ -14,7 +14,8 @@ public enum TextKeys {
     BGM_VOLUME("bgm_volume"),
     SFX_VOLUME("sfx_volume"),
     BGM_MUTE("bgm_mute"),
-    SFX_MUTE("sfx_mute"),;
+    SFX_MUTE("sfx_mute"),
+    LANGUAGE("language"),;
 
     private final String key;
 

@@ -41,7 +41,7 @@ public class LanguageSelection {
         StackPane pane = new StackPane();
         VBox mainColumn = new VBox(20);
         Label title = new Label("SELECT LANGUAGE");
-        title.getStyleClass().add("language-title");
+        title.getStyleClass().add("title");
         HBox languageSelection = new HBox(10);
         double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 1);
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
@@ -64,7 +64,7 @@ public class LanguageSelection {
         flagImg.setFitWidth(width);
         flagImg.setFitHeight((width / 3) * 2);
         Label language = new Label(locale.getLocalizedName());
-        language.getStyleClass().add("language-label");
+        language.getStyleClass().add("label");
         VBox composition = new VBox(flagImg, language);
         composition.setAlignment(Pos.CENTER);
         Button languageButton = new Button();
