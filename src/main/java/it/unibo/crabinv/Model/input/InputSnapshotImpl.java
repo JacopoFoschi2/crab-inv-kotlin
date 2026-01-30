@@ -1,21 +1,31 @@
 package it.unibo.crabinv.Model.input;
 
-public class InputSnapshotImpl implements InputSnapshot {
-    private final CommandMovement movement;
-    private final CommandAction action;
+import it.unibo.crabinv.Model.entity.Delta;
 
-    public InputSnapshotImpl (CommandMovement movement, CommandAction action){
-        this.movement = movement != null ? movement : CommandMovement.IDLE;
-        this.action = action != null ? action : CommandAction.NO_ACTION;
+public final class InputSnapshotImpl implements InputSnapshot {
+    private final boolean shootPressed;
+    private final Delta xMovementDelta;
+    private final Delta yMovementDelta;
+
+    public InputSnapshotImpl (boolean shootPressed, Delta xMovementDelta, Delta yMovementDelta){
+        this.shootPressed = shootPressed;
+        this.xMovementDelta = xMovementDelta;
+        this.yMovementDelta = yMovementDelta;
     }
 
     @Override
-    public CommandMovement getMovement() {
-        return this.movement;
+    public boolean isShooting() {
+        return shootPressed;
     }
 
     @Override
-    public CommandAction getAction() {
-        return this.action;
+    public Delta getXMovementDelta() {
+        return xMovementDelta;
     }
+
+    @Override
+    public Delta getYMovementDelta() {
+        return yMovementDelta;
+    }
+
 }
