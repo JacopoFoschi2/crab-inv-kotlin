@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.Enemies;
 
-import it.unibo.crabinv.Controller.Entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.entity.Delta;
 
 import java.util.ArrayList;
