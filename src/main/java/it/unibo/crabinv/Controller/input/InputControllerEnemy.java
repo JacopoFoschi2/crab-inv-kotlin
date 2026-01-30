@@ -2,9 +2,7 @@ package it.unibo.crabinv.Controller.input;
 
 import it.unibo.crabinv.Model.input.InputSnapshot;
 
-public class InputControllerEnemy implements InputController{
-
-    private final
+public abstract class InputControllerEnemy implements InputController{
 
     @Override
     public InputSnapshot getInputState() {
