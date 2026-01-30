@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Controller.player;
 
-import it.unibo.crabinv.Controller.Entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.player.Player;
 
