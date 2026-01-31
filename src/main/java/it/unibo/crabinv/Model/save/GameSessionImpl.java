@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Model.save;
 
+import it.unibo.crabinv.Model.Enemies.Enemy;
 import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
 
 import java.time.Instant;
@@ -127,9 +128,12 @@ public class GameSessionImpl implements GameSession {
             PowerUpType type = PowerUpType.fromName(powerUpName);
             if (powerUpLevel > 0 && type != null) {
                 switch (type) {
-                    case SPEED_UP ->  this.speedMultiplier *= type.getStatMultiplier();
-                    case HEALTH_UP ->   this.playerHealth *= (int) type.getStatMultiplier();
-                    case FIRERATE_UP ->   this.fireRateMultiplier *= type.getStatMultiplier();
+                    case SPEED_UP ->
+                            this.speedMultiplier = speedMultiplier * type.getStatMultiplier() * powerUpLevel;
+                    case HEALTH_UP ->
+                            this.playerHealth = playerHealth * (int) type.getStatMultiplier() * powerUpLevel;
+                    case FIRERATE_UP ->
+                            this.fireRateMultiplier = fireRateMultiplier * type.getStatMultiplier() * powerUpLevel;
                 }
             }
         }

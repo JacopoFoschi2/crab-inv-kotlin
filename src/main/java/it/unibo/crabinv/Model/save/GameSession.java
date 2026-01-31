@@ -1,5 +1,8 @@
 package it.unibo.crabinv.Model.save;
 
+import it.unibo.crabinv.Model.Enemies.Enemy;
+import it.unibo.crabinv.Model.Enemies.EnemyType;
+
 /**
  * Represents a single game session,
  * exposes level, currency, and player health.
@@ -70,5 +73,11 @@ public interface GameSession {
      * @param amount the amount to subtract
      */
     void subPlayerHealth(int amount);
+
+    /**
+     * Applies the powerUps to the player taking the base and then using the level
+     * @param profile the profile used by the player at that moment
+     */
+    void applyPowerUps(UserProfile profile);
 }
 

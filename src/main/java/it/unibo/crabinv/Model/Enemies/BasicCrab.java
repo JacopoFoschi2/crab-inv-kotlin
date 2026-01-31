@@ -4,6 +4,7 @@ import it.unibo.crabinv.Model.entity.AbstractEntity;
 
 public class BasicCrab extends AbstractEntity implements Enemy {
     private final EnemyType type;
+    private int currencyToGive = 10;
 
     public BasicCrab(final EnemyType type, int maxHealth, double x, double y) {
         super(maxHealth, x, y);
@@ -18,5 +19,10 @@ public class BasicCrab extends AbstractEntity implements Enemy {
     @Override
     public String getImagePath() {
         return type.getImagePath();
+    }
+
+    @Override
+    public int getReward() {
+        return currencyToGive;
     }
 }

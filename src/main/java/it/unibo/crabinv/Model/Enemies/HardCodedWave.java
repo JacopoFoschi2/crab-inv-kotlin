@@ -11,11 +11,13 @@ public class HardCodedWave extends EntityAbstractController implements Wave{
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;
     private boolean isSpawned = false;
+    private final RewardsService rewardsService;
 
 
-    public HardCodedWave(List<EnemyType> enemyTypes, EnemyFactory enemyFactory) {
+    public HardCodedWave(List<EnemyType> enemyTypes, EnemyFactory enemyFactory, RewardsService rewardsService) {
         this.enemyTypes = enemyTypes;
         this.enemyFactory = enemyFactory;
+        this.rewardsService = rewardsService;
     }
 
 
@@ -38,6 +40,14 @@ public class HardCodedWave extends EntityAbstractController implements Wave{
     @Override
     public void update(Delta delta) {
         super.update(delta);
+
+        activeEnemies.removeIf(enemy -> {
+            if (!enemy.isAlive()) {
+                rewardsService.rewardEnemyDeath(enemy);
+                return true;
+            }
+            return false;
+        });
 
     }
 }
