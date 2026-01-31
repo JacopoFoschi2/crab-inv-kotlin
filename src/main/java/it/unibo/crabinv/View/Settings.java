@@ -8,6 +8,7 @@ import it.unibo.crabinv.Model.i18n.SupportedLocales;
 import it.unibo.crabinv.Model.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -29,14 +30,17 @@ public class Settings {
     }
 
     public Pane getView() {
-        Pane pane = new StackPane();
+        StackPane pane = new StackPane();
         Label title = new Label(loc.getString(TextKeys.SETTINGS));
         title.getStyleClass().add("title");
-        title.setAlignment(Pos.TOP_CENTER);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setMargin(title, new Insets(20,0,0,0));
+        pane.getChildren().add(title);
         VBox mainColumn = new VBox(25);
+        mainColumn.setMinWidth(350);
         GridPane grid = new GridPane();
         grid.addColumn(0);
-        grid.addColumn(1, title, mainColumn);
+        grid.addColumn(1, mainColumn);
         grid.addColumn(2);
         grid.setAlignment(Pos.CENTER);
         mainColumn.setAlignment(settingsAlignment);
@@ -51,11 +55,13 @@ public class Settings {
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         aReturn.getStyleClass().add("app-button");
-        mainColumn.getChildren().addAll(languageSpinner, bgmVolume, sfxVolume, bgmMute, sfxMute, aReturn);
+        StackPane.setAlignment(aReturn, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(aReturn, new Insets(0,0,60,0));
+        mainColumn.getChildren().addAll(languageSpinner, bgmVolume, sfxVolume, bgmMute, sfxMute);
         for (var child : mainColumn.getChildren()) {
             child.focusedProperty().addListener(_ -> audio.playSFX(SFXTracks.MENU_HOVER));
         }
-        pane.getChildren().add(grid);
+        pane.getChildren().addAll(grid, aReturn);
         return pane;
     }
 

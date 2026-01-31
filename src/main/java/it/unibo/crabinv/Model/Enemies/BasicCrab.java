@@ -1,12 +1,10 @@
 package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Model.entity.AbstractEntity;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Movable;
-import it.unibo.crabinv.Model.entity.Shooter;
 
-public class BasicCrab extends AbstractEntity implements Enemy, Shooter, Movable {
+public class BasicCrab extends AbstractEntity implements Enemy {
     private final EnemyType type;
+    private int currencyToGive = 10;
 
     public BasicCrab(final EnemyType type, int maxHealth, double x, double y) {
         super(maxHealth, x, y);
@@ -24,22 +22,7 @@ public class BasicCrab extends AbstractEntity implements Enemy, Shooter, Movable
     }
 
     @Override
-    public void move(Delta delta, double minBound, double maxBound) {
-
-    }
-
-    @Override
-    public boolean isAbleToShoot() {
-        return false;
-    }
-
-    @Override
-    public int getFireRate() {
-        return 0;
-    }
-
-    @Override
-    public void shoot() {
-
+    public int getReward() {
+        return currencyToGive;
     }
 }
