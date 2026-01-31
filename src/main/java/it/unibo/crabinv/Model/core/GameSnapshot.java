@@ -1,5 +1,10 @@
 package it.unibo.crabinv.Model.core;
 
-public record GameSnapshot (
+import it.unibo.crabinv.Model.save.GameSession;
 
+import java.util.List;
+
+public record GameSnapshot (
+        List<RenderObjectSnapshot> renderObjects,
+        GameSession session
 ){}
