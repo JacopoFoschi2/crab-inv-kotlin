@@ -3,6 +3,17 @@ package it.unibo.crabinv.Model.Enemies;
 import java.util.List;
 
 public interface Wave {
+
+    /**
+     * Advances the wave by one gameEngine tick
+     */
+    void tickLogicUpdate();
+
+    /**
+     * @return a list of all enemies still alive
+     */
+    List<Enemy> getAliveEnemies();
+
     /**
      *Checks if the wave is finished
      * @return true if wave is finished, false if it isn't

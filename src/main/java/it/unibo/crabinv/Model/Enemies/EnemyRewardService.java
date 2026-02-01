@@ -1,11 +1,11 @@
 package it.unibo.crabinv.Model.Enemies;
 
-import it.unibo.crabinv.Model.save.UserProfile;
+import it.unibo.crabinv.Model.save.GameSession;
 
 public class EnemyRewardService implements RewardsService {
-    private final UserProfile profile;
+    private final GameSession profile;
 
-    public  EnemyRewardService(UserProfile profile){
+    public  EnemyRewardService(GameSession profile){
         this.profile = profile;
     }
 

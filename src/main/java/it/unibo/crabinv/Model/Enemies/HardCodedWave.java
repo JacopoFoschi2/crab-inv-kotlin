@@ -23,13 +23,21 @@ public class HardCodedWave extends EntityAbstractController implements Wave{
 
     private void spawnIfNeeded(){
         if(!isSpawned){
-            //TODO: make this better and if needed transform it
             enemyTypes.forEach(type -> activeEnemies.add(enemyFactory.createEnemy(type,0 ,0 )));
             isSpawned = true;
         }
     }
 
 
+    @Override
+    public void tickLogicUpdate() {
+
+    }
+
+    @Override
+    public List<Enemy> getAliveEnemies() {
+        return List.of();
+    }
 
     @Override
     public boolean isWaveFinished() {
