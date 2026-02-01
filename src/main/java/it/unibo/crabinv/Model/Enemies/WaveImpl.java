@@ -10,17 +10,14 @@ import java.util.Objects;
 
 public class WaveImpl extends EntityAbstractController implements Wave {
 
+    private static final double DEFAULT_TOP_MARGIN_Y_MULT = 0.05;
+    private static final double DEFAULT_SIDE_MARGIN_X_MULT = 0.05;
+    private static final double DEFAULT_SPACING_X_MULT = 0.08;
+
     private final List<EnemyType> enemyTypes;
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;
     private final RewardsService rewardsService;
-
-    //temp usando x e y javaFX per sviluppo, da correggere quando pronto
-    // JavaFX = Y dall'alto verso il basso
-    double TEMP_SPAWN_Y = 100;
-    double TEMP_BOTTOM_Y = 800;
-    double TEMP_SPAWN_X = 10;
-    double TEMP_SPACING_X = 10;
 
     private final double spawnY; //is also the upper bound of Y
     private final double spawnX;
@@ -28,45 +25,107 @@ public class WaveImpl extends EntityAbstractController implements Wave {
     private final double bottomY;
     private boolean spawned;
 
+    /**
+     * Constructor with calculated default position parameters
+     * To be used as the default constructor for wave creation
+     *
+     * @param enemyTypes     the composition of the wave
+     * @param enemyFactory   the factory used to create enemies
+     * @param rewardsService the reward handler
+     * @param worldWidth     the width of the world, used for calculating positions
+     * @param worldHeight    the height of the world, used for calculating positions
+     */
+    public WaveImpl(final List<EnemyType> enemyTypes,
+                    final EnemyFactory enemyFactory,
+                    final RewardsService rewardsService,
+                    double worldWidth,
+                    double worldHeight
+    ) {
+        this(enemyTypes,
+                enemyFactory,
+                rewardsService,
+                requirePositive("worldHeight", worldHeight) * DEFAULT_TOP_MARGIN_Y_MULT,
+                requirePositive("worldWidth", worldWidth) * DEFAULT_SIDE_MARGIN_X_MULT,
+                requirePositive("worldWidth", worldWidth) * DEFAULT_SPACING_X_MULT,
+                requirePositive("worldHeight", worldHeight)
+        );
+    }
 
     /**
-     * Constructor with default (CONSTANT) values
-     * @param enemyTypes
-     * @param enemyFactory
-     * @param rewardsService
+     * Constructor with ALL parameters
+     *
+     * @param enemyTypes     the composition of the wave
+     * @param enemyFactory   the factory used to create enemies
+     * @param rewardsService the reward handler
+     * @param spawnY         Y position of enemy spawn and upper bound of enemy movement
+     * @param spawnX         X position of first enemy spawn
+     * @param spawnXSpacing  X spacing between enemies
+     * @param bottomY        Y lower bound of enemy movement
      */
-    public WaveImpl(List<EnemyType> enemyTypes,
-                    EnemyFactory enemyFactory,
-                    RewardsService rewardsService) {
-
-        this.enemyTypes = List.copyOf(Objects.requireNonNull(enemyTypes,"enemyTypes cannot be null"));
+    public WaveImpl(final List<EnemyType> enemyTypes,
+                    final EnemyFactory enemyFactory,
+                    final RewardsService rewardsService,
+                    final double spawnY,
+                    final double spawnX,
+                    final double spawnXSpacing,
+                    final double bottomY
+    ) {
+        this.enemyTypes = List.copyOf(Objects.requireNonNull(enemyTypes, "enemyTypes cannot be null"));
         this.enemyFactory = Objects.requireNonNull(enemyFactory, "enemyFactory cannot be null");
         this.rewardsService = Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
 
-        this.spawnY = TEMP_SPAWN_Y;
-        this.spawnX = TEMP_SPAWN_X;
-        this.spawnXSpacing = TEMP_SPACING_X;
-        this.bottomY = TEMP_BOTTOM_Y;
+        if (spawnXSpacing <= 0) {
+            throw new IllegalArgumentException("invalid spawnXSpacing, must be > 0");
+        }
+        if (bottomY < spawnY) {
+            throw new IllegalArgumentException("spawnY (the y upper bound) cannot be lower than bottomY");
+        }
+
+        this.spawnY = spawnY;
+        this.spawnX = spawnX;
+        this.spawnXSpacing = spawnXSpacing;
+        this.bottomY = bottomY;
         this.spawned = false;
     }
 
-    private void spawnIfNeeded(){ //Adapted from MoseBarbieri
-        if(!this.spawned){
+    /**
+     * Helper method for Constructor refuses negative values
+     * @param name the name of the parameter to be checked, needed for debugging
+     * @param value the parameter to be checked
+     * @return the validated parameter
+     */
+    private static double requirePositive(final String name, final double value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(name + " must be > 0: " + value);
+        }
+        return value;
+    }
+
+    /**
+     *
+     */
+    private void spawnIfNeeded() { //Adapted from MoseBarbieri
+        if (!this.spawned) {
             double x = spawnX;
-            for (EnemyType type : enemyTypes){
+            for (EnemyType type : enemyTypes) {
                 activeEnemies.add(enemyFactory.createEnemy(type, x, spawnY));
                 x += spawnXSpacing;
             }
             this.spawned = true;
         }
-
     }
 
-    private void updateMovement(){
+    /**
+     *
+     */
+    private void updateMovement() {
         update(Delta.INCREASE);
     }
 
-    private void cleanUpAndRewards(){ //Adapted from MoseBarbieri
+    /**
+     *
+     */
+    private void cleanUpAndRewards() { //Adapted from MoseBarbieri
         activeEnemies.removeIf(enemy -> {
             if (!enemy.isAlive()) {
                 rewardsService.rewardEnemyDeath(enemy);
@@ -76,6 +135,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         });
     }
 
+    /* {@inheritDoc} */
     @Override
     public void tickLogicUpdate() {
         spawnIfNeeded();
@@ -83,20 +143,23 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         cleanUpAndRewards();
     }
 
+    /* {@inheritDoc} */
     @Override
     public List<Enemy> getAliveEnemies() {
         return List.copyOf(activeEnemies);
     }
 
+    /* {@inheritDoc} */
     @Override
     public boolean isWaveFinished() {
         return spawned && activeEnemies.isEmpty();
     }
 
+    /* {@inheritDoc} */
     @Override
-    public void update(Delta delta){
-        for (Enemy enemy : activeEnemies){
-            if (enemy instanceof Movable movableEnemy){
+    public void update(Delta delta) {
+        for (Enemy enemy : activeEnemies) {
+            if (enemy instanceof Movable movableEnemy) {
                 movableEnemy.move(delta, spawnY, bottomY);
             }
         }
