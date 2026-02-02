@@ -23,5 +23,8 @@ public record AppSettings(
         if (sfxVolume < 0 || sfxVolume > 100) {
             throw new IllegalArgumentException("sfxVolume must be between 0 and 100");
         }
+        if (locales == null) {
+            locales = SupportedLocales.ENGLISH;
+        }
     }
 }
