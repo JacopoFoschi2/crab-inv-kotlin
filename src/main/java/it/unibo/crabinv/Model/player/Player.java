@@ -75,5 +75,8 @@ public class Player extends AbstractEntity implements Shooter, Movable {
         }
     }
 
+    public String getImagePath() {
+        return "/player/player_apperence.png";
+    }
 
 }

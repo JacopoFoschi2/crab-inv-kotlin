@@ -45,7 +45,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
                 enemyFactory,
                 rewardsService,
                 requirePositive("worldHeight", worldHeight) * DEFAULT_TOP_MARGIN_Y_MULT,
-                requirePositive("worldWidth", worldWidth) * DEFAULT_SIDE_MARGIN_X_MULT,
+                requirePositive("worldWidth", worldWidth) / 2,
                 requirePositive("worldWidth", worldWidth) * DEFAULT_SPACING_X_MULT,
                 requirePositive("worldHeight", worldHeight)
         );

@@ -29,7 +29,7 @@ public class GameLoopControllerImpl implements GameLoopController{
         this.maxTicksPerFrame = STANDARD_MAX_TICKS_PER_FRAME;
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
-        this.engine.reset();
+        this.engine.newGame();
         this.latestSnapshot = engine.snapshot();
     }
 
