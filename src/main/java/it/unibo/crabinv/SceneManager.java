@@ -40,6 +40,7 @@ public class SceneManager {
      */
     public void showLanguageSelection() {
         root.getChildren().setAll(new LanguageSelection(this, loc, audio).getView());
+        audio.playBGM(BGMTracks.MENU);
     }
 
     /**

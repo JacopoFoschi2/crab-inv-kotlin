@@ -48,9 +48,7 @@ public class MainMenu {
 
     private Button createMenuButton(TextKeys key, Runnable action) {
         Button menuButton = new Button(loc.getString(key));
-        menuButton.getStyleClass().add("menu-button");
-
-        menuButton.setMinWidth(220);
+        menuButton.getStyleClass().add("app-button");
 
         menuButton.focusedProperty().addListener((_, _, newValue) -> {
             if (newValue) {
