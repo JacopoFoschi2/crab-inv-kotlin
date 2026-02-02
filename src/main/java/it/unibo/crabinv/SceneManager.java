@@ -2,11 +2,9 @@ package it.unibo.crabinv;
 
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.PowerUpsShop.Shop;
 import it.unibo.crabinv.Model.audio.BGMTracks;
-import it.unibo.crabinv.View.GameScreen;
-import it.unibo.crabinv.View.LanguageSelection;
-import it.unibo.crabinv.View.MainMenu;
-import it.unibo.crabinv.View.Settings;
+import it.unibo.crabinv.View.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 
@@ -50,6 +48,12 @@ public class SceneManager {
         root.getChildren().setAll(new MainMenu(this,loc,audio).getView());
         audio.playBGM(BGMTracks.MENU);
     }
+    /*
+    public void showShop(){
+        root.getChildren().setAll(root.getChildren().setAll(new ShopMenu(this,loc,audio).getView()));
+    }
+
+     */
 
     public void showSettings() {
         root.getChildren().setAll(new Settings(this,loc,audio).getView());
