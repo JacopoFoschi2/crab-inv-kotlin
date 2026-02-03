@@ -36,9 +36,6 @@ public abstract class AbstractEntity implements Entity {
         return health;
     }
 
-    /**
-     * @return the max health of the entity
-     */
     public int getMaxHealth() {
         return maxHealth;
     }

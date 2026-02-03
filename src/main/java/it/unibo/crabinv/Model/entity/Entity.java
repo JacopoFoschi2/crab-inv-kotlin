@@ -11,6 +11,11 @@ public interface Entity {
     public int getHealth();
 
     /**
+     * @return the max amount of HP an entity has
+     */
+    public int getMaxHealth();
+
+    /**
      * Checks if the entity is still alive
      * @return true if alive, false if not
      */
