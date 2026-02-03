@@ -18,7 +18,11 @@ public enum TextKeys {
     LANGUAGE("language"),
     BUY("buy"),
     COST("cost"),
-    CURRENCY("currency");
+    CURRENCY("currency"),
+    RETURN_TO_MENU("return_to_menu"),
+    ARE_YOU_SURE("are_you_sure"),
+    YES("yes"),
+    NO("no"),;
 
     private final String key;
 
