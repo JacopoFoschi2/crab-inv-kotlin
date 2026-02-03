@@ -11,4 +11,9 @@ public interface Movable {
      * @param maxBound the maximal bound that the entity cannot surpass of the wanted axis
      */
     void move(Delta delta, double minBound, double maxBound);
+
+    /**
+     * @return the speed of the entity
+     */
+    double getSpeed();
 }

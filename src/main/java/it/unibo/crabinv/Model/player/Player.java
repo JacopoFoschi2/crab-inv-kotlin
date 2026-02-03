@@ -49,6 +49,11 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     }
 
     @Override
+    public double getSpeed() {
+        return speed;
+    }
+
+    @Override
     public boolean isAbleToShoot() {
         return shootingCounter == 0;
     }
