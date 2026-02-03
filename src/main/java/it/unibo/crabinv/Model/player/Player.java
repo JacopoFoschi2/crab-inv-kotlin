@@ -1,12 +1,9 @@
 package it.unibo.crabinv.Model.player;
 
-import it.unibo.crabinv.Model.Enemies.WaveProvider;
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
 import it.unibo.crabinv.Model.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Movable;
 import it.unibo.crabinv.Model.entity.Shooter;
-import it.unibo.crabinv.Model.save.UserProfile;
 
 /**
  * Provides the implementation of what a player is
@@ -76,7 +73,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     }
 
     public String getImagePath() {
-        return "/player/player_apperence.png";
+        return "/player/player_appearance.png";
     }
 
 }

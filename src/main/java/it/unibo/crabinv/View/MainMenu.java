@@ -37,7 +37,7 @@ public class MainMenu {
         mainColumn.getChildren().addAll(
                 title,
                 createMenuButton(TextKeys.PLAY, sceneManager::showGame),
-                createMenuButton(TextKeys.SHOP, () -> System.out.println("SHOP")),
+                //createMenuButton(TextKeys.SHOP, sceneManager::showShop),
                 createMenuButton(TextKeys.RUN_LOG, () -> System.out.println("RUN_LOG")),
                 createMenuButton(TextKeys.SETTINGS, sceneManager::showSettings),
                 createMenuButton(TextKeys.EXIT_GAME, Platform::exit)
