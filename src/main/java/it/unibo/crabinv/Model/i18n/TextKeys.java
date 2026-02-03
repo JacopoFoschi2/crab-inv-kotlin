@@ -23,7 +23,6 @@ public enum TextKeys {
     ARE_YOU_SURE("are_you_sure"),
     YES("yes"),
     NO("no"),
-    CURRENCY("currency"),
     SPEED_UP ("Speed Up"),
     FIRERATE_UP("Firerate Up"),
     HEALTH_UP("Health Up"),
