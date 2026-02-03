@@ -1,15 +1,14 @@
 package it.unibo.crabinv.Controller.player;
 
 import it.unibo.crabinv.Controller.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entity.EntityCapableOfInputController;
 import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Entity;
 import it.unibo.crabinv.Model.player.Player;
 
 /**
  * Provides all the apis to control a {@link Player}
  */
-public class PlayerController extends EntityAbstractController {
-    private final Player player;
+public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
     private final double minBounds;
     private final double maxBounds;
 
@@ -20,16 +19,11 @@ public class PlayerController extends EntityAbstractController {
      * @param maxBounds the maximal bounds of the x-axis
      */
     public PlayerController(Player player, double minBounds, double maxBounds) {
-        this.player = player;
+        super(player);
         this.minBounds = minBounds;
         this.maxBounds = maxBounds;
     }
 
-    /**
-     * Updates the status of the player, it needs to be called for every tick
-     * @param firePressed tells the controller if the user requested to fire
-     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
-     */
     @Override
     public void update(boolean firePressed, Delta delta) {
         tick();
@@ -39,41 +33,11 @@ public class PlayerController extends EntityAbstractController {
         }
     }
 
-    @Override
-    public boolean isAlive() {
-        return player.isAlive();
-    }
-
-    @Override
-    public void onCollisionWith(Entity other) {
-        player.onCollisionWith(other);
-    }
-
-    @Override
-    public int getHealth() {
-        return player.getHealth();
-    }
-
-    @Override
-    public int getMaxHealth() {
-        return player.getMaxHealth();
-    }
-
-    @Override
-    public double getX() {
-        return player.getX();
-    }
-
-    @Override
-    public double getY() {
-        return player.getY();
-    }
-
     /**
      * @return the speed of the player
      */
     public double getSpeed() {
-        return player.getSpeed();
+        return entity.getSpeed();
     }
 
     /**
@@ -81,7 +45,7 @@ public class PlayerController extends EntityAbstractController {
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        player.move(delta, minBounds, maxBounds);
+        entity.move(delta, minBounds, maxBounds);
     }
 
     /**
@@ -89,8 +53,8 @@ public class PlayerController extends EntityAbstractController {
      * TODO handle the bullet being created
      */
     private void shoot() {
-        if (player.isAbleToShoot()) {
-            player.shoot();
+        if (entity.isAbleToShoot()) {
+            entity.shoot();
         }
     }
 
@@ -98,6 +62,6 @@ public class PlayerController extends EntityAbstractController {
      * Updates the player status for the tick
      */
     private void tick() {
-        player.tick();
+        entity.tick();
     }
 }
