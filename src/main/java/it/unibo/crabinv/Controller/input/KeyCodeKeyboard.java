@@ -5,7 +5,9 @@ public enum KeyCodeKeyboard {
     RIGHT(39),
     UP(38),
     DOWN(40),
-    SHOOT(32);
+    SHOOT(32),
+    PAUSE(27);
+
 
     private final int keyCode;
 

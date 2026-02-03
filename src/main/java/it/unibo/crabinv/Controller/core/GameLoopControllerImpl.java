@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
 
-public class GameLoopControllerImpl implements GameLoopController{
+public class GameLoopControllerImpl implements GameLoopController {
 
     private final GameEngine gameEngine;
     private final InputController inputController;
@@ -18,9 +18,13 @@ public class GameLoopControllerImpl implements GameLoopController{
     private long totalElapsedTicks;
     private GameSnapshot latestSnapshot;
 
-    public GameLoopControllerImpl(GameEngine gameEngine, InputController inputController){
-        if (gameEngine == null) {throw new NullPointerException("gameEngine cannot be null");}
-        if (inputController == null) {throw new NullPointerException(("inputController cannot be null"));}
+    public GameLoopControllerImpl(GameEngine gameEngine, InputController inputController) {
+        if (gameEngine == null) {
+            throw new NullPointerException("gameEngine cannot be null");
+        }
+        if (inputController == null) {
+            throw new NullPointerException(("inputController cannot be null"));
+        }
         this.gameEngine = gameEngine;
         this.inputController = inputController;
         this.tickDurationMillis = STANDARD_TICK_MILLIS;
@@ -31,27 +35,40 @@ public class GameLoopControllerImpl implements GameLoopController{
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTickDurationMillis() {
         return tickDurationMillis;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getAccumulatedMillis() {
         return accumulatedMillis;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getTotalElapsedTicks() {
         return totalElapsedTicks;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameSnapshot step(long frameElapsedMillis) {
+        if (inputController.getInputState().isPause()) {
+            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+                this.gameEngine.pauseGame();
+            }
+        }
         if (gameEngine.getGameState() == GameEngineState.RUNNING) {
             this.accumulatedMillis += frameElapsedMillis;
             long ticksOfStep = accumulatedMillis / this.tickDurationMillis;
@@ -75,12 +92,14 @@ public class GameLoopControllerImpl implements GameLoopController{
     public GameSnapshot getLatestSnapshot() {
         return this.latestSnapshot;
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public void pause() {
         this.gameEngine.pauseGame();
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public void resume() {
         this.gameEngine.resumeGame();
