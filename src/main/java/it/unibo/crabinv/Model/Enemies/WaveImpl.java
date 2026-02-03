@@ -1,18 +1,14 @@
 package it.unibo.crabinv.Model.Enemies;
 
-import it.unibo.crabinv.Controller.entity.EntityAbstractController;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Movable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class WaveImpl extends EntityAbstractController implements Wave {
+public class WaveImpl implements Wave {
 
     private static final double DEFAULT_TOP_MARGIN_Y_MULT = 0.05;
 
-    private final List<EnemyType> enemyTypes;
+    private final List<EnemyType> enemy;
     private final List<Integer> spawnSlots;
     private final int maxSpawnSlots;
 
@@ -65,18 +61,18 @@ public class WaveImpl extends EntityAbstractController implements Wave {
                     final double spawnYNorm,
                     final double bottomYNorm
     ) {
-        this.enemyTypes = List.copyOf(Objects.requireNonNull(enemies, "enemies cannot be null"));
+        this.enemy = List.copyOf(Objects.requireNonNull(enemies, "enemies cannot be null"));
         this.spawnSlots = List.copyOf(Objects.requireNonNull(spawnSlots, "spawnSlots cannot be null"));
         this.enemyFactory = Objects.requireNonNull(enemyFactory, "enemyFactory cannot be null");
         this.rewardsService = Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
 
-        if (this.enemyTypes.stream().anyMatch(Objects::isNull)) {
+        if (this.enemy.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("enemies cannot contain null elements");
         }
         if (this.spawnSlots.stream().anyMatch(Objects::isNull)) {
             throw new IllegalArgumentException("spawnSlots cannot contain null elements");
         }
-        if (this.enemyTypes.size() != this.spawnSlots.size()) {
+        if (this.enemy.size() != this.spawnSlots.size()) {
             throw new IllegalArgumentException("enemies and spawnSlots must have the same size");
         }
         if (maxSpawnSlots <= 0) {
@@ -103,11 +99,11 @@ public class WaveImpl extends EntityAbstractController implements Wave {
      */
     private void spawnIfNeeded() {//Adapted from MoseBarbieri
         if (!this.spawned) {
-            for (int i = 0; i < enemyTypes.size(); i++) {
+            for (int i = 0; i < enemy.size(); i++) {
                 final int slot = spawnSlots.get(i);
                 final double xNorm = (slot + 0.5) / this.maxSpawnSlots;
-                final EnemyType type = enemyTypes.get(i);
-                activeEnemies.add(enemyFactory.createEnemy(type, xNorm, spawnYNorm));
+                final EnemyType enemyType = enemy.get(i);
+                activeEnemies.add(enemyFactory.createEnemy(enemyType, xNorm, spawnYNorm));
             }
             this.spawned = true;
         }
@@ -159,15 +155,5 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         return this.maxSpawnSlots;
     }
 
-
-    /* {@inheritDoc} */
-    @Override
-    public void update(Delta delta) {
-        for (Enemy enemy : activeEnemies) {
-            if (enemy instanceof Movable movableEnemy) {
-                movableEnemy.move(delta, spawnYNorm, bottomYNorm);
-            }
-        }
-    }
 
 }
