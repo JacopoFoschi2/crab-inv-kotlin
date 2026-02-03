@@ -2,6 +2,7 @@ package it.unibo.crabinv.Controller.player;
 
 import it.unibo.crabinv.Controller.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entity.Entity;
 import it.unibo.crabinv.Model.player.Player;
 
 /**
@@ -36,6 +37,43 @@ public class PlayerController extends EntityAbstractController {
         if (firePressed) {
             shoot();
         }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return player.isAlive();
+    }
+
+    @Override
+    public void onCollisionWith(Entity other) {
+        player.onCollisionWith(other);
+    }
+
+    @Override
+    public int getHealth() {
+        return player.getHealth();
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return player.getMaxHealth();
+    }
+
+    @Override
+    public double getX() {
+        return player.getX();
+    }
+
+    @Override
+    public double getY() {
+        return player.getY();
+    }
+
+    /**
+     * @return the speed of the player
+     */
+    public double getSpeed() {
+        return player.getSpeed();
     }
 
     /**
