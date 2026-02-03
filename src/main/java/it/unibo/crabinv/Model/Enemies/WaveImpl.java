@@ -108,7 +108,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         if (!this.spawned) {
             double x = spawnX;
             for (EnemyType type : enemyTypes) {
-                activeEnemies.add(enemyFactory.createEnemy(type, x, spawnY));
+                activeEnemies.add(enemyFactory.createEnemy(type, x, spawnY)); //TODO: Adapt to the new factory.
                 x += spawnXSpacing;
             }
             this.spawned = true;

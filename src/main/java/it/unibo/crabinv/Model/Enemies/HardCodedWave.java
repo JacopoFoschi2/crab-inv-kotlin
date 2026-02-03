@@ -23,7 +23,7 @@ public class HardCodedWave extends EntityAbstractController implements Wave{
 
     private void spawnIfNeeded(){
         if(!isSpawned){
-            enemyTypes.forEach(type -> activeEnemies.add(enemyFactory.createEnemy(type,0 ,0 )));
+            enemyTypes.forEach(type -> activeEnemies.add(enemyFactory.createEnemy(type,1 ,0.0 ,0.0,1,0.25)));
             isSpawned = true;
         }
     }

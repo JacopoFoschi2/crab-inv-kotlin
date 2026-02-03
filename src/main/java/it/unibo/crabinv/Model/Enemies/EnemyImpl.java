@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Model.Enemies;
 
+import it.unibo.crabinv.Model.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entity.*;
 
 public class EnemyImpl extends AbstractEntity implements Enemy, Movable, Shooter {
@@ -7,11 +8,13 @@ public class EnemyImpl extends AbstractEntity implements Enemy, Movable, Shooter
     private int currencyToGive = 10;
     private int shootingCounter;
     private final int fireRate;
+    private final double speed;
 
-    public EnemyImpl(final EnemyType type, int maxHealth, double x, double y, int fireRate) {
+    public EnemyImpl(final EnemyType type, int maxHealth, double x, double y, int fireRate, double speed) {
         super(maxHealth, x, y);
         this.type = type;
         this.fireRate = fireRate;
+        this.speed = speed;
     }
 
     @Override
@@ -76,5 +79,10 @@ public class EnemyImpl extends AbstractEntity implements Enemy, Movable, Shooter
     @Override
     public boolean isFriendlyFire(Entity other) {
         return other instanceof BulletEnemy;
+    }
+
+    @Override
+    public double getSpeed() {
+        return speed;
     }
 }

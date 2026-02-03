@@ -3,6 +3,7 @@ package it.unibo.crabinv.Controller.enemy;
 import it.unibo.crabinv.Controller.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.Enemies.EnemyImpl;
 import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entity.Entity;
 
 import java.util.Random;
 
@@ -32,6 +33,44 @@ public class EnemyController extends EntityAbstractController {
             shoot();
         }
     }
+
+    @Override
+    public boolean isAlive() {
+        return enemy.isAlive();
+    }
+
+    @Override
+    public void onCollisionWith(Entity other) {
+        enemy.onCollisionWith(other);
+    }
+
+    @Override
+    public int getHealth() {
+        return enemy.getHealth();
+    }
+
+    @Override
+    public int getMaxHealth() {
+        return enemy.getMaxHealth();
+    }
+
+    @Override
+    public double getX() {
+        return enemy.getX();
+    }
+
+    @Override
+    public double getY() {
+        return enemy.getY();
+    }
+
+    /**
+     * @return the speed of the enemy
+     */
+    public double getSpeed() {
+        return enemy.getSpeed();
+    }
+
 
     /**
      * Tells the enemy to go to a specific direction for 1 tick

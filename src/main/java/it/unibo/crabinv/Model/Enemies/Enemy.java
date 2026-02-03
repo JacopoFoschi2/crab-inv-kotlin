@@ -32,5 +32,9 @@ public interface Enemy extends Entity {
      */
     boolean isFriendlyFire(Entity other);
 
-
+    /**
+     * Gives the speed of the enemy
+     * @return the speed of the enemy
+     */
+    double getSpeed();
 }
