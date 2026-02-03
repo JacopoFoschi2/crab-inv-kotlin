@@ -61,7 +61,7 @@ public class EnemyController extends EntityAbstractController<EnemyImpl> impleme
     }
 
     /**
-     * Updates the enemy status for the tick
+     * Updates the status for the tick
      */
     private void tick() {
         entity.tick();
