@@ -4,46 +4,42 @@ import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
 
 /**
- * Provides the methods an EntityController should absolutely implement in one of its overloads
+ * Provides the methods an EntityController should implement.
  */
-public class EntityAbstractController implements EntityController {
-    @Override
-    public void update(boolean firePressed, Delta delta) {
+public abstract class EntityAbstractController<T extends Entity> implements EntityController {
+    protected final T entity;
 
-    }
-
-    @Override
-    public void update(Delta delta) {
-
+    public EntityAbstractController(T entity) {
+        this.entity = entity;
     }
 
     @Override
     public boolean isAlive() {
-        return false;
+        return entity.isAlive();
     }
 
     @Override
     public void onCollisionWith(Entity other) {
-
+        entity.onCollisionWith(other);
     }
 
     @Override
     public int getHealth() {
-        return 0;
+        return entity.getHealth();
     }
 
     @Override
     public int getMaxHealth() {
-        return 0;
+        return entity.getMaxHealth();
     }
 
     @Override
     public double getX() {
-        return 0;
+        return entity.getX();
     }
 
     @Override
     public double getY() {
-        return 0;
+        return entity.getY();
     }
 }
