@@ -22,8 +22,12 @@ public enum TextKeys {
     RETURN_TO_MENU("return_to_menu"),
     ARE_YOU_SURE("are_you_sure"),
     YES("yes"),
-    NO("no"),;
-
+    NO("no"),
+    CURRENCY("currency"),
+    SPEED_UP ("Speed Up"),
+    FIRERATE_UP("Firerate Up"),
+    HEALTH_UP("Health Up"),
+    ;
     private final String key;
 
     TextKeys(String key) {

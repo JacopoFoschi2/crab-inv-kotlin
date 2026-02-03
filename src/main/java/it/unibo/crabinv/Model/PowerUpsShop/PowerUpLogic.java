@@ -1,13 +1,13 @@
 package it.unibo.crabinv.Model.PowerUpsShop;
 
 public class PowerUpLogic implements PowerUp{
-    private final String powerUpName;
+    private final PowerUpType type;
     private final int cost;
     private final int maxLevel;
 
 
-    public PowerUpLogic(String powerUpName, int cost , int maxLevel) {
-        this.powerUpName = powerUpName;
+    public PowerUpLogic(PowerUpType type, int cost , int maxLevel) {
+        this.type = type;
         this.cost = cost;
         this.maxLevel = maxLevel;
     }
@@ -24,7 +24,11 @@ public class PowerUpLogic implements PowerUp{
 
     @Override
     public String getPowerUpName() {
-        return this.powerUpName;
+        return this.type.name();
     }
 
+    @Override
+    public PowerUpType getPowerUpType() {
+        return type;
+    }
 }

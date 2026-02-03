@@ -27,8 +27,10 @@ public interface Enemy extends Entity {
     void tick();
 
     /**
-     *
+     * Checks if the bullet comes from the other enemies or if it comes from the
      * @return true if the bullet is shot by another enemy is true else is false
      */
     boolean isFriendlyFire(Entity other);
+
+
 }

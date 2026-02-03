@@ -2,8 +2,11 @@ package it.unibo.crabinv;
 
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUpFactory;
 import it.unibo.crabinv.Model.PowerUpsShop.Shop;
 import it.unibo.crabinv.Model.audio.BGMTracks;
+import it.unibo.crabinv.Model.save.UserProfile;
+import it.unibo.crabinv.Model.save.UserProfileImpl;
 import it.unibo.crabinv.View.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -19,6 +22,7 @@ public class SceneManager {
     private final AudioController audio;
     private final double width;
     private final double height;
+    private final UserProfile userProfile;
 
     /**
      * Constructs the sceneManager
@@ -33,6 +37,7 @@ public class SceneManager {
         this.audio = audio;
         this.width = bounds.getWidth();
         this.height = bounds.getHeight();
+        this.userProfile = new UserProfileImpl();
     }
 
     /**
@@ -50,12 +55,11 @@ public class SceneManager {
         root.getChildren().setAll(new MainMenu(this,loc,audio).getView());
         audio.playBGM(BGMTracks.MENU);
     }
-    /*
-    public void showShop(){
-        root.getChildren().setAll(root.getChildren().setAll(new ShopMenu(this,loc,audio).getView()));
-    }
 
-     */
+    public void showShop(){
+        root.getChildren().setAll(new ShopMenu(this,loc,audio, userProfile,
+                PowerUpFactory.createShopPowerUps()).getView());
+    }
 
     public void showSettings() {
         root.getChildren().setAll(new Settings(this,loc,audio).getView());
