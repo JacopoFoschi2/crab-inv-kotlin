@@ -29,6 +29,11 @@ public class BulletPlayer extends AbstractEntity implements Movable {
     }
 
     @Override
+    public double getSpeed() {
+        return speedY;
+    }
+
+    @Override
     public void onCollisionWith(Entity entity) {
         super.onCollisionWith(entity);
     }

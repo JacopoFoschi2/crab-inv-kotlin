@@ -29,6 +29,11 @@ public class BulletEnemy extends AbstractEntity implements Movable {
     }
 
     @Override
+    public double getSpeed() {
+        return speedY;
+    }
+
+    @Override
     public void onCollisionWith(Entity entity) {
         if (entity instanceof BulletEnemy){
             return;
