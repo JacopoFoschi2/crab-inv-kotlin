@@ -37,7 +37,7 @@ public class MainMenu {
         mainColumn.getChildren().addAll(
                 title,
                 createMenuButton(TextKeys.PLAY, sceneManager::showGame),
-                createMenuButton(TextKeys.SHOP, () -> System.out.println("SHOP")),
+                //createMenuButton(TextKeys.SHOP, sceneManager::showShop),
                 createMenuButton(TextKeys.RUN_LOG, () -> System.out.println("RUN_LOG")),
                 createMenuButton(TextKeys.SETTINGS, sceneManager::showSettings),
                 createMenuButton(TextKeys.EXIT_GAME, Platform::exit)
@@ -48,9 +48,7 @@ public class MainMenu {
 
     private Button createMenuButton(TextKeys key, Runnable action) {
         Button menuButton = new Button(loc.getString(key));
-        menuButton.getStyleClass().add("menu-button");
-
-        menuButton.setMinWidth(220);
+        menuButton.getStyleClass().add("app-button");
 
         menuButton.focusedProperty().addListener((_, _, newValue) -> {
             if (newValue) {

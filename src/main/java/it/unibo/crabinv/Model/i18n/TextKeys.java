@@ -15,7 +15,10 @@ public enum TextKeys {
     SFX_VOLUME("sfx_volume"),
     BGM_MUTE("bgm_mute"),
     SFX_MUTE("sfx_mute"),
-    LANGUAGE("language"),;
+    LANGUAGE("language"),
+    BUY("buy"),
+    COST("cost"),
+    CURRENCY("currency");
 
     private final String key;
 

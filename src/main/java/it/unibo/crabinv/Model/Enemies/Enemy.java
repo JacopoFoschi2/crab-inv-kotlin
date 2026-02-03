@@ -20,4 +20,15 @@ public interface Enemy extends Entity {
      * @return the amount of the reward for enemy defeat
      */
     int getReward();
+
+    /**
+     * Updates at the tick the single enemy
+     */
+    void tick();
+
+    /**
+     *
+     * @return true if the bullet is shot by another enemy is true else is false
+     */
+    boolean isFriendlyFire(Entity other);
 }
