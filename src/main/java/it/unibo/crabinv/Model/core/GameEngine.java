@@ -14,7 +14,7 @@ public interface GameEngine {
 
     /**
      * Defines the logic of the simulation and advances one tick
-     * @param inputSnapshot the state of the calculated tick
+     * @param inputSnapshot the input on which the logic will be calculated
      */
     void tick (InputSnapshot inputSnapshot);
 
@@ -24,9 +24,22 @@ public interface GameEngine {
     GameSnapshot snapshot();
 
     /**
-     * Defines the logic of the game when the game ends
+     * @return the current GameEngineState
+     */
+    GameEngineState getGameState();
+
+    /**
+     * Marks the current attempt as game over
      */
     void gameOver();
 
+    /**
+     * Pauses the game, blocks the gamelogic to the latest snapshot
+     */
+    void pauseGame();
 
+    /**
+     * Resumes the game, resumes the tick logic
+     */
+    void resumeGame();
 }

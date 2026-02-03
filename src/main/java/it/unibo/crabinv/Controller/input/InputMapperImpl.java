@@ -33,4 +33,12 @@ public class InputMapperImpl implements InputMapper {
         KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
         return key == KeyCodeKeyboard.SHOOT;
     }
+
+    @Override
+    public boolean mapToPause(int inputCode) {
+        KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
+        return key == KeyCodeKeyboard.PAUSE;
+    }
+
+
 }

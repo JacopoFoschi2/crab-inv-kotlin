@@ -8,9 +8,6 @@ import java.util.Objects;
 
 public class LevelFactoryImpl implements LevelFactory {
 
-    private static final double DEFAULT_WORLD_WIDTH = 800;
-    private static final double DEFAULT_WORLD_HEIGHT = 1600;
-
     @Override
     public Level createLevel(int levelId, EnemyFactory enemyFactory, RewardsService rewardsService) {
         if (levelId <= 0) {
@@ -21,16 +18,16 @@ public class LevelFactoryImpl implements LevelFactory {
 
         final List<Wave> waves = switch (levelId) {
             case 1 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+                    new WaveAlpha(enemyFactory, rewardsService)
             );
             case 2 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT),
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+                    new WaveAlpha(enemyFactory, rewardsService),
+                    new WaveAlpha(enemyFactory, rewardsService)
             );
             case 3 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT),
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT),
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT)
+                    new WaveAlpha(enemyFactory, rewardsService),
+                    new WaveAlpha(enemyFactory, rewardsService),
+                    new WaveAlpha(enemyFactory, rewardsService)
             );
             default -> throw new IllegalArgumentException("Unsupported levelNumber: " + levelId);
             // TODO if levelId = last case + 1 = win

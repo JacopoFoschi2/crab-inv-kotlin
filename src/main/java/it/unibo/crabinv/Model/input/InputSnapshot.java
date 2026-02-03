@@ -9,4 +9,5 @@ public interface InputSnapshot {
     boolean isShooting();
     Delta getXMovementDelta();
     Delta getYMovementDelta();
+    boolean isPause();
 }

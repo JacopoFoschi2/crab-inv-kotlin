@@ -1,11 +1,13 @@
 package it.unibo.crabinv.Controller.input;
 
 public enum KeyCodeKeyboard {
-    LEFT(65),
-    RIGHT(68),
-    UP(87),
-    DOWN(83),
-    SHOOT(32);
+    LEFT(37),
+    RIGHT(39),
+    UP(38),
+    DOWN(40),
+    SHOOT(32),
+    PAUSE(27);
+
 
     private final int keyCode;
 
