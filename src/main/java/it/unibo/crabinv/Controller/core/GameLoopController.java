@@ -35,4 +35,15 @@ public interface GameLoopController {
      */
     GameSnapshot getLatestSnapshot();
 
+    /**
+     * Instructs the gameEngine to pause the game, blocks any calculation
+     */
+    void pause();
+
+    /**
+     * Instructs the gameEngine to resume the game, resumes calculations
+     */
+    void resume();
+
+
 }

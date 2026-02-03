@@ -17,6 +17,7 @@ public class InputControllerPlayer implements InputController {
     private final InputMapper mapper;
 
 
+
     public InputControllerPlayer(InputMapper mapper) {
         if (mapper == null) {
             throw new NullPointerException("mapper is null");
@@ -26,7 +27,10 @@ public class InputControllerPlayer implements InputController {
     }
 
     public void onKeyPressed(int keyCode) {
-        boolean validKey = mapper.mapToShoot(keyCode) || mapper.mapToXDelta(keyCode) != Delta.NO_ACTION;
+        boolean validKey =
+                mapper.mapToShoot(keyCode)
+                        || mapper.mapToXDelta(keyCode) != Delta.NO_ACTION
+                        || mapper.mapToPause(keyCode);
         if (validKey) {
             this.pressedKeys.add(keyCode);
         }
@@ -38,6 +42,8 @@ public class InputControllerPlayer implements InputController {
 
     @Override
     public InputSnapshot getInputState() {
+        boolean isPausePressed = pressedKeys.stream()
+                .anyMatch(mapper::mapToPause);
         boolean isShooting = pressedKeys.stream()
                 .anyMatch(mapper::mapToShoot);
         boolean isInputRight = pressedKeys.stream()
@@ -52,6 +58,6 @@ public class InputControllerPlayer implements InputController {
         } else if (isInputLeft && !isInputRight) {
             xMovementDelta = Delta.DECREASE;
         }
-        return new InputSnapshotImpl(isShooting, xMovementDelta, Delta.NO_ACTION);
+        return new InputSnapshotImpl(isShooting, xMovementDelta, Delta.NO_ACTION, isPausePressed);
     }
 }

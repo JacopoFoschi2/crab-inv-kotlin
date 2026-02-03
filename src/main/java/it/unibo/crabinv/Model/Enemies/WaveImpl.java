@@ -11,115 +11,114 @@ import java.util.Objects;
 public class WaveImpl extends EntityAbstractController implements Wave {
 
     private static final double DEFAULT_TOP_MARGIN_Y_MULT = 0.05;
-    private static final double DEFAULT_SIDE_MARGIN_X_MULT = 0.05;
-    private static final double DEFAULT_SPACING_X_MULT = 0.08;
 
     private final List<EnemyType> enemyTypes;
+    private final List<Integer> spawnSlots;
+    private final int maxSpawnSlots;
+
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;
     private final RewardsService rewardsService;
 
-    private final double spawnY; //is also the upper bound of Y
-    private final double spawnX;
-    private final double spawnXSpacing;
-    private final double bottomY;
+    private final double spawnYNorm; //is also the upper bound of Y
+    private final double bottomYNorm;
     private boolean spawned;
 
     /**
-     * Constructor with calculated default position parameters
-     * To be used as the default constructor for wave creation
-     *
-     * @param enemyTypes     the composition of the wave
-     * @param enemyFactory   the factory used to create enemies
+     * LITE Constructor for preset creation
+     * @param enemies the composition of the wave
+     * @param spawnSlots the slots for the enemies
+     * @param enemyFactory the factory used to create enemies
      * @param rewardsService the reward handler
-     * @param worldWidth     the width of the world, used for calculating positions
-     * @param worldHeight    the height of the world, used for calculating positions
+     * @param maxSpawnSlots the number of available slots for spawn
      */
-    public WaveImpl(final List<EnemyType> enemyTypes,
+    public WaveImpl(final List<EnemyType> enemies,
+                    final List<Integer> spawnSlots,
                     final EnemyFactory enemyFactory,
                     final RewardsService rewardsService,
-                    double worldWidth,
-                    double worldHeight
-    ) {
-        this(enemyTypes,
+                    final int maxSpawnSlots) {
+        this(
+                enemies,
+                spawnSlots,
                 enemyFactory,
                 rewardsService,
-                requirePositive("worldHeight", worldHeight) * DEFAULT_TOP_MARGIN_Y_MULT,
-                requirePositive("worldWidth", worldWidth) / 2,
-                requirePositive("worldWidth", worldWidth) * DEFAULT_SPACING_X_MULT,
-                requirePositive("worldHeight", worldHeight)
-        );
+                maxSpawnSlots,
+                DEFAULT_TOP_MARGIN_Y_MULT,
+                1.0);
     }
 
     /**
-     * Constructor with ALL parameters
-     *
-     * @param enemyTypes     the composition of the wave
-     * @param enemyFactory   the factory used to create enemies
+     * FULL Constructor with all parameters
+     * @param enemies the composition of the wave
+     * @param spawnSlots the slots for the enemies
+     * @param enemyFactory the factory used to create enemies
      * @param rewardsService the reward handler
-     * @param spawnY         Y position of enemy spawn and upper bound of enemy movement
-     * @param spawnX         X position of first enemy spawn
-     * @param spawnXSpacing  X spacing between enemies
-     * @param bottomY        Y lower bound of enemy movement
+     * @param maxSpawnSlots the number of available slots for spawn
+     * @param spawnYNorm the spawn position (and upper bound)
+     * @param bottomYNorm the lower bound
      */
-    public WaveImpl(final List<EnemyType> enemyTypes,
+    public WaveImpl(final List<EnemyType> enemies,
+                    final List<Integer> spawnSlots,
                     final EnemyFactory enemyFactory,
                     final RewardsService rewardsService,
-                    final double spawnY,
-                    final double spawnX,
-                    final double spawnXSpacing,
-                    final double bottomY
+                    final int maxSpawnSlots,
+                    final double spawnYNorm,
+                    final double bottomYNorm
     ) {
-        this.enemyTypes = List.copyOf(Objects.requireNonNull(enemyTypes, "enemyTypes cannot be null"));
+        this.enemyTypes = List.copyOf(Objects.requireNonNull(enemies, "enemies cannot be null"));
+        this.spawnSlots = List.copyOf(Objects.requireNonNull(spawnSlots, "spawnSlots cannot be null"));
         this.enemyFactory = Objects.requireNonNull(enemyFactory, "enemyFactory cannot be null");
         this.rewardsService = Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
 
-        if (spawnXSpacing <= 0) {
-            throw new IllegalArgumentException("invalid spawnXSpacing, must be > 0");
+        if (this.enemyTypes.stream().anyMatch(Objects::isNull)) {
+            throw new IllegalArgumentException("enemies cannot contain null elements");
         }
-        if (bottomY < spawnY) {
-            throw new IllegalArgumentException("spawnY (the y upper bound) cannot be lower than bottomY");
+        if (this.spawnSlots.stream().anyMatch(Objects::isNull)) {
+            throw new IllegalArgumentException("spawnSlots cannot contain null elements");
+        }
+        if (this.enemyTypes.size() != this.spawnSlots.size()) {
+            throw new IllegalArgumentException("enemies and spawnSlots must have the same size");
+        }
+        if (maxSpawnSlots <= 0) {
+            throw new IllegalArgumentException("maxSpawnSlots must be > 0");
+        }
+        if (this.spawnSlots.stream().anyMatch(s -> s < 0 || s >= maxSpawnSlots)) {
+            throw new IllegalArgumentException("spawnSlots must be in range [0.." + (maxSpawnSlots - 1) + "]");
+        }
+        if (spawnYNorm < 0.0 || spawnYNorm > 1.0 || bottomYNorm < 0.0 || bottomYNorm > 1.0) {
+            throw new IllegalArgumentException("spawnYNorm/bottomYNorm must be in [0..1]");
+        }
+        if (bottomYNorm < spawnYNorm) {
+            throw new IllegalArgumentException("bottomYNorm must be >= spawnYNorm");
         }
 
-        this.spawnY = spawnY;
-        this.spawnX = spawnX;
-        this.spawnXSpacing = spawnXSpacing;
-        this.bottomY = bottomY;
+        this.maxSpawnSlots = maxSpawnSlots;
+        this.spawnYNorm = spawnYNorm;
+        this.bottomYNorm = bottomYNorm;
         this.spawned = false;
     }
 
     /**
-     * Helper method for Constructor refuses negative values
-     * @param name the name of the parameter to be checked, needed for debugging
-     * @param value the parameter to be checked
-     * @return the validated parameter
-     */
-    private static double requirePositive(final String name, final double value) {
-        if (value <= 0) {
-            throw new IllegalArgumentException(name + " must be > 0: " + value);
-        }
-        return value;
-    }
-
-    /**
      *
      */
-    private void spawnIfNeeded() { //Adapted from MoseBarbieri
+    private void spawnIfNeeded() {//Adapted from MoseBarbieri
         if (!this.spawned) {
-            double x = spawnX;
-            for (EnemyType type : enemyTypes) {
-                activeEnemies.add(enemyFactory.createEnemy(type, x, spawnY)); //TODO: Adapt to the new factory.
-                x += spawnXSpacing;
+            for (int i = 0; i < enemyTypes.size(); i++) {
+                final int slot = spawnSlots.get(i);
+                final double xNorm = (slot + 0.5) / this.maxSpawnSlots;
+                final EnemyType type = enemyTypes.get(i);
+                activeEnemies.add(enemyFactory.createEnemy(type, xNorm, spawnYNorm));
             }
             this.spawned = true;
         }
     }
 
+
     /**
-     *
+     * Advances the logic of movement of the wave's enemies
      */
     private void updateMovement() {
-        update(Delta.INCREASE);
+        //update(Delta.INCREASE);
     }
 
     /**
@@ -155,12 +154,18 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         return spawned && activeEnemies.isEmpty();
     }
 
+    @Override
+    public int getMaxSpawnSlots() {
+        return this.maxSpawnSlots;
+    }
+
+
     /* {@inheritDoc} */
     @Override
     public void update(Delta delta) {
         for (Enemy enemy : activeEnemies) {
             if (enemy instanceof Movable movableEnemy) {
-                movableEnemy.move(delta, spawnY, bottomY);
+                movableEnemy.move(delta, spawnYNorm, bottomYNorm);
             }
         }
     }
