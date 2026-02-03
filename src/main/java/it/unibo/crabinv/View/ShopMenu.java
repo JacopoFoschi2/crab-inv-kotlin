@@ -23,7 +23,6 @@ public class ShopMenu {
     private final UserProfile profile;
     private final Shop shop = new ShopLogic();
     private final List<PowerUp> powerUps;
-
     private Label currencyLabel;
 
     public ShopMenu(SceneManager sceneManager,
@@ -71,7 +70,12 @@ public class ShopMenu {
         HBox row = new HBox(15);
         row.setAlignment(Pos.CENTER);
 
-        Label name = new Label(powerUp.getPowerUpName());
+        PowerUpType type = powerUp.getPowerUpType();
+
+        Label name = new Label(
+                loc.getString(TextKeys.valueOf(type.name()))
+        );
+
         Label level = new Label();
         Label cost = new Label(
                 loc.getString(TextKeys.COST) + ": " + powerUp.getCost()
@@ -99,6 +103,7 @@ public class ShopMenu {
         row.getChildren().addAll(name, level, cost, buyButton);
         return row;
     }
+
 
     private Button createMenuButton(TextKeys key, Runnable action) {
         Button button = new Button(loc.getString(key));

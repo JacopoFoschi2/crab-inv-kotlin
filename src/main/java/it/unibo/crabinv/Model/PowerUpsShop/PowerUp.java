@@ -18,4 +18,10 @@ public interface PowerUp {
      * @return the powerUp name
      */
     String getPowerUpName();
+
+    /**
+     * Gets the type of the type of the power up
+     * @return the type of the powerUp
+     */
+    PowerUpType getPowerUpType();
 }

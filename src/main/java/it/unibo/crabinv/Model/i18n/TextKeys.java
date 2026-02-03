@@ -18,7 +18,11 @@ public enum TextKeys {
     LANGUAGE("language"),
     BUY("buy"),
     COST("cost"),
-    CURRENCY("currency");
+    CURRENCY("currency"),
+    SPEED_UP ("Speed Up"),
+    FIRERATE_UP("Firerate Up"),
+    HEALTH_UP("Health Up");
+
 
     private final String key;
 
