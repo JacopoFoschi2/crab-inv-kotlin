@@ -6,6 +6,8 @@ import it.unibo.crabinv.Model.PowerUpsShop.Shop;
 import it.unibo.crabinv.Model.audio.BGMTracks;
 import it.unibo.crabinv.View.*;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -63,7 +65,10 @@ public class SceneManager {
      * Sets the Game Screen as the shown one
      */
     public void showGame(){
-        root.getChildren().setAll(new GameScreen(this,loc,audio).getView());
+        Node gameView = new GameScreen(this,loc, audio).getView();
+        Pane pauseMenu = new PauseMenu(this, loc, audio).getView();
+        pauseMenu.setVisible(false);
+        root.getChildren().setAll(gameView,pauseMenu);
         audio.playBGM(BGMTracks.LEVEL);
     }
 
