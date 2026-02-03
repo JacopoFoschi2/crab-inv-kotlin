@@ -1,3 +1,5 @@
+
+
 package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Controller.entity.EntityAbstractController;
@@ -6,7 +8,7 @@ import it.unibo.crabinv.Model.entity.Delta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HardCodedWave extends EntityAbstractController implements Wave{
+public abstract class HardCodedWave extends EntityAbstractController implements Wave{
     private final List<EnemyType> enemyTypes;
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;

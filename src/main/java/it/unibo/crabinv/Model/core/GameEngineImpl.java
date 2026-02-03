@@ -15,12 +15,14 @@ import java.util.List;
 
 public class GameEngineImpl implements GameEngine {
 
-    final double WorldWidth = 800;
-    final double WorldHeight = 1600;
-    final double playerMinX = 0;
-    final double playerMaxX = WorldWidth;
-    final double playerStartX = playerMaxX / 2;
-    final double playerFixedY = 1500; //TODO togliere la const di prova
+    private static final double PLAYER_SPRITE_MULT = 0.08;
+    private static final double PLAYER_HALF_SIZE_NORM = PLAYER_SPRITE_MULT / 2.0;
+
+    private static final double WORLD_MIN_X = PLAYER_HALF_SIZE_NORM;
+    private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
+
+    private static final double PLAYER_START_X = 0.5;
+    private static final double PLAYER_FIXED_Y = 0.90;
 
     GameSession gameSession;
     WaveProvider waveProvider;
@@ -42,10 +44,15 @@ public class GameEngineImpl implements GameEngine {
         this.gameSession = new GameSessionImpl();
         this.rewardsService = new EnemyRewardService(this.gameSession);
 
-        player = new Player(this.gameSession.getPlayerHealth(), playerStartX, playerFixedY, 1, 1);
-        playerController = new PlayerController(this.player, playerMinX, playerMaxX);
+        player = new Player(
+                this.gameSession.getPlayerHealth(),
+                PLAYER_START_X,
+                PLAYER_FIXED_Y,
+                0.01,
+                1);
+        playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 
-        EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
+        final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
 
         this.currentLevel = 1;
         this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, this.rewardsService);

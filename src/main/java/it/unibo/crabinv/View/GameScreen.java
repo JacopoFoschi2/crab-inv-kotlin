@@ -35,32 +35,19 @@ public class GameScreen {
         final Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        // INPUT
         final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
 
-        // Important: the node must be focusable to receive key events
         canvas.setFocusTraversable(true);
-
         canvas.setOnKeyPressed(e -> input.onKeyPressed(e.getCode().getCode()));
         canvas.setOnKeyReleased(e -> input.onKeyReleased(e.getCode().getCode()));
 
-        // MODEL
         final GameEngine engine = new GameEngineImpl();
         engine.newGame();
 
-        final double worldWidth = 800;
-        final double worldHeight = 1600;
-
-        // RENDERER
         final GameRenderer renderer = new GameRenderer(
-                canvas.getGraphicsContext2D(),
-                width,
-                height,
-                worldWidth,
-                worldHeight
+                canvas.getGraphicsContext2D()
         );
 
-        // LOOP (JavaFX)
         final AnimationTimer timer = new AnimationTimer() {
             private long lastNow = 0;
 
@@ -71,9 +58,7 @@ public class GameScreen {
                     return;
                 }
 
-                // tick-based engine: one engine.tick per call (simple for now)
                 engine.tick(input.getInputState());
-
                 renderer.render(engine.snapshot());
 
                 lastNow = now;
@@ -81,7 +66,6 @@ public class GameScreen {
         };
         timer.start();
 
-        // Request focus AFTER it is attached: Platform.runLater is the safe way
         javafx.application.Platform.runLater(canvas::requestFocus);
 
         return root;
