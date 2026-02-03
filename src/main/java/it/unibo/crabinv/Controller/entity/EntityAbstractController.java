@@ -1,6 +1,5 @@
 package it.unibo.crabinv.Controller.entity;
 
-import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
 
 /**
