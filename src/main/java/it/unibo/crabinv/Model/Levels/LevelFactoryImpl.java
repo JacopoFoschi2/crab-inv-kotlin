@@ -8,9 +8,6 @@ import java.util.Objects;
 
 public class LevelFactoryImpl implements LevelFactory {
 
-    private static final double DEFAULT_WORLD_WIDTH = 800;
-    private static final double DEFAULT_WORLD_HEIGHT = 1600;
-
     @Override
     public Level createLevel(int levelId, EnemyFactory enemyFactory, RewardsService rewardsService) {
         if (levelId <= 0) {

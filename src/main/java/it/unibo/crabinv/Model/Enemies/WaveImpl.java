@@ -11,7 +11,6 @@ import java.util.Objects;
 public class WaveImpl extends EntityAbstractController implements Wave {
 
     private static final double DEFAULT_TOP_MARGIN_Y_MULT = 0.05;
-    private static final double DEFAULT_ENEMY_SPEED_SCALE = 250.0;
 
     private final List<EnemyType> enemyTypes;
     private final List<Integer> spawnSlots;
@@ -23,9 +22,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
 
     private final double spawnYNorm; //is also the upper bound of Y
     private final double bottomYNorm;
-    private final double enemySpeedScale;
     private boolean spawned;
-
 
     /**
      * LITE Constructor for preset creation
@@ -47,8 +44,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
                 rewardsService,
                 maxSpawnSlots,
                 DEFAULT_TOP_MARGIN_Y_MULT,
-                1.0,
-                DEFAULT_ENEMY_SPEED_SCALE);
+                1.0);
     }
 
     /**
@@ -67,8 +63,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
                     final RewardsService rewardsService,
                     final int maxSpawnSlots,
                     final double spawnYNorm,
-                    final double bottomYNorm,
-                    final double enemySpeedScale
+                    final double bottomYNorm
     ) {
         this.enemyTypes = List.copyOf(Objects.requireNonNull(enemies, "enemies cannot be null"));
         this.spawnSlots = List.copyOf(Objects.requireNonNull(spawnSlots, "spawnSlots cannot be null"));
@@ -100,22 +95,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
         this.maxSpawnSlots = maxSpawnSlots;
         this.spawnYNorm = spawnYNorm;
         this.bottomYNorm = bottomYNorm;
-        this.enemySpeedScale = enemySpeedScale;
-
         this.spawned = false;
-    }
-
-    /**
-     * Helper method for Constructor refuses negative values
-     * @param name the name of the parameter to be checked, needed for debugging
-     * @param value the parameter to be checked
-     * @return the validated parameter
-     */
-    private static double requirePositive(final String name, final double value) {
-        if (value <= 0) {
-            throw new IllegalArgumentException(name + " must be > 0: " + value);
-        }
-        return value;
     }
 
     /**
@@ -138,7 +118,7 @@ public class WaveImpl extends EntityAbstractController implements Wave {
      * Advances the logic of movement of the wave's enemies
      */
     private void updateMovement() {
-        update(Delta.INCREASE);
+        //update(Delta.INCREASE);
     }
 
     /**

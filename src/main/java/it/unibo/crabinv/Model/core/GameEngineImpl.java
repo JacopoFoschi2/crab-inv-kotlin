@@ -26,6 +26,7 @@ public class GameEngineImpl implements GameEngine {
 
     GameSession gameSession;
     WaveProvider waveProvider;
+    GameEngineState gameEngineState;
     RewardsService rewardsService;
     Level level;
     int currentLevel;
@@ -54,9 +55,9 @@ public class GameEngineImpl implements GameEngine {
 
         final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
 
+        this.gameEngineState = GameEngineState.RUNNING;
         this.currentLevel = 1;
         this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, this.rewardsService);
-
         this.elapsedTicks = 0;
     }
 
@@ -65,24 +66,30 @@ public class GameEngineImpl implements GameEngine {
         if (inputSnapshot == null) {throw new IllegalStateException("inputSnapshot cannot be null");}
         if (this.gameSession == null) {throw new IllegalStateException("call newGame() before tick()");}
         if (this.level == null){throw new IllegalStateException("newGame() called a null level");}
-        if (this.gameSession.isGameOver()){return;} //da cambiare, il metodo gameOver() deve bloccare i tick e svolgere le operazioni di fine partita
+        if (this.gameEngineState == null){throw new IllegalStateException("gameEngineState cannot be null");}
 
-        playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
-
-        if (!level.isLevelFinished()) {
-            final Wave currentWave = level.getCurrentWave();
-            if (currentWave != null) {
-                currentWave.tickLogicUpdate();
-                if (currentWave.isWaveFinished()){
-                    level.advanceWave();
+        switch (this.gameEngineState) {
+            case RUNNING -> {
+                    playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta())
+                ;
+                if (!level.isLevelFinished()) {
+                    final Wave currentWave = level.getCurrentWave();
+                    if (currentWave != null) {
+                        currentWave.tickLogicUpdate();
+                        if (currentWave.isWaveFinished()) {
+                            level.advanceWave();
+                        }
+                    }
                 }
+                this.elapsedTicks++;
+                //if nemici su asse y giocatore -> -1hp
+                //if hp == 0 -> is gameOver = gameOver()
+                //if nemici == 0, prossima wave
+                }
+            case PAUSED, GAME_OVER -> {
+                return;
             }
         }
-        this.elapsedTicks ++;
-        //if nemici su asse y giocatore -> -1hp
-        //if hp == 0 -> is gameOver = gameOver()
-        //if nemici == 0, prossima wave
-
     }
 
     @Override
@@ -107,12 +114,31 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
+    public GameEngineState getGameState() {
+        return this.gameEngineState;
+    }
+
+    @Override
     public void gameOver() {
+        if (this.gameEngineState == GameEngineState.GAME_OVER) {
+            return;
+        }
+        this.gameEngineState = GameEngineState.GAME_OVER;
+
+        //TODO creare altra classe per gestire le operazione out-of-gameplay e richiamare qui
         this.gameSession.markGameOver();
         //TODO Crea SessionRecord
         //TODO Aggiorna UserProfile
-
     }
 
+    @Override
+    public void pauseGame() {
+        if (this.gameEngineState == GameEngineState.RUNNING) {this.gameEngineState = GameEngineState.PAUSED;}
+    }
+
+    @Override
+    public void resumeGame() {
+        if (this.gameEngineState == GameEngineState.PAUSED) {this.gameEngineState = GameEngineState.RUNNING;}
+    }
 
 }
