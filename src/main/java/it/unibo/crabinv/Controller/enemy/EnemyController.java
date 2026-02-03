@@ -1,6 +1,8 @@
 package it.unibo.crabinv.Controller.enemy;
 
 import it.unibo.crabinv.Controller.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entity.EntityNotCapableOfInputController;
+import it.unibo.crabinv.Model.Enemies.Enemy;
 import it.unibo.crabinv.Model.Enemies.EnemyImpl;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
@@ -8,13 +10,12 @@ import it.unibo.crabinv.Model.entity.Entity;
 import java.util.Random;
 
 
-public class EnemyController extends EntityAbstractController {
-    private final EnemyImpl enemy;
+public class EnemyController extends EntityAbstractController<EnemyImpl> implements EntityNotCapableOfInputController {
     private final double minBounds;
     private final double maxBounds;
 
     public EnemyController(EnemyImpl enemy, double minBounds, double maxBounds) {
-        this.enemy = enemy;
+        super(enemy);
         this.minBounds = minBounds;
         this.maxBounds = maxBounds;
     }
@@ -34,41 +35,11 @@ public class EnemyController extends EntityAbstractController {
         }
     }
 
-    @Override
-    public boolean isAlive() {
-        return enemy.isAlive();
-    }
-
-    @Override
-    public void onCollisionWith(Entity other) {
-        enemy.onCollisionWith(other);
-    }
-
-    @Override
-    public int getHealth() {
-        return enemy.getHealth();
-    }
-
-    @Override
-    public int getMaxHealth() {
-        return enemy.getMaxHealth();
-    }
-
-    @Override
-    public double getX() {
-        return enemy.getX();
-    }
-
-    @Override
-    public double getY() {
-        return enemy.getY();
-    }
-
     /**
      * @return the speed of the enemy
      */
     public double getSpeed() {
-        return enemy.getSpeed();
+        return entity.getSpeed();
     }
 
 
@@ -77,15 +48,15 @@ public class EnemyController extends EntityAbstractController {
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        enemy.move(delta, minBounds, maxBounds);
+        entity.move(delta, minBounds, maxBounds);
     }
 
     /**
      * Makes the enemy shoot if it can
      */
     private void shoot() {
-        if (enemy.isAbleToShoot()) {
-            enemy.shoot();
+        if (entity.isAbleToShoot()) {
+            entity.shoot();
         }
     }
 
@@ -93,6 +64,6 @@ public class EnemyController extends EntityAbstractController {
      * Updates the enemy status for the tick
      */
     private void tick() {
-        enemy.tick();
+        entity.tick();
     }
 }
