@@ -58,7 +58,7 @@ public class ShopMenu {
         }
 
         Button backButton = createMenuButton(
-                TextKeys.BACK,
+                TextKeys.RETURN,
                 sceneManager::showMainMenu
         );
 
