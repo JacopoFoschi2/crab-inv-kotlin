@@ -23,9 +23,12 @@ public enum TextKeys {
     ARE_YOU_SURE("are_you_sure"),
     YES("yes"),
     NO("no"),
-    SPEED_UP ("Speed Up"),
-    FIRERATE_UP("Firerate Up"),
-    HEALTH_UP("Health Up"),
+    SPEED_UP("speed_up"),
+    SPEED_DESC("speed_desc"),
+    FIRERATE_UP("firerate_up"),
+    FIRERATE_DESC("firerate_desc"),
+    HEALTH_UP("health_up"),
+    HEALTH_DESC("health_desc"),
     ;
     private final String key;
 
