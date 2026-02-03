@@ -1,0 +1,12 @@
+package it.unibo.crabinv.Controller.entity;
+
+import it.unibo.crabinv.Model.entity.Delta;
+
+public interface EntityCapableOfInputController {
+    /**
+     * Updates the status of something that receives inputs, such as the player
+     * @param firePressed tells the controller if the user requested to fire
+     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
+     */
+    void update(boolean firePressed, Delta delta);
+}
