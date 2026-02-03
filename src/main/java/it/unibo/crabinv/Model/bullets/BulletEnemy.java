@@ -1,6 +1,11 @@
-package it.unibo.crabinv.Model.entity;
+package it.unibo.crabinv.Model.bullets;
 
-public class BulletPlayer extends AbstractEntity implements Movable {
+import it.unibo.crabinv.Model.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entity.Entity;
+import it.unibo.crabinv.Model.entity.Movable;
+
+public class BulletEnemy extends AbstractEntity implements Movable {
     private final double speedY;
     /**
      * Creates the bullet by setting its basic parameters
@@ -9,7 +14,7 @@ public class BulletPlayer extends AbstractEntity implements Movable {
      * @param x
      * @param y
      */
-    public BulletPlayer(int maxHealth, double x, double y, double speedY) {
+    public BulletEnemy(int maxHealth, double x, double y, double speedY) {
         super(maxHealth, x, y);
         this.speedY = speedY;
     }
@@ -24,7 +29,15 @@ public class BulletPlayer extends AbstractEntity implements Movable {
     }
 
     @Override
+    public double getSpeed() {
+        return speedY;
+    }
+
+    @Override
     public void onCollisionWith(Entity entity) {
+        if (entity instanceof BulletEnemy){
+            return;
+        }
         super.onCollisionWith(entity);
     }
 }
