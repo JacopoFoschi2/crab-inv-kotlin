@@ -36,6 +36,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
     }
 
     /**
+     * Gives the speed of the enemy
      * @return the speed of the enemy
      */
     public double getSpeed() {

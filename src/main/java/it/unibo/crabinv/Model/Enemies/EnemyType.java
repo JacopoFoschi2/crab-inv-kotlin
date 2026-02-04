@@ -14,5 +14,3 @@ public enum EnemyType {
     }
 
 }
-
-// TODO: modify based on type of enemies

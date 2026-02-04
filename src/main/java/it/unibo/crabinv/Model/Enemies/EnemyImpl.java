@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.entity.*;
 
 public class EnemyImpl extends AbstractEntity implements Enemy {
     private final EnemyType type;
-    private int currencyToGive = 10;
+    private final int currencyToGive = 10;
     private int shootingCounter;
     private final int fireRate;
     private final double speed;
