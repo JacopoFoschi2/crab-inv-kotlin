@@ -49,8 +49,8 @@ public class GameEngineImpl implements GameEngine {
                 this.gameSession.getPlayerHealth(),
                 PLAYER_START_X,
                 PLAYER_FIXED_Y,
-                0.01,
-                1);
+                this.gameSession.getPlayerSpeed(),
+                this.gameSession.getPlayerFireRate());
         playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 
         final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
@@ -73,7 +73,7 @@ public class GameEngineImpl implements GameEngine {
                 playerUpdate(inputSnapshot);
                 waveUpdate();
 
-                //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAMEENGINE
+                //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
                 //enemyUpdate() ? o integrare in waveUpdate();
                 //collisionUpdate(); //calcola tutte le collisioni
                 //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy

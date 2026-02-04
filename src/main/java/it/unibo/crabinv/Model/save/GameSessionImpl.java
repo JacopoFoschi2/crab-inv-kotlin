@@ -1,6 +1,5 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.Enemies.Enemy;
 import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
 
 import java.time.Instant;
@@ -16,17 +15,18 @@ public class GameSessionImpl implements GameSession {
 
     private static final int STARTING_LEVEL = 1;
     private static final int STARTING_CURRENCY = 0;
-    public static final int STARTING_PLAYER_HEALTH = 3; // ATTENZIONE: VALORE E VISIBILITA' PLACEHOLDER
-    // manca logica di calcolo HP
+    private static final double STARTING_SPEED = 0.01;
+    private static final int STARTING_FIRE_RATE = 1;
+    public static final int STARTING_PLAYER_HEALTH = 3;
+
 
     private int currentLevel;
     private boolean gameOver;
     private final long startingTimeStamp;
     private int currency;
     private int playerHealth;
-    private double speedMultiplier = 1.0;
-    private double fireRateMultiplier = 1.0;
-    private int bonusHealth = 0;
+    private double playerSpeed;
+    private double playerFireRate;
 
 
     /**
@@ -38,6 +38,8 @@ public class GameSessionImpl implements GameSession {
         this.startingTimeStamp = Instant.now().toEpochMilli();
         this.currency = STARTING_CURRENCY;
         this.playerHealth = STARTING_PLAYER_HEALTH;
+        this.playerSpeed = STARTING_SPEED;
+        this.playerFireRate = STARTING_FIRE_RATE;
     }
 
     /** {@inheritDoc} */
@@ -74,6 +76,16 @@ public class GameSessionImpl implements GameSession {
     @Override
     public int getPlayerHealth() {
         return this.playerHealth;
+    }
+
+    @Override
+    public double getPlayerSpeed() {
+        return this.playerSpeed;
+    }
+
+    @Override
+    public double getPlayerFireRate() {
+        return this.playerFireRate;
     }
 
     /** {@inheritDoc} */
@@ -119,23 +131,24 @@ public class GameSessionImpl implements GameSession {
     }
     
 
-    public  void applyPowerUps(UserProfile profile) {
-        speedMultiplier = 1.0;
-        fireRateMultiplier = 1.0;
-        bonusHealth = STARTING_PLAYER_HEALTH;
+    public void applyPowerUps(UserProfile profile) {
         for (String powerUpName : profile.getPowerUpList()){
             int powerUpLevel = profile.getPowerUpLevel(powerUpName);
             PowerUpType type = PowerUpType.fromName(powerUpName);
             if (powerUpLevel > 0 && type != null) {
                 switch (type) {
                     case SPEED_UP ->
-                            this.speedMultiplier = speedMultiplier * type.getStatMultiplier() * powerUpLevel;
+                            this.playerSpeed =
+                                    STARTING_SPEED * type.getStatMultiplier() * powerUpLevel;
                     case HEALTH_UP ->
-                            this.playerHealth = playerHealth * (int) type.getStatMultiplier() * powerUpLevel;
+                            this.playerHealth =
+                                    STARTING_PLAYER_HEALTH * (int) type.getStatMultiplier() * powerUpLevel;
                     case FIRERATE_UP ->
-                            this.fireRateMultiplier = fireRateMultiplier * type.getStatMultiplier() * powerUpLevel;
+                            this.playerFireRate =
+                                    STARTING_FIRE_RATE * (int) type.getStatMultiplier() * powerUpLevel;
                 }
             }
         }
     }
+
 }
