@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
 import it.unibo.crabinv.Model.entity.Movable;
 
-public class BulletPlayer extends AbstractEntity implements Movable {
+public class BulletPlayer extends AbstractEntity implements Bullet {
     private final double speedY;
     /**
      * Creates the bullet by setting its basic parameters
@@ -31,10 +31,5 @@ public class BulletPlayer extends AbstractEntity implements Movable {
     @Override
     public double getSpeed() {
         return speedY;
-    }
-
-    @Override
-    public void onCollisionWith(Entity entity) {
-        super.onCollisionWith(entity);
     }
 }
