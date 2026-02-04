@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
 import it.unibo.crabinv.Model.entity.Movable;
 
-public class BulletEnemy extends AbstractEntity implements Movable {
+public class BulletEnemy extends AbstractEntity implements Bullet {
     private final double speedY;
     /**
      * Creates the bullet by setting its basic parameters
