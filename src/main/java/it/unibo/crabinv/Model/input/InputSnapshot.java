@@ -10,4 +10,5 @@ public interface InputSnapshot {
     Delta getXMovementDelta();
     Delta getYMovementDelta();
     boolean isPause();
+    boolean isUnpause();
 }

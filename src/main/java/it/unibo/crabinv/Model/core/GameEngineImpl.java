@@ -86,7 +86,8 @@ public class GameEngineImpl implements GameEngine {
                 //if hp == 0 -> is gameOver = gameOver()
                 //if nemici == 0, prossima wave
                 }
-            case PAUSED, GAME_OVER -> {
+            case PAUSED -> {
+
                 return;
             }
         }

@@ -64,9 +64,14 @@ public class GameLoopControllerImpl implements GameLoopController {
      */
     @Override
     public GameSnapshot step(long frameElapsedMillis) {
+
+        if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
+            if (inputController.getInputState().isUnpause()) {resume();}
+        }
+
         if (inputController.getInputState().isPause()) {
             if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-                this.gameEngine.pauseGame();
+                pause();
             }
         }
         if (gameEngine.getGameState() == GameEngineState.RUNNING) {
@@ -80,10 +85,8 @@ public class GameLoopControllerImpl implements GameLoopController {
                 totalElapsedTicks++;
             }
             accumulatedMillis -= ticksOfStep * tickDurationMillis;
-        } else {
-            this.accumulatedMillis = 0;
+            latestSnapshot = gameEngine.snapshot();
         }
-        latestSnapshot = gameEngine.snapshot();
         return latestSnapshot;
     }
 

@@ -6,7 +6,8 @@ public enum KeyCodeKeyboard {
     UP(38),
     DOWN(40),
     SHOOT(32),
-    PAUSE(27);
+    PAUSE(27), //ESC
+    UNPAUSE(8); //BACKSPACE
 
 
     private final int keyCode;
