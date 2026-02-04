@@ -6,7 +6,7 @@ import it.unibo.crabinv.Model.entity.Entity;
  * Provides the methods an EntityController should implement.
  */
 public abstract class EntityAbstractController<T extends Entity> implements EntityController {
-    protected final T entity;
+    private final T entity;
 
     public EntityAbstractController(T entity) {
         this.entity = entity;
@@ -40,5 +40,9 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
     @Override
     public double getY() {
         return entity.getY();
+    }
+
+    protected T getEntity() {
+        return entity;
     }
 }

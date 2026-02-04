@@ -37,7 +37,7 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * @return the speed of the player
      */
     public double getSpeed() {
-        return entity.getSpeed();
+        return super.getEntity().getSpeed();
     }
 
     /**
@@ -45,7 +45,7 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        entity.move(delta, minBounds, maxBounds);
+        super.getEntity().move(delta, minBounds, maxBounds);
     }
 
     /**
@@ -53,8 +53,8 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * TODO handle the bullet being created
      */
     private void shoot() {
-        if (entity.isAbleToShoot()) {
-            entity.shoot();
+        if (super.getEntity().isAbleToShoot()) {
+            super.getEntity().shoot();
         }
     }
 
@@ -62,6 +62,6 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * Updates the player status for the tick
      */
     private void tick() {
-        entity.tick();
+        super.getEntity().tick();
     }
 }

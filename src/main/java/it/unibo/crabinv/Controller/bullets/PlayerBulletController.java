@@ -25,7 +25,7 @@ public class PlayerBulletController extends EntityAbstractController<BulletPlaye
      * @return the speed of the bullet
      */
     public double getSpeed() {
-        return entity.getSpeed();
+        return super.getEntity().getSpeed();
     }
 
     /**
@@ -33,7 +33,7 @@ public class PlayerBulletController extends EntityAbstractController<BulletPlaye
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        entity.move(delta, minBounds, maxBounds);
+        super.getEntity().move(delta, minBounds, maxBounds);
     }
 
 
