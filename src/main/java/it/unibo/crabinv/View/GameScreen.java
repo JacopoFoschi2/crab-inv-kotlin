@@ -1,6 +1,8 @@
 package it.unibo.crabinv.View;
 
 import it.unibo.crabinv.Controller.audio.AudioController;
+import it.unibo.crabinv.Controller.core.GameLoopController;
+import it.unibo.crabinv.Controller.core.GameLoopControllerImpl;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
 import it.unibo.crabinv.Controller.input.InputMapperImpl;
@@ -28,39 +30,22 @@ public class GameScreen {
 
     public Node getView() {
         final StackPane root = new StackPane();
-
         final double width = sceneManager.getWidth();
         final double height = sceneManager.getHeight();
-
         final Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        // INPUT
         final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
-
-        // Important: the node must be focusable to receive key events
         canvas.setFocusTraversable(true);
-
         canvas.setOnKeyPressed(e -> input.onKeyPressed(e.getCode().getCode()));
         canvas.setOnKeyReleased(e -> input.onKeyReleased(e.getCode().getCode()));
 
-        // MODEL
         final GameEngine engine = new GameEngineImpl();
-        engine.newGame();
-
-        final double worldWidth = 800;
-        final double worldHeight = 1600;
-
-        // RENDERER
+        final GameLoopController gameLoopController = new GameLoopControllerImpl(engine, input);
         final GameRenderer renderer = new GameRenderer(
-                canvas.getGraphicsContext2D(),
-                width,
-                height,
-                worldWidth,
-                worldHeight
+                canvas.getGraphicsContext2D()
         );
 
-        // LOOP (JavaFX)
         final AnimationTimer timer = new AnimationTimer() {
             private long lastNow = 0;
 
@@ -71,17 +56,14 @@ public class GameScreen {
                     return;
                 }
 
-                // tick-based engine: one engine.tick per call (simple for now)
-                engine.tick(input.getInputState());
-
-                renderer.render(engine.snapshot());
+                final long frameElapsedMillis = Math.max(0L, (now - lastNow) / 1_000_000L);
+                renderer.render(gameLoopController.step(frameElapsedMillis));
 
                 lastNow = now;
             }
         };
         timer.start();
 
-        // Request focus AFTER it is attached: Platform.runLater is the safe way
         javafx.application.Platform.runLater(canvas::requestFocus);
 
         return root;

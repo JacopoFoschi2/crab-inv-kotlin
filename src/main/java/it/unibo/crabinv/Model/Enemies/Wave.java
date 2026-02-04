@@ -20,4 +20,9 @@ public interface Wave {
      */
     boolean isWaveFinished();
 
+    /**
+     * @return the number of available spawn slots for the enemies
+     */
+    int getMaxSpawnSlots();
+
 }

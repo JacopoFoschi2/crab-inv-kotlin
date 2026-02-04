@@ -12,68 +12,73 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class GameRenderer {
-    private static final double SPRITE_W = 96;
-    private static final double SPRITE_H = 96;
+
+    private static final double SPRITE_MULT = 0.08;
 
     private final GraphicsContext gc;
-    private final double canvasWidth;
-    private final double canvasHeight;
-
-    private final double worldWidth;
-    private final double worldHeight;
-
     private final Map<String, Image> imageCache = new HashMap<>();
 
-    public GameRenderer(final GraphicsContext gc,
-                        final double canvasWidth,
-                        final double canvasHeight,
-                        final double worldWidth,
-                        final double worldHeight) {
+    public GameRenderer(final GraphicsContext gc) {
         this.gc = Objects.requireNonNull(gc, "gc must not be null");
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
-        this.worldWidth = worldWidth;
-        this.worldHeight = worldHeight;
     }
 
     public void render(final GameSnapshot snapshot) {
         Objects.requireNonNull(snapshot, "snapshot must not be null");
-        clear();
 
-        final double playfieldWidth = canvasWidth / 3.0;
-        final double offsetX = (canvasWidth - playfieldWidth) / 2.0;
+        final double canvasW = gc.getCanvas().getWidth();
+        final double canvasH = gc.getCanvas().getHeight();
+        final double worldSquareSideDimension = Math.min(canvasW, canvasH);
 
-        final double scaleX = playfieldWidth / worldWidth;
-        final double scaleY = canvasHeight / worldHeight;
+        // Center the square world into the available canvas
+        final double offsetX = (canvasW - worldSquareSideDimension) / 2.0;
+        final double offsetY = (canvasH - worldSquareSideDimension) / 2.0;
+
+        clear(canvasW, canvasH);
+
+        // Optional debug: draw world bounds (can be removed later)
+        gc.setStroke(Color.DARKGRAY);
+        gc.strokeRect(offsetX, offsetY, worldSquareSideDimension, worldSquareSideDimension);
 
         for (final RenderObjectSnapshot obj : snapshot.renderObjects()) {
-            final double px = offsetX + obj.x() * scaleX;
-            final double py = obj.y() * scaleY;
-            drawSprite(obj.imagePath(), px, py);
+            final double cx = offsetX + toPixels(obj.x(), worldSquareSideDimension);
+            final double cy = offsetY + toPixels(obj.y(), worldSquareSideDimension);
+            drawSpriteCentered(obj.imagePath(), cx, cy, worldSquareSideDimension);
         }
     }
 
-    private void clear() {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvasWidth, canvasHeight);
+    private double toPixels(final double coordNorm, final double worldSquareSideDimension) {
+        final double clamped = Math.max(0.0, Math.min(1.0, coordNorm));
+        return clamped * worldSquareSideDimension;
     }
 
-    private void drawSprite(final String imagePath, final double x, final double y) {
+    private void clear(final double canvasW, final double canvasH) {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, canvasW, canvasH);
+    }
+
+    private void drawSpriteCentered(final String imagePath,
+                                    final double centerX,
+                                    final double centerY,
+                                    final double worldSquareSideDimension) {
+        final double spriteW = worldSquareSideDimension * SPRITE_MULT;
+        final double spriteH = worldSquareSideDimension * SPRITE_MULT;
+
+        final double x = centerX - (spriteW / 2.0);
+        final double y = centerY - (spriteH / 2.0);
+
         if (imagePath == null || imagePath.isBlank()) {
-            // fallback: if missing sprite path, draw a placeholder rectangle
             gc.setFill(Color.MAGENTA);
-            gc.fillRect(x, y, SPRITE_W, SPRITE_H);
+            gc.fillRect(x, y, spriteW, spriteH);
             return;
         }
 
         final Image img = imageCache.computeIfAbsent(imagePath, this::loadImage);
-        gc.drawImage(img, x, y, SPRITE_W, SPRITE_H);
+        gc.drawImage(img, x, y, spriteW, spriteH);
     }
 
     private Image loadImage(final String imagePath) {
         final InputStream is = getClass().getResourceAsStream(imagePath);
         if (is == null) {
-            // If resource missing, return a 1x1 transparent image to avoid crashing render loop
             return new Image(Objects.requireNonNull(
                     getClass().getResourceAsStream("/uiImages/frameMenuButton.png"),
                     "Fallback image missing too"
