@@ -26,7 +26,7 @@ public class GameSessionImpl implements GameSession {
     private int currency;
     private int playerHealth;
     private double playerSpeed;
-    private double playerFireRate;
+    private int playerFireRate;
 
 
     /**
@@ -84,7 +84,7 @@ public class GameSessionImpl implements GameSession {
     }
 
     @Override
-    public double getPlayerFireRate() {
+    public int getPlayerFireRate() {
         return this.playerFireRate;
     }
 
