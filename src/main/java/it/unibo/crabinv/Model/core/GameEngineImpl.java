@@ -61,15 +61,13 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public void tick(InputSnapshot inputSnapshot) {
-        if (inputSnapshot == null) {throw new IllegalStateException("inputSnapshot cannot be null");}
+    public void tick() {
         if (this.gameSession == null) {throw new IllegalStateException("call newGame() before tick()");}
         if (this.level == null){throw new IllegalStateException("newGame() called a null level");}
         if (this.gameEngineState == null){throw new IllegalStateException("gameEngineState cannot be null");}
 
         switch (this.gameEngineState) {
             case RUNNING -> {
-                playerUpdate(inputSnapshot);
                 waveUpdate();
 
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
@@ -158,10 +156,6 @@ public class GameEngineImpl implements GameEngine {
     @Override
     public double getWorldMaxX() {
         return WORLD_MAX_X;
-    }
-
-    private void playerUpdate(InputSnapshot inputSnapshot){
-
     }
 
     private void waveUpdate(){

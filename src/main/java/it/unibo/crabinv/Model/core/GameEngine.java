@@ -15,9 +15,8 @@ public interface GameEngine {
 
     /**
      * Defines the logic of the simulation and advances one tick
-     * @param inputSnapshot the input on which the logic will be calculated
      */
-    void tick (InputSnapshot inputSnapshot);
+    void tick ();
 
     /**
      * @return the snapshot of the current state

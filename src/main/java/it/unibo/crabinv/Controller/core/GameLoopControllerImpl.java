@@ -72,50 +72,92 @@ public class GameLoopControllerImpl implements GameLoopController {
      */
     @Override
     public GameSnapshot step(long frameElapsedMillis) {
-
-        if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
-            if (inputController.getInputState().isUnpause()) {resume();}
+        checkPause();
+        checkResume();
+        if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+            accumulateTime(frameElapsedMillis);
+            final int nextStepTicks = calculateTicks();
+            executeTicks(nextStepTicks);
+            updateSnapshot(nextStepTicks);
         }
+        return latestSnapshot;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameSnapshot getLatestSnapshot() {
+        return this.latestSnapshot;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void pause() {
+        this.gameEngine.pauseGame();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resume() {
+        this.gameEngine.resumeGame();
+    }
+
+    private void checkResume() {
+        if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
+            if (inputController.getInputState().isUnpause()) {
+                resume();
+            }
+        }
+    }
+
+    private void checkPause() {
         if (inputController.getInputState().isPause()) {
             if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
                 pause();
             }
         }
-        if (gameEngine.getGameState() == GameEngineState.RUNNING) {
-            this.accumulatedMillis += frameElapsedMillis;
-            long ticksOfStep = accumulatedMillis / this.tickDurationMillis;
-            if (ticksOfStep > maxTicksPerFrame) {
-                ticksOfStep = maxTicksPerFrame;
-            }
-            for (long i = 0; i < ticksOfStep; i++) {
-                final InputSnapshot inputSnapshot = inputController.getInputState();
-                this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+    }
 
-                this.gameEngine.tick(inputController.getInputState());
-                totalElapsedTicks++;
-            }
-            accumulatedMillis -= ticksOfStep * tickDurationMillis;
-            latestSnapshot = gameEngine.snapshot();
+    private void accumulateTime(long frameElapsedMillis) {
+        this.accumulatedMillis += frameElapsedMillis;
+    }
+
+    private int calculateTicks() {
+        final long ticks = this.accumulatedMillis / this.tickDurationMillis;
+        final long cappedTicks = Math.min(ticks, (long) maxTicksPerFrame);
+        return (int) cappedTicks;
+    }
+
+    private void executeTicks(int nextStepTicks) {
+        for (int i = 0; i < nextStepTicks; i++) {
+            playerUpdate();
+            //enemyUpdate(); //TODO
+            tickUpdate();
         }
-        return latestSnapshot;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public GameSnapshot getLatestSnapshot() {
-        return this.latestSnapshot;
+    private void playerUpdate() {
+        final InputSnapshot inputSnapshot = inputController.getInputState();
+        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
     }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void pause() {
-        this.gameEngine.pauseGame();
+
+    private void enemyUpdate() {
+        //TODO
     }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void resume() {
-        this.gameEngine.resumeGame();
+
+    private void tickUpdate() {
+        this.gameEngine.tick();
+        totalElapsedTicks++;
     }
+
+    private void updateSnapshot(int nextStepTicks) {
+        this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis;
+        this.latestSnapshot = this.gameEngine.snapshot();
+    }
+
 }
