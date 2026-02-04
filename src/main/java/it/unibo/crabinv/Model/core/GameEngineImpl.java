@@ -1,11 +1,9 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Controller.player.PlayerController;
 import it.unibo.crabinv.Model.Enemies.*;
 import it.unibo.crabinv.Model.Levels.Level;
 import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
-import it.unibo.crabinv.Model.input.InputSnapshot;
 import it.unibo.crabinv.Model.player.Player;
 import it.unibo.crabinv.Model.save.*;
 
@@ -16,25 +14,20 @@ public class GameEngineImpl implements GameEngine {
 
     private static final double PLAYER_SPRITE_MULT = 0.08;
     private static final double PLAYER_HALF_SIZE_NORM = PLAYER_SPRITE_MULT / 2.0;
-
     private static final double WORLD_MIN_X = PLAYER_HALF_SIZE_NORM;
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
-
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
-
-    Save save;
-    GameSession gameSession;
-    WaveProvider waveProvider; //TODO check safe-remove after correct implementation
-    GameEngineState gameEngineState;
-    RewardsService rewardsService;
-    Level level;
-    int currentLevel;
-    long elapsedTicks;
-
-    Player player;
-
     private final LevelFactory levelFactory = new LevelFactoryImpl();
+    Player player;
+    private Save save;
+    private GameSession gameSession;
+    private WaveProvider waveProvider; //TODO check safe-remove after correct implementation
+    private GameEngineState gameEngineState;
+    private RewardsService rewardsService;
+    private Level level;
+    private int currentLevel;
+    private long elapsedTicks;
 
     public GameEngineImpl() {
     }
@@ -43,7 +36,6 @@ public class GameEngineImpl implements GameEngine {
     public void newGame() {
         this.gameSession = new GameSessionImpl();
         this.rewardsService = new EnemyRewardService(this.gameSession);
-
         player = new Player(
                 this.gameSession.getPlayerHealth(),
                 PLAYER_START_X,
@@ -62,51 +54,38 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void tick() {
-        if (this.gameSession == null) {throw new IllegalStateException("call newGame() before tick()");}
-        if (this.level == null){throw new IllegalStateException("newGame() called a null level");}
-        if (this.gameEngineState == null){throw new IllegalStateException("gameEngineState cannot be null");}
-
+        if (this.gameSession == null) {
+            throw new IllegalStateException("call newGame() before tick()");
+        }
+        if (this.level == null) {
+            throw new IllegalStateException("newGame() called a null level");
+        }
+        if (this.gameEngineState == null) {
+            throw new IllegalStateException("gameEngineState cannot be null");
+        }
         switch (this.gameEngineState) {
             case RUNNING -> {
                 waveUpdate();
-
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
                 //enemyUpdate() ? o integrare in waveUpdate();
                 //collisionUpdate(); //calcola tutte le collisioni
                 //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
                 //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player
                 checkGameOver();
-
                 this.elapsedTicks++;
                 //if nemici su asse y giocatore -> -1hp
                 //if hp == 0 -> is gameOver = gameOver()
                 //if nemici == 0, prossima wave
-                }
+            }
             case PAUSED, GAME_OVER -> {
-                return;
             }
         }
     }
 
     @Override
     public GameSnapshot snapshot() {
-        if (this.gameSession == null) {
-            throw new IllegalStateException("newGame() needed before snapshot()");
-        }
-        final List<RenderObjectSnapshot> objects = new ArrayList<>();
-
-        objects.add(new RenderObjectSnapshot(player.getImagePath(), player.getX(), player.getY()));
-
-        if (this.level != null && !this.level.isLevelFinished()) {
-            final Wave wave = level.getCurrentWave();
-            if (wave != null) {
-                for (final Enemy enemy : wave.getAliveEnemies()) {
-                    objects.add(new RenderObjectSnapshot(enemy.getImagePath(), enemy.getX(), enemy.getY()));
-                }
-            }
-        }
-
-        return new GameSnapshot(List.copyOf(objects), this.gameSession);
+        checkGameStarted();
+        return createSnapshot(populateSnapshot());//TODO inserire snapshot bullet in populateSnapshot().populateBullet()
     }
 
     @Override
@@ -120,7 +99,6 @@ public class GameEngineImpl implements GameEngine {
             return;
         }
         this.gameEngineState = GameEngineState.GAME_OVER;
-
         this.gameSession.markGameOver();
         SessionRecord sessionRecord = new SessionRecordImpl(
                 this.gameSession.getStartingTimeStamp(),
@@ -132,12 +110,16 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void pauseGame() {
-        if (this.gameEngineState == GameEngineState.RUNNING) {this.gameEngineState = GameEngineState.PAUSED;}
+        if (this.gameEngineState == GameEngineState.RUNNING) {
+            this.gameEngineState = GameEngineState.PAUSED;
+        }
     }
 
     @Override
     public void resumeGame() {
-        if (this.gameEngineState == GameEngineState.PAUSED) {this.gameEngineState = GameEngineState.RUNNING;}
+        if (this.gameEngineState == GameEngineState.PAUSED) {
+            this.gameEngineState = GameEngineState.RUNNING;
+        }
     }
 
     @Override
@@ -158,7 +140,7 @@ public class GameEngineImpl implements GameEngine {
         return WORLD_MAX_X;
     }
 
-    private void waveUpdate(){
+    private void waveUpdate() {
         if (!level.isLevelFinished()) {
             final Wave currentWave = level.getCurrentWave();
             if (currentWave != null) {
@@ -170,8 +152,50 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
-    private void checkGameOver(){
-        if (this.gameSession.getPlayerHealth() <= 0) {gameOver();}
+    private void checkGameStarted() {
+        if (this.gameSession == null) {
+            throw new IllegalStateException("newGame() needed before snapshot()");
         }
     }
+
+    private List<RenderObjectSnapshot> populateSnapshot() {
+        final List<RenderObjectSnapshot> renderObjects = new ArrayList<>();
+        populatePlayer(renderObjects);
+        populateEnemies(renderObjects);
+        //populateBullets(renderObjects); //TODO
+        return renderObjects;
+    }
+
+    private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
+        if (this.gameSession == null) {
+            throw new IllegalStateException("newGame() needed before snapshot()");
+        }
+        return new GameSnapshot(List.copyOf(renderObjects), this.gameSession);
+    }
+
+    private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
+        renderObjects.add(new RenderObjectSnapshot(player.getImagePath(), player.getX(), player.getY()));
+    }
+
+    private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
+        if (this.level != null && !this.level.isLevelFinished()) {
+            final Wave wave = level.getCurrentWave();
+            if (wave != null) {
+                for (final Enemy enemy : wave.getAliveEnemies()) {
+                    renderObjects.add(new RenderObjectSnapshot(enemy.getImagePath(), enemy.getX(), enemy.getY()));
+                }
+            }
+        }
+    }
+
+    private void populateBullets(List<RenderObjectSnapshot> renderObjects){
+
+    }
+
+    private void checkGameOver() {
+        if (this.gameSession.getPlayerHealth() <= 0) {
+            gameOver();
+        }
+    }
+}
 

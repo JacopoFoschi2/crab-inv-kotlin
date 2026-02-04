@@ -13,8 +13,8 @@ public class GameLoopControllerImpl implements GameLoopController {
     private final InputController inputController;
     private final PlayerController playerController;
 
-    long STANDARD_TICK_MILLIS = 16;
-    int STANDARD_MAX_TICKS_PER_FRAME = 5;
+    private static final long STANDARD_TICK_MILLIS = 16;
+    private static final int STANDARD_MAX_TICKS_PER_FRAME = 5;
     private final long tickDurationMillis;
     private final int maxTicksPerFrame;
     private long accumulatedMillis;
