@@ -70,24 +70,22 @@ public class GameEngineImpl implements GameEngine {
 
         switch (this.gameEngineState) {
             case RUNNING -> {
-                    playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta())
-                ;
-                if (!level.isLevelFinished()) {
-                    final Wave currentWave = level.getCurrentWave();
-                    if (currentWave != null) {
-                        currentWave.tickLogicUpdate();
-                        if (currentWave.isWaveFinished()) {
-                            level.advanceWave();
-                        }
-                    }
-                }
+                playerUpdate(inputSnapshot);
+                waveUpdate();
+
+                //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAMEENGINE
+                //enemyUpdate() ? o integrare in waveUpdate();
+                //collisionUpdate(); //calcola tutte le collisioni
+                //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
+                //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player
+                checkGameOver();
+
                 this.elapsedTicks++;
                 //if nemici su asse y giocatore -> -1hp
                 //if hp == 0 -> is gameOver = gameOver()
                 //if nemici == 0, prossima wave
                 }
-            case PAUSED -> {
-
+            case PAUSED, GAME_OVER -> {
                 return;
             }
         }
@@ -126,7 +124,6 @@ public class GameEngineImpl implements GameEngine {
         }
         this.gameEngineState = GameEngineState.GAME_OVER;
 
-        //TODO creare altra classe per gestire le operazione out-of-gameplay e richiamare qui
         this.gameSession.markGameOver();
         //TODO Crea SessionRecord
         //TODO Aggiorna UserProfile
@@ -142,4 +139,24 @@ public class GameEngineImpl implements GameEngine {
         if (this.gameEngineState == GameEngineState.PAUSED) {this.gameEngineState = GameEngineState.RUNNING;}
     }
 
-}
+    private void playerUpdate(InputSnapshot inputSnapshot){
+        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+    }
+
+    private void waveUpdate(){
+        if (!level.isLevelFinished()) {
+            final Wave currentWave = level.getCurrentWave();
+            if (currentWave != null) {
+                currentWave.tickLogicUpdate();
+                if (currentWave.isWaveFinished()) {
+                    level.advanceWave();
+                }
+            }
+        }
+    }
+
+    private void checkGameOver(){
+        if (this.gameSession.getPlayerHealth() <= 0) {gameOver();}
+        }
+    }
+
