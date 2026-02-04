@@ -14,32 +14,32 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
 
     @Override
     public boolean isAlive() {
-        return entity.isAlive();
+        return getEntity().isAlive();
     }
 
     @Override
     public void onCollisionWith(Entity other) {
-        entity.onCollisionWith(other);
+        getEntity().onCollisionWith(other);
     }
 
     @Override
     public int getHealth() {
-        return entity.getHealth();
+        return getEntity().getHealth();
     }
 
     @Override
     public int getMaxHealth() {
-        return entity.getMaxHealth();
+        return getEntity().getMaxHealth();
     }
 
     @Override
     public double getX() {
-        return entity.getX();
+        return getEntity().getX();
     }
 
     @Override
     public double getY() {
-        return entity.getY();
+        return getEntity().getY();
     }
 
     protected T getEntity() {
