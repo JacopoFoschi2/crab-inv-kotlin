@@ -8,6 +8,10 @@ import it.unibo.crabinv.Model.entity.Entity;
 public abstract class EntityAbstractController<T extends Entity> implements EntityController {
     private final T entity;
 
+    /**
+     * Links the controller to its referred entity
+     * @param entity an entity implementation
+     */
     public EntityAbstractController(T entity) {
         this.entity = entity;
     }
@@ -42,6 +46,9 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
         return getEntity().getY();
     }
 
+    /**
+     * @return the instance of entity to access getters and methods from for controllers that implement this one.
+     */
     protected T getEntity() {
         return entity;
     }

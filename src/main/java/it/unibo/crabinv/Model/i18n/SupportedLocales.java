@@ -20,14 +20,23 @@ public enum SupportedLocales {
         this.localizedName = localizedName;
     }
 
+    /**
+     * @return the locale
+     */
     public Locale getLocale() {
         return locale;
     }
 
+    /**
+     * @return the image path of the language flag
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * @return the localized name of the language
+     */
     public String getLocalizedName() {
         return localizedName;
     }

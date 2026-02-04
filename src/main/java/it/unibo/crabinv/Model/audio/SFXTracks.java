@@ -19,6 +19,9 @@ public enum SFXTracks {
         this.path = path;
     }
 
+    /**
+     * @return the resource path of the selected SFX
+     */
     public String getPath() {
         return path;
     }

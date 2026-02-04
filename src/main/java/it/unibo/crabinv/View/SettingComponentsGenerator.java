@@ -16,12 +16,21 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
+/**
+ * Provides the methods to create all settings components
+ */
 public class SettingComponentsGenerator {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
     private final Pos settingsAlignment;
 
+    /**
+     * @param sceneManager the instance of sceneManager
+     * @param loc the instance of localization
+     * @param audio the instance of AudioController
+     * @param settingsAlignment the aligment that the settings component should have
+     */
     public SettingComponentsGenerator (SceneManager sceneManager, LocalizationController loc, AudioController audio, Pos settingsAlignment) {
         this.sceneManager = sceneManager;
         this.loc = loc;
@@ -29,6 +38,14 @@ public class SettingComponentsGenerator {
         this.settingsAlignment = settingsAlignment;
     }
 
+    /**
+     * Creates a working volume slider be it of SFX or BGM thanks to the setVolume IntConsumer
+     * @param volume the volume that the slider should be set to
+     * @param setVolume the method that sets the volume in the audioController
+     * @param onFocused the sound effect the slider should make when focused
+     * @param key the textkey related to the slider
+     * @return an HBox containing the slider and it's related label
+     */
     public HBox createVolumeSlider(int volume, IntConsumer setVolume, Consumer<SFXTracks> onFocused, TextKeys key) {
         HBox sliderBox = new HBox(20);
         sliderBox.setAlignment(settingsAlignment);
@@ -45,6 +62,13 @@ public class SettingComponentsGenerator {
         return sliderBox;
     }
 
+    /**
+     * Creates a working mute checkbox for all the audio implementations
+     * @param key the key to obtain the localization text
+     * @param isMute if the checkbox should be created already muted
+     * @param toggleMute the method that should be run when the checkbox is toggled
+     * @return the ready checkbox object
+     */
     public CheckBox createMute(TextKeys key, boolean isMute, Runnable toggleMute) {
         CheckBox mute = new CheckBox(loc.getString(key));
         mute.getStyleClass().add("label");
@@ -56,7 +80,23 @@ public class SettingComponentsGenerator {
         return mute;
     }
 
-    public Spinner<SupportedLocales> createSpinner() {
+    /**
+     * Creates the working language selector
+     * @return the HBox containing both the spinner and its related label
+     */
+    public HBox createLanguageSelector() {
+        HBox box = new HBox(20);
+        Spinner<SupportedLocales> languageSpinner = createSpinner();
+        Label label = new Label(loc.getString(TextKeys.LANGUAGE));
+        box.getChildren().addAll(languageSpinner, label);
+        return box;
+    }
+
+    /**
+     * Creates a spinner of the supported locales
+     * @return the working spinner
+     */
+    private Spinner<SupportedLocales> createSpinner() {
         ObservableList<SupportedLocales> locales = new ObservableListWrapper<>(List.of(SupportedLocales.values()));
         SpinnerValueFactory<SupportedLocales> factory =
                 new SpinnerValueFactory.ListSpinnerValueFactory<>(locales);
@@ -69,13 +109,5 @@ public class SettingComponentsGenerator {
             sceneManager.showSettings();
         });
         return spinner;
-    }
-
-    public HBox createLanguageSelector() {
-        HBox box = new HBox(20);
-        Spinner<SupportedLocales> languageSpinner = createSpinner();
-        Label label = new Label(loc.getString(TextKeys.LANGUAGE));
-        box.getChildren().addAll(languageSpinner, label);
-        return box;
     }
 }

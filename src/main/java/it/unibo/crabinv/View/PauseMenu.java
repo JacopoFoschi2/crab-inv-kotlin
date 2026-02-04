@@ -12,6 +12,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+/**
+ * Provides the method to create the pause menu GUI
+ */
 public class PauseMenu {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
@@ -19,6 +22,11 @@ public class PauseMenu {
     private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
+    /**
+     * @param sceneManager the instance of SceneManager
+     * @param loc the instance of LocalizationController
+     * @param audio the instance of AudioController
+     */
     public PauseMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
@@ -26,6 +34,9 @@ public class PauseMenu {
         components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
     }
 
+    /**
+     * @return the Stackpane containing a working pauseMenu
+     */
     public Pane getView() {
         StackPane pane = new StackPane();
         Label title = new Label(loc.getString(TextKeys.SETTINGS));

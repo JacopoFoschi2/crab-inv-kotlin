@@ -2,6 +2,9 @@ package it.unibo.crabinv.Controller.entity;
 
 import it.unibo.crabinv.Model.entity.Delta;
 
+/**
+ * Provides an entity not capable of receiving input the update method it should implement
+ */
 public interface EntityNotCapableOfInputController {
     /**
      * Updates the status of something that doesn't receive inputs,

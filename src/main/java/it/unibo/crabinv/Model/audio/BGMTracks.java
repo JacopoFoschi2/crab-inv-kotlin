@@ -13,6 +13,9 @@ public enum BGMTracks {
         this.path = path;
     }
 
+    /**
+     * @return the resource path of the selected BGM
+     */
     public String getPath() {
         return path;
     }
