@@ -25,7 +25,7 @@ public class GameEngineImpl implements GameEngine {
 
     Save save;
     GameSession gameSession;
-    WaveProvider waveProvider;
+    WaveProvider waveProvider; //TODO check safe-remove after correct implementation
     GameEngineState gameEngineState;
     RewardsService rewardsService;
     Level level;
@@ -33,7 +33,6 @@ public class GameEngineImpl implements GameEngine {
     long elapsedTicks;
 
     Player player;
-    PlayerController playerController;
 
     private final LevelFactory levelFactory = new LevelFactoryImpl();
 
@@ -51,7 +50,7 @@ public class GameEngineImpl implements GameEngine {
                 PLAYER_FIXED_Y,
                 this.gameSession.getPlayerSpeed(),
                 this.gameSession.getPlayerFireRate());
-        playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
+        //playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 
         final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
 
@@ -143,8 +142,26 @@ public class GameEngineImpl implements GameEngine {
         if (this.gameEngineState == GameEngineState.PAUSED) {this.gameEngineState = GameEngineState.RUNNING;}
     }
 
+    @Override
+    public Player getPlayer() {
+        if (this.player == null) {
+            throw new IllegalStateException("call newGame() before getPlayer()");
+        }
+        return this.player;
+    }
+
+    @Override
+    public double getWorldMinX() {
+        return WORLD_MIN_X;
+    }
+
+    @Override
+    public double getWorldMaxX() {
+        return WORLD_MAX_X;
+    }
+
     private void playerUpdate(InputSnapshot inputSnapshot){
-        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+
     }
 
     private void waveUpdate(){

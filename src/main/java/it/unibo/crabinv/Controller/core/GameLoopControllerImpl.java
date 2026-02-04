@@ -1,14 +1,17 @@
 package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.input.InputController;
+import it.unibo.crabinv.Controller.player.PlayerController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.input.InputSnapshot;
 
 public class GameLoopControllerImpl implements GameLoopController {
 
     private final GameEngine gameEngine;
     private final InputController inputController;
+    private final PlayerController playerController;
 
     long STANDARD_TICK_MILLIS = 16;
     int STANDARD_MAX_TICKS_PER_FRAME = 5;
@@ -32,6 +35,11 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
         this.gameEngine.newGame();
+        this.playerController = new PlayerController(
+                this.gameEngine.getPlayer(),
+                this.gameEngine.getWorldMinX(),
+                this.gameEngine.getWorldMaxX()
+        );
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
@@ -81,6 +89,9 @@ public class GameLoopControllerImpl implements GameLoopController {
                 ticksOfStep = maxTicksPerFrame;
             }
             for (long i = 0; i < ticksOfStep; i++) {
+                final InputSnapshot inputSnapshot = inputController.getInputState();
+                this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+
                 this.gameEngine.tick(inputController.getInputState());
                 totalElapsedTicks++;
             }
