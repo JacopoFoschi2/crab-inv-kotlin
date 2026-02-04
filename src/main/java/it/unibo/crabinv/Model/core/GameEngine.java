@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Model.input.InputSnapshot;
+import it.unibo.crabinv.Model.player.Player;
 
 /**
  * Defines the contract for the game simulation
@@ -14,9 +15,8 @@ public interface GameEngine {
 
     /**
      * Defines the logic of the simulation and advances one tick
-     * @param inputSnapshot the input on which the logic will be calculated
      */
-    void tick (InputSnapshot inputSnapshot);
+    void tick ();
 
     /**
      * @return the snapshot of the current state
@@ -42,4 +42,19 @@ public interface GameEngine {
      * Resumes the game, resumes the tick logic
      */
     void resumeGame();
+
+    /**
+     * @return the Player in the game engine
+     */
+    Player getPlayer();
+
+    /**
+     * @return the min coordinates of the world
+     */
+    double getWorldMinX();
+
+    /**
+     * @return the max coordinates of the world
+     */
+    double getWorldMaxX();
 }

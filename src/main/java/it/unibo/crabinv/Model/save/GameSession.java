@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.Enemies.EnemyType;
 
 /**
  * Represents a single game session,
- * exposes level, currency, and player health.
+ * exposes level, currency, and player stats.
  */
 
 public interface GameSession {
@@ -39,6 +39,10 @@ public interface GameSession {
      * @return current player health
      * */
     int getPlayerHealth();
+
+    double getPlayerSpeed();
+
+    int getPlayerFireRate();
 
     /**
      * Advances CurrentLevel and NextLevel counters

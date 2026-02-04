@@ -9,5 +9,5 @@ public interface InputMapper {
     Delta mapToYDelta(int inputCode);
     boolean mapToShoot(int inputCode);
     boolean mapToPause (int inputCode);
-
+    boolean mapToUnPause (int inputCode);
 }
