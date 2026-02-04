@@ -1,8 +1,10 @@
 package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Model.entity.Entity;
+import it.unibo.crabinv.Model.entity.Movable;
+import it.unibo.crabinv.Model.entity.Shooter;
 
-public interface Enemy extends Entity {
+public interface Enemy extends Entity, Movable,Shooter {
     /**
      * Getter for the enemy Type that the enemy has
      * @return the enemy type of that specific enemy
@@ -31,10 +33,4 @@ public interface Enemy extends Entity {
      * @return true if the bullet is shot by another enemy is true else is false
      */
     boolean isFriendlyFire(Entity other);
-
-    /**
-     * Gives the speed of the enemy
-     * @return the speed of the enemy
-     */
-    double getSpeed();
 }

@@ -3,7 +3,7 @@ package it.unibo.crabinv.Model.Enemies;
 import it.unibo.crabinv.Model.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entity.*;
 
-public class EnemyImpl extends AbstractEntity implements Enemy, Movable, Shooter {
+public class EnemyImpl extends AbstractEntity implements Enemy {
     private final EnemyType type;
     private int currencyToGive = 10;
     private int shootingCounter;

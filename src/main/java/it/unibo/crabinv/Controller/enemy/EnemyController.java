@@ -10,11 +10,11 @@ import it.unibo.crabinv.Model.entity.Entity;
 import java.util.Random;
 
 
-public class EnemyController extends EntityAbstractController<EnemyImpl> implements EntityNotCapableOfInputController {
+public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
     private final double minBounds;
     private final double maxBounds;
 
-    public EnemyController(EnemyImpl enemy, double minBounds, double maxBounds) {
+    public EnemyController(Enemy enemy, double minBounds, double maxBounds) {
         super(enemy);
         this.minBounds = minBounds;
         this.maxBounds = maxBounds;
