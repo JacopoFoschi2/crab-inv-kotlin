@@ -7,8 +7,7 @@ import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.input.InputSnapshot;
 import it.unibo.crabinv.Model.player.Player;
-import it.unibo.crabinv.Model.save.GameSession;
-import it.unibo.crabinv.Model.save.GameSessionImpl;
+import it.unibo.crabinv.Model.save.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,7 @@ public class GameEngineImpl implements GameEngine {
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
 
+    Save save;
     GameSession gameSession;
     WaveProvider waveProvider;
     GameEngineState gameEngineState;
@@ -125,7 +125,11 @@ public class GameEngineImpl implements GameEngine {
         this.gameEngineState = GameEngineState.GAME_OVER;
 
         this.gameSession.markGameOver();
-        //TODO Crea SessionRecord
+        SessionRecord sessionRecord = new SessionRecordImpl(
+                this.gameSession.getStartingTimeStamp(),
+                this.gameSession.getCurrentLevel(),
+                this.gameSession.getCurrency());
+        //
         //TODO Aggiorna UserProfile
     }
 
