@@ -5,7 +5,7 @@ import it.unibo.crabinv.Controller.entity.EntityNotCapableOfInputController;
 import it.unibo.crabinv.Model.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entity.Delta;
 
-public class EnemyBulletController extends EntityAbstractController<BulletEnemy> implements EntityNotCapableOfInputController {
+public class EnemyBulletController extends EntityAbstractController<BulletEnemy> implements BulletController {
     private final double minBounds;
     private final double maxBounds;
 
