@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.save;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -11,38 +12,23 @@ import java.util.UUID;
 public class SaveImpl implements Save{
     private final UUID saveId;
     private final long creationTimeStamp;
-    private final GameSession saveGameSession;
-    private final UserProfile saveUserProfile;
-    private final PlayerMemorial savePlayerMemorial;
+    private final UserProfile userProfile;
+    private final PlayerMemorial playerMemorial;
+    private GameSession gameSession; //Not to be assigned at Save creation
 
     /**
      * Constructor, creates and assigns UUID and timeStamp
-     * Creates all new save related Classes
      */
-
-
-
-    /* Factory */
-    private SaveImpl(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
-        this.saveId = sId;
-        this.creationTimeStamp = cts;
-        this.saveGameSession = gs;
-        this.saveUserProfile = up;
-        this.savePlayerMemorial = pm;
-    }
-
-    public static Save createNewSave(){
-        return new SaveImpl(
-                UUID.randomUUID(),
-                Instant.now().toEpochMilli(),
-                new GameSessionImpl(),
-                new UserProfileImpl(),
-                new PlayerMemorialImpl()
-        );
-    }
-
-    public static Save restoreSave(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
-        return new SaveImpl(sId, cts, gs, up, pm);
+    public SaveImpl(UUID saveId,
+                    long creationTimeStamp,
+                    UserProfile userProfile,
+                    PlayerMemorial playerMemorial,
+                    GameSession gameSession){
+        this.saveId = saveId;
+        this.creationTimeStamp = creationTimeStamp;
+        this.userProfile = userProfile;
+        this.playerMemorial = playerMemorial;
+        this.gameSession = gameSession;
     }
 
     /** {@inheritDoc} */
@@ -59,34 +45,27 @@ public class SaveImpl implements Save{
 
     @Override
     public void setGameSession(GameSession gameSession) {
-
+        if (this.gameSession == null){
+            this.gameSession = gameSession;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public GameSession getGameSession() {
-        return saveGameSession;
+        return gameSession;
     }
 
-    @Override
-    public void createUserProfile() {
-
-    }
 
     /** {@inheritDoc} */
     @Override
     public UserProfile getUserProfile() {
-        return saveUserProfile;
-    }
-
-    @Override
-    public void createPlayerMemorial() {
-
+        return userProfile;
     }
 
     /** {@inheritDoc} */
     @Override
     public PlayerMemorial getPlayerMemorial() {
-        return savePlayerMemorial;
+        return playerMemorial;
     }
 }

@@ -2,12 +2,25 @@ package it.unibo.crabinv.persistence.repository;
 
 import it.unibo.crabinv.Model.save.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
  * Manages the persistence of Save objects.
  */
 public interface SaveRepository {
+
+    /**
+     * Retrieves the SaveDirectory where to manipulate save files
+     * @return the SaveDirectory in use
+     */
+    Path getSaveDirectory();
+
+    /**
+     * Retrieves the SaveFactory used for the save file actions
+     * @return the SaveFactory in use
+     */
+    SaveFactory getSaveFactory();
 
     /**
      * Creates and returns a Save
@@ -20,7 +33,7 @@ public interface SaveRepository {
      * @param save the Save to save
      * @throws java.io.IOException if an I/O error occurs
      */
-    void save(Save save) throws java.io.IOException;
+    void saveSaveFile(Save save) throws java.io.IOException;
 
     /**
      * Lists all the Save objects found
@@ -35,7 +48,7 @@ public interface SaveRepository {
      * @return the Save identified
      * @throws java.io.IOException if an I/O error occurs
      */
-    Save load(java.util.UUID saveUUID) throws java.io.IOException;
+    Save loadSaveFile(java.util.UUID saveUUID) throws java.io.IOException;
 
     /**
      * Deletes the Save specified by the UUID passed

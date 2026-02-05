@@ -7,6 +7,8 @@ import java.util.UUID;
  */
 public interface Save {
 
+
+
     /** @return UUID of the save */
     UUID getSaveId();
 
@@ -22,18 +24,8 @@ public interface Save {
     /** @return GameSession bound to save */
     GameSession getGameSession();
 
-    /**
-     * Creates the UserProfile of the save
-     */
-    void createUserProfile();
-
     /** @return UserProfile bound to save */
     UserProfile getUserProfile();
-
-    /**
-     * Creates the PlayerMemorial of the save
-     */
-    void createPlayerMemorial();
 
     /** @return PlayerMemorial bound to save */
     PlayerMemorial getPlayerMemorial();

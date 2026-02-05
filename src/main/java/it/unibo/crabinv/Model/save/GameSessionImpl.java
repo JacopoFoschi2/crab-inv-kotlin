@@ -129,7 +129,6 @@ public class GameSessionImpl implements GameSession {
     public void subPlayerHealth(int amount) {
         this.playerHealth = DomainUtils.subClampedToZero(this.playerHealth, amount);
     }
-    
 
     public void applyPowerUps(UserProfile profile) {
         for (String powerUpName : profile.getPowerUpList()){

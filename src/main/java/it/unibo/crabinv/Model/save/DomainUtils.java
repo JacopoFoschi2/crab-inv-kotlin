@@ -3,7 +3,6 @@ package it.unibo.crabinv.Model.save;
 /**
  * Helper methods for save related classes
  */
-
 public final class DomainUtils {
 
     /**

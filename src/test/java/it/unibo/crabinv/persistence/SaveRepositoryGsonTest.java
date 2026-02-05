@@ -46,7 +46,7 @@ class SaveRepositoryGsonTest {
 
         /* Act */
         // Save and load
-        repository.save(originalSave);
+        repository.saveSaveFile(originalSave);
         Save loadedSave = repository.load(saveId);
 
         /* Assert */
@@ -78,8 +78,8 @@ class SaveRepositoryGsonTest {
     @Test
     void testListSaves() throws IOException {
         // Creiamo e salviamo due file
-        repository.save(repository.newSave());
-        repository.save(repository.newSave());
+        repository.saveSaveFile(repository.newSave());
+        repository.saveSaveFile(repository.newSave());
 
         // Verifichiamo che la lista contenga 2 elementi
         List<Save> saves = repository.list();
@@ -87,9 +87,9 @@ class SaveRepositoryGsonTest {
     }
 
     @Test
-    void testDeleteSave() throws IOException {
+    void testDeleteSaveSaveFile() throws IOException {
         Save save = repository.newSave();
-        repository.save(save);
+        repository.saveSaveFile(save);
 
         // Cancelliamo
         repository.delete(save.getSaveId());

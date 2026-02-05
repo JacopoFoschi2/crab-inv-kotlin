@@ -42,10 +42,7 @@ public class GameEngineImpl implements GameEngine {
                 PLAYER_FIXED_Y,
                 this.gameSession.getPlayerSpeed(),
                 this.gameSession.getPlayerFireRate());
-        //playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
-
         final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
-
         this.gameEngineState = GameEngineState.RUNNING;
         this.currentLevel = 1;
         this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, this.rewardsService);
