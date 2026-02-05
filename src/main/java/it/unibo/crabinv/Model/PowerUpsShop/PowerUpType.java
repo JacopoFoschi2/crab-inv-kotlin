@@ -1,13 +1,18 @@
 package it.unibo.crabinv.Model.PowerUpsShop;
 
+import it.unibo.crabinv.Model.i18n.TextKeys;
+
 public enum PowerUpType {
-    SPEED_UP (0.25),
-    FIRERATE_UP(0.10),
-    HEALTH_UP(1);
+    SPEED_UP (0.25, TextKeys.SPEED_DESC),
+    FIRERATE_UP(0.10, TextKeys.FIRERATE_DESC),
+    HEALTH_UP(1, TextKeys.HEALTH_DESC);
 
     final double multiplier;
-    PowerUpType(double multiplier) {
+    final TextKeys description;
+
+    PowerUpType(double multiplier, TextKeys description) {
         this.multiplier = multiplier;
+        this.description = description;
     }
 
     /**
@@ -17,6 +22,12 @@ public enum PowerUpType {
     public double getStatMultiplier(){
         return multiplier;
     };
+
+    /**
+     * Method that returns the description of the power up
+     * @return the description of the single power up
+     */
+    public TextKeys getDescription(){return description;}
 
     public static PowerUpType fromName(String name) {
         try {
