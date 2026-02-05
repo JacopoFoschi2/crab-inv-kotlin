@@ -1,7 +1,6 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Model.input.InputSnapshot;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.entities.player.Player;
 
 /**
  * Defines the contract for the game simulation

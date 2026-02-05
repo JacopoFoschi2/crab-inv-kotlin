@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.entity;
+package it.unibo.crabinv.Model.entities.entity;
 
 /**
  * provides the method that a movable entity should implement

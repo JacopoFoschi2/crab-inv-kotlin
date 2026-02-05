@@ -2,7 +2,9 @@ package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Model.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.entity.*;
+import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Entity;
 
 public class EnemyImpl extends AbstractEntity implements Enemy {
     private final EnemyType type;

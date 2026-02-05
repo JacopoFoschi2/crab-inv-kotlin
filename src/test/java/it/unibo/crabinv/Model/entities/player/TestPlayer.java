@@ -1,6 +1,7 @@
-package it.unibo.crabinv.Model.player;
+package it.unibo.crabinv.Model.entities.player;
 
-import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,7 +4,7 @@ import it.unibo.crabinv.Model.Enemies.*;
 import it.unibo.crabinv.Model.Levels.Level;
 import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.save.*;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.entity;
+package it.unibo.crabinv.Model.entities.entity;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 

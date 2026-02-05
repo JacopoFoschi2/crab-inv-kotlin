@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.entity;
+package it.unibo.crabinv.Model.entities.entity;
 
 /**
  * Provides all the deltas that the entity that wishes to move should handle.

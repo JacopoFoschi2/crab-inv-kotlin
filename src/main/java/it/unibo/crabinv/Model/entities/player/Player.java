@@ -1,10 +1,10 @@
-package it.unibo.crabinv.Model.player;
+package it.unibo.crabinv.Model.entities.player;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.entity.AbstractEntity;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Movable;
-import it.unibo.crabinv.Model.entity.Shooter;
+import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Movable;
+import it.unibo.crabinv.Model.entities.entity.Shooter;
 
 /**
  * Provides the implementation of what a player is

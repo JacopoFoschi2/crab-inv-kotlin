@@ -1,9 +1,9 @@
-package it.unibo.crabinv.Controller.player;
+package it.unibo.crabinv.Controller.entities.player;
 
-import it.unibo.crabinv.Controller.entity.EntityAbstractController;
-import it.unibo.crabinv.Controller.entity.EntityCapableOfInputController;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entities.entity.EntityCapableOfInputController;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.player.Player;
 
 /**
  * Provides all the apis to control a {@link Player}

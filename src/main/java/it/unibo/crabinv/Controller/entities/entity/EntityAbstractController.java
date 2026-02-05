@@ -1,6 +1,6 @@
-package it.unibo.crabinv.Controller.entity;
+package it.unibo.crabinv.Controller.entities.entity;
 
-import it.unibo.crabinv.Model.entity.Entity;
+import it.unibo.crabinv.Model.entities.entity.Entity;
 
 /**
  * Provides the methods an EntityController should implement.

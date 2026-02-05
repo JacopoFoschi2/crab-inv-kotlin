@@ -1,6 +1,6 @@
-package it.unibo.crabinv.Controller.entity;
+package it.unibo.crabinv.Controller.entities.entity;
 
-import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 
 /**
  * Provides an entity capable of receiving input the update method it should implement

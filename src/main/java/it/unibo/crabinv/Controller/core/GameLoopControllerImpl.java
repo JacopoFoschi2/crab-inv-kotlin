@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.input.InputController;
-import it.unibo.crabinv.Controller.player.PlayerController;
+import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;

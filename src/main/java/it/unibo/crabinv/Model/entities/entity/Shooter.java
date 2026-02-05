@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.entity;
+package it.unibo.crabinv.Model.entities.entity;
 
 /**
  * Provides the basic methods that a shooter entity should implement

@@ -1,6 +1,4 @@
-package it.unibo.crabinv.Controller.entity;
-
-import it.unibo.crabinv.Model.entity.Entity;
+package it.unibo.crabinv.Controller.entities.entity;
 
 /**
  * Provides methods to control an entity standardizing the way they should be controlled
