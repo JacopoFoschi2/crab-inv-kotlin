@@ -1,30 +1,59 @@
 package it.unibo.crabinv.Controller.save;
 
 import it.unibo.crabinv.Model.save.Save;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class SaveControllerImpl implements SaveController {
-    @Override
-    public int countExistingSaves() {
-        return 0;
+
+    private final SaveRepository saveRepository;
+
+    public SaveControllerImpl(SaveRepository saveRepository) {
+        this.saveRepository = Objects.requireNonNull(saveRepository);
     }
 
     @Override
-    public Save createSave() {
-        return null;
+    public SaveRepository getSaveRepository() {
+        return this.saveRepository;
     }
 
     @Override
-    public Save loadSave() {
-        return null;
+    public Save saveControlAndLoad() throws IOException {
+        List<Save> saveList = this.saveRepository.list();
+        if (saveList.isEmpty()) {
+            return createSave();
+        } else if (saveList.size() == 1) {
+            return saveList.getFirst();
+        } else {
+            return selectSave(saveList);
+        }
     }
 
     @Override
-    public void deleteSave() {
+    public Save createSave() throws IOException {
+        Save newSaveFile = this.saveRepository.newSave();
+        this.saveRepository.saveSaveFile(newSaveFile);
+        return newSaveFile;
 
     }
 
     @Override
-    public boolean gameSessionCheck() {
-        return false;
+    public Save selectSave(List<Save> saveList) {
+        return saveList.getLast();
+        // Placeholder for user-directed save selection if implemented
+    }
+
+    @Override
+    public Save loadSave(UUID saveId) throws IOException {
+        return this.saveRepository.loadSaveFile(saveId);
+    }
+
+    @Override
+    public void deleteSave(UUID saveId) throws IOException {
+        this.saveRepository.delete(saveId);
     }
 }

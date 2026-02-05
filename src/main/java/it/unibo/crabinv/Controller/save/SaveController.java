@@ -1,18 +1,49 @@
 package it.unibo.crabinv.Controller.save;
 
 import it.unibo.crabinv.Model.save.*;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 public interface SaveController {
 
-    int countExistingSaves();
+    /**
+     * Returns the SaveRepository used by the SaveController
+     * @return the SaveRepository in use
+     */
+    SaveRepository getSaveRepository();
 
-    Save createSave();
+    /**
+     * Checks the save files (and if there are any) and loads the correct save
+     * @return the loaded save
+     */
+    Save saveControlAndLoad() throws IOException;
 
-    Save loadSave();
+    /**
+     * Creates a new default save file
+     * @return the newly created save file
+     */
+    Save createSave() throws IOException;
 
-    void deleteSave();
+    /**
+     * Selects the save lo load from a saveList
+     * @param saveList the saveList containing all the found valid files
+     * @return the selected save
+     */
+    Save selectSave(List<Save> saveList);
 
-    boolean gameSessionCheck();
+    /**
+     * Loads a selected save file to be used by the game
+     * @return the loaded save
+     */
+    Save loadSave(UUID saveId) throws IOException;
+
+    /**
+     * Deletes the selected file
+     */
+    void deleteSave(UUID saveId) throws IOException;
 
 
 }

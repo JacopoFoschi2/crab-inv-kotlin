@@ -3,7 +3,6 @@ package it.unibo.crabinv.persistence.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonParseException;
 import it.unibo.crabinv.Model.save.*;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
@@ -24,8 +23,18 @@ public class SaveRepositoryGson implements SaveRepository {
     private final Path saveDirectory;
     private final SaveFactory saveFactory;
 
+
     /**
-     * Constructor, initializes the Gson.builder
+     * LITE Constructor to be used by Main, requires only saveDirectory, uses default SaveFactory
+     * @param saveDirectory the directory where the json files will be stored
+     * @throws IOException if an I/O error occurs
+     */
+    public SaveRepositoryGson(Path saveDirectory) throws IOException{
+        this(saveDirectory, new SaveFactoryImpl());
+    }
+
+    /**
+     * FULL Constructor, needed to initialize the Gson.builder and SaveFactory
      *
      * @param saveDirectory the directory where the json files will be stored
      * @throws IOException if an I/O error occurs
@@ -35,15 +44,20 @@ public class SaveRepositoryGson implements SaveRepository {
         this.saveFactory = Objects.requireNonNull(saveFactory);
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-        builder.registerTypeAdapter(Save.class, (JsonDeserializer<Save>) (json, type, context) ->
+        builder.registerTypeAdapter(Save.class, (JsonDeserializer<Save>)
+                (json, type, context) ->
                 context.deserialize(json, SaveImpl.class));
-        builder.registerTypeAdapter(GameSession.class, (JsonDeserializer<GameSession>) (json, type, context) ->
+        builder.registerTypeAdapter(GameSession.class, (JsonDeserializer<GameSession>)
+                (json, type, context) ->
                 context.deserialize(json, GameSessionImpl.class));
-        builder.registerTypeAdapter(UserProfile.class, (JsonDeserializer<UserProfile>) (json, type, context) ->
+        builder.registerTypeAdapter(UserProfile.class, (JsonDeserializer<UserProfile>)
+                (json, type, context) ->
                 context.deserialize(json, UserProfileImpl.class));
-        builder.registerTypeAdapter(PlayerMemorial.class, (JsonDeserializer<PlayerMemorial>) (json, type, context) ->
+        builder.registerTypeAdapter(PlayerMemorial.class, (JsonDeserializer<PlayerMemorial>)
+                (json, type, context) ->
                 context.deserialize(json, PlayerMemorialImpl.class));
-        builder.registerTypeAdapter(SessionRecord.class, (JsonDeserializer<SessionRecord>) (json, type, context) ->
+        builder.registerTypeAdapter(SessionRecord.class, (JsonDeserializer<SessionRecord>)
+                (json, type, context) ->
                 context.deserialize(json, SessionRecordImpl.class));
         this.gson = builder.create();
     }
@@ -67,7 +81,7 @@ public class SaveRepositoryGson implements SaveRepository {
         } catch (IOException error) {
             System.err.println("Cannot load files: " + path);
             return null;
-        } catch (RuntimeException error){
+        } catch (RuntimeException error) {
             System.err.println("Invalid or empty file: " + path + ": " + error.getMessage());
             return null;
         }
