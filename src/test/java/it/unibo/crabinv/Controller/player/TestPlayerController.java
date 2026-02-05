@@ -9,10 +9,11 @@ import org.junit.jupiter.api.Test;
 public class TestPlayerController {
     Player player;
     PlayerController playerController;
+    static final int INITIAL_HEALTH = 3;
 
     @BeforeEach
     public void setup() {
-        player = new Player(1,0,0,1,1);
+        player = new Player(INITIAL_HEALTH,0,0,1,1);
         playerController = new PlayerController(player, -2, 2);
     }
 
@@ -49,5 +50,15 @@ public class TestPlayerController {
         Assertions.assertFalse(player.isAbleToShoot());
         playerController.update(false, Delta.NO_ACTION);
         Assertions.assertTrue(player.isAbleToShoot());
+    }
+
+    @Test
+    public void testDamage() {
+        int damage1 = 1;
+        int damage2 = 2;
+        playerController.takeDamage(damage1);
+        Assertions.assertEquals(INITIAL_HEALTH - damage1, player.getHealth());
+        playerController.takeDamage(damage2);
+        Assertions.assertFalse(player.isAlive());
     }
 }

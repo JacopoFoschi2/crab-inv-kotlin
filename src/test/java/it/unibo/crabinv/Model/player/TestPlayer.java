@@ -45,8 +45,14 @@ public class TestPlayer {
     }
 
     @Test
-    public void TestDeath() {
-        player.onCollisionWith(player);
+    public void TestDeathByDamage() {
+        player.takeDamage(999);
+        Assertions.assertFalse(player.isAlive());
+    }
+
+    @Test
+    public void TestDeathByDestroy() {
+        player.destroy();
         Assertions.assertFalse(player.isAlive());
     }
 
