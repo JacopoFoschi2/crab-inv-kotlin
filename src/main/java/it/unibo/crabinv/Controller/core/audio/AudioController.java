@@ -1,8 +1,8 @@
-package it.unibo.crabinv.Controller.audio;
+package it.unibo.crabinv.Controller.core.audio;
 
-import it.unibo.crabinv.Model.audio.BGMTracks;
-import it.unibo.crabinv.Model.audio.SFXTracks;
-import it.unibo.crabinv.Model.audio.SoundService;
+import it.unibo.crabinv.Model.core.audio.BGMTracks;
+import it.unibo.crabinv.Model.core.audio.SFXTracks;
+import it.unibo.crabinv.Model.core.audio.SoundService;
 
 /**
  * Provides a controller facade that lets you utilize any implementation of {@link SoundService} regardless of the library used.

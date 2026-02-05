@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.i18n;
+package it.unibo.crabinv.Model.core.i18n;
 
 /**
  * Provides all currently supported keys of localization.

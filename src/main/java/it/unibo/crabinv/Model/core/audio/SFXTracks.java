@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.audio;
+package it.unibo.crabinv.Model.core.audio;
 
 /**
  * Provides a set list of present SFX Tracks and their relative path in resources

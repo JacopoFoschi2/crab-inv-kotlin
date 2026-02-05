@@ -1,10 +1,8 @@
 package it.unibo.crabinv.Model.bullets;
 
-import it.unibo.crabinv.Model.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Entity;
-import it.unibo.crabinv.Model.entity.Movable;
 
 public class BulletPlayer extends AbstractEntity implements Bullet {
     private final double speedY;

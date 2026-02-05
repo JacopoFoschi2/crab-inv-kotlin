@@ -1,8 +1,8 @@
-package it.unibo.crabinv.Controller.i18n;
+package it.unibo.crabinv.Controller.core.i18n;
 
-import it.unibo.crabinv.Model.i18n.Localization;
-import it.unibo.crabinv.Model.i18n.SupportedLocales;
-import it.unibo.crabinv.Model.i18n.TextKeys;
+import it.unibo.crabinv.Model.core.i18n.Localization;
+import it.unibo.crabinv.Model.core.i18n.SupportedLocales;
+import it.unibo.crabinv.Model.core.i18n.TextKeys;
 
 /**
  * Provides all the apis to control the localization

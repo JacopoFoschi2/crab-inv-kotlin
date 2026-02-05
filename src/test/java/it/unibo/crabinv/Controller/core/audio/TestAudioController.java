@@ -1,8 +1,9 @@
-package it.unibo.crabinv.Controller.audio;
+package it.unibo.crabinv.Controller.core.audio;
 
-import it.unibo.crabinv.Model.audio.BGMTracks;
-import it.unibo.crabinv.Model.audio.SFXTracks;
-import it.unibo.crabinv.Model.audio.SoundService;
+import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Model.core.audio.BGMTracks;
+import it.unibo.crabinv.Model.core.audio.SFXTracks;
+import it.unibo.crabinv.Model.core.audio.SoundService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

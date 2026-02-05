@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.audio;
+package it.unibo.crabinv.Model.core.audio;
 
 /**
  * Provides all the basic sound apis

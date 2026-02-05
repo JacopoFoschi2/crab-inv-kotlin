@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.i18n;
+package it.unibo.crabinv.Model.core.i18n;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

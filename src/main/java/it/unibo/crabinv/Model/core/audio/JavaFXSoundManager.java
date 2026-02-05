@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.audio;
+package it.unibo.crabinv.Model.core.audio;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;

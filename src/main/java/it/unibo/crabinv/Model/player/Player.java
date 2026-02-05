@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.player;
 
-import it.unibo.crabinv.Model.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Movable;

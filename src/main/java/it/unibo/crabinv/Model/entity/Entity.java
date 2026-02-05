@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.entity;
 
-import it.unibo.crabinv.Model.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 
 /**
  * Provides all the methods that an entity should implement

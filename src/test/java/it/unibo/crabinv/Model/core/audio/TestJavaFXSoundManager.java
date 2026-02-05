@@ -1,5 +1,7 @@
-package it.unibo.crabinv.Model.audio;
+package it.unibo.crabinv.Model.core.audio;
 
+import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
+import it.unibo.crabinv.Model.core.audio.SoundService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

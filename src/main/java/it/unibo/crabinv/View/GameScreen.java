@@ -1,9 +1,9 @@
 package it.unibo.crabinv.View;
 
-import it.unibo.crabinv.Controller.audio.AudioController;
+import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.GameLoopController;
 import it.unibo.crabinv.Controller.core.GameLoopControllerImpl;
-import it.unibo.crabinv.Controller.i18n.LocalizationController;
+import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
 import it.unibo.crabinv.Controller.input.InputMapperImpl;
 import it.unibo.crabinv.Model.core.GameEngine;
