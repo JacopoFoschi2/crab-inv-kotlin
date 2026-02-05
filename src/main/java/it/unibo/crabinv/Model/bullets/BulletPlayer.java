@@ -24,7 +24,7 @@ public class BulletPlayer extends AbstractEntity implements Bullet {
         setPosition(getX(), getY() + speedY * delta.getValue());
 
         if (getY() < minBound || getY() > maxBound) {
-            onCollisionWith(this);
+            destroy();
         }
     }
 

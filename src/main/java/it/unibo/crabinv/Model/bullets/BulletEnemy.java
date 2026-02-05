@@ -24,20 +24,12 @@ public class BulletEnemy extends AbstractEntity implements Bullet {
         setPosition(getX(), getY() + speedY * delta.getValue());
 
         if (getY() < minBound || getY() > maxBound) {
-            onCollisionWith(this);
+            destroy();
         }
     }
 
     @Override
     public double getSpeed() {
         return speedY;
-    }
-
-    @Override
-    public void onCollisionWith(Entity entity) {
-        if (entity instanceof BulletEnemy){
-            return;
-        }
-        super.onCollisionWith(entity);
     }
 }

@@ -41,17 +41,6 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     }
 
     @Override
-    public void onCollisionWith(Entity other) {
-        if (isFriendlyFire(other)) {
-            return;
-        }
-        if (other instanceof Enemy){
-            return;
-        }
-        super.onCollisionWith(other);
-    }
-
-    @Override
     public boolean isAbleToShoot() {
         return shootingCounter == 0;
     }
