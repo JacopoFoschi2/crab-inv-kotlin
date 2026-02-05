@@ -16,12 +16,12 @@ public abstract class AbstractEntity implements Entity {
     /**
      * Creates the entity by setting its basic parameters
      */
-    public AbstractEntity(int maxHealth, CollisionGroups collisionGroup, double x, double y, double radius) {
+    public AbstractEntity(double x, double y, int maxHealth, CollisionGroups collisionGroup,double radius) {
+        this.x = x;
+        this.y = y;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;
-        this.x = x;
-        this.y = y;
         this.radius = radius;
     }
 
