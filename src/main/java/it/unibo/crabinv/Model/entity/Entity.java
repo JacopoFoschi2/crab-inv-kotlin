@@ -1,5 +1,7 @@
 package it.unibo.crabinv.Model.entity;
 
+import it.unibo.crabinv.Model.collisions.CollisionGroups;
+
 /**
  * Provides all the methods that an entity should implement
  */
@@ -41,4 +43,9 @@ public interface Entity {
      * Make the entity die
      */
     void destroy();
+
+    /**
+     * @return the collision group the entity is part of
+     */
+    CollisionGroups getCollisionGroup();
 }

@@ -1,10 +1,13 @@
 package it.unibo.crabinv.Model.entity;
 
+import it.unibo.crabinv.Model.collisions.CollisionGroups;
+
 /**
  * Provides a basic implementation of what an entity is and what it should do by default
  */
 public abstract class AbstractEntity implements Entity {
     private final int maxHealth;
+    private final CollisionGroups collisionGroup;
     private int health;
     private double x;
     private double y;
@@ -12,9 +15,10 @@ public abstract class AbstractEntity implements Entity {
     /**
      * Creates the entity by setting its basic parameters
      */
-    public AbstractEntity(int maxHealth, double x, double y) {
+    public AbstractEntity(int maxHealth, CollisionGroups collisionGroup, double x, double y) {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
+        this.collisionGroup = collisionGroup;
         this.x = x;
         this.y = y;
     }
@@ -52,6 +56,11 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public double getY() {
         return y;
+    }
+
+    @Override
+    public CollisionGroups getCollisionGroup() {
+        return collisionGroup;
     }
 
     /**
