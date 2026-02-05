@@ -36,4 +36,9 @@ public interface Entity {
      * @param damage the damage it should receive
      */
     void takeDamage(int damage);
+
+    /**
+     * Make the entity die
+     */
+    void destroy();
 }

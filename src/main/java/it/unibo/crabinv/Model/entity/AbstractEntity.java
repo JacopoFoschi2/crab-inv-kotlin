@@ -40,6 +40,11 @@ public abstract class AbstractEntity implements Entity {
     }
 
     @Override
+    public void destroy() {
+        health = 0;
+    }
+
+    @Override
     public double getX() {
         return x;
     }
