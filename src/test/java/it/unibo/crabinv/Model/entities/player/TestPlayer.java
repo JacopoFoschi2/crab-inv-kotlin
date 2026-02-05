@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Model.entities.player;
 
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.Delta;
-import it.unibo.crabinv.Model.entities.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,16 @@ public class TestPlayer {
 
     @BeforeEach
     public void setup() {
-        player = new Player(1,0,0,1,1);
+        player = Player.builder()
+                .x(0)
+                .y(0)
+                .maxHealth(3)
+                .health(3)
+                .collisionGroup(CollisionGroups.FRIENDLY)
+                .radius(10)
+                .speed(1)
+                .fireRate(1)
+                .build();
     }
 
     @Test

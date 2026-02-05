@@ -5,10 +5,13 @@ import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.Movable;
 import it.unibo.crabinv.Model.entities.entity.Shooter;
+import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Provides the implementation of what a player is
  */
+@SuperBuilder
 public class Player extends AbstractEntity implements Shooter, Movable {
     /**
      * The speed at witch the player moves in a tick
@@ -17,7 +20,8 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     /**
      * Ticks counter for the next shot
      */
-    private int shootingCounter;
+    @Builder.Default
+    private int shootingCounter = 0;
     /**
      * The minimal amount of ticks needed between two shots
      */
@@ -28,13 +32,11 @@ public class Player extends AbstractEntity implements Shooter, Movable {
      * @param speed the space covered in one tick
      * @param fireRate the minimal amount of ticks needed between two shots
      */
-    public Player(int maxHealth, double x, double y, double radius, double speed, int fireRate) {
-        super(maxHealth, CollisionGroups.FRIENDLY, x, y, radius);
+    public Player(double x, double y, int maxHealth, double radius, double speed, int fireRate) {
+        super(x, y, maxHealth, CollisionGroups.FRIENDLY, radius);
         this.speed = speed;
         this.fireRate = fireRate;
         this.shootingCounter = 0;
-
-        // applyPowerUps(profile);
     }
 
     @Override

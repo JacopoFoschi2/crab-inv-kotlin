@@ -1,17 +1,19 @@
 package it.unibo.crabinv.Model.entities.entity;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Provides a basic implementation of what an entity is and what it should do by default
  */
+@SuperBuilder
 public abstract class AbstractEntity implements Entity {
-    private final int maxHealth;
-    private final CollisionGroups collisionGroup;
-    private final double radius;
-    private int health;
     private double x;
     private double y;
+    private final int maxHealth;
+    private int health;
+    private final CollisionGroups collisionGroup;
+    private final double radius;
 
     /**
      * Creates the entity by setting its basic parameters
