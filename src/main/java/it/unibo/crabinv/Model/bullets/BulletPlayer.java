@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Model.bullets;
 
+import it.unibo.crabinv.Model.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entity.Delta;
 import it.unibo.crabinv.Model.entity.Entity;
@@ -15,7 +16,7 @@ public class BulletPlayer extends AbstractEntity implements Bullet {
      * @param y
      */
     public BulletPlayer(int maxHealth, double x, double y, double speedY) {
-        super(maxHealth, x, y);
+        super(maxHealth, CollisionGroups.FRIENDLY, x, y);
         this.speedY = speedY;
     }
 

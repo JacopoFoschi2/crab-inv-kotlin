@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Model.bullets.BulletEnemy;
+import it.unibo.crabinv.Model.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entity.*;
 
 public class EnemyImpl extends AbstractEntity implements Enemy {
@@ -11,7 +12,7 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private final double speed;
 
     public EnemyImpl(final EnemyType type, int maxHealth, double x, double y, int fireRate, double speed) {
-        super(maxHealth, x, y);
+        super(maxHealth, CollisionGroups.HOSTILE, x, y);
         this.type = type;
         this.fireRate = fireRate;
         this.speed = speed;
