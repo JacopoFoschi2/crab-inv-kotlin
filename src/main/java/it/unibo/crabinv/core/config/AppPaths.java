@@ -1,4 +1,4 @@
-package it.unibo.crabinv.config;
+package it.unibo.crabinv.core.config;
 
 import java.nio.file.Path;
 

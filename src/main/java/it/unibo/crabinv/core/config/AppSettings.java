@@ -1,4 +1,4 @@
-package it.unibo.crabinv.config;
+package it.unibo.crabinv.core.config;
 
 import it.unibo.crabinv.Model.core.i18n.SupportedLocales;
 
