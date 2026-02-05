@@ -14,6 +14,9 @@ public enum Delta {
         this.value = value;
     }
 
+    /**
+     * @return the value of delta
+     */
     public int getValue() {
         return value;
     }

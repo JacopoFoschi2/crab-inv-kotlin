@@ -30,7 +30,8 @@ public class InputControllerPlayer implements InputController {
         boolean validKey =
                 mapper.mapToShoot(keyCode)
                         || mapper.mapToXDelta(keyCode) != Delta.NO_ACTION
-                        || mapper.mapToPause(keyCode);
+                        || mapper.mapToPause(keyCode)
+                        || mapper.mapToUnPause(keyCode);
         if (validKey) {
             this.pressedKeys.add(keyCode);
         }
@@ -44,6 +45,8 @@ public class InputControllerPlayer implements InputController {
     public InputSnapshot getInputState() {
         boolean isPausePressed = pressedKeys.stream()
                 .anyMatch(mapper::mapToPause);
+        boolean isUnPausePressed = pressedKeys.stream()
+                .anyMatch(mapper::mapToUnPause);
         boolean isShooting = pressedKeys.stream()
                 .anyMatch(mapper::mapToShoot);
         boolean isInputRight = pressedKeys.stream()
@@ -58,6 +61,6 @@ public class InputControllerPlayer implements InputController {
         } else if (isInputLeft && !isInputRight) {
             xMovementDelta = Delta.DECREASE;
         }
-        return new InputSnapshotImpl(isShooting, xMovementDelta, Delta.NO_ACTION, isPausePressed);
+        return new InputSnapshotImpl(isShooting, xMovementDelta, Delta.NO_ACTION, isPausePressed, isUnPausePressed);
     }
 }

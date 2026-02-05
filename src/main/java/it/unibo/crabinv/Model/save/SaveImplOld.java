@@ -8,7 +8,7 @@ import java.util.UUID;
  * Identifies the save with a UUID (for identification) and a timeStamp (for sorting),
  * references to all other save-related interfaces
  */
-public class SaveImpl implements Save{
+public class SaveImplOld implements Save{
     private final UUID saveId;
     private final long creationTimeStamp;
     private final GameSession saveGameSession;
@@ -20,10 +20,8 @@ public class SaveImpl implements Save{
      * Creates all new save related Classes
      */
 
-
-
     /* Factory */
-    private SaveImpl(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
+    private SaveImplOld(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
         this.saveId = sId;
         this.creationTimeStamp = cts;
         this.saveGameSession = gs;
@@ -32,7 +30,7 @@ public class SaveImpl implements Save{
     }
 
     public static Save createNewSave(){
-        return new SaveImpl(
+        return new SaveImplOld(
                 UUID.randomUUID(),
                 Instant.now().toEpochMilli(),
                 new GameSessionImpl(),
@@ -42,7 +40,7 @@ public class SaveImpl implements Save{
     }
 
     public static Save restoreSave(UUID sId, long cts, GameSession gs, UserProfile up, PlayerMemorial pm){
-        return new SaveImpl(sId, cts, gs, up, pm);
+        return new SaveImplOld(sId, cts, gs, up, pm);
     }
 
     /** {@inheritDoc} */

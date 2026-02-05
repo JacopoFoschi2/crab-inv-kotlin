@@ -36,6 +36,9 @@ public enum TextKeys {
         this.key = key;
     }
 
+    /**
+     * @return the string associated to the key to make the request to the resource bundle
+     */
     public String getKey() {
         return key;
     }

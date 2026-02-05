@@ -2,6 +2,9 @@ package it.unibo.crabinv.Controller.entity;
 
 import it.unibo.crabinv.Model.entity.Delta;
 
+/**
+ * Provides an entity capable of receiving input the update method it should implement
+ */
 public interface EntityCapableOfInputController {
     /**
      * Updates the status of something that receives inputs, such as the player

@@ -1,17 +1,20 @@
 package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.input.InputController;
+import it.unibo.crabinv.Controller.player.PlayerController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.input.InputSnapshot;
 
 public class GameLoopControllerImpl implements GameLoopController {
 
     private final GameEngine gameEngine;
     private final InputController inputController;
+    private final PlayerController playerController;
 
-    long STANDARD_TICK_MILLIS = 16;
-    int STANDARD_MAX_TICKS_PER_FRAME = 5;
+    private static final long STANDARD_TICK_MILLIS = 16;
+    private static final int STANDARD_MAX_TICKS_PER_FRAME = 5;
     private final long tickDurationMillis;
     private final int maxTicksPerFrame;
     private long accumulatedMillis;
@@ -32,6 +35,11 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
         this.gameEngine.newGame();
+        this.playerController = new PlayerController(
+                this.gameEngine.getPlayer(),
+                this.gameEngine.getWorldMinX(),
+                this.gameEngine.getWorldMaxX()
+        );
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
@@ -64,44 +72,92 @@ public class GameLoopControllerImpl implements GameLoopController {
      */
     @Override
     public GameSnapshot step(long frameElapsedMillis) {
-        if (inputController.getInputState().isPause()) {
-            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-                this.gameEngine.pauseGame();
-            }
+        checkPause();
+        checkResume();
+        if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+            accumulateTime(frameElapsedMillis);
+            final int nextStepTicks = calculateTicks();
+            executeTicks(nextStepTicks);
+            updateSnapshot(nextStepTicks);
         }
-        if (gameEngine.getGameState() == GameEngineState.RUNNING) {
-            this.accumulatedMillis += frameElapsedMillis;
-            long ticksOfStep = accumulatedMillis / this.tickDurationMillis;
-            if (ticksOfStep > maxTicksPerFrame) {
-                ticksOfStep = maxTicksPerFrame;
-            }
-            for (long i = 0; i < ticksOfStep; i++) {
-                this.gameEngine.tick(inputController.getInputState());
-                totalElapsedTicks++;
-            }
-            accumulatedMillis -= ticksOfStep * tickDurationMillis;
-        } else {
-            this.accumulatedMillis = 0;
-        }
-        latestSnapshot = gameEngine.snapshot();
         return latestSnapshot;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameSnapshot getLatestSnapshot() {
         return this.latestSnapshot;
     }
-    
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void pause() {
         this.gameEngine.pauseGame();
     }
-    
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resume() {
         this.gameEngine.resumeGame();
     }
+
+    private void checkResume() {
+        if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
+            if (inputController.getInputState().isUnpause()) {
+                resume();
+            }
+        }
+    }
+
+    private void checkPause() {
+        if (inputController.getInputState().isPause()) {
+            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+                pause();
+            }
+        }
+    }
+
+    private void accumulateTime(long frameElapsedMillis) {
+        this.accumulatedMillis += frameElapsedMillis;
+    }
+
+    private int calculateTicks() {
+        final long ticks = this.accumulatedMillis / this.tickDurationMillis;
+        final long cappedTicks = Math.min(ticks, (long) maxTicksPerFrame);
+        return (int) cappedTicks;
+    }
+
+    private void executeTicks(int nextStepTicks) {
+        for (int i = 0; i < nextStepTicks; i++) {
+            playerUpdate();
+            //enemyUpdate(); //TODO
+            tickUpdate();
+        }
+    }
+
+    private void playerUpdate() {
+        final InputSnapshot inputSnapshot = inputController.getInputState();
+        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+    }
+
+    private void enemyUpdate() {
+        //TODO
+    }
+
+    private void tickUpdate() {
+        this.gameEngine.tick();
+        totalElapsedTicks++;
+    }
+
+    private void updateSnapshot(int nextStepTicks) {
+        this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis;
+        this.latestSnapshot = this.gameEngine.snapshot();
+    }
+
 }

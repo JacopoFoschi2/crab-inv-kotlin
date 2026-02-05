@@ -5,10 +5,10 @@ package it.unibo.crabinv.Model.entity;
  */
 public abstract class AbstractEntity implements Entity {
     /**
-     * The damage that all entities currently suffer upon collision with a shot
-     * TODO modify this after the other entities are implemented
+     * The damage that all entities currently suffer upon collision with a shot.
+     * Can be modified upon further development
      */
-    private final int DAMAGE = 1;
+    private final static int DAMAGE = 1;
     private final int maxHealth;
     private int health;
     private double x;

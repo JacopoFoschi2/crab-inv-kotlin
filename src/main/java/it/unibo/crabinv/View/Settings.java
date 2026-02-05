@@ -1,22 +1,18 @@
 package it.unibo.crabinv.View;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import it.unibo.crabinv.Controller.audio.AudioController;
 import it.unibo.crabinv.Controller.i18n.LocalizationController;
 import it.unibo.crabinv.Model.audio.SFXTracks;
-import it.unibo.crabinv.Model.i18n.SupportedLocales;
 import it.unibo.crabinv.Model.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.IntConsumer;
-
+/**
+ * Provides the settings interface of the application
+ */
 public class Settings {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
@@ -24,6 +20,11 @@ public class Settings {
     private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
+    /**
+     * @param sceneManager the instance of sceneManager
+     * @param loc the instance of localization
+     * @param audio the instance of AudioController
+     */
     public Settings(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
@@ -31,6 +32,9 @@ public class Settings {
         components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
     }
 
+    /**
+     * @return the stackpane to be shown in the GUI
+     */
     public Pane getView() {
         StackPane pane = new StackPane();
         Label title = new Label(loc.getString(TextKeys.SETTINGS));
