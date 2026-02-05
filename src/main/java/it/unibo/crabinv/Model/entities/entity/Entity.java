@@ -48,4 +48,9 @@ public interface Entity {
      * @return the collision group the entity is part of
      */
     CollisionGroups getCollisionGroup();
+
+    /**
+     * @return the radius of the entity used to solve collision
+     */
+    double getRadius();
 }

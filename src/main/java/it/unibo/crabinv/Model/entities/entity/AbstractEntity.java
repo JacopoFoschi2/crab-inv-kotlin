@@ -8,6 +8,7 @@ import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 public abstract class AbstractEntity implements Entity {
     private final int maxHealth;
     private final CollisionGroups collisionGroup;
+    private final double radius;
     private int health;
     private double x;
     private double y;
@@ -15,12 +16,13 @@ public abstract class AbstractEntity implements Entity {
     /**
      * Creates the entity by setting its basic parameters
      */
-    public AbstractEntity(int maxHealth, CollisionGroups collisionGroup, double x, double y) {
+    public AbstractEntity(int maxHealth, CollisionGroups collisionGroup, double x, double y, double radius) {
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;
         this.x = x;
         this.y = y;
+        this.radius = radius;
     }
 
     @Override
@@ -61,6 +63,11 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public CollisionGroups getCollisionGroup() {
         return collisionGroup;
+    }
+
+    @Override
+    public double getRadius() {
+        return radius;
     }
 
     /**
