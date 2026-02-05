@@ -4,11 +4,6 @@ package it.unibo.crabinv.Model.entity;
  * Provides a basic implementation of what an entity is and what it should do by default
  */
 public abstract class AbstractEntity implements Entity {
-    /**
-     * The damage that all entities currently suffer upon collision with a shot.
-     * Can be modified upon further development
-     */
-    private final static int DAMAGE = 1;
     private final int maxHealth;
     private int health;
     private double x;
@@ -24,26 +19,32 @@ public abstract class AbstractEntity implements Entity {
         this.y = y;
     }
 
+    @Override
     public boolean isAlive() {
         return health > 0;
     }
 
-    public void onCollisionWith(Entity other) {
-        health -= DAMAGE;
-    }
-
+    @Override
     public int getHealth() {
         return health;
     }
 
+    @Override
     public int getMaxHealth() {
         return maxHealth;
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        health -= damage;
+    }
+
+    @Override
     public double getX() {
         return x;
     }
 
+    @Override
     public double getY() {
         return y;
     }

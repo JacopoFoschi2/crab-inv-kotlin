@@ -32,8 +32,8 @@ public interface Entity {
     public double getY();
 
     /**
-     * Manages the contact with another entity
-     * @param otherEntity the entity that collides with it
+     * Make the entity suffer the amount of damage in input
+     * @param damage the damage it should receive
      */
-    public void onCollisionWith(Entity otherEntity);
+    public void takeDamage(int damage);
 }
