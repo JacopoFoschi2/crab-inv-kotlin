@@ -47,13 +47,29 @@ public class ShopMenu {
         Label title = new Label(loc.getString(TextKeys.SHOP));
         title.getStyleClass().add("menu-title");
 
+        Label descriptionLabel = new Label();
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.getStyleClass().add("shop-description");
+
+        VBox descriptionBox = new VBox(descriptionLabel);
+        descriptionBox.setPadding(new Insets(15));
+        descriptionBox.setMaxWidth(400);
+        descriptionBox.getStyleClass().add("shop-description-box");
+
+
         currencyLabel = new Label();
         updateCurrency();
 
-        mainColumn.getChildren().addAll(title, currencyLabel);
+        VBox powerUpsBox = new VBox(20);
+        powerUpsBox.setAlignment(Pos.CENTER);
+        VBox headerBox = new VBox(25);
+        headerBox.setAlignment(Pos.CENTER);
+        headerBox.getChildren().addAll(title, descriptionBox, currencyLabel);
+        mainColumn.getChildren().add(headerBox);
+        mainColumn.getChildren().add(powerUpsBox);
 
         for (PowerUp p : powerUps) {
-            mainColumn.getChildren().add(createPowerUpRow(p));
+            mainColumn.getChildren().add(createPowerUpRow(p, descriptionLabel));
         }
 
         Button backButton = createMenuButton(
@@ -66,20 +82,25 @@ public class ShopMenu {
         return root;
     }
 
-    private HBox createPowerUpRow(PowerUp powerUp) {
-        HBox row = new HBox(15);
-        row.setAlignment(Pos.CENTER);
+    private VBox createPowerUpRow(PowerUp powerUp , Label descriptionLabel) {
+        VBox card = new VBox(12);
+        card.setAlignment(Pos.CENTER);
+        card.getStyleClass().add("powerup-card");
+        card.setPadding(new Insets(15));
+
 
         PowerUpType type = powerUp.getPowerUpType();
 
         Label name = new Label(
                 loc.getString(TextKeys.valueOf(type.name()))
         );
+        name.getStyleClass().add("powerup-title");
 
         Label level = new Label();
         Label cost = new Label(
                 loc.getString(TextKeys.COST) + ": " + powerUp.getCost()
         );
+        cost.getStyleClass().add("powerup-cost");
 
         updateLevelLabel(level, powerUp);
 
@@ -89,6 +110,9 @@ public class ShopMenu {
         buyButton.focusedProperty().addListener((_, _, focused) -> {
             if (focused) {
                 audio.playSFX(SFXTracks.MENU_HOVER);
+                descriptionLabel.setText(
+                        loc.getString(type.getDescription())
+                );
             }
         });
 
@@ -100,8 +124,8 @@ public class ShopMenu {
             }
         });
 
-        row.getChildren().addAll(name, level, cost, buyButton);
-        return row;
+        card.getChildren().addAll(name, level, cost, buyButton);
+        return card;
     }
 
 
