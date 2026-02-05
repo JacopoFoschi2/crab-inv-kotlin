@@ -22,8 +22,8 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
     }
 
     @Override
-    public void onCollisionWith(Entity other) {
-        getEntity().onCollisionWith(other);
+    public void takeDamage(int damage) {
+        getEntity().takeDamage(damage);
     }
 
     @Override

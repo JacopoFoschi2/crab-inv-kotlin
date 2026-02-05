@@ -13,10 +13,10 @@ public interface EntityController {
     public boolean isAlive();
 
     /**
-     * Calls on collisionWith method of the entity.
-     * @param other the other entity it collided with
+     * Make the entity suffer the inputted amount of damage.
+     * @param damage the damage the entity should suffer
      */
-    public void onCollisionWith(Entity other);
+    public void takeDamage(int damage);
 
     /**
      * @return the current health of the entity
@@ -34,7 +34,7 @@ public interface EntityController {
     public double getX();
 
     /**
-     * @return the y coordinate of the enity
+     * @return the y coordinate of the entity
      */
     public double getY();
 }
