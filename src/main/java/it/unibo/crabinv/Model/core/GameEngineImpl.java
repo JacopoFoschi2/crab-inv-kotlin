@@ -4,6 +4,7 @@ import it.unibo.crabinv.Model.entities.enemies.rewardService.EnemyRewardService;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 import it.unibo.crabinv.Model.entities.enemies.wave.WaveProvider;
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import it.unibo.crabinv.Model.levels.Level;
 import it.unibo.crabinv.Model.levels.LevelFactory;
 import it.unibo.crabinv.Model.levels.LevelFactoryImpl;
@@ -52,6 +53,7 @@ public class GameEngineImpl implements GameEngine {
                 .fireRate(this.gameSession.getPlayerFireRate())
                 .minBound(this.getWorldMinX())
                 .maxBound(this.getWorldMaxX())
+                .sprite(EntitySprites.PLAYER)
                 .build();
         //playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 

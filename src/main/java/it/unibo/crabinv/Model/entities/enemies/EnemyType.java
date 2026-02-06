@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Model.entities.enemies;
 
 public enum EnemyType {
-    SERVANT ( 10);
+    SERVANT (10);
 
     private final int rewardForKill;
 

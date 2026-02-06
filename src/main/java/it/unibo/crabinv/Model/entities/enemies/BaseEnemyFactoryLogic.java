@@ -1,5 +1,7 @@
 package it.unibo.crabinv.Model.entities.enemies;
 
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
+
 public class BaseEnemyFactoryLogic implements EnemyFactory{
     @Override
     public Enemy createEnemy(EnemyType type, double x, double y) {
@@ -13,6 +15,7 @@ public class BaseEnemyFactoryLogic implements EnemyFactory{
                     .fireRate(1)
                     .type(type)
                     .radius(10)
+                    .sprite(EntitySprites.ENEMY_SERVANT)
                     .build();
         };
     }

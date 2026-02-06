@@ -1,10 +1,12 @@
 package it.unibo.crabinv.Controller.core;
 
+import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.input.InputSnapshot;
 
 public class GameLoopControllerImpl implements GameLoopController {
@@ -35,7 +37,7 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
         this.gameEngine.newGame();
-        this.playerController = new PlayerController(this.gameEngine.getPlayer());
+        this.playerController = new PlayerController(this.gameEngine.getPlayer(), new AudioController(new JavaFXSoundManager()));
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
