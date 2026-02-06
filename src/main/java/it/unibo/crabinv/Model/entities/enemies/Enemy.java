@@ -24,10 +24,4 @@ public interface Enemy extends Entity, Movable,Shooter {
      * Updates at the tick the single enemy
      */
     void tick();
-
-    /**
-     * Checks if the bullet comes from the other enemies or if it comes from the
-     * @return true if the bullet is shot by another enemy is true else is false
-     */
-    boolean isFriendlyFire(Entity other);
 }

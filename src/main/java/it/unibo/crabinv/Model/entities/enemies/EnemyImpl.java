@@ -71,11 +71,6 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     }
 
     @Override
-    public boolean isFriendlyFire(Entity other) {
-        return other instanceof BulletEnemy;
-    }
-
-    @Override
     public double getSpeed() {
         return speed;
     }
