@@ -1,4 +1,9 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.wave;
+
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
+import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
+import it.unibo.crabinv.Model.entities.enemies.EnemyType;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 
 import java.util.ArrayList;
 import java.util.List;

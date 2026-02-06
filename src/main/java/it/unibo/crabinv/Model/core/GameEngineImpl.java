@@ -1,5 +1,9 @@
 package it.unibo.crabinv.Model.core;
 
+import it.unibo.crabinv.Model.entities.enemies.rewardService.EnemyRewardService;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
+import it.unibo.crabinv.Model.entities.enemies.wave.WaveProvider;
 import it.unibo.crabinv.Model.levels.Level;
 import it.unibo.crabinv.Model.levels.LevelFactory;
 import it.unibo.crabinv.Model.levels.LevelFactoryImpl;

@@ -1,5 +1,8 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.wave;
 
+/**
+ * It is the interface that has all the methods that should be useful
+ */
 public interface WaveProvider {
     /**
      * Getter for the next available wave

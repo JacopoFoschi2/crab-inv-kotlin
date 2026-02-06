@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.levels;
 
-import it.unibo.crabinv.Model.entities.enemies.Wave;
+import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 
 public interface Level {
     /**

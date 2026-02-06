@@ -1,5 +1,6 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.rewardService;
 
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.save.GameSession;
 
 public class EnemyRewardService implements RewardsService {

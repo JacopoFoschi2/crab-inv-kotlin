@@ -1,6 +1,12 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.wave;
+
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
 
 import java.util.List;
+
+/**
+ * Is the interface that has all the methods that the wave has
+ */
 
 public interface Wave {
 
