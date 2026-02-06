@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.PowerUpsShop;
 
-import it.unibo.crabinv.Model.i18n.TextKeys;
+import it.unibo.crabinv.Model.core.i18n.TextKeys;
 
 public enum PowerUpType {
     SPEED_UP (0.25, TextKeys.SPEED_DESC),
