@@ -1,11 +1,11 @@
 package it.unibo.crabinv;
 
-import it.unibo.crabinv.Controller.audio.AudioController;
-import it.unibo.crabinv.Controller.i18n.LocalizationController;
-import it.unibo.crabinv.Model.audio.JavaFXSoundManager;
-import it.unibo.crabinv.Model.i18n.Localization;
-import it.unibo.crabinv.config.AppSettings;
-import it.unibo.crabinv.config.SettingsFileManager;
+import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
+import it.unibo.crabinv.Model.core.i18n.Localization;
+import it.unibo.crabinv.core.config.AppSettings;
+import it.unibo.crabinv.core.config.SettingsFileManager;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;

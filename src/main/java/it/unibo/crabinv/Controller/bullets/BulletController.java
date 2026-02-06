@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Controller.bullets;
 
-import it.unibo.crabinv.Controller.entity.EntityController;
-import it.unibo.crabinv.Controller.entity.EntityNotCapableOfInputController;
+import it.unibo.crabinv.Controller.entities.entity.EntityController;
+import it.unibo.crabinv.Controller.entities.entity.EntityNotCapableOfInputController;
 
 /**
  * Provides any bulletController with the methods it should implement by combining EntityController and EntityNotCapableOfInputController

@@ -1,8 +1,8 @@
 package it.unibo.crabinv.Model.Enemies;
 
-import it.unibo.crabinv.Model.entity.Entity;
-import it.unibo.crabinv.Model.entity.Movable;
-import it.unibo.crabinv.Model.entity.Shooter;
+import it.unibo.crabinv.Model.entities.entity.Entity;
+import it.unibo.crabinv.Model.entities.entity.Movable;
+import it.unibo.crabinv.Model.entities.entity.Shooter;
 
 public interface Enemy extends Entity, Movable,Shooter {
     /**

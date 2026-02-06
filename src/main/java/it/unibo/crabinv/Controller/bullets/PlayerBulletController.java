@@ -1,9 +1,8 @@
 package it.unibo.crabinv.Controller.bullets;
 
-import it.unibo.crabinv.Controller.entity.EntityAbstractController;
-import it.unibo.crabinv.Controller.entity.EntityNotCapableOfInputController;
+import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.bullets.BulletPlayer;
-import it.unibo.crabinv.Model.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 
 public class PlayerBulletController extends EntityAbstractController<BulletPlayer> implements BulletController {
     private final double minBounds;

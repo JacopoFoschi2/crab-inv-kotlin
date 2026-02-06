@@ -1,12 +1,12 @@
 package it.unibo.crabinv.Model.bullets;
 
-import it.unibo.crabinv.Model.entity.AbstractEntity;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Entity;
-import it.unibo.crabinv.Model.entity.Movable;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import lombok.experimental.SuperBuilder;
 
-public class BulletPlayer extends AbstractEntity implements Bullet {
-    private final double speedY;
+@SuperBuilder
+public class BulletPlayer extends AbstractBullet {
     /**
      * Creates the bullet by setting its basic parameters
      *
@@ -14,22 +14,7 @@ public class BulletPlayer extends AbstractEntity implements Bullet {
      * @param x
      * @param y
      */
-    public BulletPlayer(int maxHealth, double x, double y, double speedY) {
-        super(maxHealth, x, y);
-        this.speedY = speedY;
-    }
-
-    @Override
-    public void move(Delta delta, double minBound, double maxBound) {
-        setPosition(getX(), getY() + speedY * delta.getValue());
-
-        if (getY() < minBound || getY() > maxBound) {
-            onCollisionWith(this);
-        }
-    }
-
-    @Override
-    public double getSpeed() {
-        return speedY;
+    public BulletPlayer(int maxHealth, double x, double y, double radius, double speedY) {
+        super( x, y, maxHealth, CollisionGroups.FRIENDLY,radius, speedY);
     }
 }

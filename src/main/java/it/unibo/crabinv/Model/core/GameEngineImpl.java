@@ -4,7 +4,8 @@ import it.unibo.crabinv.Model.Enemies.*;
 import it.unibo.crabinv.Model.Levels.Level;
 import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.save.*;
 
 import java.util.ArrayList;
@@ -36,12 +37,16 @@ public class GameEngineImpl implements GameEngine {
     public void newGame() {
         this.gameSession = new GameSessionImpl();
         this.rewardsService = new EnemyRewardService(this.gameSession);
-        player = new Player(
-                this.gameSession.getPlayerHealth(),
-                PLAYER_START_X,
-                PLAYER_FIXED_Y,
-                this.gameSession.getPlayerSpeed(),
-                this.gameSession.getPlayerFireRate());
+        player = Player.builder()
+                .x(PLAYER_START_X)
+                .y(PLAYER_FIXED_Y)
+                .maxHealth(this.gameSession.getPlayerHealth())
+                .health(this.gameSession.getPlayerHealth())
+                .collisionGroup(CollisionGroups.FRIENDLY)
+                .radius(10)
+                .speed(this.gameSession.getPlayerSpeed())
+                .fireRate(this.gameSession.getPlayerFireRate())
+                .build();
         //playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 
         final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();

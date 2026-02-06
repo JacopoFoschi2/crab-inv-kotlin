@@ -1,11 +1,9 @@
 package it.unibo.crabinv.Controller.enemy;
 
-import it.unibo.crabinv.Controller.entity.EntityAbstractController;
-import it.unibo.crabinv.Controller.entity.EntityNotCapableOfInputController;
+import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entities.entity.EntityNotCapableOfInputController;
 import it.unibo.crabinv.Model.Enemies.Enemy;
-import it.unibo.crabinv.Model.Enemies.EnemyImpl;
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.entity.Entity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 
 import java.util.Random;
 

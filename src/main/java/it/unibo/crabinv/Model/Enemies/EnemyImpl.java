@@ -1,16 +1,21 @@
 package it.unibo.crabinv.Model.Enemies;
 
 import it.unibo.crabinv.Model.bullets.BulletEnemy;
-import it.unibo.crabinv.Model.entity.*;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Entity;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 public class EnemyImpl extends AbstractEntity implements Enemy {
     private final EnemyType type;
     private int shootingCounter;
     private final int fireRate;
     private final double speed;
 
-    public EnemyImpl(final EnemyType type, int maxHealth, double x, double y, int fireRate, double speed) {
-        super(maxHealth, x, y);
+    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate, double speed) {
+        super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
         this.type = type;
         this.fireRate = fireRate;
         this.speed = speed;
@@ -37,17 +42,6 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
         if (newY<minBound){newY=minBound;}
         if (newY>maxBound){newY=maxBound;}
         this.setPosition(this.getX(), newY);
-    }
-
-    @Override
-    public void onCollisionWith(Entity other) {
-        if (isFriendlyFire(other)) {
-            return;
-        }
-        if (other instanceof Enemy){
-            return;
-        }
-        super.onCollisionWith(other);
     }
 
     @Override
