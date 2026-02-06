@@ -4,6 +4,9 @@ import it.unibo.crabinv.Model.entities.entity.Entity;
 import it.unibo.crabinv.Model.entities.entity.Movable;
 import it.unibo.crabinv.Model.entities.entity.Shooter;
 
+/**
+ * It's the interface that establish the enemy
+ */
 public interface Enemy extends Entity, Movable,Shooter {
     /**
      * Getter for the enemy Type that the enemy has

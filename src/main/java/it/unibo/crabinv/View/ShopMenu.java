@@ -56,20 +56,22 @@ public class ShopMenu {
         descriptionBox.setMaxWidth(400);
         descriptionBox.getStyleClass().add("shop-description-box");
 
-
         currencyLabel = new Label();
         updateCurrency();
-
-        VBox powerUpsBox = new VBox(20);
+        FlowPane powerUpsBox = new FlowPane();
+        powerUpsBox.setHgap(20);
+        powerUpsBox.setVgap(20);
         powerUpsBox.setAlignment(Pos.CENTER);
+        powerUpsBox.setPrefWrapLength(600);
         VBox headerBox = new VBox(25);
         headerBox.setAlignment(Pos.CENTER);
         headerBox.getChildren().addAll(title, descriptionBox, currencyLabel);
         mainColumn.getChildren().add(headerBox);
         mainColumn.getChildren().add(powerUpsBox);
-
         for (PowerUp p : powerUps) {
-            mainColumn.getChildren().add(createPowerUpRow(p, descriptionLabel));
+            powerUpsBox.getChildren().add(
+                    createPowerUpCard(p, descriptionLabel)
+            );
         }
 
         Button backButton = createMenuButton(
@@ -78,11 +80,13 @@ public class ShopMenu {
         );
 
         mainColumn.getChildren().add(backButton);
+
         root.getChildren().add(mainColumn);
         return root;
     }
 
-    private VBox createPowerUpRow(PowerUp powerUp , Label descriptionLabel) {
+
+    private VBox createPowerUpCard(PowerUp powerUp , Label descriptionLabel) {
         VBox card = new VBox(12);
         card.setAlignment(Pos.CENTER);
         card.getStyleClass().add("powerup-card");
@@ -105,7 +109,7 @@ public class ShopMenu {
         updateLevelLabel(level, powerUp);
 
         Button buyButton = new Button(loc.getString(TextKeys.BUY));
-        buyButton.getStyleClass().add("app-button");
+        buyButton.getStyleClass().add("app-button-small");
 
         buyButton.focusedProperty().addListener((_, _, focused) -> {
             if (focused) {
