@@ -6,6 +6,7 @@ import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
  * Provides all the methods that an entity should implement
  */
 public interface Entity {
+    int CONTACT_DAMAGE = 1;
 
     /**
      * @return the current amount of HP

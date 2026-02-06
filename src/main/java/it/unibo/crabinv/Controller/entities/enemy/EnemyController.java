@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Controller.entities.enemy;
 
+import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Controller.entities.entity.EntityNotCapableOfInputController;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
@@ -9,9 +10,11 @@ import java.util.Random;
 
 
 public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
+    private final AudioController audio;
 
-    public EnemyController(Enemy enemy) {
+    public EnemyController(Enemy enemy, AudioController audio) {
         super(enemy);
+        this.audio = audio;
     }
 
     /**
