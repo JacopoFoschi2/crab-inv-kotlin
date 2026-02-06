@@ -5,13 +5,9 @@ import it.unibo.crabinv.Model.entities.bullets.BulletPlayer;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 
 public class PlayerBulletController extends EntityAbstractController<BulletPlayer> implements BulletController {
-    private final double minBounds;
-    private final double maxBounds;
 
-    public PlayerBulletController(BulletPlayer entity, double minBounds, double maxBounds) {
+    public PlayerBulletController(BulletPlayer entity) {
         super(entity);
-        this.minBounds = minBounds;
-        this.maxBounds = maxBounds;
     }
 
     @Override
@@ -32,7 +28,7 @@ public class PlayerBulletController extends EntityAbstractController<BulletPlaye
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        super.getEntity().move(delta, minBounds, maxBounds);
+        super.getEntity().move(delta);
     }
 
 

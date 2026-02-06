@@ -12,7 +12,7 @@ public class BulletEnemy extends AbstractBullet {
      * @param x
      * @param y
      */
-    public BulletEnemy(int maxHealth, double x, double y, double radius, double speedY) {
-        super( x, y, maxHealth, CollisionGroups.HOSTILE,radius, speedY);
+    public BulletEnemy(int maxHealth, double x, double y, double radius, double speedY, double minBound, double maxBound) {
+        super( x, y, maxHealth, CollisionGroups.HOSTILE,radius, speedY, minBound, maxBound);
     }
 }

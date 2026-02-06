@@ -20,30 +20,32 @@ public class TestPlayer {
                 .radius(10)
                 .speed(1)
                 .fireRate(1)
+                .minBound(-1)
+                .maxBound(1)
                 .build();
     }
 
     @Test
     public void TestPlayerMovement() {
-        player.move(Delta.INCREASE, -1, 1);
+        player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
     }
 
     @Test
     public void TestOutOfBounds() {
-        player.move(Delta.INCREASE, -1, 1);
+        player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
-        player.move(Delta.DECREASE, -1, 1);
+        player.move(Delta.DECREASE);
         Assertions.assertEquals(0, player.getX());
-        player.move(Delta.DECREASE, -1, 1);
+        player.move(Delta.DECREASE);
         Assertions.assertEquals(-1, player.getX());
-        player.move(Delta.DECREASE, -1, 1);
+        player.move(Delta.DECREASE);
         Assertions.assertEquals(-1, player.getX());
     }
 
     @Test
     public void TestNoMovement() {
-        player.move(Delta.NO_ACTION, -1, 1);
+        player.move(Delta.NO_ACTION);
         Assertions.assertEquals(0, player.getX());
     }
 

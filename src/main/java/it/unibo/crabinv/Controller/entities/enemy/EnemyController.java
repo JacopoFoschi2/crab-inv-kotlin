@@ -9,13 +9,9 @@ import java.util.Random;
 
 
 public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
-    private final double minBounds;
-    private final double maxBounds;
 
-    public EnemyController(Enemy enemy, double minBounds, double maxBounds) {
+    public EnemyController(Enemy enemy) {
         super(enemy);
-        this.minBounds = minBounds;
-        this.maxBounds = maxBounds;
     }
 
     /**
@@ -47,7 +43,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        super.getEntity().move(delta, minBounds, maxBounds);
+        super.getEntity().move(delta);
     }
 
     /**

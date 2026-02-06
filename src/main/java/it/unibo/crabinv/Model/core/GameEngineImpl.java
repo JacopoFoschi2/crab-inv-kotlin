@@ -46,6 +46,8 @@ public class GameEngineImpl implements GameEngine {
                 .radius(10)
                 .speed(this.gameSession.getPlayerSpeed())
                 .fireRate(this.gameSession.getPlayerFireRate())
+                .minBound(this.getWorldMinX())
+                .maxBound(this.getWorldMaxX())
                 .build();
         //playerController = new PlayerController(this.player, WORLD_MIN_X, WORLD_MAX_X);
 

@@ -12,7 +12,7 @@ public class BulletPlayer extends AbstractBullet {
      * @param x
      * @param y
      */
-    public BulletPlayer(int maxHealth, double x, double y, double radius, double speedY) {
-        super( x, y, maxHealth, CollisionGroups.FRIENDLY,radius, speedY);
+    public BulletPlayer(int maxHealth, double x, double y, double radius, double speedY, double minBound, double maxBound) {
+        super( x, y, maxHealth, CollisionGroups.FRIENDLY,radius, speedY, minBound, maxBound);
     }
 }

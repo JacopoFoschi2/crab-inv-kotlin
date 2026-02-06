@@ -13,12 +13,16 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private int shootingCounter;
     private final int fireRate;
     private final double speed;
+    private final double minBound;
+    private final double maxBound;
 
-    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate, double speed) {
+    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate, double speed, double minBound, double maxBound) {
         super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
         this.type = type;
         this.fireRate = fireRate;
         this.speed = speed;
+        this.minBound = minBound;
+        this.maxBound = maxBound;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     }
 
     @Override
-    public void move(Delta delta, double minBound, double maxBound) {
+    public void move(Delta delta) {
         double newY = this.getY() + delta.getValue();
         if (newY<minBound){newY=minBound;}
         if (newY>maxBound){newY=maxBound;}

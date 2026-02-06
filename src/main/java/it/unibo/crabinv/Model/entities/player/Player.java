@@ -26,21 +26,25 @@ public class Player extends AbstractEntity implements Shooter, Movable {
      * The minimal amount of ticks needed between two shots
      */
     private final int fireRate;
+    private final double minBound;
+    private final double maxBound;
 
     /**
      * Creates a player
      * @param speed the space covered in one tick
      * @param fireRate the minimal amount of ticks needed between two shots
      */
-    public Player(double x, double y, int maxHealth, double radius, double speed, int fireRate) {
+    public Player(double x, double y, int maxHealth, double radius, double speed, int fireRate, double minBound, double maxBound) {
         super(x, y, maxHealth, CollisionGroups.FRIENDLY, radius);
         this.speed = speed;
         this.fireRate = fireRate;
         this.shootingCounter = 0;
+        this.minBound = minBound;
+        this.maxBound = maxBound;
     }
 
     @Override
-    public void move(Delta delta, double minBound, double maxBound) {
+    public void move(Delta delta) {
         double movement = delta.getValue() * speed;
         double newX = this.getX() + movement;
         if (newX <  minBound) {

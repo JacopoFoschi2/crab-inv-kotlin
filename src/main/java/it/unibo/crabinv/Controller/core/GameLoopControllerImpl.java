@@ -35,11 +35,7 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
         this.gameEngine.newGame();
-        this.playerController = new PlayerController(
-                this.gameEngine.getPlayer(),
-                this.gameEngine.getWorldMinX(),
-                this.gameEngine.getWorldMaxX()
-        );
+        this.playerController = new PlayerController(this.gameEngine.getPlayer());
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 

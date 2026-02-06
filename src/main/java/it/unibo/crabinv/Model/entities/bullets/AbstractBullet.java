@@ -8,14 +8,18 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private final double speed;
+    private final double minBound;
+    private final double maxBound;
 
-    public AbstractBullet(double x, double y, int maxHealth, CollisionGroups collisionGroup, double radius, double speed) {
+    public AbstractBullet(double x, double y, int maxHealth, CollisionGroups collisionGroup, double radius, double speed, double minBound, double maxBound) {
         super(x, y, maxHealth, collisionGroup, radius);
         this.speed = speed;
+        this.minBound = minBound;
+        this.maxBound = maxBound;
     }
 
     @Override
-    public void move(Delta delta, double minBound, double maxBound) {
+    public void move(Delta delta) {
         setPosition(getX(), getY() + speed * delta.getValue());
 
         if (getY() < minBound || getY() > maxBound) {

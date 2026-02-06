@@ -24,8 +24,10 @@ public class TestPlayerController {
                 .radius(10)
                 .speed(1)
                 .fireRate(1)
+                .minBound(-2)
+                .maxBound(2)
                 .build();
-        playerController = new PlayerController(player, -2, 2);
+        playerController = new PlayerController(player);
     }
 
     @Test

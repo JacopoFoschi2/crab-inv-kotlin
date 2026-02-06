@@ -9,19 +9,13 @@ import it.unibo.crabinv.Model.entities.player.Player;
  * Provides all the apis to control a {@link Player}
  */
 public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
-    private final double minBounds;
-    private final double maxBounds;
 
     /**
      * Sets the controller linking it to a set player
      * @param player the player
-     * @param minBounds the minimal bounds of the x-axis
-     * @param maxBounds the maximal bounds of the x-axis
      */
-    public PlayerController(Player player, double minBounds, double maxBounds) {
+    public PlayerController(Player player) {
         super(player);
-        this.minBounds = minBounds;
-        this.maxBounds = maxBounds;
     }
 
     @Override
@@ -45,7 +39,7 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     private void move(Delta delta) {
-        super.getEntity().move(delta, minBounds, maxBounds);
+        super.getEntity().move(delta);
     }
 
     /**
