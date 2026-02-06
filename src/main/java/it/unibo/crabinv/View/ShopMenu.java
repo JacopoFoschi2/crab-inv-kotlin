@@ -54,6 +54,7 @@ public class ShopMenu {
         VBox descriptionBox = new VBox(descriptionLabel);
         descriptionBox.setPadding(new Insets(15));
         descriptionBox.setMaxWidth(400);
+        descriptionBox.setMinHeight(220);
         descriptionBox.getStyleClass().add("shop-description-box");
 
         currencyLabel = new Label();
