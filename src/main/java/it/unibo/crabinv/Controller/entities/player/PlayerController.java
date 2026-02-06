@@ -3,6 +3,7 @@ package it.unibo.crabinv.Controller.entities.player;
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Controller.entities.entity.EntityCapableOfInputController;
+import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.player.Player;
 
@@ -51,6 +52,7 @@ public class PlayerController extends EntityAbstractController<Player> implement
     private void shoot() {
         if (super.getEntity().isAbleToShoot()) {
             super.getEntity().shoot();
+            audio.playSFX(SFXTracks.SHOT_PLAYER);
         }
     }
 
