@@ -3,12 +3,14 @@ package it.unibo.crabinv.Model.bullets;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entities.entity.Delta;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private final double speed;
 
-    public AbstractBullet(int maxHealth, CollisionGroups collisionGroup, double x, double y, double radius, double speed) {
-        super(maxHealth, collisionGroup, x, y, radius);
+    public AbstractBullet(double x, double y, int maxHealth, CollisionGroups collisionGroup, double radius, double speed) {
+        super(x, y, maxHealth, collisionGroup, radius);
         this.speed = speed;
     }
 
