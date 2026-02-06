@@ -6,6 +6,9 @@ import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Provides the base of the bullet
+ */
 @SuperBuilder
 public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private final double speed;
