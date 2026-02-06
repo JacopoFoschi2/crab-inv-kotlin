@@ -13,8 +13,10 @@ public class CollisionSystem {
     /**
      * Resolves all collisions between entities
      * @param entities the list of all the entities on the screen
+     * @return true if there has been at least one collision, false if there hasn't
      */
-    public void resolve(List<Entity> entities) {
+    public boolean resolve(List<Entity> entities) {
+        boolean collisionOccurred = false;
         for (int first = 0; first < entities.size(); first++) {
             for (int second = first + 1; second < entities.size(); second++) {
                 Entity entity1 = entities.get(first);
@@ -22,9 +24,11 @@ public class CollisionSystem {
                 if (isColliding(entity1, entity2)) {
                     entity1.takeDamage(Entity.CONTACT_DAMAGE);
                     entity2.takeDamage(Entity.CONTACT_DAMAGE);
+                    collisionOccurred = true;
                 }
             }
         }
+        return collisionOccurred;
     }
 
     /**
