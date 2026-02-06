@@ -2,45 +2,57 @@ package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.player.PlayerController;
+import it.unibo.crabinv.Model.Enemies.EnemyFactory;
+import it.unibo.crabinv.Model.Enemies.RewardsService;
+import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
 import it.unibo.crabinv.Model.input.InputSnapshot;
+import it.unibo.crabinv.Model.save.GameSession;
 
 public class GameLoopControllerImpl implements GameLoopController {
 
+    private static final long STANDARD_TICK_MILLIS = 16;
+    private static final int STANDARD_MAX_TICKS_PER_FRAME = 5;
+
+    private final long tickDurationMillis;
+    private final int maxTicksPerFrame;
     private final GameEngine gameEngine;
     private final InputController inputController;
     private final PlayerController playerController;
-
-    private static final long STANDARD_TICK_MILLIS = 16;
-    private static final int STANDARD_MAX_TICKS_PER_FRAME = 5;
-    private final long tickDurationMillis;
-    private final int maxTicksPerFrame;
     private long accumulatedMillis;
     private long totalElapsedTicks;
     private GameSnapshot latestSnapshot;
 
-    public GameLoopControllerImpl(GameEngine gameEngine, InputController inputController) {
-        if (gameEngine == null) {
-            throw new NullPointerException("gameEngine cannot be null");
-        }
-        if (inputController == null) {
-            throw new NullPointerException(("inputController cannot be null"));
-        }
-        this.gameEngine = gameEngine;
-        this.inputController = inputController;
+    public GameLoopControllerImpl(GameEngine gameEngine,
+                                  InputController inputController,
+                                  PlayerController playerController) {
+
         this.tickDurationMillis = STANDARD_TICK_MILLIS;
         this.maxTicksPerFrame = STANDARD_MAX_TICKS_PER_FRAME;
         this.accumulatedMillis = 0;
         this.totalElapsedTicks = 0;
-        this.gameEngine.newGame();
-        this.playerController = new PlayerController(
-                this.gameEngine.getPlayer(),
-                this.gameEngine.getWorldMinX(),
-                this.gameEngine.getWorldMaxX()
-        );
+        this.gameEngine = gameEngine;
+        this.inputController = inputController;
+        this.playerController = playerController;
         this.latestSnapshot = this.gameEngine.snapshot();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameSnapshot step(long frameElapsedMillis) {
+        checkPause();
+        checkResume();
+        if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+            accumulateTime(frameElapsedMillis);
+            final int nextStepTicks = calculateTicks();
+            executeTicks(nextStepTicks);
+            updateSnapshot(nextStepTicks);
+        }
+        return latestSnapshot;
     }
 
     /**
@@ -67,21 +79,7 @@ public class GameLoopControllerImpl implements GameLoopController {
         return totalElapsedTicks;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameSnapshot step(long frameElapsedMillis) {
-        checkPause();
-        checkResume();
-        if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-            accumulateTime(frameElapsedMillis);
-            final int nextStepTicks = calculateTicks();
-            executeTicks(nextStepTicks);
-            updateSnapshot(nextStepTicks);
-        }
-        return latestSnapshot;
-    }
+
 
     /**
      * {@inheritDoc}
@@ -129,7 +127,7 @@ public class GameLoopControllerImpl implements GameLoopController {
 
     private int calculateTicks() {
         final long ticks = this.accumulatedMillis / this.tickDurationMillis;
-        final long cappedTicks = Math.min(ticks, (long) maxTicksPerFrame);
+        final long cappedTicks = Math.min(ticks, maxTicksPerFrame);
         return (int) cappedTicks;
     }
 

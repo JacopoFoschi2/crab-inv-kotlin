@@ -16,10 +16,15 @@ public interface Save {
     long getCreationTimeStamp();
 
     /**
-     * Assigns a gameSession to the save
-     * @param gameSession the GameSession to assign to the save
+     * Creates a new GameSession based on the UserProfile, does nothing if a GameSession is already present
+     * @return the newly created GameSession
      */
-    void setGameSession(GameSession gameSession);
+    GameSession newGameSession();
+
+    /**
+     * Closes the GameSession
+     */
+    void closeGameSession();
 
     /** @return GameSession bound to save */
     GameSession getGameSession();

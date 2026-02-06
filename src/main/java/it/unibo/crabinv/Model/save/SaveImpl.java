@@ -31,6 +31,7 @@ public class SaveImpl implements Save{
         this.gameSession = gameSession;
     }
 
+
     /** {@inheritDoc} */
     @Override
     public UUID getSaveId() {
@@ -43,11 +44,14 @@ public class SaveImpl implements Save{
         return creationTimeStamp;
     }
 
+    @Override //TODO trasferire i modificatori di statistica in UserProfile da GameSession
+    public GameSession newGameSession() {
+        return this.gameSession == null ? GameSessionImpl(this.userProfile.) : null;
+    }
+
     @Override
-    public void setGameSession(GameSession gameSession) {
-        if (this.gameSession == null){
-            this.gameSession = gameSession;
-        }
+    public void closeGameSession() {
+        this.gameSession = null;
     }
 
     /** {@inheritDoc} */

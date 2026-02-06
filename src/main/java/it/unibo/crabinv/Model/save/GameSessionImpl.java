@@ -15,10 +15,9 @@ public class GameSessionImpl implements GameSession {
 
     private static final int STARTING_LEVEL = 1;
     private static final int STARTING_CURRENCY = 0;
-    private static final double STARTING_SPEED = 0.01;
-    private static final int STARTING_FIRE_RATE = 1;
-    public static final int STARTING_PLAYER_HEALTH = 3;
-
+    private static final double STARTING_SPEED = 0.01; //TODO rimuovere
+    private static final int STARTING_FIRE_RATE = 1; //TODO rimuovere
+    public static final int STARTING_PLAYER_HEALTH = 3; //TODO rimuovere
 
     private int currentLevel;
     private boolean gameOver;
@@ -30,7 +29,41 @@ public class GameSessionImpl implements GameSession {
 
 
     /**
-     * Constructor with default values
+     * LOAD_GAME Constructor, to be used in a Controller to load an existing GameSession
+     * @param currency the currency to assign to the player of the GameSession
+     * @param playerHealth the Health to assign to the player of the GameSession
+     * @param playerSpeed the Speed to assign to the player of the GameSession
+     * @param playerFireRate the FireRate to assign to the player of the GameSession
+     */
+    public GameSessionImpl(int currency, int playerHealth, int playerSpeed, int playerFireRate){
+        this.currentLevel = STARTING_LEVEL;
+        this.gameOver = false;
+        this.startingTimeStamp = Instant.now().toEpochMilli();
+        this.currency = currency;
+        this.playerHealth = playerHealth;
+        this.playerSpeed = playerSpeed;
+        this.playerFireRate = playerFireRate;
+    }
+
+    /**
+     * NEW_GAME Constructor, to be used in a Controller to create a new GameSession
+     * @param playerHealth the Health to assign to the player of the GameSession
+     * @param playerSpeed the Speed to assign to the player of the GameSession
+     * @param playerFireRate the FireRate to assign to the player of the GameSession
+     */
+    public GameSessionImpl(int playerHealth, int playerSpeed, int playerFireRate){
+        this.currentLevel = STARTING_LEVEL;
+        this.gameOver = false;
+        this.startingTimeStamp = Instant.now().toEpochMilli();
+        this.currency = STARTING_CURRENCY;
+        this.playerHealth = playerHealth;
+        this.playerSpeed = playerSpeed;
+        this.playerFireRate = playerFireRate;
+    }
+
+    /**
+     * Constructor with default values, to be used only for testing
+     * //TODO remove when deprecated
      */
     public GameSessionImpl() {
         this.currentLevel = STARTING_LEVEL;
@@ -121,7 +154,7 @@ public class GameSessionImpl implements GameSession {
     @Override
     public void addPlayerHealth(int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
-        this.playerHealth = Math.min(STARTING_PLAYER_HEALTH, this.playerHealth + amount);
+        this.playerHealth += amount;
     }
 
     /** {@inheritDoc} */

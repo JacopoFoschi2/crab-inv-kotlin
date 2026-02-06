@@ -1,7 +1,11 @@
 package it.unibo.crabinv.Model.core;
 
+import it.unibo.crabinv.Model.Enemies.EnemyFactory;
+import it.unibo.crabinv.Model.Enemies.RewardsService;
+import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.input.InputSnapshot;
 import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.save.GameSession;
 
 /**
  * Defines the contract for the game simulation
@@ -9,9 +13,10 @@ import it.unibo.crabinv.Model.player.Player;
 public interface GameEngine {
 
     /**
-     * Creates a new instance of the game
+     * Initializes the instance of the game
+     * @param gameSession the GameSession from which the GameEngine will be initialized
      */
-    void newGame();
+    void init(GameSession gameSession, LevelFactory levelFactory, EnemyFactory enemyFactory, RewardsService rewardsService);
 
     /**
      * Defines the logic of the simulation and advances one tick

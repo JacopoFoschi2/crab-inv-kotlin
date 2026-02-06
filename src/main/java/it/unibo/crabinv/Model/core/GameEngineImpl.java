@@ -1,11 +1,14 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Model.Enemies.*;
+import it.unibo.crabinv.Model.Enemies.Enemy;
+import it.unibo.crabinv.Model.Enemies.EnemyFactory;
+import it.unibo.crabinv.Model.Enemies.RewardsService;
+import it.unibo.crabinv.Model.Enemies.Wave;
 import it.unibo.crabinv.Model.Levels.Level;
 import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.player.Player;
-import it.unibo.crabinv.Model.save.*;
+import it.unibo.crabinv.Model.save.GameSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,35 +21,37 @@ public class GameEngineImpl implements GameEngine {
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
-    private final LevelFactory levelFactory = new LevelFactoryImpl();
-    Player player;
-    private Save save;
+
     private GameSession gameSession;
-    private WaveProvider waveProvider; //TODO check safe-remove after correct implementation
-    private GameEngineState gameEngineState;
+    private int currentLevel;
+    private LevelFactory levelFactory;
+    private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
     private Level level;
-    private int currentLevel;
+    private Player player;
     private long elapsedTicks;
+    private GameEngineState gameEngineState;
 
     public GameEngineImpl() {
     }
 
     @Override
-    public void newGame() {
-        this.gameSession = new GameSessionImpl();
-        this.rewardsService = new EnemyRewardService(this.gameSession);
-        player = new Player(
+    public void init(GameSession gameSession,
+                     LevelFactory levelFactory,
+                     EnemyFactory enemyFactory,
+                     RewardsService rewardsService) {
+        this.gameSession = gameSession;
+        this.levelFactory = levelFactory;
+        this.currentLevel = gameSession.getCurrentLevel();
+        this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, rewardsService);
+        this.player = new Player(
                 this.gameSession.getPlayerHealth(),
                 PLAYER_START_X,
                 PLAYER_FIXED_Y,
                 this.gameSession.getPlayerSpeed(),
                 this.gameSession.getPlayerFireRate());
-        final EnemyFactory enemyFactory = new BaseEnemyFactoryLogic();
+        this.elapsedTicks = 0; //TODO controllare se necessario salvare in GameSession
         this.gameEngineState = GameEngineState.RUNNING;
-        this.currentLevel = 1;
-        this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, this.rewardsService);
-        this.elapsedTicks = 0;
     }
 
     @Override
@@ -97,12 +102,6 @@ public class GameEngineImpl implements GameEngine {
         }
         this.gameEngineState = GameEngineState.GAME_OVER;
         this.gameSession.markGameOver();
-        SessionRecord sessionRecord = new SessionRecordImpl(
-                this.gameSession.getStartingTimeStamp(),
-                this.gameSession.getCurrentLevel(),
-                this.gameSession.getCurrency());
-        //
-        //TODO Aggiorna UserProfile
     }
 
     @Override
@@ -185,7 +184,7 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
-    private void populateBullets(List<RenderObjectSnapshot> renderObjects){
+    private void populateBullets(List<RenderObjectSnapshot> renderObjects) {
 
     }
 

@@ -55,10 +55,6 @@ public class SaveImplOld implements Save{
         return creationTimeStamp;
     }
 
-    @Override
-    public void setGameSession(GameSession gameSession) {
-
-    }
 
     /** {@inheritDoc} */
     @Override
