@@ -5,6 +5,7 @@ import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.Entity;
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -16,9 +17,9 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private final double minBound;
     private final double maxBound;
 
-    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate,
-                      double speed, double minBound, double maxBound) {
-        super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
+    public EnemyImpl(double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate,
+                     double speed, double minBound, double maxBound, EntitySprites sprite) {
+        super( x, y, maxHealth, CollisionGroups.HOSTILE, radius, sprite);
         this.type = type;
         this.fireRate = fireRate;
         this.speed = speed;

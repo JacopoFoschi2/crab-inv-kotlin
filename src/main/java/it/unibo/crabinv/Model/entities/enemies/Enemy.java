@@ -15,12 +15,6 @@ public interface Enemy extends Entity, Movable,Shooter {
     public EnemyType getEnemyType();
 
     /**
-     * Getter for the imagePath of the enemy
-     * @return the image path
-     */
-    String getImagePath();
-
-    /**
      * Gives the amount of currency to give back to the player
      * @return the amount of the reward for enemy defeat
      */

@@ -14,17 +14,19 @@ public abstract class AbstractEntity implements Entity {
     private int health;
     private final CollisionGroups collisionGroup;
     private final double radius;
+    private final EntitySprites sprite;
 
     /**
      * Creates the entity by setting its basic parameters
      */
-    public AbstractEntity(double x, double y, int maxHealth, CollisionGroups collisionGroup,double radius) {
+    public AbstractEntity(double x, double y, int maxHealth, CollisionGroups collisionGroup,double radius, EntitySprites sprite) {
         this.x = x;
         this.y = y;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;
         this.radius = radius;
+        this.sprite = sprite;
     }
 
     @Override
@@ -70,6 +72,11 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public double getRadius() {
         return radius;
+    }
+
+    @Override
+    public String getSprite() {
+        return sprite.getImagePath();
     }
 
     /**

@@ -185,7 +185,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
-        renderObjects.add(new RenderObjectSnapshot(player.getImagePath(), player.getX(), player.getY()));
+        renderObjects.add(new RenderObjectSnapshot(player.getSprite(), player.getX(), player.getY()));
     }
 
     private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
@@ -193,7 +193,7 @@ public class GameEngineImpl implements GameEngine {
             final Wave wave = level.getCurrentWave();
             if (wave != null) {
                 for (final Enemy enemy : wave.getAliveEnemies()) {
-                    renderObjects.add(new RenderObjectSnapshot(enemy.getImagePath(), enemy.getX(), enemy.getY()));
+                    renderObjects.add(new RenderObjectSnapshot(enemy.getSprite(), enemy.getX(), enemy.getY()));
                 }
             }
         }

@@ -54,4 +54,9 @@ public interface Entity {
      * @return the radius of the entity used to solve collision
      */
     double getRadius();
+
+    /**
+     * @return the sprite of the entity
+     */
+    String getSprite();
 }

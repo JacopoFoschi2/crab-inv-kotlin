@@ -1,10 +1,7 @@
 package it.unibo.crabinv.Model.entities.player;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
-import it.unibo.crabinv.Model.entities.entity.Delta;
-import it.unibo.crabinv.Model.entities.entity.Movable;
-import it.unibo.crabinv.Model.entities.entity.Shooter;
+import it.unibo.crabinv.Model.entities.entity.*;
 import lombok.Builder;
 import lombok.experimental.SuperBuilder;
 
@@ -35,7 +32,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
      * @param fireRate the minimal amount of ticks needed between two shots
      */
     public Player(double x, double y, int maxHealth, double radius, double speed, int fireRate, double minBound, double maxBound) {
-        super(x, y, maxHealth, CollisionGroups.FRIENDLY, radius);
+        super(x, y, maxHealth, CollisionGroups.FRIENDLY, radius, EntitySprites.PLAYER);
         this.speed = speed;
         this.fireRate = fireRate;
         this.shootingCounter = 0;
@@ -83,12 +80,4 @@ public class Player extends AbstractEntity implements Shooter, Movable {
             shootingCounter--;
         }
     }
-
-    /**
-     * @return the path of the sprite
-     */
-    public String getImagePath() {
-        return "/player/player_appearance.png";
-    }
-
 }
