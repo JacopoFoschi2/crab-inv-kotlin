@@ -2,8 +2,8 @@ package it.unibo.crabinv.Model.entities.enemies.wavetypes;
 
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.EnemyType;
-import it.unibo.crabinv.Model.entities.enemies.RewardsService;
-import it.unibo.crabinv.Model.entities.enemies.WaveImpl;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.Model.entities.enemies.wave.WaveImpl;
 
 import java.util.List;
 

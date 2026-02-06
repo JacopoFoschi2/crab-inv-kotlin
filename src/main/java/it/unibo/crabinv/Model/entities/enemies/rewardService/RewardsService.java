@@ -1,4 +1,6 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.rewardService;
+
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
 
 public interface RewardsService {
     /**

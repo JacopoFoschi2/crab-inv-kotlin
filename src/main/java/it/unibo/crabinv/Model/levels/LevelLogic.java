@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Model.levels;
 
-import it.unibo.crabinv.Model.entities.enemies.Wave;
-import it.unibo.crabinv.Model.entities.enemies.WaveProvider;
+import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
+import it.unibo.crabinv.Model.entities.enemies.wave.WaveProvider;
 
 public class LevelLogic implements Level {
     private  final WaveProvider waveProvider;

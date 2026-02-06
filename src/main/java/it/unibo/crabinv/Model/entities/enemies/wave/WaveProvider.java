@@ -1,4 +1,4 @@
-package it.unibo.crabinv.Model.entities.enemies;
+package it.unibo.crabinv.Model.entities.enemies.wave;
 
 public interface WaveProvider {
     /**
