@@ -11,7 +11,8 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private final double minBound;
     private final double maxBound;
 
-    public AbstractBullet(double x, double y, int maxHealth, CollisionGroups collisionGroup, double radius, double speed, double minBound, double maxBound) {
+    public AbstractBullet(double x, double y, int maxHealth, CollisionGroups collisionGroup, double radius,
+                          double speed, double minBound, double maxBound) {
         super(x, y, maxHealth, collisionGroup, radius);
         this.speed = speed;
         this.minBound = minBound;

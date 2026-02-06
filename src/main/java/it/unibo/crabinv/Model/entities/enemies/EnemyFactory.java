@@ -8,5 +8,5 @@ public interface EnemyFactory {
      * @param y is the vertical axis position that you want the enemy at
      * @return the created enemy
      */
-    Enemy createEnemy(EnemyType type, double x, double y);
+    Enemy createEnemy(EnemyType type, double x, double y, double minBound, double maxBound);
 }

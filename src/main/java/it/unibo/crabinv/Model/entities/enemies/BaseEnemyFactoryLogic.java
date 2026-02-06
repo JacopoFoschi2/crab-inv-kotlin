@@ -2,18 +2,9 @@ package it.unibo.crabinv.Model.entities.enemies;
 
 public class BaseEnemyFactoryLogic implements EnemyFactory{
     @Override
-    public Enemy createEnemy(EnemyType type, double x, double y) {
+    public Enemy createEnemy(EnemyType type, double x, double y, double maxBound, double minBound) {
         return switch (type){
-            case SERVANT ->  EnemyImpl.builder()
-                    .x(x)
-                    .y(y)
-                    .maxHealth(1)
-                    .health(1)
-                    .speed(0.5)
-                    .fireRate(1)
-                    .type(type)
-                    .radius(10)
-                    .build();
+            case SERVANT ->  new EnemyImpl(x,y,1,0.01,type,1,0.01,maxBound,minBound);
         };
     }
 }

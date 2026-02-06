@@ -16,7 +16,8 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private final double minBound;
     private final double maxBound;
 
-    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate,
+    public EnemyImpl( double x, double y, int maxHealth, double radius,
+                      final EnemyType type, int fireRate,
                       double speed, double minBound, double maxBound) {
         super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
         this.type = type;
