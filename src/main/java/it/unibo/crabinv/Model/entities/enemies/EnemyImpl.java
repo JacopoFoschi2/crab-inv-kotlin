@@ -16,7 +16,8 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private final double minBound;
     private final double maxBound;
 
-    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate, double speed, double minBound, double maxBound) {
+    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate,
+                      double speed, double minBound, double maxBound) {
         super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
         this.type = type;
         this.fireRate = fireRate;
@@ -28,11 +29,6 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     @Override
     public EnemyType getEnemyType() {
         return this.type;
-    }
-
-    @Override
-    public String getImagePath() {
-        return this.type.getImagePath();
     }
 
     @Override
