@@ -4,7 +4,16 @@ public class BaseEnemyFactoryLogic implements EnemyFactory{
     @Override
     public Enemy createEnemy(EnemyType type, double x, double y) {
         return switch (type){
-            case SERVANT -> new EnemyImpl(EnemyType.SERVANT,1,x,y,1,0.5);
+            case SERVANT ->  EnemyImpl.builder()
+                    .x(x)
+                    .y(y)
+                    .maxHealth(1)
+                    .health(1)
+                    .speed(0.5)
+                    .fireRate(1)
+                    .type(type)
+                    .radius(10)
+                    .build();
         };
     }
 }

@@ -5,7 +5,9 @@ import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.Entity;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 public class EnemyImpl extends AbstractEntity implements Enemy {
     private final EnemyType type;
     private int currencyToGive = 10;
@@ -13,9 +15,8 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
     private final int fireRate;
     private final double speed;
 
-    public EnemyImpl(final EnemyType type, int maxHealth, double x, double y, int fireRate, double speed) {
-        super(maxHealth, CollisionGroups.HOSTILE, x, y, 1);
-        //TODO fix this
+    public EnemyImpl( double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate, double speed) {
+        super( x, y, maxHealth, CollisionGroups.HOSTILE, radius);
         this.type = type;
         this.fireRate = fireRate;
         this.speed = speed;
