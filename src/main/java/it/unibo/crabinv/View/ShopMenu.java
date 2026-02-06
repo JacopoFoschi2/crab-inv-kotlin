@@ -2,7 +2,7 @@ package it.unibo.crabinv.View;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.Model.PowerUpsShop.*;
+import it.unibo.crabinv.Model.powerUpsShop.*;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.core.i18n.TextKeys;
 import it.unibo.crabinv.Model.save.UserProfile;

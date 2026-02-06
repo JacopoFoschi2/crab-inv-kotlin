@@ -1,7 +1,5 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
-
 import java.util.List;
 
 /**

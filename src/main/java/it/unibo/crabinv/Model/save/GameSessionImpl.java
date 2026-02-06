@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
+import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
 
 import java.time.Instant;
 

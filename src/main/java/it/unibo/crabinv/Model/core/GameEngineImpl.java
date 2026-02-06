@@ -1,10 +1,10 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Model.Enemies.*;
-import it.unibo.crabinv.Model.Levels.Level;
-import it.unibo.crabinv.Model.Levels.LevelFactory;
-import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
+import it.unibo.crabinv.Model.levels.Level;
+import it.unibo.crabinv.Model.levels.LevelFactory;
+import it.unibo.crabinv.Model.levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.enemies.*;
 import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.save.*;
 
