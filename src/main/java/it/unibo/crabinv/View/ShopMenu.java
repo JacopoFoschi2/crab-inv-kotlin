@@ -159,7 +159,7 @@ public class ShopMenu {
     }
 
     private void updateLevelLabel(Label label, PowerUp p) {
-        int lvl = profile.getPowerUpLevel(p.getPowerUpName());
+        int lvl = profile.getPowerUpLevel(p.getPowerUpType());
         label.setText("Lv " + lvl + " / " + p.getMaxLevel());
     }
 }
