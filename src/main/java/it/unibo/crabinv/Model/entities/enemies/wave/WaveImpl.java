@@ -108,7 +108,7 @@ public class WaveImpl implements Wave {
                 final int slot = spawnSlots.get(i);
                 final double xNorm = (slot + 0.5) / this.maxSpawnSlots;
                 final EnemyType enemyType = enemy.get(i);
-                activeEnemies.add(enemyFactory.createEnemy(enemyType, xNorm, spawnYNorm));
+                activeEnemies.add(enemyFactory.createEnemy(enemyType, xNorm, spawnYNorm, 1, 1));
             }
             this.spawned = true;
         }
