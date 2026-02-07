@@ -1,8 +1,5 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.Enemies.Enemy;
-import it.unibo.crabinv.Model.Enemies.EnemyType;
-
 /**
  * Represents a single game session,
  * exposes level, currency, and player stats.

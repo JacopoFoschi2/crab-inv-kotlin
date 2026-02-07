@@ -1,13 +1,14 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Model.Enemies.Enemy;
-import it.unibo.crabinv.Model.Enemies.EnemyFactory;
-import it.unibo.crabinv.Model.Enemies.RewardsService;
-import it.unibo.crabinv.Model.Enemies.Wave;
-import it.unibo.crabinv.Model.Levels.Level;
-import it.unibo.crabinv.Model.Levels.LevelFactory;
-import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
+import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
+import it.unibo.crabinv.Model.entities.player.Player;
+import it.unibo.crabinv.Model.levels.Level;
+import it.unibo.crabinv.Model.levels.LevelFactory;
 import it.unibo.crabinv.Model.save.GameSession;
 
 import java.util.ArrayList;
@@ -44,12 +45,19 @@ public class GameEngineImpl implements GameEngine {
         this.levelFactory = levelFactory;
         this.currentLevel = gameSession.getCurrentLevel();
         this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, rewardsService);
-        this.player = new Player(
-                this.gameSession.getPlayerHealth(),
-                PLAYER_START_X,
-                PLAYER_FIXED_Y,
-                this.gameSession.getPlayerSpeed(),
-                this.gameSession.getPlayerFireRate());
+        player = Player.builder()
+                .x(PLAYER_START_X)
+                .y(PLAYER_FIXED_Y)
+                .maxHealth(this.gameSession.getPlayerHealth())
+                .health(this.gameSession.getPlayerHealth())
+                .collisionGroup(CollisionGroups.FRIENDLY)
+                .radius(10)
+                .speed(this.gameSession.getPlayerSpeed())
+                .fireRate(this.gameSession.getPlayerFireRate())
+                .minBound(this.getWorldMinX())
+                .maxBound(this.getWorldMaxX())
+                .sprite(EntitySprites.PLAYER)
+                .build();
         this.elapsedTicks = 0; //TODO controllare se necessario salvare in GameSession
         this.gameEngineState = GameEngineState.RUNNING;
     }
@@ -162,7 +170,6 @@ public class GameEngineImpl implements GameEngine {
         return renderObjects;
     }
 
-
     private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
         if (this.gameSession == null) {
             throw new IllegalStateException("newGame() needed before snapshot()");
@@ -171,7 +178,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
-        renderObjects.add(new RenderObjectSnapshot(player.getImagePath(), player.getX(), player.getY()));
+        renderObjects.add(new RenderObjectSnapshot(player.getSprite(), player.getX(), player.getY()));
     }
 
     private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
@@ -179,7 +186,7 @@ public class GameEngineImpl implements GameEngine {
             final Wave wave = level.getCurrentWave();
             if (wave != null) {
                 for (final Enemy enemy : wave.getAliveEnemies()) {
-                    renderObjects.add(new RenderObjectSnapshot(enemy.getImagePath(), enemy.getX(), enemy.getY()));
+                    renderObjects.add(new RenderObjectSnapshot(enemy.getSprite(), enemy.getX(), enemy.getY()));
                 }
             }
         }

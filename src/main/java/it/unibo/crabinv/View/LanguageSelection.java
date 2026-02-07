@@ -1,9 +1,9 @@
 package it.unibo.crabinv.View;
 
-import it.unibo.crabinv.Controller.audio.AudioController;
-import it.unibo.crabinv.Controller.i18n.LocalizationController;
-import it.unibo.crabinv.Model.audio.SFXTracks;
-import it.unibo.crabinv.Model.i18n.SupportedLocales;
+import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.Model.core.audio.SFXTracks;
+import it.unibo.crabinv.Model.core.i18n.SupportedLocales;
 import it.unibo.crabinv.SceneManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

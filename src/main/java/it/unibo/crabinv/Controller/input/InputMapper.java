@@ -1,7 +1,6 @@
 package it.unibo.crabinv.Controller.input;
 
-import it.unibo.crabinv.Model.entity.Delta;
-import it.unibo.crabinv.Model.input.*;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 
 public interface InputMapper {
 

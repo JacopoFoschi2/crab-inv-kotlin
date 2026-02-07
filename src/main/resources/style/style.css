@@ -128,3 +128,55 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
+
+.shop-description {
+    -fx-font-size: 20px;
+    -fx-text-fill: #B0B0B0;
+    -fx-max-width: 700px;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 4px;
+}
+
+.shop-description-box {
+    -fx-padding: 30 0 40 0;
+}
+
+.powerup-card {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #3A3A3A;
+    -fx-border-width: 2px;
+    -fx-min-width: 420px;
+    -fx-max-width: 420px;
+}
+
+.powerup-card:focused {
+    -fx-border-color: #3EA6FF;
+}
+
+.powerup-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.powerup-cost {
+    -fx-font-size: 18px;
+    -fx-text-fill: #E0E0E0;
+}
+
+.app-button-small {
+ -fx-background-color: #888888;
+    -fx-background-radius: 0;
+    -fx-font-size: 18px;
+    -fx-min-width: 150px;
+    -fx-min-height: 24px;
+    -fx-text-fill: #121212;
+}
+
+.app-button-small:focused{
+    -fx-background-color: #3EA6FF;
+    -fx-text-fill: #121212;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+

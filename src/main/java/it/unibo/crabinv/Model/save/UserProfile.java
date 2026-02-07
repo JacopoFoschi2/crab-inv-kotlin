@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
+import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
 
 /**
  * Represents the meta-data of a single player's profile,
@@ -16,18 +16,23 @@ public interface UserProfile {
 
     /**
      * Sums the amount to the stored currency
+     *
      * @param amount the amount of currency to add
-     * */
-    void addCurrency (int amount);
+     *
+     */
+    void addCurrency(int amount);
 
     /**
      * Subtracts the amount to the stored currency
+     *
      * @param amount the amount of currency to subtract
-     * */
-    void subCurrency (int amount);
+     *
+     */
+    void subCurrency(int amount);
 
     /**
      * Used to get the level of a powerUp
+     *
      * @param powUpType the type of the PowerUp to check
      * @return the level of the powerUp (defaults to 0 if null or invalid)
      */
@@ -36,17 +41,19 @@ public interface UserProfile {
 
     /**
      * Sets the selected powerUp the updated level number
+     *
      * @param powerUpType the name of the power up
-     * @param level the level to apply to the powerUp
-     * */
-    void updatePowerUp (PowerUpType powerUpType, int level);
+     * @param level       the level to apply to the powerUp
+     *
+     */
+    void updatePowerUp(PowerUpType powerUpType, int level);
 
     /**
      * Applies the power ups by multiplication
      * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
      */
-    double applyMultiplyPowerUp (PowerUpType powerUpType);
+    double applyMultiplyPowerUp(PowerUpType powerUpType);
 
-    double applyAddPowerUp (PowerUpType powerUpType);
+    double applyAddPowerUp(PowerUpType powerUpType);
 
 }

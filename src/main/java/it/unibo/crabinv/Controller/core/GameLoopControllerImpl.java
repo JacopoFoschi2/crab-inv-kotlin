@@ -1,15 +1,11 @@
 package it.unibo.crabinv.Controller.core;
 
+import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Controller.input.InputController;
-import it.unibo.crabinv.Controller.player.PlayerController;
-import it.unibo.crabinv.Model.Enemies.EnemyFactory;
-import it.unibo.crabinv.Model.Enemies.RewardsService;
-import it.unibo.crabinv.Model.Levels.LevelFactory;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
 import it.unibo.crabinv.Model.input.InputSnapshot;
-import it.unibo.crabinv.Model.save.GameSession;
 
 public class GameLoopControllerImpl implements GameLoopController {
 
@@ -78,7 +74,6 @@ public class GameLoopControllerImpl implements GameLoopController {
     public long getTotalElapsedTicks() {
         return totalElapsedTicks;
     }
-
 
 
     /**

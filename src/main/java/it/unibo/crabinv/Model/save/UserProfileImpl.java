@@ -1,6 +1,6 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
+import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
 
 import java.util.Map;
 
@@ -71,12 +71,13 @@ public class UserProfileImpl implements UserProfile {
         return PlayerBaseStats.getDoubleValueOf(powerUpType) + powerUpType.getStatMultiplier() * getLevel(powerUpType);
     }
 
-    private int getLevel(PowerUpType powerUpType){
+    private int getLevel(PowerUpType powerUpType) {
         return this.powerUpMap.get(powerUpType);
     }
 
     /**
      * Initializes or validates a powerUpMap
+     *
      * @param powerUpMap the existing powerUpMap to validate, can be null
      * @return the new validated powerUpMap
      */

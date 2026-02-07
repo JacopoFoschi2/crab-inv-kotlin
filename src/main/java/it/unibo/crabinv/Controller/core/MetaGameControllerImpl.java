@@ -1,16 +1,18 @@
 package it.unibo.crabinv.Controller.core;
 
+import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
 import it.unibo.crabinv.Controller.input.InputMapperImpl;
-import it.unibo.crabinv.Controller.player.PlayerController;
 import it.unibo.crabinv.Controller.save.SessionController;
-import it.unibo.crabinv.Model.Enemies.BaseEnemyFactoryLogic;
-import it.unibo.crabinv.Model.Enemies.EnemyRewardService;
-import it.unibo.crabinv.Model.Levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineImpl;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
+import it.unibo.crabinv.Model.entities.enemies.BaseEnemyFactoryLogic;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.EnemyRewardService;
+import it.unibo.crabinv.Model.levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.save.GameSession;
 
 import java.util.Objects;
@@ -50,8 +52,8 @@ public class MetaGameControllerImpl implements MetaGameController {
                 this.inputController,
                 new PlayerController(
                         gameEngine.getPlayer(),
-                        gameEngine.getWorldMinX(),
-                        gameEngine.getWorldMaxX()));
+                        new AudioController(new JavaFXSoundManager())
+                ));
     }
 
 
@@ -62,10 +64,10 @@ public class MetaGameControllerImpl implements MetaGameController {
         }
         GameSnapshot gameSnapshot = this.gameLoopController.step(frameElapsedMillis);
         GameSession gameSession = this.sessionController.getGameSession();
-        if (gameSession == null){
+        if (gameSession == null) {
             return gameSnapshot;
         }
-        if (gameSession.isGameOver()){
+        if (gameSession.isGameOver()) {
             this.sessionController.gameOverGameSession();
             this.gameLoopController = null;
             this.inputController = null;

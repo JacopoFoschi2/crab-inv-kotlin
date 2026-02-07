@@ -1,10 +1,9 @@
 package it.unibo.crabinv.Model.core;
 
-import it.unibo.crabinv.Model.Enemies.EnemyFactory;
-import it.unibo.crabinv.Model.Enemies.RewardsService;
-import it.unibo.crabinv.Model.Levels.LevelFactory;
-import it.unibo.crabinv.Model.input.InputSnapshot;
-import it.unibo.crabinv.Model.player.Player;
+import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
+import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.Model.entities.player.Player;
+import it.unibo.crabinv.Model.levels.LevelFactory;
 import it.unibo.crabinv.Model.save.GameSession;
 
 /**
@@ -14,6 +13,7 @@ public interface GameEngine {
 
     /**
      * Initializes the instance of the game
+     *
      * @param gameSession the GameSession from which the GameEngine will be initialized
      */
     void init(GameSession gameSession, LevelFactory levelFactory, EnemyFactory enemyFactory, RewardsService rewardsService);
@@ -21,7 +21,7 @@ public interface GameEngine {
     /**
      * Defines the logic of the simulation and advances one tick
      */
-    void tick ();
+    void tick();
 
     /**
      * @return the snapshot of the current state
