@@ -15,9 +15,9 @@ public class GameSessionImpl implements GameSession {
 
     private static final int STARTING_LEVEL = 1;
     private static final int STARTING_CURRENCY = 0;
-    private static final double STARTING_SPEED = 0.01; //TODO rimuovere
-    private static final int STARTING_FIRE_RATE = 1; //TODO rimuovere
-    public static final int STARTING_PLAYER_HEALTH = 3; //TODO rimuovere
+    private static final double STARTING_SPEED = 0.01; //TODO rendere ENUM
+    private static final int STARTING_FIRE_RATE = 1; //TODO rendere ENUM
+    public static final int STARTING_PLAYER_HEALTH = 3; //TODO rendere ENUM
 
     private int currentLevel;
     private boolean gameOver;
@@ -36,13 +36,13 @@ public class GameSessionImpl implements GameSession {
      * @param playerFireRate the FireRate to assign to the player of the GameSession
      */
     public GameSessionImpl(int currency, int playerHealth, int playerSpeed, int playerFireRate){
-        this.currentLevel = STARTING_LEVEL;
+        this.currentLevel = StartingSaveValues.LEVEL.getIntValue();
         this.gameOver = false;
         this.startingTimeStamp = Instant.now().toEpochMilli();
         this.currency = currency;
-        this.playerHealth = playerHealth;
-        this.playerSpeed = playerSpeed;
-        this.playerFireRate = playerFireRate;
+        this.playerHealth = StartingSaveValues.PLAYER_HEALTH.getIntValue();
+        this.playerSpeed = StartingSaveValues.SPEED.getDoubleValue();
+        this.playerFireRate = StartingSaveValues.FIRE_RATE.getIntValue();
     }
 
     /**
@@ -52,27 +52,13 @@ public class GameSessionImpl implements GameSession {
      * @param playerFireRate the FireRate to assign to the player of the GameSession
      */
     public GameSessionImpl(int playerHealth, int playerSpeed, int playerFireRate){
-        this.currentLevel = STARTING_LEVEL;
+        this.currentLevel = StartingSaveValues.LEVEL.getIntValue();
         this.gameOver = false;
         this.startingTimeStamp = Instant.now().toEpochMilli();
-        this.currency = STARTING_CURRENCY;
-        this.playerHealth = playerHealth;
-        this.playerSpeed = playerSpeed;
-        this.playerFireRate = playerFireRate;
-    }
-
-    /**
-     * Constructor with default values, to be used only for testing
-     * //TODO remove when deprecated
-     */
-    public GameSessionImpl() {
-        this.currentLevel = STARTING_LEVEL;
-        this.gameOver = false;
-        this.startingTimeStamp = Instant.now().toEpochMilli();
-        this.currency = STARTING_CURRENCY;
-        this.playerHealth = STARTING_PLAYER_HEALTH;
-        this.playerSpeed = STARTING_SPEED;
-        this.playerFireRate = STARTING_FIRE_RATE;
+        this.currency = StartingSaveValues.CURRENCY.getIntValue();
+        this.playerHealth = StartingSaveValues.PLAYER_HEALTH.getIntValue();
+        this.playerSpeed = StartingSaveValues.SPEED.getDoubleValue();
+        this.playerFireRate = StartingSaveValues.FIRE_RATE.getIntValue();
     }
 
     /** {@inheritDoc} */
@@ -171,13 +157,13 @@ public class GameSessionImpl implements GameSession {
                 switch (type) {
                     case SPEED_UP ->
                             this.playerSpeed =
-                                    STARTING_SPEED * type.getStatMultiplier() * powerUpLevel;
+                                    StartingSaveValues.SPEED.getDoubleValue() * type.getStatMultiplier() * powerUpLevel;
                     case HEALTH_UP ->
                             this.playerHealth =
-                                    STARTING_PLAYER_HEALTH * (int) type.getStatMultiplier() * powerUpLevel;
+                                    StartingSaveValues.PLAYER_HEALTH.getIntValue() * (int) type.getStatMultiplier() * powerUpLevel;
                     case FIRERATE_UP ->
                             this.playerFireRate =
-                                    STARTING_FIRE_RATE * (int) type.getStatMultiplier() * powerUpLevel;
+                                    StartingSaveValues.FIRE_RATE.getIntValue() * (int) type.getStatMultiplier() * powerUpLevel;
                 }
             }
         }

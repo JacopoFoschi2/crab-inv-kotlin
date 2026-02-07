@@ -162,6 +162,7 @@ public class GameEngineImpl implements GameEngine {
         return renderObjects;
     }
 
+
     private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
         if (this.gameSession == null) {
             throw new IllegalStateException("newGame() needed before snapshot()");
