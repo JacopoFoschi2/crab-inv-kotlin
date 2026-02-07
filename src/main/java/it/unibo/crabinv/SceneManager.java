@@ -2,15 +2,23 @@ package it.unibo.crabinv;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.Controller.save.SaveController;
+import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Model.powerUpsShop.PowerUpFactory;
 import it.unibo.crabinv.Model.core.audio.BGMTracks;
+import it.unibo.crabinv.Model.save.Save;
+import it.unibo.crabinv.Model.save.SaveImpl;
 import it.unibo.crabinv.Model.save.UserProfile;
 import it.unibo.crabinv.Model.save.UserProfileImpl;
 import it.unibo.crabinv.View.*;
+import it.unibo.crabinv.core.config.AppPaths;
+import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+
+import java.io.IOException;
 
 /**
  * Provides the apis to orchestrate the changes inside the main stage
@@ -21,7 +29,7 @@ public class SceneManager {
     private final AudioController audio;
     private final double width;
     private final double height;
-    private final UserProfile userProfile;
+    private final Save save;
 
     /**
      * Constructs the sceneManager
@@ -30,13 +38,13 @@ public class SceneManager {
      * @param audio the global audio controller
      * @param bounds the bounds of the screen
      */
-    public SceneManager(StackPane root, LocalizationController loc, AudioController audio, Rectangle2D bounds) {
+    public SceneManager(StackPane root, LocalizationController loc, AudioController audio, Rectangle2D bounds) throws IOException {
         this.root = root;
         this.loc = loc;
         this.audio = audio;
         this.width = bounds.getWidth();
         this.height = bounds.getHeight();
-        this.userProfile = new UserProfileImpl();
+        this.save = new SaveControllerImpl(new SaveRepositoryGson(AppPaths.getSaves())).saveControlAndLoad();
     }
 
     /**
@@ -56,7 +64,7 @@ public class SceneManager {
     }
 
     public void showShop(){
-        root.getChildren().setAll(new ShopMenu(this,loc,audio, userProfile,
+        root.getChildren().setAll(new ShopMenu(this,loc,audio, save.getUserProfile(),
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
@@ -68,7 +76,7 @@ public class SceneManager {
      * Sets the Game Screen as the shown one
      */
     public void showGame(){
-        Node gameView = new GameScreen(this,loc, audio).getView();
+        Node gameView = new GameScreen(this, loc, audio, save).getView();
         Pane pauseMenu = new PauseMenu(this, loc, audio).getView();
         pauseMenu.setVisible(false);
         root.getChildren().setAll(gameView,pauseMenu);

@@ -7,8 +7,6 @@ import java.util.UUID;
  */
 public interface Save {
 
-
-
     /** @return UUID of the save */
     UUID getSaveId();
 

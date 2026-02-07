@@ -15,6 +15,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -25,7 +26,7 @@ public class App extends Application {
     private final AudioController audio = new AudioController(new JavaFXSoundManager());
 
     @Override
-    public void start(Stage mainStage) {
+    public void start(Stage mainStage) throws IOException {
         //Tweaks the initial config of the stage
         mainStage.initStyle(StageStyle.UNDECORATED);
         mainStage.setMaximized(true);

@@ -4,9 +4,9 @@ import it.unibo.crabinv.Model.save.*;
 
 public class SessionControllerImpl implements SessionController {
 
-    private Save save;
+    private final Save save;
 
-    public void SessionController(Save save) {
+    public SessionControllerImpl(Save save) {
         this.save = save;
     }
 

@@ -34,9 +34,6 @@ public class MetaGameControllerImpl implements MetaGameController {
 
     @Override
     public void startGame() {
-        if (gameLoopController != null) {
-            throw new IllegalStateException("Cannot start a Game with another Game running");
-        }
         GameSession gameSession = Objects.requireNonNull(
                 this.sessionController.newOrLoadGameSession(),
                 "GameSession cannot be null");
@@ -57,6 +54,7 @@ public class MetaGameControllerImpl implements MetaGameController {
     }
 
 
+
     @Override
     public GameSnapshot stepCheck(long frameElapsedMillis) {
         if (gameLoopController == null) {
@@ -75,4 +73,7 @@ public class MetaGameControllerImpl implements MetaGameController {
         return gameSnapshot;
     }
 
+    public InputController getInputController(){
+        return this.inputController;
+    }
 }
