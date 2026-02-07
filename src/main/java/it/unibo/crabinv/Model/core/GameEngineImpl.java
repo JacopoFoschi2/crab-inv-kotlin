@@ -26,8 +26,6 @@ public class GameEngineImpl implements GameEngine {
     private GameSession gameSession;
     private int currentLevel;
     private LevelFactory levelFactory;
-    private EnemyFactory enemyFactory;
-    private RewardsService rewardsService;
     private Level level;
     private Player player;
     private long elapsedTicks;

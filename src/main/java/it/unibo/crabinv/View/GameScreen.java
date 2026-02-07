@@ -36,13 +36,16 @@ public class GameScreen {
         final Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-
         final SessionController sessionController = new SessionControllerImpl(this.save);
         final MetaGameController metaGameController = new MetaGameControllerImpl(sessionController);
         final GameRenderer gameRenderer = new GameRenderer(canvas.getGraphicsContext2D());
+
         metaGameController.startGame();
+        metaGameController.getInputController();
 
         canvas.setFocusTraversable(true);
+        canvas.setOnKeyPressed(e -> metaGameController.getInputController().onKeyPressed(e.getCode().getCode()));
+        canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
         /*
         final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
         canvas.setFocusTraversable(true);

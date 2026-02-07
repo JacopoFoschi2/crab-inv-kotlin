@@ -7,7 +7,6 @@ import it.unibo.crabinv.Model.input.InputSnapshotImpl;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * Returns an InputSnapshot based on InputMapper and the key pressed/released
  */
@@ -15,8 +14,6 @@ public class InputControllerPlayer implements InputController {
 
     private final Set<Integer> pressedKeys;
     private final InputMapper mapper;
-
-
 
     public InputControllerPlayer(InputMapper mapper) {
         if (mapper == null) {
@@ -26,6 +23,7 @@ public class InputControllerPlayer implements InputController {
         this.pressedKeys = new HashSet<>();
     }
 
+    @Override
     public void onKeyPressed(int keyCode) {
         boolean validKey =
                 mapper.mapToShoot(keyCode)
@@ -37,6 +35,7 @@ public class InputControllerPlayer implements InputController {
         }
     }
 
+    @Override
     public void onKeyReleased(int keyCode) {
         this.pressedKeys.remove(keyCode);
     }

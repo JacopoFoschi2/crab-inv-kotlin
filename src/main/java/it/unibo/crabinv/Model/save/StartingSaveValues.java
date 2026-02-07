@@ -2,7 +2,8 @@ package it.unibo.crabinv.Model.save;
 
 public enum StartingSaveValues {
     LEVEL(1),
-    CURRENCY(0);
+    CURRENCY(0),
+    BASE_LEVEL_POWER_UP(1);
 
     private final int value;
 

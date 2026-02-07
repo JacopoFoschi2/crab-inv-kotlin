@@ -35,7 +35,6 @@ public final class GameRenderer {
 
         clear(canvasW, canvasH);
 
-        // Optional debug: draw world bounds (can be removed later)
         gc.setStroke(Color.DARKGRAY);
         gc.strokeRect(offsetX, offsetY, worldSquareSideDimension, worldSquareSideDimension);
 

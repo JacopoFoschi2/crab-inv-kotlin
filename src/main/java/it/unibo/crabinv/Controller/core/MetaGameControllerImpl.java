@@ -24,7 +24,6 @@ public class MetaGameControllerImpl implements MetaGameController {
     private InputController inputController;
     private GameLoopController gameLoopController;
 
-
     public MetaGameControllerImpl(SessionController sessionController) {
         this.sessionController = Objects.requireNonNull(sessionController, "SessionController cannot be null");
         this.gameEngine = new GameEngineImpl();
@@ -73,7 +72,8 @@ public class MetaGameControllerImpl implements MetaGameController {
         return gameSnapshot;
     }
 
+    @Override
     public InputController getInputController(){
-        return this.inputController;
+        return Objects.requireNonNull(this.inputController, "inputController cannot be null");
     }
 }

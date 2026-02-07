@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class UserProfileImpl implements UserProfile {
 
-    private final Map<PowerUpType, Integer> powerUpMap;
+    private Map<PowerUpType, Integer> powerUpMap;
     private int currency;
 
     public UserProfileImpl(Map<PowerUpType, Integer> powerUpMap) {
@@ -85,16 +85,23 @@ public class UserProfileImpl implements UserProfile {
         final Map<PowerUpType, Integer> validMap = new java.util.EnumMap<>(PowerUpType.class);
         if (powerUpMap.isEmpty()) {
             for (final PowerUpType type : PowerUpType.values()) {
-                validMap.put(type, 0);
+                validMap.put(type, StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue());
             }
         } else {
             for (final PowerUpType type : PowerUpType.values()) {
                 Integer level = (powerUpMap.get(type) == null) ? null : powerUpMap.get(type);
-                level = level != null && level >= 0 ? level : 0;
+                level =
+                        level != null && level >= StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue() ?
+                        level :
+                        StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue();
                 validMap.put(type, level);
+                updatePowerUpMap(validMap);
             }
         }
         return validMap;
     }
 
+    private void updatePowerUpMap(Map<PowerUpType, Integer> newPowerUpMap){
+        this.powerUpMap = newPowerUpMap;
+    }
 }

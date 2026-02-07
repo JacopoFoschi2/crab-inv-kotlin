@@ -1,4 +1,5 @@
 package it.unibo.crabinv.save;
+import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
 import it.unibo.crabinv.Model.save.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,12 @@ public class GameSessionTest {
     private GameSessionImpl session;
     @BeforeEach
     void init(){
-        session = new GameSessionImpl();
+        session = new GameSessionImpl(
+                StartingSaveValues.CURRENCY.getIntValue(),
+                PlayerBaseStats.getIntValueOf(PowerUpType.HEALTH_UP),
+                PlayerBaseStats.getDoubleValueOf(PowerUpType.SPEED_UP),
+                PlayerBaseStats.getIntValueOf(PowerUpType.FIRERATE_UP)
+                );
     }
 
     @Test
@@ -21,7 +27,7 @@ public class GameSessionTest {
         session.addCurrency(50);
         assertEquals(50, session.getCurrency());
         assertThrows(IllegalArgumentException.class, () -> {session.subCurrency(80);});
-        assertEquals(GameSessionImpl.STARTING_PLAYER_HEALTH, session.getPlayerHealth());
+        assertEquals(PlayerBaseStats.getIntValueOf(PowerUpType.HEALTH_UP), session.getPlayerHealth());
         session.subPlayerHealth(5);
         assertEquals(0, session.getPlayerHealth());
         session.advanceLevel();

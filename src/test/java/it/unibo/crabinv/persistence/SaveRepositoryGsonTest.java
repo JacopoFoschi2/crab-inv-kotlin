@@ -37,7 +37,7 @@ class SaveRepositoryGsonTest {
         //UserProfile assign
         originalSave.getUserProfile().addCurrency(100);
         //GameSession assign
-        originalSave.getGameSession().subPlayerHealth(GameSessionImpl.STARTING_PLAYER_HEALTH);
+        originalSave.getGameSession().subPlayerHealth(1);
         originalSave.getGameSession().addPlayerHealth(1);
         //PlayerMemorial - SessionRecord assign
         long testRecordTimeStamp = Instant.now().toEpochMilli();
@@ -47,7 +47,7 @@ class SaveRepositoryGsonTest {
         /* Act */
         // Save and load
         repository.saveSaveFile(originalSave);
-        Save loadedSave = repository.load(saveId);
+        Save loadedSave = repository.loadSaveFile(saveId);
 
         /* Assert */
         // Load assert
@@ -96,7 +96,7 @@ class SaveRepositoryGsonTest {
 
         // Verifichiamo che il caricamento ora fallisca (IOException come definito nel tuo codice)
         Assertions.assertThrows(IOException.class, () -> {
-            repository.load(save.getSaveId());
+            repository.loadSaveFile(save.getSaveId());
         }, "Loading a deleted file must throw IOException");
     }
 }
