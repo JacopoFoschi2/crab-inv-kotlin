@@ -2,6 +2,9 @@ package it.unibo.crabinv.Model.levels;
 
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 
+/**
+ * Interface that establishes how a level should be and which methods has
+ */
 public interface Level {
     /**
      * Returns the wave that it is happening
