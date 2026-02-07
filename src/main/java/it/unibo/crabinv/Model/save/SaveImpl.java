@@ -1,5 +1,7 @@
 package it.unibo.crabinv.Model.save;
 
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
+
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -44,9 +46,13 @@ public class SaveImpl implements Save{
         return creationTimeStamp;
     }
 
-    @Override //TODO trasferire i modificatori di statistica in UserProfile da GameSession
+    @Override
     public GameSession newGameSession() {
-        return this.gameSession == null ? GameSessionImpl(this.userProfile.) : null;
+        return new GameSessionImpl(
+                StartingSaveValues.CURRENCY.getIntValue(),
+                this.userProfile.applyAddPowerUp(PowerUpType.HEALTH_UP),
+                this.userProfile.applyMultiplyPowerUp(PowerUpType.SPEED_UP),
+                this.userProfile.applyMultiplyPowerUp(PowerUpType.FIRERATE_UP));
     }
 
     @Override
@@ -59,7 +65,6 @@ public class SaveImpl implements Save{
     public GameSession getGameSession() {
         return gameSession;
     }
-
 
     /** {@inheritDoc} */
     @Override

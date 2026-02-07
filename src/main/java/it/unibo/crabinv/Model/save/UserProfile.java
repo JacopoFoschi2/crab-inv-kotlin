@@ -1,8 +1,6 @@
 package it.unibo.crabinv.Model.save;
 
-import it.unibo.crabinv.Model.PowerUpsShop.PowerUp;
-
-import java.util.List;
+import it.unibo.crabinv.Model.PowerUpsShop.PowerUpType;
 
 /**
  * Represents the meta-data of a single player's profile,
@@ -30,22 +28,25 @@ public interface UserProfile {
 
     /**
      * Used to get the level of a powerUp
-     * @param powUpName the name of the PowerUp to check
-     * @return the level of the powerUp (0 = not yet unlocked)
+     * @param powUpType the type of the PowerUp to check
+     * @return the level of the powerUp (defaults to 0 if null or invalid)
      */
-    int getPowerUpLevel(String powUpName);
+    int getPowerUpLevel(PowerUpType powUpType);
 
 
     /**
-     * Sets the selected powerUp to locked or unlocked
-     * @param powUp the name of the power up
-     * @param level the level to apply to the powerUp (0 = not yet unlocked)
+     * Sets the selected powerUp the updated level number
+     * @param powerUpType the name of the power up
+     * @param level the level to apply to the powerUp
      * */
-    void updatePowerUp (String powUp, int level);
+    void updatePowerUp (PowerUpType powerUpType, int level);
 
     /**
-     * Lists the owned powerUps
-     * @return the list of the owned powerUps
+     * Applies the power ups by multiplication
+     * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
      */
-    List<String> getPowerUpList ();
+    double applyMultiplyPowerUp (PowerUpType powerUpType);
+
+    double applyAddPowerUp (PowerUpType powerUpType);
+
 }

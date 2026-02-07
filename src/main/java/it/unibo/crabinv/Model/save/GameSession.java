@@ -78,10 +78,5 @@ public interface GameSession {
      */
     void subPlayerHealth(int amount);
 
-    /**
-     * Applies the powerUps to the player taking the base and then using the level
-     * @param profile the profile used by the player at that moment
-     */
-    void applyPowerUps(UserProfile profile);
 }
 

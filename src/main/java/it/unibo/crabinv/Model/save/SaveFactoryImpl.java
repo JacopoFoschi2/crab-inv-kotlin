@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Model.save;
 
 import java.time.Instant;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public class SaveFactoryImpl implements SaveFactory {
         return new SaveImpl(
                 UUID.randomUUID(),
                 Instant.now().toEpochMilli(),
-                new UserProfileImpl(),
+                new UserProfileImpl(new LinkedHashMap<>()),
                 new PlayerMemorialImpl(),
                 null
         );
