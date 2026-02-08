@@ -22,7 +22,7 @@ public interface SessionController {
      * if there is no active GameSession creates a new GameSession and binds it to the save
      * @return the loaded or newly created GameSession
      */
-    GameSession newOrLoadGameSession();
+    GameSession newGameSession();
 
     /**
      * Manages the GameSession logic after a GameOver,

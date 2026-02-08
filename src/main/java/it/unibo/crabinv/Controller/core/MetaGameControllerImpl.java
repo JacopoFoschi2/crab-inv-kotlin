@@ -5,6 +5,7 @@ import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
 import it.unibo.crabinv.Controller.input.InputMapperImpl;
+import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineImpl;
@@ -14,18 +15,23 @@ import it.unibo.crabinv.Model.entities.enemies.BaseEnemyFactoryLogic;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.EnemyRewardService;
 import it.unibo.crabinv.Model.levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.save.GameSession;
+import it.unibo.crabinv.Model.save.Save;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class MetaGameControllerImpl implements MetaGameController {
 
     private final SessionController sessionController;
+    private final SaveRepository saveRepository;
     private final GameEngine gameEngine;
     private InputController inputController;
     private GameLoopController gameLoopController;
 
-    public MetaGameControllerImpl(SessionController sessionController) {
+    public MetaGameControllerImpl(SessionController sessionController, SaveRepository saveRepository) {
         this.sessionController = Objects.requireNonNull(sessionController, "SessionController cannot be null");
+        this.saveRepository = Objects.requireNonNull(saveRepository, "SaveRepository cannot be null");
         this.gameEngine = new GameEngineImpl();
         this.gameLoopController = null;
         this.inputController = null;
@@ -34,7 +40,7 @@ public class MetaGameControllerImpl implements MetaGameController {
     @Override
     public void startGame() {
         GameSession gameSession = Objects.requireNonNull(
-                this.sessionController.newOrLoadGameSession(),
+                this.sessionController.newGameSession(),
                 "GameSession cannot be null");
         this.gameEngine.init(
                 gameSession,
@@ -53,7 +59,7 @@ public class MetaGameControllerImpl implements MetaGameController {
     }
 
     @Override
-    public GameSnapshot stepCheck(long frameElapsedMillis) {
+    public GameSnapshot stepCheck(long frameElapsedMillis) throws IOException {
         if (gameLoopController == null) {
             throw new IllegalStateException("No Game is currently active");
         }
@@ -66,6 +72,7 @@ public class MetaGameControllerImpl implements MetaGameController {
             this.sessionController.gameOverGameSession();
             this.gameLoopController = null;
             this.inputController = null;
+            updateSave();
         }
         return gameSnapshot;
     }
@@ -83,5 +90,10 @@ public class MetaGameControllerImpl implements MetaGameController {
     @Override
     public void endGame(){
         this.gameEngine.gameOver();
+    }
+
+    @Override
+    public void updateSave() throws IOException {
+        new SaveControllerImpl(saveRepository).updateSave(this.sessionController.getSave());
     }
 }
