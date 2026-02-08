@@ -25,4 +25,10 @@ public interface MetaGameController {
      * @return the InputController
      */
     InputController getInputController();
+
+    /**
+     * Exposes the GameLoopController
+     * @return the GameLoopController
+     */
+    GameLoopController getGameLoopController();
 }
