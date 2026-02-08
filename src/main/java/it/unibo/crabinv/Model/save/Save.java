@@ -15,9 +15,8 @@ public interface Save {
 
     /**
      * Creates a new GameSession based on the UserProfile, does nothing if a GameSession is already present
-     * @return the newly created GameSession
      */
-    GameSession newGameSession();
+    void newGameSession();
 
     /**
      * Closes the GameSession
