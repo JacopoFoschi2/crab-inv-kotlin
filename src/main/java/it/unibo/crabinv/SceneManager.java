@@ -2,14 +2,11 @@ package it.unibo.crabinv;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.Controller.save.SaveController;
 import it.unibo.crabinv.Controller.save.SaveControllerImpl;
+import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.powerUpsShop.PowerUpFactory;
 import it.unibo.crabinv.Model.core.audio.BGMTracks;
 import it.unibo.crabinv.Model.save.Save;
-import it.unibo.crabinv.Model.save.SaveImpl;
-import it.unibo.crabinv.Model.save.UserProfile;
-import it.unibo.crabinv.Model.save.UserProfileImpl;
 import it.unibo.crabinv.View.*;
 import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
@@ -77,8 +74,9 @@ public class SceneManager {
      * Sets the Game Screen as the shown one
      */
     public void showGame(){
-        Node gameView = new GameScreen(this, loc, audio, save).getView();
-        pauseMenu = new PauseMenu(this, loc, audio).getView();
+        GameScreen gameScreen = new GameScreen(this, loc, audio, save);
+        Node gameView = gameScreen.getView();
+        pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume()).getView();
         pauseMenu.setVisible(false);
         root.getChildren().setAll(gameView,pauseMenu);
         audio.playBGM(BGMTracks.LEVEL);
@@ -91,6 +89,8 @@ public class SceneManager {
     public void showPauseMenu() {
         if (pauseMenu != null) {
             pauseMenu.setVisible(true);
+            audio.pauseBGM();
+            audio.playSFX(SFXTracks.MENU_SELECT);
         }
     }
 
@@ -101,6 +101,8 @@ public class SceneManager {
     public void hidePauseMenu() {
         if (pauseMenu != null) {
             pauseMenu.setVisible(false);
+            audio.resumeBGM();
+            audio.playSFX(SFXTracks.MENU_SELECT);
         }
     }
 

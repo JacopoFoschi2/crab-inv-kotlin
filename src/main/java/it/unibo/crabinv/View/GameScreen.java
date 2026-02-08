@@ -22,6 +22,7 @@ public class GameScreen {
     private final LocalizationController loc;
     private final AudioController audio;
     private final Save save;
+    private MetaGameController metaGameController;
 
     public GameScreen(final SceneManager sceneManager, final LocalizationController loc, final AudioController audio, final Save save) {
         this.sceneManager = Objects.requireNonNull(sceneManager, "sceneManager must not be null");
@@ -38,7 +39,7 @@ public class GameScreen {
         root.getChildren().add(canvas);
 
         final SessionController sessionController = new SessionControllerImpl(this.save);
-        final MetaGameController metaGameController = new MetaGameControllerImpl(sessionController);
+        metaGameController = new MetaGameControllerImpl(sessionController);
         final GameRenderer gameRenderer = new GameRenderer(canvas.getGraphicsContext2D());
 
         metaGameController.startGame();
@@ -49,6 +50,7 @@ public class GameScreen {
             metaGameController.getInputController().onKeyPressed(e.getCode().getCode());
             if (e.getCode() == KeyCode.ESCAPE) {
                 sceneManager.showPauseMenu();
+                metaGameController.getGameLoopController().resume();
             }
         });
         canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
@@ -85,5 +87,18 @@ public class GameScreen {
         javafx.application.Platform.runLater(canvas::requestFocus);
 
         return root;
+    }
+
+    /**
+     * Exposes the resume method of the gameLoop to be used by the resume menu
+     * @return
+     */
+    public Runnable getResume() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                metaGameController.getGameLoopController().resume();
+            }
+        };
     }
 }

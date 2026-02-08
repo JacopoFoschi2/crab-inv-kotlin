@@ -1,6 +1,5 @@
 package it.unibo.crabinv.View;
 
-import it.unibo.crabinv.Controller.core.GameLoopControllerImpl;
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
@@ -20,6 +19,7 @@ public class PauseMenu {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
+    private final Runnable resumeMethod;
     private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
@@ -28,10 +28,11 @@ public class PauseMenu {
      * @param loc the instance of LocalizationController
      * @param audio the instance of AudioController
      */
-    public PauseMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
+    public PauseMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio, Runnable resumeMethod) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
+        this.resumeMethod = resumeMethod;
         components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
     }
 
@@ -67,6 +68,7 @@ public class PauseMenu {
         Button resume = new Button(loc.getString(TextKeys.RESUME));
         resume.setOnAction(_ -> {
             sceneManager.hidePauseMenu();
+            resumeMethod.run();
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         StackPane.setMargin(exit, new Insets(0,0,60,0));
