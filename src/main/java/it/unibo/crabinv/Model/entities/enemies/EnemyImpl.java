@@ -37,7 +37,7 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
 
     @Override
     public void move(Delta delta) {
-        double newY = this.getY() + delta.getValue();
+        double newY = this.getY() + (delta.getValue() * speed);
         if (newY < minBound) {
             newY = minBound;
         }

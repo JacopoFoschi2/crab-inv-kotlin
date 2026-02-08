@@ -10,6 +10,7 @@ import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.View.*;
 import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -26,6 +27,7 @@ public class SceneManager {
     private final AudioController audio;
     private final double width;
     private final double height;
+    private final SaveRepository repo;
     private final Save save;
     private Pane pauseMenu;
 
@@ -42,7 +44,8 @@ public class SceneManager {
         this.audio = audio;
         this.width = bounds.getWidth();
         this.height = bounds.getHeight();
-        this.save = new SaveControllerImpl(new SaveRepositoryGson(AppPaths.getSaves())).saveControlAndLoad();
+        this.repo = new SaveRepositoryGson(AppPaths.getSaves());
+        this.save = new SaveControllerImpl(this.repo).saveControlAndLoad();
     }
 
     /**
@@ -74,7 +77,7 @@ public class SceneManager {
      * Sets the Game Screen as the shown one
      */
     public void showGame(){
-        GameScreen gameScreen = new GameScreen(this, loc, audio, save);
+        GameScreen gameScreen = new GameScreen(this, loc, audio, save, repo);
         Node gameView = gameScreen.getView();
         pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume(), gameScreen.getGameOver()).getView();
         pauseMenu.setVisible(false);

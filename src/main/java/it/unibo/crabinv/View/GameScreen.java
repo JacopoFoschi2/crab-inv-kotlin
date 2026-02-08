@@ -8,12 +8,14 @@ import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Controller.save.SessionControllerImpl;
 import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.SceneManager;
+import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class GameScreen {
@@ -22,25 +24,35 @@ public class GameScreen {
     private final LocalizationController loc;
     private final AudioController audio;
     private final Save save;
+    private final SaveRepository repo;
     private MetaGameController metaGameController;
 
-    public GameScreen(final SceneManager sceneManager, final LocalizationController loc, final AudioController audio, final Save save) {
+    private AnimationTimer timer;
+    private Canvas canvas;
+    private GameRenderer gameRenderer;
+
+    public GameScreen(final SceneManager sceneManager,
+                      final LocalizationController loc,
+                      final AudioController audio,
+                      final Save save,
+                      final SaveRepository repo) {
         this.sceneManager = Objects.requireNonNull(sceneManager, "sceneManager must not be null");
         this.loc = Objects.requireNonNull(loc, "loc must not be null");
         this.audio = Objects.requireNonNull(audio, "audio must not be null");
         this.save = Objects.requireNonNull(save, "save must not be null");
+        this.repo = Objects.requireNonNull(repo, "SaveRepository must not be null");
     }
 
     public Node getView() {
         final StackPane root = new StackPane();
         final double width = sceneManager.getWidth();
         final double height = sceneManager.getHeight();
-        final Canvas canvas = new Canvas(width, height);
+        this.canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
         final SessionController sessionController = new SessionControllerImpl(this.save);
-        metaGameController = new MetaGameControllerImpl(sessionController);
-        final GameRenderer gameRenderer = new GameRenderer(canvas.getGraphicsContext2D());
+        metaGameController = new MetaGameControllerImpl(sessionController, repo);
+        this.gameRenderer = new GameRenderer(canvas.getGraphicsContext2D());
 
         metaGameController.startGame();
         metaGameController.getInputController();
@@ -54,19 +66,7 @@ public class GameScreen {
             }
         });
         canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
-        /*
-        final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
-        canvas.setFocusTraversable(true);
-        canvas.setOnKeyPressed(e -> input.onKeyPressed(e.getCode().getCode()));
-        canvas.setOnKeyReleased(e -> input.onKeyReleased(e.getCode().getCode()));
-
-        final GameEngine engine = new GameEngineImpl();
-        final GameLoopController gameLoopController = new GameLoopControllerImpl(engine, input);
-        final GameRenderer renderer = new GameRenderer(
-                canvas.getGraphicsContext2D()
-        );
-         */
-        final AnimationTimer timer = new AnimationTimer() {
+        this.timer = new AnimationTimer() {
             private long lastNow = 0;
 
             @Override
@@ -77,7 +77,11 @@ public class GameScreen {
                 }
 
                 final long frameElapsedMillis = Math.max(0L, (now - lastNow) / 1_000_000L);
-                gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
+                try {
+                    gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 lastNow = now;
             }
@@ -110,7 +114,12 @@ public class GameScreen {
         return new Runnable() {
             @Override
             public void run() {
+                timer.stop();
                 metaGameController.endGame();
+                timer = null;
+                canvas = null;
+                gameRenderer = null;
+                metaGameController = null;
             }
         };
     }

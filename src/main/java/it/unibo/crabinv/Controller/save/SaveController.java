@@ -35,6 +35,13 @@ public interface SaveController {
     Save selectSave(List<Save> saveList);
 
     /**
+     * Updates the SaveFile
+     * @param save the up to date Save to be saved
+     * @exception IOException if an I/O error occours
+     */
+    void updateSave (Save save) throws IOException;
+
+    /**
      * Loads a selected save file to be used by the game
      * @return the loaded save
      */
