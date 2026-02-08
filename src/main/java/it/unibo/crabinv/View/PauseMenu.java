@@ -43,43 +43,41 @@ public class PauseMenu {
      */
     public Pane getView() {
         StackPane pane = new StackPane();
+        pane.getStyleClass().add("pause-pane");
+        VBox content = new VBox(30);
+        content.setAlignment(Pos.CENTER);
+        content.setMaxWidth(400);
         Label title = new Label(loc.getString(TextKeys.PAUSE));
         title.getStyleClass().add("title");
-        StackPane.setAlignment(title, Pos.TOP_CENTER);
-        StackPane.setMargin(title, new Insets(20,0,0,0));
-        pane.getChildren().add(title);
-        VBox mainColumn = new VBox(25);
-        mainColumn.setMinWidth(350);
-        GridPane grid = new GridPane();
-        grid.addColumn(0);
-        grid.addColumn(1, mainColumn);
-        grid.addColumn(2);
-        grid.setAlignment(Pos.CENTER);
+        VBox mainColumn = new VBox(15);
         mainColumn.setAlignment(settingsAlignment);
         HBox bgmVolume = components.createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, audio::playSFX, TextKeys.BGM_VOLUME);
         HBox sfxVolume = components.createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, audio::playSFX, TextKeys.SFX_VOLUME);
         CheckBox bgmMute = components.createMute(TextKeys.BGM_MUTE, audio.isBGMMuted(), audio::toggleBGMMute);
         CheckBox sfxMute = components.createMute(TextKeys.SFX_MUTE, audio.isSFXMuted(), audio::toggleSFXMute);
-        Button exit = new Button(loc.getString(TextKeys.EXIT_GAME));
-        exit.setOnAction(_ -> {
-            gameOver.run();
-            sceneManager.showMainMenu();
-            audio.playSFX(SFXTracks.MENU_SELECT);
-        });
-        exit.getStyleClass().add("app-button");
-        StackPane.setAlignment(exit, Pos.BOTTOM_CENTER);
-        Button resume = new Button(loc.getString(TextKeys.RESUME));
-        resume.setOnAction(_ -> {
-            sceneManager.hidePauseMenu();
-            resumeMethod.run();
-            audio.playSFX(SFXTracks.MENU_SELECT);
-        });
-        StackPane.setMargin(exit, new Insets(0,0,60,0));
         mainColumn.getChildren().addAll(bgmVolume, sfxVolume, bgmMute, sfxMute);
         for (var child : mainColumn.getChildren()) {
-            child.focusedProperty().addListener(_ -> audio.playSFX(SFXTracks.MENU_HOVER));
+            child.focusedProperty().addListener(_ ->
+                    audio.playSFX(SFXTracks.MENU_HOVER));
         }
-        pane.getChildren().addAll(grid, exit, resume);
+        Button resume = createPauseMenuButton(loc.getString(TextKeys.RESUME), resumeMethod, sceneManager::hidePauseMenu);
+        Button exit = createPauseMenuButton(loc.getString(TextKeys.EXIT_GAME), gameOver, sceneManager::showMainMenu);
+        HBox buttons = new HBox(20, resume, exit);
+        buttons.setAlignment(Pos.CENTER);
+        content.getChildren().addAll(title, mainColumn, buttons);
+        pane.getChildren().add(content);
         return pane;
+    }
+
+    private Button createPauseMenuButton(String text, Runnable method, Runnable changeScene) {
+        Button button = new Button(text);
+        button.getStyleClass().add("app-button");
+        button.setOnAction(_ -> {
+            method.run();
+            changeScene.run();
+            audio.playSFX(SFXTracks.MENU_SELECT);
+        });
+        button.focusedProperty().addListener(_ -> audio.playSFX(SFXTracks.MENU_HOVER));
+        return button;
     }
 }
