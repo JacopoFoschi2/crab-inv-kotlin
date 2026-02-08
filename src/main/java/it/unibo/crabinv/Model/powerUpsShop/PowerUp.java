@@ -1,5 +1,8 @@
 package it.unibo.crabinv.Model.powerUpsShop;
 
+/**
+ * It's the interface that implements the methods for the powerUp
+ */
 public interface PowerUp {
     /**
      *Method to get the cost of the single powerUp

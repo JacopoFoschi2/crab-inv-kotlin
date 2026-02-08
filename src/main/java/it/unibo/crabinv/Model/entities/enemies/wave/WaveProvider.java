@@ -1,7 +1,8 @@
 package it.unibo.crabinv.Model.entities.enemies.wave;
 
 /**
- * It is the interface that has all the methods that should be useful
+ * It is the interface that has all the methods that implements the WaveProvide that
+ * should be able to act as a strategy pattern if there are other ways of the way
  */
 public interface WaveProvider {
     /**
