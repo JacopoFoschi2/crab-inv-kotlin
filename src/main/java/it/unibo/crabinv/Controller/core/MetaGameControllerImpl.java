@@ -76,4 +76,9 @@ public class MetaGameControllerImpl implements MetaGameController {
     public InputController getInputController(){
         return Objects.requireNonNull(this.inputController, "inputController cannot be null");
     }
+
+    @Override
+    public GameLoopController getGameLoopController(){
+        return Objects.requireNonNull(this.gameLoopController, "GameLoopController cannot be null");
+    }
 }

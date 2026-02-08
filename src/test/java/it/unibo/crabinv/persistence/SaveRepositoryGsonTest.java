@@ -1,8 +1,10 @@
 package it.unibo.crabinv.persistence;
 
+import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Model.save.GameSessionImpl;
 import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.Model.save.SessionRecordImpl;
+import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +32,7 @@ class SaveRepositoryGsonTest {
 
     @Test
     void testPersistenceAndDeepFieldAssertion() throws IOException {
-        Save originalSave = repository.newSave();
+        Save originalSave = new SaveControllerImpl(repository).createSave();
         UUID saveId = originalSave.getSaveId();
 
         /* arrange  */
