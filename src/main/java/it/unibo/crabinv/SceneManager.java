@@ -76,7 +76,7 @@ public class SceneManager {
     public void showGame(){
         GameScreen gameScreen = new GameScreen(this, loc, audio, save);
         Node gameView = gameScreen.getView();
-        pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume()).getView();
+        pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume(), gameScreen.getGameOver()).getView();
         pauseMenu.setVisible(false);
         root.getChildren().setAll(gameView,pauseMenu);
         audio.playBGM(BGMTracks.LEVEL);

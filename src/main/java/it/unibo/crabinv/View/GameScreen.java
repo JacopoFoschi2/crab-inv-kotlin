@@ -91,9 +91,22 @@ public class GameScreen {
 
     /**
      * Exposes the resume method of the gameLoop to be used by the resume menu
-     * @return
+     * @return the runnable of the resume method
      */
     public Runnable getResume() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                metaGameController.getGameLoopController().resume();
+            }
+        };
+    }
+
+    /**
+     * Exposes the gameOver method of the gameLoop to be used by the resume menu
+     * @return the runnable of the gameOver method
+     */
+    public Runnable getGameOver() {
         return new Runnable() {
             @Override
             public void run() {

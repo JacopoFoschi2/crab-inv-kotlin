@@ -20,6 +20,7 @@ public class PauseMenu {
     private final LocalizationController loc;
     private final AudioController audio;
     private final Runnable resumeMethod;
+    private final Runnable gameOver;
     private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
@@ -28,11 +29,12 @@ public class PauseMenu {
      * @param loc the instance of LocalizationController
      * @param audio the instance of AudioController
      */
-    public PauseMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio, Runnable resumeMethod) {
+    public PauseMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio, Runnable resumeMethod, Runnable gameOver) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
         this.resumeMethod = resumeMethod;
+        this.gameOver = gameOver;
         components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
     }
 
@@ -61,6 +63,7 @@ public class PauseMenu {
         Button exit = new Button(loc.getString(TextKeys.EXIT_GAME));
         exit.setOnAction(_ -> {
             sceneManager.showMainMenu();
+            gameOver.run();
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         exit.getStyleClass().add("app-button");
