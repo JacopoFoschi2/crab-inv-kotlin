@@ -61,7 +61,7 @@ public class PauseMenu {
                     audio.playSFX(SFXTracks.MENU_HOVER));
         }
         Button resume = createPauseMenuButton(loc.getString(TextKeys.RESUME), resumeMethod, sceneManager::hidePauseMenu);
-        Button exit = createPauseMenuButton(loc.getString(TextKeys.EXIT_GAME), gameOver, sceneManager::showMainMenu);
+        Button exit = createPauseMenuButton(loc.getString(TextKeys.ABANDON), gameOver, sceneManager::showMainMenu);
         HBox buttons = new HBox(20, resume, exit);
         buttons.setAlignment(Pos.CENTER);
         content.getChildren().addAll(title, mainColumn, buttons);
