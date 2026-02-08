@@ -122,6 +122,8 @@ public class WaveImpl implements Wave {
     private void updateMovement() {
         for (Enemy enemy : activeEnemies) {
             enemy.move(Delta.DECREASE);
+            System.out.println("x del nemico:"+enemy.getX());
+            System.out.println("y del nemico: "+ enemy.getY());
             enemy.tick();
         }
     }
