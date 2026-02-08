@@ -75,7 +75,7 @@ public class GameEngineImpl implements GameEngine {
             case RUNNING -> {
                 waveUpdate();
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
-                //enemyUpdate() ? o integrare in waveUpdate();
+                //enemyUpdate() ? o integrare in waveUpdate(), in teoria non serve....
                 //collisionUpdate(); //calcola tutte le collisioni
                 //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
                 //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player

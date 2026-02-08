@@ -4,6 +4,7 @@ import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.EnemyType;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +120,10 @@ public class WaveImpl implements Wave {
      * Advances the logic of movement of the wave's enemies
      */
     private void updateMovement() {
-        //update(Delta.INCREASE);
+        for (Enemy enemy : activeEnemies) {
+            enemy.move(Delta.DECREASE);
+            enemy.tick();
+        }
     }
 
     /**
