@@ -109,7 +109,13 @@ public class WaveImpl implements Wave {
                 final int slot = spawnSlots.get(i);
                 final double xNorm = (slot + 0.5) / this.maxSpawnSlots;
                 final EnemyType enemyType = enemy.get(i);
-                activeEnemies.add(enemyFactory.createEnemy(enemyType, xNorm, spawnYNorm, 1, 1));
+                activeEnemies.add(enemyFactory.createEnemy(
+                        enemyType,
+                        xNorm,
+                        spawnYNorm,
+                        spawnYNorm,
+                        bottomYNorm
+                ));
             }
             this.spawned = true;
         }
@@ -121,7 +127,7 @@ public class WaveImpl implements Wave {
      */
     private void updateMovement() {
         for (Enemy enemy : activeEnemies) {
-            enemy.move(Delta.DECREASE);
+            enemy.move(Delta.INCREASE);
             enemy.tick();
         }
     }
