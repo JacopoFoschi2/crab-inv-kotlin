@@ -30,6 +30,7 @@ public class SceneManager {
     private final double width;
     private final double height;
     private final Save save;
+    private Pane pauseMenu;
 
     /**
      * Constructs the sceneManager
@@ -77,10 +78,30 @@ public class SceneManager {
      */
     public void showGame(){
         Node gameView = new GameScreen(this, loc, audio, save).getView();
-        Pane pauseMenu = new PauseMenu(this, loc, audio).getView();
+        pauseMenu = new PauseMenu(this, loc, audio).getView();
         pauseMenu.setVisible(false);
         root.getChildren().setAll(gameView,pauseMenu);
         audio.playBGM(BGMTracks.LEVEL);
+    }
+
+    /**
+     * Shows pause menu.
+     * To be used during game
+     */
+    public void showPauseMenu() {
+        if (pauseMenu != null) {
+            pauseMenu.setVisible(true);
+        }
+    }
+
+    /**
+     * Hides pause menu.
+     * To be used during game
+     */
+    public void hidePauseMenu() {
+        if (pauseMenu != null) {
+            pauseMenu.setVisible(false);
+        }
     }
 
     /**
