@@ -49,7 +49,7 @@ class SavePersistenceFlowTest {
 
         // Act: create/load a GameSession through SessionController
         SessionController sessionController = new SessionControllerImpl(save);
-        GameSession gameSession = sessionController.newOrLoadGameSession();
+        GameSession gameSession = sessionController.newGameSession();
 
         Assertions.assertNotNull(gameSession, "GameSession must be created/loaded");
         Assertions.assertNotNull(save.getGameSession(), "GameSession must be bound to Save");

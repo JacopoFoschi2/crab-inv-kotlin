@@ -48,6 +48,11 @@ public class SaveControllerImpl implements SaveController {
     }
 
     @Override
+    public void updateSave(Save save) throws IOException {
+        this.saveRepository.saveSaveFile(save);
+    }
+
+    @Override
     public Save loadSave(UUID saveId) throws IOException {
         return this.saveRepository.loadSaveFile(saveId);
     }
