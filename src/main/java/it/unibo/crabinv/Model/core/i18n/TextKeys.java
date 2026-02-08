@@ -11,6 +11,7 @@ public enum TextKeys {
     SETTINGS("settings"),
     PAUSE("pause"),
     RESUME("resume"),
+    ABANDON("abandon"),
     RETURN("return"),
     EXIT_GAME("exit_game"),
     BGM_VOLUME("bgm_volume"),
