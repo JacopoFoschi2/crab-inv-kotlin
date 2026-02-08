@@ -19,7 +19,7 @@ public class TestShop {
 
         assertTrue(result);
         assertEquals(50,profile.getCurrency());
-        assertEquals(1, profile.getPowerUpLevel(powerUp.getPowerUpType()));
+        assertEquals(2, profile.getPowerUpLevel(powerUp.getPowerUpType()));
 
     }
 
@@ -35,7 +35,7 @@ public class TestShop {
         assertFalse(result);
 
         assertEquals(20,profile.getCurrency());
-        assertEquals(0, profile.getPowerUpLevel(powerUp.getPowerUpType()));
+        assertEquals(1, profile.getPowerUpLevel(powerUp.getPowerUpType()));
 
     }
     @Test
