@@ -5,7 +5,7 @@
 - La navigazione di questo gioco va svolta esclusivamente tramite la tastiera
 - Scorrere i menù con Tab o le frecce direzionali e selezionare le opzioni con lo Spazio o il tasto Invio
 - Controllare il giocatore con le frecce direzionali sinistra e destra, sparare con Spazio.
-- Per mettere in pausa durante il gioco premere Esc
+- Per mettere in pausa durante il gioco premere Esc e spostare il focus dal gioco con Tab
 
 ## Funzionalità implementate
 
@@ -14,7 +14,7 @@
 - [x] Supporto Multilingua: italiano e inglese
 - [x] Shop nel Menu: dove saranno acquistati i meta-potenziamenti: upgrade alle statistiche che verranno mantenuti per ogni tentativo
 - [x] Gestione salvataggio dopo ogni tentativo
-- [x] Gestione dei nemici e progettazione dei livelli: verranno gestiti ad ondate per ogni livello
+- [x] Gestione dei nemici e progettazione dei livelli: verranno gestiti a ondate per ogni livello
 - [x] Logica di game-loop
 - [x] Storico dei propri tentativi terminati
 - [x] Controllo del giocatore
