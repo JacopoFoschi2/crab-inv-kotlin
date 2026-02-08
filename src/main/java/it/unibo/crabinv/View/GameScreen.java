@@ -11,6 +11,7 @@ import it.unibo.crabinv.SceneManager;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
 import java.util.Objects;
@@ -46,6 +47,11 @@ public class GameScreen {
         canvas.setFocusTraversable(true);
         canvas.setOnKeyPressed(e -> metaGameController.getInputController().onKeyPressed(e.getCode().getCode()));
         canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
+        canvas.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                sceneManager.showPauseMenu();
+            }
+        });
         /*
         final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
         canvas.setFocusTraversable(true);
