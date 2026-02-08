@@ -45,13 +45,13 @@ public class GameScreen {
         metaGameController.getInputController();
 
         canvas.setFocusTraversable(true);
-        canvas.setOnKeyPressed(e -> metaGameController.getInputController().onKeyPressed(e.getCode().getCode()));
-        canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
         canvas.setOnKeyPressed(e -> {
+            metaGameController.getInputController().onKeyPressed(e.getCode().getCode());
             if (e.getCode() == KeyCode.ESCAPE) {
                 sceneManager.showPauseMenu();
             }
         });
+        canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
         /*
         final InputControllerPlayer input = new InputControllerPlayer(new InputMapperImpl());
         canvas.setFocusTraversable(true);
