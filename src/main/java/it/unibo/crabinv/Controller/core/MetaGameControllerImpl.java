@@ -52,8 +52,6 @@ public class MetaGameControllerImpl implements MetaGameController {
                 ));
     }
 
-
-
     @Override
     public GameSnapshot stepCheck(long frameElapsedMillis) {
         if (gameLoopController == null) {
@@ -80,5 +78,10 @@ public class MetaGameControllerImpl implements MetaGameController {
     @Override
     public GameLoopController getGameLoopController(){
         return Objects.requireNonNull(this.gameLoopController, "GameLoopController cannot be null");
+    }
+
+    @Override
+    public void endGame(){
+        this.gameEngine.gameOver();
     }
 }

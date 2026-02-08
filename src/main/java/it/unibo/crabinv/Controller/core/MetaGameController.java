@@ -31,4 +31,9 @@ public interface MetaGameController {
      * @return the GameLoopController
      */
     GameLoopController getGameLoopController();
+
+    /**
+     * Closes the game, triggers a Game Over, to be used by the pause menu
+     */
+    void endGame();
 }

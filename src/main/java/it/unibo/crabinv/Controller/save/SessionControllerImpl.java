@@ -22,7 +22,10 @@ public class SessionControllerImpl implements SessionController {
 
     @Override
     public GameSession newOrLoadGameSession() {
-        return this.save.getGameSession() != null ? getGameSession() : this.save.newGameSession();
+        if (this.save.getGameSession() != null) {
+           save.newGameSession();
+        }
+        return this.save.getGameSession();
     }
 
     @Override

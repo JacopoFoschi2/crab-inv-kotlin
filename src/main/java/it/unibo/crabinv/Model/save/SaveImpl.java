@@ -45,8 +45,8 @@ public class SaveImpl implements Save{
     }
 
     @Override
-    public GameSession newGameSession() {
-        return new GameSessionImpl(
+    public void newGameSession() {
+        this.gameSession = new GameSessionImpl(
                 StartingSaveValues.CURRENCY.getIntValue(),
                 this.userProfile.applyAddPowerUp(PowerUpType.HEALTH_UP),
                 this.userProfile.applyMultiplyPowerUp(PowerUpType.SPEED_UP),
