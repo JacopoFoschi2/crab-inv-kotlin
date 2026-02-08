@@ -62,8 +62,8 @@ public class PauseMenu {
         CheckBox sfxMute = components.createMute(TextKeys.SFX_MUTE, audio.isSFXMuted(), audio::toggleSFXMute);
         Button exit = new Button(loc.getString(TextKeys.EXIT_GAME));
         exit.setOnAction(_ -> {
-            sceneManager.showMainMenu();
             gameOver.run();
+            sceneManager.showMainMenu();
             audio.playSFX(SFXTracks.MENU_SELECT);
         });
         exit.getStyleClass().add("app-button");

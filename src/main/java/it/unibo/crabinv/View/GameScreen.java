@@ -110,7 +110,7 @@ public class GameScreen {
         return new Runnable() {
             @Override
             public void run() {
-                metaGameController.getGameLoopController().resume();
+                metaGameController.endGame();
             }
         };
     }
