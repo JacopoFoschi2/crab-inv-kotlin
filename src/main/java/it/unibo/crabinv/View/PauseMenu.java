@@ -69,6 +69,13 @@ public class PauseMenu {
         return pane;
     }
 
+    /**
+     * Creates the buttons for the pause menu
+     * @param text the text of the button
+     * @param method the method it's linked to
+     * @param changeScene the method to change the scene
+     * @return the complete button
+     */
     private Button createPauseMenuButton(String text, Runnable method, Runnable changeScene) {
         Button button = new Button(text);
         button.getStyleClass().add("app-button");
