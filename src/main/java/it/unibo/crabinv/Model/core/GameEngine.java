@@ -2,6 +2,7 @@ package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Controller.core.collision.CollisionController;
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.player.Player;
@@ -80,4 +81,10 @@ public interface GameEngine {
      * Creates the bullets for the GameEngine
      */
     void spawnPlayerBullet();
+
+    /**
+     * Spawns the bullet for the enemies
+     * @param enemy to know the position of it to make the bullet come from it
+     */
+    void spawnEnemyBullet(Enemy enemy);
 }

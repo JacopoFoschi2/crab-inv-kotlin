@@ -26,11 +26,12 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     private final double minBound;
     private final double maxBound;
 
-    /**
+    /*
      * Creates a player
      * @param speed the space covered in one tick
      * @param fireRate the minimal amount of ticks needed between two shots
      */
+    /*
     public Player(double x, double y, int maxHealth, double radius, double speed, int fireRate, double minBound, double maxBound) {
         super(x, y, maxHealth, CollisionGroups.FRIENDLY, radius, EntitySprites.PLAYER);
         this.speed = speed;
@@ -39,6 +40,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
         this.minBound = minBound;
         this.maxBound = maxBound;
     }
+     */
 
     @Override
     public void move(Delta delta) {
@@ -59,7 +61,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
 
     @Override
     public boolean isAbleToShoot() {
-        return shootingCounter == 0;
+        return shootingCounter <= 0;
     }
 
     @Override
@@ -69,6 +71,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
 
     @Override
     public void shoot() {
+        System.out.println("Sparo! Cooldown impostato a: " + this.fireRate);
         shootingCounter = fireRate;
     }
 
