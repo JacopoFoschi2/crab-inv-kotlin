@@ -161,7 +161,7 @@ public class GameLoopControllerImpl implements GameLoopController {
     private void enemyUpdate() {
         List<Enemy> enemyList = this.gameEngine.getEnemyList();
         for (Enemy enemy : enemyList) {
-            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController));
+            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController,gameEngine));
         }
         for (Enemy enemy : enemyList) {
             EnemyController enemyController = enemyControllerMap.get(enemy);

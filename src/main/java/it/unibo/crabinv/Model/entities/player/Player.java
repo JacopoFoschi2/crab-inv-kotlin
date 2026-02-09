@@ -71,7 +71,6 @@ public class Player extends AbstractEntity implements Shooter, Movable {
 
     @Override
     public void shoot() {
-        System.out.println("Sparo! Cooldown impostato a: " + this.fireRate);
         shootingCounter = fireRate;
     }
 
