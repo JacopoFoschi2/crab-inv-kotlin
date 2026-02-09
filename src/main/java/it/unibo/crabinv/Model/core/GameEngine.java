@@ -14,7 +14,10 @@ public interface GameEngine {
     /**
      * Initializes the instance of the game
      *
-     * @param gameSession the GameSession from which the GameEngine will be initialized
+     * @param gameSession    the {@link GameSession} from which the {@link GameEngine} will be initialized
+     * @param levelFactory   the {@link LevelFactory} used by the {@link GameEngine}
+     * @param enemyFactory   the {@link EnemyFactory} used by the {@link GameEngine}
+     * @param rewardsService the {@link RewardsService} used by the {@link GameEngine}
      */
     void init(GameSession gameSession, LevelFactory levelFactory, EnemyFactory enemyFactory, RewardsService rewardsService);
 
@@ -39,17 +42,17 @@ public interface GameEngine {
     void gameOver();
 
     /**
-     * Pauses the game, blocks the gamelogic to the latest snapshot
+     * Pauses the game, blocks the game logic to the latest snapshot
      */
     void pauseGame();
 
     /**
-     * Resumes the game, resumes the tick logic
+     * Resumes the game, resumes the game logic
      */
     void resumeGame();
 
     /**
-     * @return the Player in the game engine
+     * @return the {@link Player} in the game engine
      */
     Player getPlayer();
 

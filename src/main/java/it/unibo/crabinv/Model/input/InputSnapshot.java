@@ -8,7 +8,6 @@ import it.unibo.crabinv.Model.entities.entity.Delta;
 public interface InputSnapshot {
     boolean isShooting();
     Delta getXMovementDelta();
-    Delta getYMovementDelta();
     boolean isPause();
     boolean isUnpause();
 }

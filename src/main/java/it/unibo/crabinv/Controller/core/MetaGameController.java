@@ -4,6 +4,7 @@ import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.save.GameSession;
 
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 public interface MetaGameController {
 
     /**
-     * Manages and instructs the components when a new game must be created
+     * Manages and instructs the components when a new {@link GameSession} must be created
      */
     void startGame();
 

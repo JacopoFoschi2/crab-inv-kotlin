@@ -7,9 +7,6 @@ import it.unibo.crabinv.Model.input.InputSnapshotImpl;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Returns an InputSnapshot based on InputMapper and the key pressed/released
- */
 public class InputControllerPlayer implements InputController {
 
     private final Set<Integer> pressedKeys;
