@@ -35,9 +35,6 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public GameSnapshot step(long frameElapsedMillis) {
         checkPause();
@@ -51,55 +48,39 @@ public class GameLoopControllerImpl implements GameLoopController {
         return latestSnapshot;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public long getTickDurationMillis() {
         return tickDurationMillis;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public long getAccumulatedMillis() {
         return accumulatedMillis;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public long getTotalElapsedTicks() {
         return totalElapsedTicks;
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public GameSnapshot getLatestSnapshot() {
         return this.latestSnapshot;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void pause() {
         this.gameEngine.pauseGame();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void resume() {
         this.gameEngine.resumeGame();
     }
 
+    /**
+     * Controls if the game is in the correct state to be resumed
+     */
     private void checkResume() {
         if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
             if (inputController.getInputState().isUnpause()) {
@@ -108,6 +89,9 @@ public class GameLoopControllerImpl implements GameLoopController {
         }
     }
 
+    /**
+     * Controls if the game is in the correct state to be paused
+     */
     private void checkPause() {
         if (inputController.getInputState().isPause()) {
             if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
@@ -116,16 +100,29 @@ public class GameLoopControllerImpl implements GameLoopController {
         }
     }
 
+
+    /**
+     * Adds the milliseconds of the last frame to the accumulated milliseconds
+     * @param frameElapsedMillis the milliseconds to add
+     */
     private void accumulateTime(long frameElapsedMillis) {
         this.accumulatedMillis += frameElapsedMillis;
     }
 
+    /**
+     * Calculates (with capping and rounding) the ticks of the next frame
+     * @return the ticks
+     */
     private int calculateTicks() {
         final long ticks = this.accumulatedMillis / this.tickDurationMillis;
         final long cappedTicks = Math.min(ticks, maxTicksPerFrame);
         return (int) cappedTicks;
     }
 
+    /**
+     * Requests the GameEngine to calculate the game logic for the number of ticks
+     * @param nextStepTicks the ticks the Game Engine must calculate
+     */
     private void executeTicks(int nextStepTicks) {
         for (int i = 0; i < nextStepTicks; i++) {
             playerUpdate();
@@ -134,6 +131,9 @@ public class GameLoopControllerImpl implements GameLoopController {
         }
     }
 
+    /**
+     * Updates the Player input data
+     */
     private void playerUpdate() {
         final InputSnapshot inputSnapshot = inputController.getInputState();
         this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
@@ -143,11 +143,18 @@ public class GameLoopControllerImpl implements GameLoopController {
         //TODO
     }
 
+    /**
+     * Calls the {@link GameEngine} to execute the ticks
+     */
     private void tickUpdate() {
         this.gameEngine.tick();
         totalElapsedTicks++;
     }
 
+    /**
+     * Calls the {@link GameEngine} to update its snapshot
+     * @param nextStepTicks
+     */
     private void updateSnapshot(int nextStepTicks) {
         this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis;
         this.latestSnapshot = this.gameEngine.snapshot();
