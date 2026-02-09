@@ -64,13 +64,27 @@ public class SceneManager {
         audio.playBGM(BGMTracks.MENU);
     }
 
+    /**
+     * Sets the shop screen as the shown one
+     */
     public void showShop(){
         root.getChildren().setAll(new ShopMenu(this,loc,audio, save.getUserProfile(),
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
+    /**
+     * Sets the settings screen as the shown one
+     */
     public void showSettings() {
         root.getChildren().setAll(new Settings(this,loc,audio).getView());
+    }
+
+    /**
+     * Sets the gameOver screen as the shown one
+     * @param message the type of message to be displayed, either game over or victory
+     */
+    public void showGameOver(GameOver.MESSAGE_TYPE message) {
+        root.getChildren().setAll(new GameOver(this, loc, audio, message).getView());
     }
 
     /**
