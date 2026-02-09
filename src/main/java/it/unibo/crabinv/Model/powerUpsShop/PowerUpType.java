@@ -4,7 +4,7 @@ import it.unibo.crabinv.Model.core.i18n.TextKeys;
 
 public enum PowerUpType {
     SPEED_UP (0.25, TextKeys.SPEED_DESC),
-    FIRERATE_UP(0.10, TextKeys.FIRERATE_DESC),
+    FIRERATE_UP(0.01, TextKeys.FIRERATE_DESC),
     HEALTH_UP(1, TextKeys.HEALTH_DESC);
 
     final double multiplier;

@@ -32,7 +32,7 @@ public class GameEngineImpl implements GameEngine {
     private static final double PLAYER_FIXED_Y = 0.90;
     private  final  double PLAYER_SPRITE_BULLET_SPAWN = 0.05;
     private  final  double PLAYER_RADIUS = 0.01;
-    private  final  double PLAYER_FIRERATE = 0.01;
+    private static  final  int  PLAYER_FIRERATE = 30;
 
     private GameSession gameSession;
     private int currentLevel;
@@ -67,7 +67,7 @@ public class GameEngineImpl implements GameEngine {
                 .collisionGroup(CollisionGroups.FRIENDLY)
                 .radius(PLAYER_RADIUS)
                 .speed(this.gameSession.getPlayerSpeed())
-                .fireRate(this.gameSession.getPlayerFireRate())
+                .fireRate(PLAYER_FIRERATE)
                 .minBound(this.getWorldMinX())
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)
