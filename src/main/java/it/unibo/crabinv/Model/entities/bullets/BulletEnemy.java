@@ -17,4 +17,9 @@ public class BulletEnemy extends AbstractBullet {
     public BulletEnemy(int maxHealth, double x, double y, double radius, double speedY, double minBound, double maxBound) {
         super( x, y, maxHealth, CollisionGroups.HOSTILE,radius, speedY, minBound, maxBound, EntitySprites.ENEMY_BULLET);
     }
+
+    @Override
+    public EntitySprites getSprites() {
+        return EntitySprites.ENEMY_BULLET;
+    }
 }

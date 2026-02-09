@@ -17,4 +17,9 @@ public class BulletPlayer extends AbstractBullet {
     public BulletPlayer(int maxHealth, double x, double y, double radius, double speedY, double minBound, double maxBound) {
         super( x, y, maxHealth, CollisionGroups.FRIENDLY,radius, speedY, minBound, maxBound, EntitySprites.PLAYER_BULLET);
     }
+
+    @Override
+    public EntitySprites getSprites() {
+        return EntitySprites.PLAYER_BULLET;
+    }
 }
