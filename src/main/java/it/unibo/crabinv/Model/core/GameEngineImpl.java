@@ -201,9 +201,7 @@ public class GameEngineImpl implements GameEngine {
         int damageTaken = healthBefore - player.getHealth();
 
         if (damageTaken > 0) {
-            // Riportiamo il danno nella sessione!
             this.gameSession.subPlayerHealth(damageTaken);
-            System.out.println("Danno riportato in sessione. Vita attuale: " + gameSession.getPlayerHealth());
         }
     }
 
