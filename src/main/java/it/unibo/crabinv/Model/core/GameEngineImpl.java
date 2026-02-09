@@ -73,9 +73,9 @@ public class GameEngineImpl implements GameEngine {
         }
         switch (this.gameEngineState) {
             case RUNNING -> {
-                waveUpdate();
+
+                WaveCheck();
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
-                //enemyUpdate() ? o integrare in waveUpdate(), in teoria non serve....
                 //collisionUpdate(); //calcola tutte le collisioni
                 //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
                 //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player
@@ -142,13 +142,26 @@ public class GameEngineImpl implements GameEngine {
         return WORLD_MAX_X;
     }
 
-    private void waveUpdate() {
-        if (!level.isLevelFinished()) {
-            final Wave currentWave = level.getCurrentWave();
+    @Override
+    public List<Enemy> getEnemyList() {
+        if (this.level == null || this.level.isLevelFinished()) {
+            return List.of();
+        }
+        final Wave wave = this.level.getCurrentWave();
+        if (wave == null) {
+            return List.of();
+        }
+        return wave.getAliveEnemies();
+    }
+
+    private void WaveCheck() {
+
+        if (!this.level.isLevelFinished()) {
+            final Wave currentWave = this.level.getCurrentWave();
             if (currentWave != null) {
-                currentWave.tickLogicUpdate();
+                currentWave.tickUpdate();
                 if (currentWave.isWaveFinished()) {
-                    level.advanceWave();
+                    this.level.advanceWave();
                 }
             }
         }

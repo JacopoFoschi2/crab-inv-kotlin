@@ -57,6 +57,6 @@ public class InputControllerPlayer implements InputController {
         } else if (isInputLeft && !isInputRight) {
             xMovementDelta = Delta.DECREASE;
         }
-        return new InputSnapshotImpl(isShooting, xMovementDelta, Delta.NO_ACTION, isPausePressed, isUnPausePressed);
+        return new InputSnapshotImpl(isShooting, xMovementDelta, isPausePressed, isUnPausePressed);
     }
 }

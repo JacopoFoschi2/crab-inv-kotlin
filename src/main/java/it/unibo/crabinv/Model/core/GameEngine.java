@@ -1,10 +1,13 @@
 package it.unibo.crabinv.Model.core;
 
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.levels.LevelFactory;
 import it.unibo.crabinv.Model.save.GameSession;
+
+import java.util.List;
 
 /**
  * Defines the contract for the game simulation
@@ -65,4 +68,6 @@ public interface GameEngine {
      * @return the max coordinates of the world
      */
     double getWorldMaxX();
+
+    List<Enemy> getEnemyList();
 }

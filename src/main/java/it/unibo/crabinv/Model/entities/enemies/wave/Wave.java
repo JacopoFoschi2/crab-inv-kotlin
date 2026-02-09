@@ -11,9 +11,9 @@ import java.util.List;
 public interface Wave {
 
     /**
-     * Advances the wave by one gameEngine tick
+     * Updates the Wave status by one tick.
      */
-    void tickLogicUpdate();
+    void tickUpdate();
 
     /**
      * Gives the entire list of all the enemies that are alive:

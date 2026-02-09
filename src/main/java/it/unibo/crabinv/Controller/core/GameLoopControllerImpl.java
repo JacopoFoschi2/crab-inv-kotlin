@@ -1,11 +1,19 @@
 package it.unibo.crabinv.Controller.core;
 
+import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Controller.entities.enemy.EnemyController;
 import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
+import it.unibo.crabinv.Model.entities.enemies.Enemy;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.input.InputSnapshot;
+
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameLoopControllerImpl implements GameLoopController {
 
@@ -17,13 +25,16 @@ public class GameLoopControllerImpl implements GameLoopController {
     private final GameEngine gameEngine;
     private final InputController inputController;
     private final PlayerController playerController;
+    private final AudioController audioController;
     private long accumulatedMillis;
     private long totalElapsedTicks;
     private GameSnapshot latestSnapshot;
+    private Map<Enemy, EnemyController> enemyControllerMap;
 
     public GameLoopControllerImpl(GameEngine gameEngine,
                                   InputController inputController,
-                                  PlayerController playerController) {
+                                  PlayerController playerController,
+                                  AudioController audioController) {
 
         this.tickDurationMillis = STANDARD_TICK_MILLIS;
         this.maxTicksPerFrame = STANDARD_MAX_TICKS_PER_FRAME;
@@ -32,6 +43,9 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.gameEngine = gameEngine;
         this.inputController = inputController;
         this.playerController = playerController;
+        this.audioController = audioController;
+        this.enemyControllerMap = new IdentityHashMap<>();
+        tickUpdate();
         this.latestSnapshot = this.gameEngine.snapshot();
     }
 
@@ -126,7 +140,7 @@ public class GameLoopControllerImpl implements GameLoopController {
     private void executeTicks(int nextStepTicks) {
         for (int i = 0; i < nextStepTicks; i++) {
             playerUpdate();
-            //enemyUpdate(); //TODO
+            enemyUpdate();
             tickUpdate();
         }
     }
@@ -139,8 +153,21 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
     }
 
+    /**
+     * Updates the Active enemies data
+     */
     private void enemyUpdate() {
-        //TODO
+        List<Enemy> enemyList = this.gameEngine.getEnemyList();
+        for (Enemy enemy : enemyList) {
+            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController));
+        }
+        for (Enemy enemy : enemyList) {
+            EnemyController enemyController = enemyControllerMap.get(enemy);
+            if (enemyController != null) {
+                enemyController.update(Delta.INCREASE);
+            }
+        }
+        enemyControllerMap.keySet().removeIf(e -> !e.isAlive() || !enemyList.contains(e));
     }
 
     /**

@@ -28,11 +28,12 @@ public class WaveImpl implements Wave {
 
     /**
      * LITE Constructor for preset creation
-     * @param enemies the composition of the wave
-     * @param spawnSlots the slots for the enemies
-     * @param enemyFactory the factory used to create enemies
+     *
+     * @param enemies        the composition of the wave
+     * @param spawnSlots     the slots for the enemies
+     * @param enemyFactory   the factory used to create enemies
      * @param rewardsService the reward handler
-     * @param maxSpawnSlots the number of available slots for spawn
+     * @param maxSpawnSlots  the number of available slots for spawn
      */
     public WaveImpl(final List<EnemyType> enemies,
                     final List<Integer> spawnSlots,
@@ -51,13 +52,14 @@ public class WaveImpl implements Wave {
 
     /**
      * FULL Constructor with all parameters
-     * @param enemies the composition of the wave
-     * @param spawnSlots the slots for the enemies
-     * @param enemyFactory the factory used to create enemies
+     *
+     * @param enemies        the composition of the wave
+     * @param spawnSlots     the slots for the enemies
+     * @param enemyFactory   the factory used to create enemies
      * @param rewardsService the reward handler
-     * @param maxSpawnSlots the number of available slots for spawn
-     * @param spawnYNorm the spawn position (and upper bound)
-     * @param bottomYNorm the lower bound
+     * @param maxSpawnSlots  the number of available slots for spawn
+     * @param spawnYNorm     the spawn position (and upper bound)
+     * @param bottomYNorm    the lower bound
      */
     public WaveImpl(final List<EnemyType> enemies,
                     final List<Integer> spawnSlots,
@@ -100,8 +102,29 @@ public class WaveImpl implements Wave {
         this.spawned = false;
     }
 
+    @Override
+    public void tickUpdate() {
+        spawnIfNeeded();
+        cleanUpAndRewards();
+    }
+
+    @Override
+    public List<Enemy> getAliveEnemies() {
+        return List.copyOf(activeEnemies);
+    }
+
+    @Override
+    public boolean isWaveFinished() {
+        return spawned && activeEnemies.isEmpty();
+    }
+
+    @Override
+    public int getMaxSpawnSlots() {
+        return this.maxSpawnSlots;
+    }
+
     /**
-     *
+     * Spawns enemies that are still not spawned
      */
     private void spawnIfNeeded() {//Adapted from MoseBarbieri
         if (!this.spawned) {
@@ -121,19 +144,8 @@ public class WaveImpl implements Wave {
         }
     }
 
-
     /**
-     * Advances the logic of movement of the wave's enemies
-     */
-    private void updateMovement() {
-        for (Enemy enemy : activeEnemies) {
-            enemy.move(Delta.INCREASE);
-            enemy.tick();
-        }
-    }
-
-    /**
-     *
+     * Removes dead enemies and assigns rewards to the player
      */
     private void cleanUpAndRewards() { //Adapted from MoseBarbieri
         activeEnemies.removeIf(enemy -> {
@@ -144,31 +156,4 @@ public class WaveImpl implements Wave {
             return false;
         });
     }
-
-    /* {@inheritDoc} */
-    @Override
-    public void tickLogicUpdate() {
-        spawnIfNeeded();
-        updateMovement();
-        cleanUpAndRewards();
-    }
-
-    /* {@inheritDoc} */
-    @Override
-    public List<Enemy> getAliveEnemies() {
-        return List.copyOf(activeEnemies);
-    }
-
-    /* {@inheritDoc} */
-    @Override
-    public boolean isWaveFinished() {
-        return spawned && activeEnemies.isEmpty();
-    }
-
-    @Override
-    public int getMaxSpawnSlots() {
-        return this.maxSpawnSlots;
-    }
-
-
 }

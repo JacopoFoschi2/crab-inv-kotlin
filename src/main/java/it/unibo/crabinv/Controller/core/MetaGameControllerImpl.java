@@ -54,8 +54,8 @@ public class MetaGameControllerImpl implements MetaGameController {
                 this.inputController,
                 new PlayerController(
                         gameEngine.getPlayer(),
-                        new AudioController(new JavaFXSoundManager())
-                ));
+                        new AudioController(new JavaFXSoundManager())),
+                new AudioController(new JavaFXSoundManager()));
     }
 
     @Override
