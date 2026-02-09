@@ -1,6 +1,8 @@
 package it.unibo.crabinv.Model.core;
 
+import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.core.collisions.CollisionSystem;
 import it.unibo.crabinv.Model.entities.bullets.Bullet;
 import it.unibo.crabinv.Model.entities.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
@@ -10,6 +12,7 @@ import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Entity;
 import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.levels.Level;
@@ -38,6 +41,7 @@ public class GameEngineImpl implements GameEngine {
     private GameEngineState gameEngineState;
     private final List<Bullet> activeBullets = new ArrayList<>();
     private BulletFactory playerBulletFactory = new PlayerBulletFactory();
+    private CollisionController collisionController;
 
     public GameEngineImpl() {
     }
@@ -46,10 +50,12 @@ public class GameEngineImpl implements GameEngine {
     public void init(GameSession gameSession,
                      LevelFactory levelFactory,
                      EnemyFactory enemyFactory,
-                     RewardsService rewardsService) {
+                     RewardsService rewardsService,
+                     CollisionController collisionController){
         this.gameSession = gameSession;
         this.levelFactory = levelFactory;
         this.currentLevel = gameSession.getCurrentLevel();
+        this.collisionController = collisionController;
         this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, rewardsService);
         player = Player.builder()
                 .x(PLAYER_START_X)
@@ -83,9 +89,9 @@ public class GameEngineImpl implements GameEngine {
             case RUNNING -> {
                 waveUpdate();
                 bulletsUpdate();
+                collisionUpdate();
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
                 //enemyUpdate() ? o integrare in waveUpdate(), in teoria non serve....
-                //collisionUpdate(); //calcola tutte le collisioni
                 //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
                 //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player
                 checkGameOver();
@@ -167,6 +173,18 @@ public class GameEngineImpl implements GameEngine {
             b.move(Delta.DECREASE);
         }
         activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0);
+    }
+
+    private void collisionUpdate() {
+        if (this.collisionController == null) return;
+
+        List<Entity> allEntities = new ArrayList<>();
+        allEntities.add(player);
+        if (level.getCurrentWave() != null) {
+            allEntities.addAll(level.getCurrentWave().getAliveEnemies());
+        }
+        allEntities.addAll(activeBullets);
+        collisionController.resolve(allEntities);
     }
 
     @Override

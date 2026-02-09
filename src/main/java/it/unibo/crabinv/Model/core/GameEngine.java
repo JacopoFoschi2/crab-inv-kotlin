@@ -1,5 +1,6 @@
 package it.unibo.crabinv.Model.core;
 
+import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.player.Player;
@@ -19,7 +20,11 @@ public interface GameEngine {
      * @param enemyFactory   the {@link EnemyFactory} used by the {@link GameEngine}
      * @param rewardsService the {@link RewardsService} used by the {@link GameEngine}
      */
-    void init(GameSession gameSession, LevelFactory levelFactory, EnemyFactory enemyFactory, RewardsService rewardsService);
+    void init(GameSession gameSession,
+              LevelFactory levelFactory,
+              EnemyFactory enemyFactory,
+              RewardsService rewardsService,
+              CollisionController collisionController);
 
     /**
      * Defines the logic of the simulation and advances one tick

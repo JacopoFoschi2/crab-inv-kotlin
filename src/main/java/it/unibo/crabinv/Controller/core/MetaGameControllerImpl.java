@@ -1,6 +1,7 @@
 package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
+import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
@@ -42,19 +43,23 @@ public class MetaGameControllerImpl implements MetaGameController {
         GameSession gameSession = Objects.requireNonNull(
                 this.sessionController.newGameSession(),
                 "GameSession cannot be null");
+        AudioController sharedAudio = new AudioController(new JavaFXSoundManager());
         this.gameEngine.init(
                 gameSession,
                 new LevelFactoryImpl(),
                 new BaseEnemyFactoryLogic(),
-                new EnemyRewardService(gameSession)
+                new EnemyRewardService(gameSession),
+                new CollisionController(sharedAudio)
         );
+
         this.inputController = new InputControllerPlayer(new InputMapperImpl());
+
         this.gameLoopController = new GameLoopControllerImpl(
                 gameEngine,
                 this.inputController,
                 new PlayerController(
                         gameEngine.getPlayer(),
-                        new AudioController(new JavaFXSoundManager()),
+                        sharedAudio, // Usiamo lo stesso sharedAudio
                         this.gameEngine
                 ));
     }
