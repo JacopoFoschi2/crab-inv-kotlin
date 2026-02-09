@@ -9,23 +9,22 @@ public enum KeyCodeKeyboard {
     PAUSE(27), //ESC
     UNPAUSE(8); //BACKSPACE
 
-
     private final int keyCode;
 
     KeyCodeKeyboard(int keyCode) {
         this.keyCode = keyCode;
     }
 
-    public int getKeyCode(){
-        return keyCode;
-    }
-
-    public static KeyCodeKeyboard findKeyCode(int code){
+    public static KeyCodeKeyboard findKeyCode(int code) {
         for (KeyCodeKeyboard k : values()) {
-            if (k.keyCode == code){
+            if (k.keyCode == code) {
                 return k;
             }
         }
         return null;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
     }
 }
