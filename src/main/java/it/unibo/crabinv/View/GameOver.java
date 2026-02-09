@@ -12,6 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Provides the method to show the game over screen
+ */
 public class GameOver {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
@@ -25,6 +28,9 @@ public class GameOver {
         this.messageType = messageType;
     }
 
+    /**
+     * @return the pane showing the game over screen
+     */
     public Pane getView() {
         StackPane pane = new StackPane();
         VBox mainColumn = new VBox(100);
@@ -48,6 +54,9 @@ public class GameOver {
         return pane;
     }
 
+    /**
+     * Provides the types of game overs there are
+     */
     public enum MESSAGE_TYPE {
         GAME_OVER,
         VICTORY
