@@ -4,7 +4,7 @@ import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
 
 public enum PlayerBaseStats {
     SPEED(0.01, PowerUpType.SPEED_UP),
-    FIRE_RATE(1, PowerUpType.FIRERATE_UP),
+    FIRE_RATE(0.01, PowerUpType.FIRERATE_UP),
     PLAYER_HEALTH(3, PowerUpType.HEALTH_UP);
 
     private final double value;

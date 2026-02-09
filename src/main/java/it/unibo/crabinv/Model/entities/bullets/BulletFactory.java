@@ -8,10 +8,9 @@ public interface BulletFactory {
      * The method that creates the bullet
      * @param x the horizontal position of the bullet
      * @param y the vertical position of the bullet
-     * @param radius the radius and circle
      * @param minBound the min bound that must not be touched
      * @param maxBound the max bound that must not be touched
      * @return Bullet, the actual bullet
      */
-    Bullet createBullet( double x, double y, double radius, double minBound, double maxBound);
+    Bullet createBullet( double x, double y, double minBound, double maxBound);
 }

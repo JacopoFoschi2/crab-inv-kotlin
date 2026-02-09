@@ -1,6 +1,9 @@
 package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.bullets.Bullet;
+import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
+import it.unibo.crabinv.Model.entities.bullets.PlayerBulletFactory;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
@@ -30,6 +33,8 @@ public class GameEngineImpl implements GameEngine {
     private Player player;
     private long elapsedTicks;
     private GameEngineState gameEngineState;
+    private final List<Bullet> activeBullets = new ArrayList<>();
+    private BulletFactory playerBulletFactory = new PlayerBulletFactory();
 
     public GameEngineImpl() {
     }
@@ -74,6 +79,7 @@ public class GameEngineImpl implements GameEngine {
         switch (this.gameEngineState) {
             case RUNNING -> {
                 waveUpdate();
+                bulletsUpdate();
                 //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
                 //enemyUpdate() ? o integrare in waveUpdate(), in teoria non serve....
                 //collisionUpdate(); //calcola tutte le collisioni
@@ -152,6 +158,17 @@ public class GameEngineImpl implements GameEngine {
                 }
             }
         }
+    }
+    private void bulletsUpdate() {
+        activeBullets.forEach(Bullet::update);
+        activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0);
+    }
+
+
+    public void spawnPlayerBullet() {
+        activeBullets.add(playerBulletFactory.createBullet(player.getX(), player.getY() - 0.05, 0.01,
+                0.0
+        ));
     }
 
     private void checkGameStarted() {
