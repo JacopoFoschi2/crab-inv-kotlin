@@ -42,11 +42,17 @@ public class GameLoopControllerImpl implements GameLoopController {
     public GameSnapshot step(long frameElapsedMillis) {
         checkPause();
         checkResume();
+        if (this.gameEngine.getGameState() == GameEngineState.GAME_OVER) {
+            return latestSnapshot;
+        }
+
         if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
             accumulateTime(frameElapsedMillis);
             final int nextStepTicks = calculateTicks();
             executeTicks(nextStepTicks);
-            updateSnapshot(nextStepTicks);
+            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+                updateSnapshot(nextStepTicks);
+            }
         }
         return latestSnapshot;
     }
@@ -128,8 +134,10 @@ public class GameLoopControllerImpl implements GameLoopController {
 
     private void executeTicks(int nextStepTicks) {
         for (int i = 0; i < nextStepTicks; i++) {
+            if (this.gameEngine.getGameState() == GameEngineState.GAME_OVER) {
+                break;
+            }
             playerUpdate();
-            //enemyUpdate(); //TODO
             tickUpdate();
         }
     }
