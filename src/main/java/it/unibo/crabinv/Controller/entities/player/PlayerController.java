@@ -3,6 +3,7 @@ package it.unibo.crabinv.Controller.entities.player;
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Controller.entities.entity.EntityCapableOfInputController;
+import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.player.Player;
@@ -12,13 +13,15 @@ import it.unibo.crabinv.Model.entities.player.Player;
  */
 public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
     private final AudioController audio;
+    private final GameEngine engine;
     /**
      * Sets the controller linking it to a set player
      * @param player the player
      */
-    public PlayerController(Player player, AudioController audio) {
+    public PlayerController(Player player, AudioController audio, GameEngine engine) {
         super(player);
         this.audio = audio;
+        this.engine = engine;
     }
 
     @Override
@@ -47,11 +50,11 @@ public class PlayerController extends EntityAbstractController<Player> implement
 
     /**
      * Tells the player to shoot if possible
-     * TODO handle the bullet being created
      */
     private void shoot() {
         if (super.getEntity().isAbleToShoot()) {
             super.getEntity().shoot();
+            engine.spawnPlayerBullet();
             audio.playSFX(SFXTracks.SHOT_PLAYER);
         }
     }

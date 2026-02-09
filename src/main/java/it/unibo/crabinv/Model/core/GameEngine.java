@@ -65,4 +65,9 @@ public interface GameEngine {
      * @return the max coordinates of the world
      */
     double getWorldMaxX();
+
+    /**
+     * Creates the bullets for the GameEngine
+     */
+    void spawnPlayerBullet();
 }

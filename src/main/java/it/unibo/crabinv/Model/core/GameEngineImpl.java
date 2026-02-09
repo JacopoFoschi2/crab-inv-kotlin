@@ -2,12 +2,14 @@ package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.bullets.Bullet;
+import it.unibo.crabinv.Model.entities.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
 import it.unibo.crabinv.Model.entities.bullets.PlayerBulletFactory;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
+import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import it.unibo.crabinv.Model.entities.player.Player;
 import it.unibo.crabinv.Model.levels.Level;
@@ -25,6 +27,7 @@ public class GameEngineImpl implements GameEngine {
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
+    private  final  double PLAYER_SPRITE_BULLET_SPAWN = 0.05;
 
     private GameSession gameSession;
     private int currentLevel;
@@ -160,15 +163,26 @@ public class GameEngineImpl implements GameEngine {
         }
     }
     private void bulletsUpdate() {
-        activeBullets.forEach(Bullet::update);
+        for(Bullet b : activeBullets){
+            b.move(Delta.DECREASE);
+        }
         activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0);
     }
 
-
+    @Override
     public void spawnPlayerBullet() {
-        activeBullets.add(playerBulletFactory.createBullet(player.getX(), player.getY() - 0.05, 0.01,
-                0.0
+        double bulletX = this.player.getX();
+        double bulletY = this.player.getY() - PLAYER_SPRITE_BULLET_SPAWN;
+        activeBullets.add(playerBulletFactory.createBullet(bulletX, bulletY,
+                0.0,
+                1.0
         ));
+    }
+
+    private void populateBullets(List<RenderObjectSnapshot> renderObjects) {
+        for (Bullet b : activeBullets) {
+            renderObjects.add(new RenderObjectSnapshot(b.getSprite(), b.getX(), b.getY()));
+        }
     }
 
     private void checkGameStarted() {
@@ -181,7 +195,7 @@ public class GameEngineImpl implements GameEngine {
         final List<RenderObjectSnapshot> renderObjects = new ArrayList<>();
         populatePlayer(renderObjects);
         populateEnemies(renderObjects);
-        //populateBullets(renderObjects); //TODO
+        populateBullets(renderObjects);
         return renderObjects;
     }
 
@@ -205,10 +219,6 @@ public class GameEngineImpl implements GameEngine {
                 }
             }
         }
-    }
-
-    private void populateBullets(List<RenderObjectSnapshot> renderObjects) {
-
     }
 
     private void checkGameOver() {
