@@ -12,10 +12,14 @@ import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -51,7 +55,12 @@ public class GameScreen {
         final double width = sceneManager.getWidth();
         final double height = sceneManager.getHeight();
         this.canvas = new Canvas(width, height);
-        root.getChildren().add(canvas);
+        Label hp = new Label();
+        Label money = new Label();
+        VBox hud = new VBox(10, hp, money);
+        StackPane.setAlignment(hud, Pos.TOP_LEFT);
+        StackPane.setMargin(hud, new Insets(20));
+        root.getChildren().addAll(canvas, hud);
 
         final SessionController sessionController = new SessionControllerImpl(this.save);
         metaGameController = new MetaGameControllerImpl(sessionController, repo);
@@ -86,6 +95,9 @@ public class GameScreen {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
+                hp.setText("HP: " + sessionController.getGameSession().getPlayerHealth());
+                money.setText("Coins: " + sessionController.getGameSession().getCurrency());
 
                 final GameEngineState currentEngineState = metaGameController.getGameEngineState();
                 if (currentEngineState != lastEngineState) {
