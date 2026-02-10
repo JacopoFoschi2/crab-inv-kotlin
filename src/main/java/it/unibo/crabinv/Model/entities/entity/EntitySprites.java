@@ -16,6 +16,8 @@ public enum EntitySprites {
     }
 
     /**
+     * It's the getter for the image path.
+     *
      * @return the imagePath of the sprite
      */
     public String getImagePath() {
