@@ -30,7 +30,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
         tick();
         move(delta);
 
-        if (rand.nextDouble() < 0.005) {
+        if (rand.nextDouble() < 0.007) {
             shoot();
         }
     }
