@@ -6,6 +6,8 @@ import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Controller.save.SessionControllerImpl;
+import it.unibo.crabinv.Model.core.GameEngine;
+import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
@@ -26,10 +28,10 @@ public class GameScreen {
     private final Save save;
     private final SaveRepository repo;
     private MetaGameController metaGameController;
-
     private AnimationTimer timer;
     private Canvas canvas;
     private GameRenderer gameRenderer;
+    private GameEngineState lastEngineState;
 
     public GameScreen(final SceneManager sceneManager,
                       final LocalizationController loc,
@@ -41,6 +43,7 @@ public class GameScreen {
         this.audio = Objects.requireNonNull(audio, "audio must not be null");
         this.save = Objects.requireNonNull(save, "save must not be null");
         this.repo = Objects.requireNonNull(repo, "SaveRepository must not be null");
+        this.lastEngineState = null;
     }
 
     public Node getView() {
@@ -56,6 +59,7 @@ public class GameScreen {
 
         metaGameController.startGame();
         metaGameController.getInputController();
+        this.lastEngineState = metaGameController.getGameEngineState();
 
         canvas.setFocusTraversable(true);
         canvas.setOnKeyPressed(e -> {
@@ -83,6 +87,12 @@ public class GameScreen {
                     throw new RuntimeException(e);
                 }
 
+                final GameEngineState currentEngineState = metaGameController.getGameEngineState();
+                if (currentEngineState != lastEngineState) {
+                    lastEngineState = currentEngineState;
+                    engineStatusTrigger(currentEngineState);
+                }
+
                 lastNow = now;
             }
         };
@@ -93,8 +103,24 @@ public class GameScreen {
         return root;
     }
 
+    private void engineStatusTrigger(final GameEngineState state) {
+        if (state == GameEngineState.GAME_OVER || state == GameEngineState.WIN) {
+            closeEngineStep1();
+            closeEngineStep2();
+            switch (state) {
+                case GAME_OVER -> {
+                    sceneManager.showGameOver(GameOver.MESSAGE_TYPE.GAME_OVER);
+                }
+                case WIN -> {
+                    sceneManager.showGameOver(GameOver.MESSAGE_TYPE.VICTORY);
+                }
+            }
+        }
+    }
+
     /**
      * Exposes the resume method of the gameLoop to be used by the resume menu
+     *
      * @return the runnable of the resume method
      */
     public Runnable getResume() {
@@ -107,19 +133,34 @@ public class GameScreen {
     }
 
     /**
+     * Executes the first part of closing procedures for the {@link GameEngine}
+     */
+    private void closeEngineStep1() {
+        timer.stop();
+    }
+
+    /**
+     * Executes the second part of closing procedures for the {@link GameEngine}
+     */
+    private void closeEngineStep2() {
+        timer = null;
+        canvas = null;
+        gameRenderer = null;
+        metaGameController = null;
+    }
+
+    /**
      * Exposes the gameOver method of the gameLoop to be used by the resume menu
+     *
      * @return the runnable of the gameOver method
      */
     public Runnable getGameOver() {
         return new Runnable() {
             @Override
             public void run() {
-                timer.stop();
+                closeEngineStep1();
                 metaGameController.endGame();
-                timer = null;
-                canvas = null;
-                gameRenderer = null;
-                metaGameController = null;
+                closeEngineStep2();
             }
         };
     }

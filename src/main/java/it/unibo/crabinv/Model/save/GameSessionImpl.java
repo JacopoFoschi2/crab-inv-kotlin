@@ -15,6 +15,7 @@ public class GameSessionImpl implements GameSession {
 
     private int currentLevel;
     private boolean gameOver;
+    private boolean gameWon;
     private final long startingTimeStamp;
     private int currency;
     private int playerHealth;
@@ -31,6 +32,7 @@ public class GameSessionImpl implements GameSession {
     public GameSessionImpl(int currency, double playerHealth, double playerSpeed, double playerFireRate){
         this.currentLevel = StartingSaveValues.LEVEL.getIntValue();
         this.gameOver = false;
+        this.gameWon = false;
         this.startingTimeStamp = Instant.now().toEpochMilli();
         this.currency = currency;
         this.playerHealth = (int) playerHealth;
@@ -38,37 +40,36 @@ public class GameSessionImpl implements GameSession {
         this.playerFireRate = (int) playerFireRate;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getCurrentLevel() {
         return this.currentLevel;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getNextLevel() {
         return this.currentLevel + 1;
     }
 
-    /** {@inheritDoc} */
     @Override
     public boolean isGameOver() {
         return this.gameOver;
     }
 
-    /** {@inheritDoc} */
+    @Override
+    public boolean isGameWon() {
+        return this.gameWon;
+    }
+
     @Override
     public long getStartingTimeStamp() {
         return this.startingTimeStamp;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getCurrency() {
         return this.currency;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getPlayerHealth() {
         return this.playerHealth;
@@ -84,26 +85,27 @@ public class GameSessionImpl implements GameSession {
         return this.playerFireRate;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void advanceLevel() {
         this.currentLevel++;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void markGameOver() {
         this.gameOver = true;
     }
 
-    /** {@inheritDoc} */
+    @Override
+    public void markGameWon() {
+        this.gameWon = true;
+    }
+
     @Override
     public void addCurrency(int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void subCurrency(int amount) {
         DomainUtils.requireNonNegativeSubtraction(this.currency, amount);
@@ -120,7 +122,6 @@ public class GameSessionImpl implements GameSession {
         this.playerHealth += amount;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void subPlayerHealth(int amount) {
         this.playerHealth = DomainUtils.subClampedToZero(this.playerHealth, amount);

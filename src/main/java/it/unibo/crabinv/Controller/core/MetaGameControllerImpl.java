@@ -10,6 +10,7 @@ import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.GameEngineImpl;
+import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
 import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.entities.enemies.BaseEnemyFactoryLogic;
@@ -91,6 +92,11 @@ public class MetaGameControllerImpl implements MetaGameController {
     @Override
     public GameLoopController getGameLoopController(){
         return Objects.requireNonNull(this.gameLoopController, "GameLoopController cannot be null");
+    }
+
+    @Override
+    public GameEngineState getGameEngineState() {
+        return this.gameEngine.getGameState();
     }
 
     @Override

@@ -51,6 +51,11 @@ public interface GameEngine {
     void gameOver();
 
     /**
+     * Marks the current attempt as won
+     */
+    void winGame();
+
+    /**
      * Pauses the game, blocks the game logic to the latest snapshot
      */
     void pauseGame();

@@ -3,13 +3,15 @@ package it.unibo.crabinv.Controller.core;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.save.SessionController;
 import it.unibo.crabinv.Model.core.GameEngine;
+import it.unibo.crabinv.Model.core.GameEngineState;
 import it.unibo.crabinv.Model.core.GameSnapshot;
 import it.unibo.crabinv.Model.save.GameSession;
+import it.unibo.crabinv.Model.save.Save;
 
 import java.io.IOException;
 
 /**
- * Orchestrates SessionController, GameLoop, GameEngine
+ * Orchestrates {@link SessionController}, {@link GameLoopController}, {@link GameEngine}
  */
 public interface MetaGameController {
 
@@ -25,16 +27,22 @@ public interface MetaGameController {
     GameSnapshot stepCheck(long frameElapsedMillis) throws IOException;
 
     /**
-     * Exposes the InputController to make it usable
-     * @return the InputController
+     * Exposes the {@link InputController} to make it usable
+     * @return the {@link InputController}
      */
     InputController getInputController();
 
     /**
-     * Exposes the GameLoopController
-     * @return the GameLoopController
+     * Exposes the {@link GameLoopController}
+     * @return the {@link GameLoopController
      */
     GameLoopController getGameLoopController();
+
+    /**
+     * Exposes the {@link GameEngineState} of the underlying {@link GameEngine}
+     * @return a {@link GameEngineState}
+     */
+    GameEngineState getGameEngineState();
 
     /**
      * Closes the game, triggers a Game Over, to be used by the pause menu
@@ -42,7 +50,7 @@ public interface MetaGameController {
     void endGame();
 
     /**
-     * Updates the save
+     * Updates the {@link Save}
      * @exception IOException if an IO error occurs during the save update
      */
     void updateSave() throws IOException;

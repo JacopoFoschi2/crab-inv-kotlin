@@ -2,9 +2,9 @@ package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.entities.bullets.*;
 import it.unibo.crabinv.Model.entities.bullets.Bullet;
 import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
+import it.unibo.crabinv.Model.entities.bullets.EnemyBulletFactory;
 import it.unibo.crabinv.Model.entities.bullets.PlayerBulletFactory;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
@@ -29,11 +29,11 @@ public class GameEngineImpl implements GameEngine {
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
-    private static   final  double ENTITY_SPRITE_BULLET_SPAWN = 0.05;
-    private static final  double PLAYER_RADIUS = 0.01;
-    private static  final  int  PLAYER_FIRERATE = 30;
-    private static  final  double ENEMY_BULLET_SPAWN = 0.005;
-
+    private static final double ENTITY_SPRITE_BULLET_SPAWN = 0.05;
+    private static final double PLAYER_RADIUS = 0.01;
+    private static final int PLAYER_FIRERATE = 30;
+    private static final double ENEMY_BULLET_SPAWN = 0.005;
+    private final List<Bullet> activeBullets = new ArrayList<>();
     private GameSession gameSession;
     private int currentLevel;
     private LevelFactory levelFactory;
@@ -41,9 +41,8 @@ public class GameEngineImpl implements GameEngine {
     private Player player;
     private long elapsedTicks;
     private GameEngineState gameEngineState;
-    private final List<Bullet> activeBullets = new ArrayList<>();
-    private BulletFactory playerBulletFactory = new PlayerBulletFactory();
-    private BulletFactory enemyBulletFactory = new EnemyBulletFactory();
+    private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
+    private final BulletFactory enemyBulletFactory = new EnemyBulletFactory();
     private CollisionController collisionController;
     private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
@@ -98,11 +97,13 @@ public class GameEngineImpl implements GameEngine {
                 collisionUpdate();
                 //enemyToGroundCheck();
                 checkGameOver();
+                checkWin();
                 waveCheck();
                 levelCheck();
+                System.out.println(this.gameEngineState);
                 this.elapsedTicks++;
             }
-            case PAUSED, GAME_OVER -> {
+            case PAUSED, GAME_OVER, WIN -> {
             }
         }
     }
@@ -120,11 +121,15 @@ public class GameEngineImpl implements GameEngine {
 
     @Override
     public void gameOver() {
-        if (this.gameEngineState == GameEngineState.GAME_OVER) {
-            return;
-        }
         this.gameEngineState = GameEngineState.GAME_OVER;
         this.gameSession.markGameOver();
+    }
+
+    @Override
+    public void winGame() {
+        this.gameEngineState = GameEngineState.WIN;
+        this.gameSession.markGameWon();
+
     }
 
     @Override
@@ -184,6 +189,9 @@ public class GameEngineImpl implements GameEngine {
         wave.tickUpdate();
 
         if (wave.isWaveFinished()) {
+            if (wave.getAliveEnemies().isEmpty()) {
+                this.level.advanceWave();
+            }
             this.level.advanceWave();
         }
     }
@@ -196,6 +204,7 @@ public class GameEngineImpl implements GameEngine {
             gameSession.advanceLevel();
             this.currentLevel = gameSession.getCurrentLevel();
             this.level = createLevel();
+            checkWin();
         }
     }
 
@@ -212,9 +221,17 @@ public class GameEngineImpl implements GameEngine {
 
     }
 
-    //TODO PUBLIC OVERRIDE
-    private void winGame() {
-        System.out.println("You win");
+    private void checkGameOver() {
+        if (this.gameSession.getPlayerHealth() <= 0 && this.gameEngineState != GameEngineState.GAME_OVER) {
+            gameOver();
+        }
+    }
+
+    private void checkWin() {
+        System.out.println(this.getEnemyList().isEmpty() + " " + this.level.isLevelFinished() + " " + this.level.getCurrentWave());
+        if (this.getEnemyList().isEmpty() && this.level.getCurrentWave().isWaveFinished()) {
+            winGame();
+        }
     }
 
     private void bulletsUpdate() {
@@ -308,12 +325,5 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
-    private void checkGameOver() {
-        if (this.gameSession.getPlayerHealth() <= 0 && this.gameEngineState != GameEngineState.GAME_OVER) {
-            this.gameEngineState = GameEngineState.GAME_OVER;
-            this.gameSession.markGameOver();
-            System.out.println("GAME OVER!");
-        }
-    }
 }
 
