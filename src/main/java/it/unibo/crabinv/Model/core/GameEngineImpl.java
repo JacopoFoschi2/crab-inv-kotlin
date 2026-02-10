@@ -34,6 +34,8 @@ public class GameEngineImpl implements GameEngine {
     private static final int PLAYER_FIRERATE = 30;
     private static final double ENEMY_BULLET_SPAWN = 0.005;
     private final List<Bullet> activeBullets = new ArrayList<>();
+    private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
+    private final BulletFactory enemyBulletFactory = new EnemyBulletFactory();
     private GameSession gameSession;
     private int currentLevel;
     private LevelFactory levelFactory;
@@ -41,8 +43,6 @@ public class GameEngineImpl implements GameEngine {
     private Player player;
     private long elapsedTicks;
     private GameEngineState gameEngineState;
-    private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
-    private final BulletFactory enemyBulletFactory = new EnemyBulletFactory();
     private CollisionController collisionController;
     private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
@@ -95,12 +95,12 @@ public class GameEngineImpl implements GameEngine {
             case RUNNING -> {
                 bulletsUpdate();
                 collisionUpdate();
-                //enemyToGroundCheck();
-                checkGameOver();
-                checkWin();
+                enemyToGroundCheck();
                 waveCheck();
                 levelCheck();
-                System.out.println(this.gameEngineState);
+                checkGameOver();
+                checkWin();
+                System.out.println(this.gameEngineState + " " + this.gameSession.getPlayerHealth());
                 this.elapsedTicks++;
             }
             case PAUSED, GAME_OVER, WIN -> {
@@ -217,19 +217,36 @@ public class GameEngineImpl implements GameEngine {
         return this.level = levelFactory.createLevel(this.currentLevel, this.enemyFactory, this.rewardsService);
     }
 
+    /**
+     * Checks if an enemy reaches the Y of the player, destroys the enemy and subtracts player health
+     */
     private void enemyToGroundCheck() {
-
+        List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
+        for (Enemy enemy : enemyList) {
+            if (enemy.getY() == this.player.getY()) {
+                this.gameSession.subPlayerHealth(1);
+                enemy.destroy();
+            }
+        }
     }
 
+    /**
+     * Checks game over conditions, calls game over procedures if needed
+     */
     private void checkGameOver() {
         if (this.gameSession.getPlayerHealth() <= 0 && this.gameEngineState != GameEngineState.GAME_OVER) {
             gameOver();
         }
     }
 
+    /**
+     * Checks win conditions, calls win procedures if needed
+     */
     private void checkWin() {
         System.out.println(this.getEnemyList().isEmpty() + " " + this.level.isLevelFinished() + " " + this.level.getCurrentWave());
-        if (this.getEnemyList().isEmpty() && this.level.getCurrentWave().isWaveFinished()) {
+        if (this.getEnemyList().isEmpty() &&
+                this.level.getCurrentWave().isWaveFinished() &&
+                this.gameSession.getPlayerHealth() > 0) {
             winGame();
         }
     }
@@ -289,12 +306,19 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
+    /**
+     * Checks if there is an active {@link GameSession}
+     */
     private void checkGameStarted() {
         if (this.gameSession == null) {
             throw new IllegalStateException("newGame() needed before snapshot()");
         }
     }
 
+    /**
+     * Creates a {@link List<RenderObjectSnapshot>} of all game entities
+     * @return the {@link List<RenderObjectSnapshot>} filled with the entities
+     */
     private List<RenderObjectSnapshot> populateSnapshot() {
         final List<RenderObjectSnapshot> renderObjects = new ArrayList<>();
         populatePlayer(renderObjects);
@@ -303,6 +327,11 @@ public class GameEngineImpl implements GameEngine {
         return renderObjects;
     }
 
+    /**
+     * Creates a {@link GameSnapshot} from a {@link List<RenderObjectSnapshot>}, used by the {@link GameEngine}
+     * @param renderObjects
+     * @return
+     */
     private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
         if (this.gameSession == null) {
             throw new IllegalStateException("newGame() needed before snapshot()");
@@ -310,10 +339,18 @@ public class GameEngineImpl implements GameEngine {
         return new GameSnapshot(List.copyOf(renderObjects), this.gameSession);
     }
 
+    /**
+     * Adds the player entity to the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     */
     private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
         renderObjects.add(new RenderObjectSnapshot(player.getSprite(), player.getX(), player.getY()));
     }
 
+    /**
+     * Adds the enemy entities to the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     */
     private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
         if (this.level != null && !this.level.isLevelFinished()) {
             final Wave wave = level.getCurrentWave();
