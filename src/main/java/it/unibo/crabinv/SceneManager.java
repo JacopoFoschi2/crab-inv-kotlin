@@ -72,6 +72,10 @@ public class SceneManager {
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
+    public void showMemorial(){
+        root.getChildren().setAll(new MemorialScreen(this,loc,audio, save.getPlayerMemorial()));
+    }
+
     /**
      * Sets the settings screen as the shown one
      */
