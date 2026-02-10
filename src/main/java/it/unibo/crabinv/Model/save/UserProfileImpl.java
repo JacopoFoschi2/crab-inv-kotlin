@@ -67,6 +67,11 @@ public class UserProfileImpl implements UserProfile {
     }
 
     @Override
+    public double applyDividePowerUp(PowerUpType powerUpType) {
+        return PlayerBaseStats.getDoubleValueOf(powerUpType) / (powerUpType.getStatMultiplier() * getLevel(powerUpType));
+    }
+
+    @Override
     public double applyAddPowerUp(PowerUpType powerUpType) {
         return PlayerBaseStats.getDoubleValueOf(powerUpType) + powerUpType.getStatMultiplier() * getLevel(powerUpType);
     }

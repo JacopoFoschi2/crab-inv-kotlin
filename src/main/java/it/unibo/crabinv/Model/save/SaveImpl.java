@@ -50,9 +50,9 @@ public class SaveImpl implements Save{
                 StartingSaveValues.CURRENCY.getIntValue(),
                 this.userProfile.applyAddPowerUp(PowerUpType.HEALTH_UP),
                 this.userProfile.applyMultiplyPowerUp(PowerUpType.SPEED_UP),
-                this.userProfile.applyMultiplyPowerUp(PowerUpType.FIRERATE_UP));
+                this.userProfile.applyDividePowerUp(PowerUpType.FIRERATE_UP));
     }
-
+    
     @Override
     public void closeGameSession() {
         this.gameSession = null;

@@ -54,6 +54,8 @@ public interface UserProfile {
      */
     double applyMultiplyPowerUp(PowerUpType powerUpType);
 
+    double applyDividePowerUp(PowerUpType powerUpType);
+
     double applyAddPowerUp(PowerUpType powerUpType);
 
 }
