@@ -4,19 +4,28 @@ import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Model.entities.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 
+/**
+ * It's the EnemyBulletController and it handles the enemyBullets.
+ */
 public class EnemyBulletController extends EntityAbstractController<BulletEnemy> implements BulletController {
 
-    public EnemyBulletController( BulletEnemy entity) {
+    /**
+     * It's the constructor of the EnemyBulletController.
+     *
+     * @param entity it's the entity needed to modify it
+     */
+    public EnemyBulletController(final BulletEnemy entity) {
         super(entity);
     }
 
     @Override
-    public void update(Delta delta) {
+    public void update(final Delta delta) {
         move(delta);
     }
 
     /**
-     * Gives the speed of the bullet
+     * Gives the speed of the bullet.
+     *
      * @return the speed of the bullet
      */
     public double getSpeed() {
@@ -24,12 +33,11 @@ public class EnemyBulletController extends EntityAbstractController<BulletEnemy>
     }
 
     /**
-     * Tells the bullet to go to a specific direction for 1 tick
+     * Tells the bullet to go to a specific direction for 1 tick.
+     *
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private void move(Delta delta) {
+    private void move(final Delta delta) {
         super.getEntity().move(delta);
     }
-
-
 }

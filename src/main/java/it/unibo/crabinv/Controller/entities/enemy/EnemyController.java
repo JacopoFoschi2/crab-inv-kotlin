@@ -10,24 +10,35 @@ import it.unibo.crabinv.Model.entities.entity.Delta;
 
 import java.util.Random;
 
-
+/**
+ * It's the EnemyController, should control each enemy.
+ */
 public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
+    private static final double ENEMY_SHOOTING_CHANCE = 0.007;
     private final AudioController audio;
     private final GameEngine engine;
     private final Random rand = new Random();
-    private final double ENEMY_SHOOTING_CHANCE = 0.007;
 
-    public EnemyController(Enemy enemy, AudioController audio, GameEngine engine) {
+    /**
+     * It's the enemyController, it needs the enemy, audio, and game engine to work.
+     *
+     * @param enemy the enemy to be created.
+     * @param audio the audio that it's needed in the class.
+     * @param engine the game engine.
+     */
+    public EnemyController(final Enemy enemy,
+                           final AudioController audio,
+                           final GameEngine engine) {
         super(enemy);
         this.audio = audio;
         this.engine = engine;
     }
 
     /**
-     * Updates the status of the enemy
+     * Updates the status of the enemy.
      */
     @Override
-    public void update(Delta delta) {
+    public void update(final Delta delta) {
         tick();
         move(delta);
 
@@ -37,24 +48,25 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
     }
 
     /**
-     * Gives the speed of the enemy
+     * Gives the speed of the enemy.
+     *
      * @return the speed of the enemy
      */
     public double getSpeed() {
         return super.getEntity().getSpeed();
     }
 
-
     /**
-     * Tells the enemy to go to a specific direction for 1 tick
+     * Tells the enemy to go to a specific direction for 1 tick.
+     *
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private void move(Delta delta) {
+    private void move(final Delta delta) {
         super.getEntity().move(delta);
     }
 
     /**
-     * Makes the enemy shoot if it can
+     * Makes the enemy shoot if it can.
      */
     private void shoot() {
         if (super.getEntity().isAbleToShoot()) {
@@ -65,7 +77,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
     }
 
     /**
-     * Updates the status for the tick
+     * Updates the status for the tick.
      */
     private void tick() {
         super.getEntity().tick();
