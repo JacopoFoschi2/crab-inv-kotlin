@@ -12,7 +12,7 @@ import java.util.function.Function;
 /**
  * Provides an implementation of {@link SoundService} using JavaFX.
  */
-public class JavaFXSoundManager implements SoundService {
+public final class JavaFXSoundManager implements SoundService {
     private double bgmVolume;
     private double sfxVolume;
     private boolean isBGMMuted;

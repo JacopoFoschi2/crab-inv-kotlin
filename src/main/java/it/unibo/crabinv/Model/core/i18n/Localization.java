@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * <p>To fetch a string from current locale use {@code loc.getString(key)} selecting key
  * from {@link TextKeys} enum</p>
  */
-public class Localization {
+public final class Localization {
     private ResourceBundle messages;
     private SupportedLocales currentLocale;
 

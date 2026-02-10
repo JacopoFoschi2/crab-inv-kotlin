@@ -82,8 +82,13 @@ public final class App extends Application {
      * Provides the launcher of the application.
      */
     public static class Main {
+        /**
+         * Prevents instantiation.
+         */
+        private Main() { }
+
         static void main(final String... args) {
-            Application.launch(App.class, args);
+            launch(App.class, args);
         }
     }
 }
