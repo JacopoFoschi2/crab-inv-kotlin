@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Model.entities.entity;
 
 /**
- * Provides the entities with the set sprites
+ * Provides the entities with the set sprites.
  */
 public enum EntitySprites {
     PLAYER_BULLET("/bullets/bullet_player.png"),
@@ -11,7 +11,7 @@ public enum EntitySprites {
 
     private final String imagePath;
 
-    EntitySprites(String imagePath) {
+    EntitySprites(final String imagePath) {
         this.imagePath = imagePath;
     }
 

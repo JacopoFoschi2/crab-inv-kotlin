@@ -4,7 +4,7 @@ import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Provides a basic implementation of what an entity is and what it should do by default
+ * Provides a basic implementation of what an entity is and what it should do by default.
  */
 @SuperBuilder
 public abstract class AbstractEntity implements Entity {
@@ -17,9 +17,22 @@ public abstract class AbstractEntity implements Entity {
     private final EntitySprites sprite;
 
     /**
-     * Creates the entity by setting its basic parameters
+     * Creates the entity by setting its basic parameters.
+     *
+     * @param x the x coordinate of spawn
+     * @param y the y coordinate of spawn
+     * @param maxHealth the max health of the entity
+     * @param collisionGroup the collision group the entity is part of
+     * @param radius the radius of the entity used to compute the collision
+     * @param sprite the path to the sprite in resources
      */
-    public AbstractEntity(double x, double y, int maxHealth, CollisionGroups collisionGroup,double radius, EntitySprites sprite) {
+    public AbstractEntity(
+            final double x,
+            final double y,
+            final int maxHealth,
+            final CollisionGroups collisionGroup,
+            final double radius,
+            final EntitySprites sprite) {
         this.x = x;
         this.y = y;
         this.maxHealth = maxHealth;
@@ -45,7 +58,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public void takeDamage(final int damage) {
         health -= damage;
     }
 
@@ -80,9 +93,12 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * "Teleports" the entity to the set position, to be used with caution
+     * "Teleports" the entity to the set position, to be used with caution.
+     *
+     * @param x the new x coordinate
+     * @param y the new y coordinate
      */
-    protected void setPosition(double x, double y) {
+    protected void setPosition(final double x, final double y) {
         this.x = x;
         this.y = y;
     }

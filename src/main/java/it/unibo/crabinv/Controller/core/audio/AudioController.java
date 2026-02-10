@@ -11,7 +11,8 @@ public class AudioController {
     private final SoundService soundManager;
 
     /**
-     * Creates the instance of AudioController
+     * Creates the instance of AudioController.
+     *
      * @param soundManager the implementation of SoundManager you want to use
      * @throws NullPointerException if you feed it a null value
      */
@@ -23,9 +24,11 @@ public class AudioController {
     }
 
     /**
-     * Plays the music
+     * Plays the music.
+     *
+     * @param bgm the wanted track to play
      */
-    public void playBGM(BGMTracks bgm) {
+    public void playBGM(final BGMTracks bgm) {
         soundManager.playBGM(bgm);
     }
 
@@ -46,15 +49,16 @@ public class AudioController {
     }
 
     /**
-     * Sets the music volume to the desired value
+     * Sets the music volume to the desired value.
+     *
      * @param volume spans from 0 to 100
      * @throws IllegalArgumentException if the volume inputted is incorrect
      */
-    public void setBGMVolume(int volume) {
+    public void setBGMVolume(final int volume) {
         if (volume < 0 || volume > 100) {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
-        double realVolume = (double) volume / 100;
+        final double realVolume = (double) volume / 100;
         soundManager.setBGMVolume(realVolume);
     }
 
@@ -67,7 +71,7 @@ public class AudioController {
     }
 
     /**
-     * Toggles if the music should be mute or not
+     * Toggles if the music should be mute or not.
      */
     public void toggleBGMMute() {
         soundManager.toggleMuteBGM();
@@ -81,18 +85,21 @@ public class AudioController {
     }
 
     /**
-     * Plays sound effects
+     * Plays sound effects.
+     *
+     * @param sfx the track you want to play
      */
-    public void playSFX(SFXTracks sfx) {
+    public void playSFX(final SFXTracks sfx) {
         soundManager.playSFX(sfx);
     }
 
     /**
-     * Sets the sound effects volume to the desired value
+     * Sets the sound effects volume to the desired value.
+     *
      * @param volume spans from 0 to 100
      * @throws IllegalArgumentException if the volume inputted is incorrect
      */
-    public void setSFXVolume(int volume) {
+    public void setSFXVolume(final int volume) {
         if (volume < 0 || volume > 100) {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
@@ -109,7 +116,7 @@ public class AudioController {
     }
 
     /**
-     * Toggles if the sound effects should be muted or not
+     * Toggles if the sound effects should be muted or not.
      */
     public void toggleSFXMute() {
         soundManager.toggleMuteSFX();

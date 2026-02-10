@@ -33,7 +33,7 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void playBGM(BGMTracks music) {
+    public void playBGM(final BGMTracks music) {
         String musicName = music.getPath();
         if (musicPlayer != null) {
             if (Objects.equals(currentTrack, musicName)) {
@@ -67,7 +67,7 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void setBGMVolume(double volume) {
+    public void setBGMVolume(final double volume) {
         if (volume < 0.0 || volume > 1.0) {
             throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
         }
@@ -106,7 +106,7 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     @Override
-    public void setSFXVolume(double volume) {
+    public void setSFXVolume(final double volume) {
         if (volume < 0.0 || volume > 1.0) {
             throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
         }
@@ -129,13 +129,14 @@ public class JavaFXSoundManager implements SoundService {
     }
 
     /**
-     * Handles the caching of either sound effects or music tracks
+     * Handles the caching of either sound effects or music tracks.
+     *
      * @param effectName the key of the track
      * @param cache a map used to cache all the tracks used at runtime
      * @param <T> the type of JavaFx sound construct you wish to create
      * @param create the method used to create the aforementioned construct
      */
-    private <T> void handleCache(String effectName, Map<String, T> cache, Function<String, T> create) {
+    private <T> void handleCache(final String effectName, final Map<String, T> cache, final Function<String, T> create) {
         if (!cache.containsKey(effectName)) {
             var resource = getClass().getResource(effectName);
             if (resource == null) {

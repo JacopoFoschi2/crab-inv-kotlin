@@ -11,11 +11,12 @@ import java.util.List;
  */
 public class CollisionSystem {
     /**
-     * Resolves all collisions between entities
+     * Resolves all collisions between entities.
+     *
      * @param entities the list of all the entities on the screen
      * @return true if there has been at least one collision, false if there hasn't
      */
-    public boolean resolve(List<Entity> entities) {
+    public boolean resolve(final List<Entity> entities) {
         boolean collisionOccurred = false;
         for (int first = 0; first < entities.size(); first++) {
             for (int second = first + 1; second < entities.size(); second++) {
@@ -32,12 +33,13 @@ public class CollisionSystem {
     }
 
     /**
-     * Checks all cases needed to determine if two entities are colliding or not
+     * Checks all cases needed to determine if two entities are colliding or not.
+     *
      * @return true if the two entities collided, false if not
      */
-    private boolean isColliding(Entity entity1, Entity entity2) {
-        if (entity1.isAlive() && entity2.isAlive()) {
-            if (entity1.getCollisionGroup() != entity2.getCollisionGroup()) {
+    private boolean isColliding(final Entity entity1, final Entity entity2) {
+        if(entity1.isAlive() && entity2.isAlive()) {
+            if(entity1.getCollisionGroup() != entity2.getCollisionGroup()) {
                 return solveCollision(entity1, entity2);
             }
         }
@@ -46,10 +48,11 @@ public class CollisionSystem {
 
     /**
      * Solves collision by computing the squared distance between the two centers,
-     * and then compares it with the squared sum of the radius
+     * and then compares it with the squared sum of the radius.
+     *
      * @return if the collision happened or not
      */
-    private boolean solveCollision(Entity entity1, Entity entity2) {
+    private boolean solveCollision(final Entity entity1, final Entity entity2) {
         double dx = entity2.getX() - entity1.getX();
         double dy = entity2.getY() - entity1.getY();
         double distanceSquared = dx * dx + dy * dy;

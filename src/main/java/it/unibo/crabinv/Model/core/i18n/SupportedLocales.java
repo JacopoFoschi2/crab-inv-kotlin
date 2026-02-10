@@ -14,7 +14,14 @@ public enum SupportedLocales {
     private final String imagePath;
     private final String localizedName;
 
-    SupportedLocales(Locale locale, String imagePath, String localizedName) {
+    /**
+     * Constructs the enum of all the languages.
+     *
+     * @param locale the set locale
+     * @param imagePath the imagePath of the flag that represents it
+     * @param localizedName the localized name of the language
+     */
+    SupportedLocales(final Locale locale, final String imagePath, final String localizedName) {
         this.locale = locale;
         this.imagePath = imagePath;
         this.localizedName = localizedName;
@@ -42,7 +49,7 @@ public enum SupportedLocales {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getLocalizedName();
     }
 }

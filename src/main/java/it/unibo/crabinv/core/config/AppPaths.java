@@ -15,21 +15,32 @@ public final class AppPaths {
     private static final Path SETTINGS = ROOT.resolve(SETTINGS_FILE);
 
     /**
-     * Returns the path of the game root folder in user home
+     * Private constructor to ensure correct initialization.
+     */
+    private AppPaths() { }
+
+    /**
+     * Returns the path of the game root folder in user home.
+     *
+     * @return the path to root
      */
     public static Path getRoot() {
         return ROOT;
     }
 
     /**
-     * Returns the path of the Saves folder
+     * Returns the path of the Saves folder.
+     *
+     * @return the path to the saves folder
      */
     public static Path getSaves() {
         return SAVES;
     }
 
     /**
-     * Returns the path of settings.json file
+     * Returns the path of settings.json file.
+     *
+     * @return the path to the settings.json file
      */
     public static Path getSettings() {
         return SETTINGS;

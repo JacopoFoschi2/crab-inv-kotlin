@@ -3,7 +3,7 @@ package it.unibo.crabinv.Model.entities.entity;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 
 /**
- * Provides all the methods that an entity should implement
+ * Provides all the methods that an entity should implement.
  */
 public interface Entity {
     int CONTACT_DAMAGE = 1;
@@ -19,7 +19,8 @@ public interface Entity {
     int getMaxHealth();
 
     /**
-     * Checks if the entity is still alive
+     * Checks if the entity is still alive.
+     *
      * @return true if alive, false if not
      */
     boolean isAlive();
@@ -35,13 +36,14 @@ public interface Entity {
     double getY();
 
     /**
-     * Make the entity suffer the amount of damage in input
+     * Make the entity suffer the amount of damage in input.
+     *
      * @param damage the damage it should receive
      */
     void takeDamage(int damage);
 
     /**
-     * Make the entity die
+     * Make the entity die.
      */
     void destroy();
 
