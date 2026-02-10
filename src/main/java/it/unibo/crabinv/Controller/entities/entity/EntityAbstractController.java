@@ -9,10 +9,11 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
     private final T entity;
 
     /**
-     * Links the controller to its referred entity
+     * Links the controller to its referred entity.
+     *
      * @param entity an entity implementation
      */
-    public EntityAbstractController(T entity) {
+    public EntityAbstractController(final T entity) {
         this.entity = entity;
     }
 

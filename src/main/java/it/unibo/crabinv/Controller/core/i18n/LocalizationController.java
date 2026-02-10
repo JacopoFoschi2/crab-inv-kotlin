@@ -5,24 +5,26 @@ import it.unibo.crabinv.Model.core.i18n.SupportedLocales;
 import it.unibo.crabinv.Model.core.i18n.TextKeys;
 
 /**
- * Provides all the apis to control the localization
+ * Provides all the apis to control the localization.
  */
 public class LocalizationController {
     Localization loc;
 
     /**
-     * Binds the controller to it's model {@link Localization}
+     * Binds the controller to it's model {@link Localization}.
+     *
      * @param loc the instance of localization
      */
-    public LocalizationController(Localization loc) {
+    public LocalizationController(final Localization loc) {
         this.loc = loc;
     }
 
     /**
-     * Sets language
+     * Sets language.
+     *
      * @param locale the language to set
      */
-    public void setLanguage(SupportedLocales locale) {
+    public void setLanguage(final SupportedLocales locale) {
         loc.setLocale(locale);
     }
 
@@ -36,7 +38,7 @@ public class LocalizationController {
     /**
      * @return the string associated to the key in input in the set language
      */
-    public String getString(TextKeys key) {
+    public String getString(final TextKeys key) {
         return loc.getString(key);
     }
 }

@@ -19,7 +19,7 @@ import javafx.scene.layout.StackPane;
 import java.io.IOException;
 
 /**
- * Provides the apis to orchestrate the changes inside the main stage
+ * Provides the apis to orchestrate the changes inside the main stage.
  */
 public class SceneManager {
     private final StackPane root;
@@ -32,7 +32,8 @@ public class SceneManager {
     private Pane pauseMenu;
 
     /**
-     * Constructs the sceneManager
+     * Constructs the sceneManager.
+     *
      * @param root the root stackPane
      * @param loc the global localization controller
      * @param audio the global audio controller
@@ -49,7 +50,7 @@ public class SceneManager {
     }
 
     /**
-     * Sets the language selection screen as the shown one
+     * Sets the language selection screen as the shown one.
      */
     public void showLanguageSelection() {
         root.getChildren().setAll(new LanguageSelection(this, loc, audio).getView());
@@ -57,18 +58,18 @@ public class SceneManager {
     }
 
     /**
-     * Sets the main menu screen as the shown one
+     * Sets the main menu screen as the shown one.
      */
     public void showMainMenu() {
-        root.getChildren().setAll(new MainMenu(this,loc,audio).getView());
+        root.getChildren().setAll(new MainMenu(this, loc, audio).getView());
         audio.playBGM(BGMTracks.MENU);
     }
 
     /**
-     * Sets the shop screen as the shown one
+     * Sets the shop screen as the shown one.
      */
     public void showShop(){
-        root.getChildren().setAll(new ShopMenu(this,loc,audio, save, repo,
+        root.getChildren().setAll(new ShopMenu(this, loc, audio, save, repo,
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
@@ -77,22 +78,23 @@ public class SceneManager {
     }
 
     /**
-     * Sets the settings screen as the shown one
+     * Sets the settings screen as the shown one.
      */
     public void showSettings() {
-        root.getChildren().setAll(new Settings(this,loc,audio).getView());
+        root.getChildren().setAll(new Settings(this, loc, audio).getView());
     }
 
     /**
-     * Sets the gameOver screen as the shown one
+     * Sets the gameOver screen as the shown one.
+     *
      * @param message the type of message to be displayed, either game over or victory
      */
-    public void showGameOver(GameOver.MESSAGE_TYPE message) {
+    public void showGameOver(final GameOver.MESSAGE_TYPE message) {
         root.getChildren().setAll(new GameOver(this, loc, audio, message).getView());
     }
 
     /**
-     * Sets the Game Screen as the shown one
+     * Sets the Game Screen as the shown one.
      */
     public void showGame(){
         GameScreen gameScreen = new GameScreen(this, loc, audio, save, repo);
