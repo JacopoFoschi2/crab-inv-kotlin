@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * It's the EnemyController, should control each enemy.
  */
-public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
+public final class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
     private static final double ENEMY_SHOOTING_CHANCE = 0.007;
     private final AudioController audio;
     private final GameEngine engine;

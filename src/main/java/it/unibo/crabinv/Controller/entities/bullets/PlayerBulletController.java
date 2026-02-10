@@ -7,7 +7,7 @@ import it.unibo.crabinv.Model.entities.entity.Delta;
 /**
  * It's the PlayerBulletController that handles the PlayerBullets.
  */
-public class PlayerBulletController extends EntityAbstractController<BulletPlayer> implements BulletController {
+public final class PlayerBulletController extends EntityAbstractController<BulletPlayer> implements BulletController {
 
     /**
      * It's the constructor of the EnemyBulletController.

@@ -2,15 +2,21 @@ package it.unibo.crabinv.Model.levels;
 
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 import it.unibo.crabinv.Model.entities.enemies.wave.WaveProvider;
-
 // Adapted from MoseBarbieri's LevelLogic
 
-public class LevelImpl implements Level{
-
+/**
+ * It's the implementation of the level.
+ */
+public final class LevelImpl implements Level {
     private final WaveProvider waveProvider;
     private Wave currentWave;
 
-    public LevelImpl(WaveProvider waveProvider) {
+    /**
+     * The levelImpl constructor.
+     *
+     * @param waveProvider the provider of the wave
+     */
+    public LevelImpl(final WaveProvider waveProvider) {
         this.waveProvider = waveProvider;
         advanceWave();
     }
