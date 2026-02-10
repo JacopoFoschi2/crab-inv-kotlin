@@ -72,6 +72,7 @@ public class GameEngineImpl implements GameEngine {
                 .radius(PLAYER_RADIUS)
                 .speed(this.gameSession.getPlayerSpeed())
                 .fireRate(this.gameSession.getPlayerFireRate())
+                .shootingCounter(0)
                 .minBound(this.getWorldMinX())
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)

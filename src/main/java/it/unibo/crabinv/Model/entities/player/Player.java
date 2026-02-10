@@ -1,8 +1,11 @@
 package it.unibo.crabinv.Model.entities.player;
 
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.entities.entity.*;
-import lombok.Builder;
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
+import it.unibo.crabinv.Model.entities.entity.AbstractEntity;
+import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.Movable;
+import it.unibo.crabinv.Model.entities.entity.Shooter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -17,8 +20,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     /**
      * Ticks counter for the next shot.
      */
-    @Builder.Default
-    private int shootingCounter = 0;
+    private int shootingCounter;
     /**
      * The minimal amount of ticks needed between two shots.
      */
@@ -27,7 +29,8 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     private final double maxBound;
 
     /**
-     * Creates a player
+     * Creates a player.
+     *
      * @param x the x coordinate at spawn
      * @param y the y coordinate at spawn
      * @param maxHealth the max health of the player
@@ -54,9 +57,12 @@ public class Player extends AbstractEntity implements Shooter, Movable {
         this.maxBound = maxBound;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void move(final Delta delta) {
-        double movement = delta.getValue() * speed;
+        final double movement = delta.getValue() * speed;
         double newX = this.getX() + movement;
         if (newX <  minBound) {
             newX = minBound;
@@ -66,21 +72,33 @@ public class Player extends AbstractEntity implements Shooter, Movable {
         this.setPosition(newX, this.getY());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAbleToShoot() {
         return shootingCounter <= 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getFireRate() {
         return fireRate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void shoot() {
         shootingCounter = fireRate;
