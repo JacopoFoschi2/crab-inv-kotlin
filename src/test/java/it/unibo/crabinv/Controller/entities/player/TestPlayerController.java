@@ -7,32 +7,44 @@ import it.unibo.crabinv.Model.core.GameEngineImpl;
 import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.Delta;
+import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 import it.unibo.crabinv.Model.entities.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class TestPlayerController {
     Player player;
     PlayerController playerController;
+    @Mock
+    AudioController audioMock;
+
+    @Mock
+    GameEngine engineMock;
+
     static final int INITIAL_HEALTH = 3;
 
     @BeforeEach
     public void setup() {
+        MockitoAnnotations.openMocks(this);
+
         player = Player.builder()
                 .x(0)
                 .y(0)
-                .maxHealth(3)
-                .health(3)
+                .maxHealth(INITIAL_HEALTH)
+                .health(INITIAL_HEALTH)
                 .collisionGroup(CollisionGroups.FRIENDLY)
                 .radius(10)
                 .speed(1)
                 .fireRate(1)
+                .shootingCounter(0)
                 .minBound(-2)
                 .maxBound(2)
+                .sprite(EntitySprites.PLAYER)
                 .build();
-        playerController = new PlayerController(player, new AudioController(new JavaFXSoundManager()), new GameEngineImpl() {
-        });
+        playerController = new PlayerController(player, audioMock, engineMock);
     }
 
     @Test
