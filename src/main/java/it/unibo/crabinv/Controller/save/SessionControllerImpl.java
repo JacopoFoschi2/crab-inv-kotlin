@@ -37,7 +37,7 @@ public class SessionControllerImpl implements SessionController {
                 gameSession.getCurrency(),
                 gameSession.isGameWon());
         playerMemorial.addMemorialRecord(sessionRecord);
+        this.save.getUserProfile().addCurrency(gameSession.getCurrency());
         this.save.closeGameSession();
     }
-
 }
