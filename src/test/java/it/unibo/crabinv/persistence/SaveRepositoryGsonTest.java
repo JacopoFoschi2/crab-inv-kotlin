@@ -3,8 +3,8 @@ package it.unibo.crabinv.persistence;
 import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Model.save.GameSessionImpl;
 import it.unibo.crabinv.Model.save.Save;
+import it.unibo.crabinv.Model.save.SessionRecord;
 import it.unibo.crabinv.Model.save.SessionRecordImpl;
-import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import org.junit.jupiter.api.Assertions;
@@ -14,91 +14,134 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 class SaveRepositoryGsonTest {
 
     @TempDir
-    Path tempDir;
+    Path tempDir;                     // directory temporaneo fornito da JUnit
 
     private SaveRepository repository;
 
     @BeforeEach
     void setUp() throws IOException {
+        // il costruttore di SaveRepositoryGson accetta la directory di salvataggio
         repository = new SaveRepositoryGson(tempDir);
     }
 
     @Test
     void testPersistenceAndDeepFieldAssertion() throws IOException {
-        Save originalSave = new SaveControllerImpl(repository).createSave();
+        // -------------------------------------------------
+        // Arrange – creazione di un Save completo
+        // -------------------------------------------------
+        SaveControllerImpl controller = new SaveControllerImpl(repository);
+        Save originalSave = controller.createSave();          // crea un nuovo Save con UUID e timestamp
         UUID saveId = originalSave.getSaveId();
 
-        /* arrange  */
-        //UserProfile assign
+        // UserProfile
         originalSave.getUserProfile().addCurrency(100);
-        //GameSession assign
-        originalSave.getGameSession().subPlayerHealth(1);
-        originalSave.getGameSession().addPlayerHealth(1);
-        //PlayerMemorial - SessionRecord assign
-        long testRecordTimeStamp = Instant.now().toEpochMilli();
-        SessionRecordImpl testRecord = new SessionRecordImpl(testRecordTimeStamp, 3, 50);
+
+        // GameSession
+        originalSave.newGameSession();
+        GameSessionImpl gameSession = (GameSessionImpl) originalSave.getGameSession();
+        gameSession.subPlayerHealth(1);
+        gameSession.addPlayerHealth(1);
+        gameSession.markGameWon();
+
+        // PlayerMemorial – aggiunta di un SessionRecord
+        SessionRecordImpl testRecord = new SessionRecordImpl(gameSession);
         originalSave.getPlayerMemorial().addMemorialRecord(testRecord);
 
-        /* Act */
-        // Save and load
+        // -------------------------------------------------
+        // Act – salvataggio e ricarica
+        // -------------------------------------------------
         repository.saveSaveFile(originalSave);
         Save loadedSave = repository.loadSaveFile(saveId);
 
-        /* Assert */
-        // Load assert
+        // -------------------------------------------------
+        // Assert – verifica di tutti i campi (deep)
+        // -------------------------------------------------
         Assertions.assertNotNull(loadedSave, "Loaded save cannot be null");
 
-        //SaveImpl
-        Assertions.assertEquals(originalSave.getSaveId(), loadedSave.getSaveId(), "UUIDs must be the same");
-        Assertions.assertEquals(
-                originalSave.getCreationTimeStamp(),
+        // Save (UUID e timestamp)
+        Assertions.assertEquals(originalSave.getSaveId(), loadedSave.getSaveId(),
+                "UUIDs must be identical");
+        Assertions.assertEquals(originalSave.getCreationTimeStamp(),
                 loadedSave.getCreationTimeStamp(),
-                "Original and loaded timestamps must be the same"
-        );
-        System.out.println("Created: " + originalSave.getCreationTimeStamp());
-        System.out.println("Loaded: " + loadedSave.getCreationTimeStamp());
+                "Creation timestamps must match");
 
-        //UserProfile
-        Assertions.assertEquals(100, loadedSave.getUserProfile().getCurrency());
-        //GameSession
-        Assertions.assertEquals(1, loadedSave.getGameSession().getPlayerHealth());
-        //PlayerMemorial - SessionRecord
-        Assertions.assertEquals(testRecordTimeStamp,
-                loadedSave.getPlayerMemorial().getMemorialRecord(testRecordTimeStamp).getStartingTimeStamp());
+        // UserProfile
+        Assertions.assertEquals(100, loadedSave.getUserProfile().getCurrency(),
+                "Currency must be persisted");
 
-        // Esempio: Verifico che il timestamp di creazione sia identico
+        // GameSession
+        Assertions.assertEquals(3, loadedSave.getGameSession().getPlayerHealth(),
+                "Player health must be persisted");
+        Assertions.assertTrue(loadedSave.getGameSession().isGameWon(),
+                "Game-won flag must be persisted");
 
+        // PlayerMemorial – SessionRecord
+        List<SessionRecord> memorialRecords = loadedSave.getPlayerMemorial().getMemorialList();
+        Assertions.assertFalse(memorialRecords.isEmpty(), "Memorial records must not be empty");
+
+        SessionRecord loadedRecord = memorialRecords.get(0);
+
+        Assertions.assertEquals(testRecord.getStartingTimeStamp(),
+                loadedRecord.getStartingTimeStamp(),
+                "Starting timestamp must be preserved");
+        Assertions.assertEquals(testRecord.getLastLevel(),
+                loadedRecord.getLastLevel(),
+                "Last level must be preserved");
+        Assertions.assertEquals(testRecord.getLastCurrency(),
+                loadedRecord.getLastCurrency(),
+                "Last currency must be preserved");
+        Assertions.assertEquals(testRecord.getWonGame(),
+                loadedRecord.getWonGame(),
+                "Game won flag must be preserved");
     }
 
     @Test
     void testListSaves() throws IOException {
-        // Creiamo e salviamo due file
-        repository.saveSaveFile(repository.newSave());
-        repository.saveSaveFile(repository.newSave());
+        // -------------------------------------------------
+        // Arrange – creazione di due salvataggi distinti
+        // -------------------------------------------------
+        Save first = repository.newSave();
+        Save second = repository.newSave();
 
-        // Verifichiamo che la lista contenga 2 elementi
+        repository.saveSaveFile(first);
+        repository.saveSaveFile(second);
+
+        // -------------------------------------------------
+        // Act – lista dei salvataggi presenti nella cartella
+        // -------------------------------------------------
         List<Save> saves = repository.list();
-        Assertions.assertEquals(2, saves.size(), "Expected 2 files inside folder");
+
+        // -------------------------------------------------
+        // Assert
+        // -------------------------------------------------
+        Assertions.assertEquals(2, saves.size(),
+                "Expected exactly 2 save files in the temporary folder");
     }
 
     @Test
-    void testDeleteSaveSaveFile() throws IOException {
+    void testDeleteSaveFile() throws IOException {
+        // -------------------------------------------------
+        // Arrange – creazione e salvataggio di un file
+        // -------------------------------------------------
         Save save = repository.newSave();
         repository.saveSaveFile(save);
 
-        // Cancelliamo
+        // -------------------------------------------------
+        // Act – cancellazione
+        // -------------------------------------------------
         repository.delete(save.getSaveId());
 
-        // Verifichiamo che il caricamento ora fallisca (IOException come definito nel tuo codice)
-        Assertions.assertThrows(IOException.class, () -> {
-            repository.loadSaveFile(save.getSaveId());
-        }, "Loading a deleted file must throw IOException");
+        // -------------------------------------------------
+        // Assert – il caricamento deve fallire con IOException
+        // -------------------------------------------------
+        Assertions.assertThrows(IOException.class,
+                () -> repository.loadSaveFile(save.getSaveId()),
+                "Loading a deleted file must throw IOException");
     }
 }

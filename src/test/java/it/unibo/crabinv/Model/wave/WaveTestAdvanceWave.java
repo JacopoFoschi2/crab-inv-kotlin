@@ -59,6 +59,9 @@ class GameEngineWaveProgressionTest {
                 anyDouble()
         )).thenAnswer(inv -> enemiesToCreate.remove());
 
+        double spawnYNorm   = 0.8;
+        double bottomYNorm  = 0.2;
+
         // CollisionController che "uccide" tutti i nemici presenti
         final CollisionController collisionController = mock(CollisionController.class);
         doAnswer(inv -> {
@@ -75,8 +78,8 @@ class GameEngineWaveProgressionTest {
         }).when(collisionController).resolve(anyList());
 
         final EnemyType type = EnemyType.values()[0];
-        final Wave w1 = new WaveImpl(List.of(type), List.of(0), enemyFactory, rewardsService, 5);
-        final Wave w2 = new WaveImpl(List.of(type), List.of(0), enemyFactory, rewardsService, 5);
+        final Wave w1 = new WaveImpl(List.of(type), List.of(0), enemyFactory, rewardsService, 5, spawnYNorm, bottomYNorm );
+        final Wave w2 = new WaveImpl(List.of(type), List.of(0), enemyFactory, rewardsService, 5, spawnYNorm, bottomYNorm);
         final WaveProvider wp = new WaveSequence(List.of(w1, w2));
 
         final LevelFactory levelFactory = (levelNumber, ef, rs) -> new LevelImpl(wp);
