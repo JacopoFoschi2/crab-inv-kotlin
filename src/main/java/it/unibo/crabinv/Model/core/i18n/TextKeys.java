@@ -32,7 +32,9 @@ public enum TextKeys {
     FIRERATE_DESC("firerate_desc"),
     HEALTH_UP("health_up"),
     HEALTH_DESC("health_desc"),
-    ;
+    GAME_OVER("game_over"),
+    VICTORY("victory");
+
     private final String key;
 
     TextKeys(String key) {

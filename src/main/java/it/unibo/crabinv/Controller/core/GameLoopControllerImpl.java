@@ -53,11 +53,17 @@ public class GameLoopControllerImpl implements GameLoopController {
     public GameSnapshot step(long frameElapsedMillis) {
         checkPause();
         checkResume();
+        if (this.gameEngine.getGameState() == GameEngineState.GAME_OVER) {
+            return latestSnapshot;
+        }
+
         if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
             accumulateTime(frameElapsedMillis);
             final int nextStepTicks = calculateTicks();
             executeTicks(nextStepTicks);
-            updateSnapshot(nextStepTicks);
+            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+                updateSnapshot(nextStepTicks);
+            }
         }
         return latestSnapshot;
     }
@@ -123,10 +129,6 @@ public class GameLoopControllerImpl implements GameLoopController {
         this.accumulatedMillis += frameElapsedMillis;
     }
 
-    /**
-     * Calculates (with capping and rounding) the ticks of the next frame
-     * @return the ticks
-     */
     private int calculateTicks() {
         final long ticks = this.accumulatedMillis / this.tickDurationMillis;
         final long cappedTicks = Math.min(ticks, maxTicksPerFrame);
@@ -159,7 +161,7 @@ public class GameLoopControllerImpl implements GameLoopController {
     private void enemyUpdate() {
         List<Enemy> enemyList = this.gameEngine.getEnemyList();
         for (Enemy enemy : enemyList) {
-            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController));
+            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController,gameEngine));
         }
         for (Enemy enemy : enemyList) {
             EnemyController enemyController = enemyControllerMap.get(enemy);

@@ -3,6 +3,7 @@ package it.unibo.crabinv.Controller.entities.enemy;
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.Controller.entities.entity.EntityNotCapableOfInputController;
+import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.entity.Delta;
@@ -12,10 +13,13 @@ import java.util.Random;
 
 public class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
     private final AudioController audio;
+    private final GameEngine engine;
+    private final Random rand = new Random();
 
-    public EnemyController(Enemy enemy, AudioController audio) {
+    public EnemyController(Enemy enemy, AudioController audio, GameEngine engine) {
         super(enemy);
         this.audio = audio;
+        this.engine = engine;
     }
 
     /**
@@ -26,9 +30,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
         tick();
         move(delta);
 
-        Random rand = new Random();
-        int n = rand.nextInt();
-        if (n%2 == 1){
+        if (rand.nextDouble() < 0.005) {
             shoot();
         }
     }
@@ -56,6 +58,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
     private void shoot() {
         if (super.getEntity().isAbleToShoot()) {
             super.getEntity().shoot();
+            engine.spawnEnemyBullet(super.getEntity());
             audio.playSFX(SFXTracks.SHOT_ENEMY);
         }
     }

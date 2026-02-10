@@ -5,7 +5,7 @@ import it.unibo.crabinv.Model.entities.entity.EntitySprites;
 public class BaseEnemyFactoryLogic implements EnemyFactory{
     //TODO: make them better...
     final int ENEMY_MAX_HEALTH = 1;
-    final double ENEMY_RADIUS = 0.001;
+    final double ENEMY_RADIUS = 0.01;
     final double ENEMY_SPEED = 0.001;
     final int ENEMY_FIRERATE = 1;
 

@@ -2,6 +2,7 @@ package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
+import it.unibo.crabinv.Model.entities.bullets.*;
 import it.unibo.crabinv.Model.entities.bullets.Bullet;
 import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
 import it.unibo.crabinv.Model.entities.bullets.PlayerBulletFactory;
@@ -28,11 +29,11 @@ public class GameEngineImpl implements GameEngine {
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
-    private final double PLAYER_SPRITE_BULLET_SPAWN = 0.05;
-    private final double PLAYER_RADIUS = 0.01;
-    private final double PLAYER_FIRERATE = 0.01;
-    private final List<Bullet> activeBullets = new ArrayList<>();
-    private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
+    private static   final  double ENTITY_SPRITE_BULLET_SPAWN = 0.05;
+    private static final  double PLAYER_RADIUS = 0.01;
+    private static  final  int  PLAYER_FIRERATE = 30;
+    private static  final  double ENEMY_BULLET_SPAWN = 0.005;
+
     private GameSession gameSession;
     private int currentLevel;
     private LevelFactory levelFactory;
@@ -40,6 +41,9 @@ public class GameEngineImpl implements GameEngine {
     private Player player;
     private long elapsedTicks;
     private GameEngineState gameEngineState;
+    private final List<Bullet> activeBullets = new ArrayList<>();
+    private BulletFactory playerBulletFactory = new PlayerBulletFactory();
+    private BulletFactory enemyBulletFactory = new EnemyBulletFactory();
     private CollisionController collisionController;
     private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
@@ -68,7 +72,7 @@ public class GameEngineImpl implements GameEngine {
                 .collisionGroup(CollisionGroups.FRIENDLY)
                 .radius(PLAYER_RADIUS)
                 .speed(this.gameSession.getPlayerSpeed())
-                .fireRate(this.gameSession.getPlayerFireRate())
+                .fireRate(PLAYER_FIRERATE)
                 .minBound(this.getWorldMinX())
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)
@@ -215,13 +219,18 @@ public class GameEngineImpl implements GameEngine {
 
     private void bulletsUpdate() {
         for (Bullet b : activeBullets) {
-            b.move(Delta.DECREASE);
+            if (b.getCollisionGroup() == CollisionGroups.FRIENDLY) {
+                b.move(Delta.DECREASE);
+            } else {
+                b.move(Delta.INCREASE);
+            }
         }
-        activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0);
+        activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0 || !b.isAlive());
     }
 
     private void collisionUpdate() {
         if (this.collisionController == null) return;
+        int healthBefore = player.getHealth();
 
         List<Entity> allEntities = new ArrayList<>();
         allEntities.add(player);
@@ -230,13 +239,28 @@ public class GameEngineImpl implements GameEngine {
         }
         allEntities.addAll(activeBullets);
         collisionController.resolve(allEntities);
+
+        int damageTaken = healthBefore - player.getHealth();
+
+        if (damageTaken > 0) {
+            this.gameSession.subPlayerHealth(damageTaken);
+        }
     }
 
     @Override
     public void spawnPlayerBullet() {
         double bulletX = this.player.getX();
-        double bulletY = this.player.getY() - PLAYER_SPRITE_BULLET_SPAWN;
+        double bulletY = this.player.getY() - ENTITY_SPRITE_BULLET_SPAWN;
         activeBullets.add(playerBulletFactory.createBullet(bulletX, bulletY,
+                0.0,
+                1.0
+        ));
+    }
+
+    @Override
+    public void spawnEnemyBullet(Enemy enemy) {
+        this.activeBullets.add(enemyBulletFactory.createBullet(enemy.getX(),
+                enemy.getY() + ENTITY_SPRITE_BULLET_SPAWN,
                 0.0,
                 1.0
         ));
@@ -285,8 +309,10 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void checkGameOver() {
-        if (this.gameSession.getPlayerHealth() <= 0) {
-            gameOver();
+        if (this.gameSession.getPlayerHealth() <= 0 && this.gameEngineState != GameEngineState.GAME_OVER) {
+            this.gameEngineState = GameEngineState.GAME_OVER;
+            this.gameSession.markGameOver();
+            System.out.println("GAME OVER!");
         }
     }
 }
