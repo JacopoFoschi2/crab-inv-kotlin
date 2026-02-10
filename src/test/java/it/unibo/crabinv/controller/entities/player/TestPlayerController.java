@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestPlayerController {
+class TestPlayerController {
     Player player;
     PlayerController playerController;
     @Mock
@@ -81,8 +81,8 @@ public class TestPlayerController {
 
     @Test
     void testDamage() {
-        int damage1 = 1;
-        int damage2 = 2;
+        final int damage1 = 1;
+        final int damage2 = 2;
         playerController.takeDamage(damage1);
         Assertions.assertEquals(INITIAL_HEALTH - damage1, player.getHealth());
         playerController.takeDamage(damage2);

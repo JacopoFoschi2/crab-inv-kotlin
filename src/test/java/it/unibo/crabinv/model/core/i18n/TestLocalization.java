@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestLocalization {
+class TestLocalization {
     private Localization loc;
 
     @BeforeEach
@@ -14,13 +14,13 @@ public class TestLocalization {
 
     @Test
     void testCorrectKeyFetch() {
-        String expectedResult = "PLAY";
+        final String expectedResult = "PLAY";
         Assertions.assertEquals(expectedResult, loc.getString(TextKeys.PLAY));
     }
 
     @Test
     void testCorrectLocaleSwap() {
-        String expectedResult = "GIOCA";
+        final String expectedResult = "GIOCA";
         loc.setLocale(SupportedLocales.ITALIAN);
         Assertions.assertEquals(expectedResult, loc.getString(TextKeys.PLAY));
     }

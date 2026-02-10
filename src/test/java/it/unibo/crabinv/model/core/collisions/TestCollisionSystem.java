@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestCollisionSystem {
+final class TestCollisionSystem {
     CollisionSystem collisionSystem = new CollisionSystem();
-    private static class entitiesExamples {
+    private static class EntitiesExamples {
         public static EnemyImpl getEnemyExample() {
             return EnemyImpl.builder()
                     .x(0)
@@ -68,9 +68,9 @@ public class TestCollisionSystem {
 
     @Test
     void testCollisionBetweenLiveEnemies() {
-        Entity enemy = entitiesExamples.getEnemyExample();
-        Entity player = entitiesExamples.getPlayerExample();
-        List<Entity> entities = new ArrayList<>();
+        final Entity enemy = EntitiesExamples.getEnemyExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
         entities.add(enemy);
         entities.add(player);
         Assertions.assertTrue(collisionSystem.resolve(entities));
@@ -80,9 +80,9 @@ public class TestCollisionSystem {
 
     @Test
     void testCollisionBetweenFriendlies() {
-        Entity bullet = entitiesExamples.getPlayerBulletExample();
-        Entity player = entitiesExamples.getPlayerExample();
-        List<Entity> entities = new ArrayList<>();
+        final Entity bullet = EntitiesExamples.getPlayerBulletExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
         entities.add(bullet);
         entities.add(player);
         Assertions.assertFalse(collisionSystem.resolve(entities));
@@ -92,9 +92,9 @@ public class TestCollisionSystem {
 
     @Test
     void testCollisionBetweenEnemies() {
-        Entity bullet = entitiesExamples.getEnemyBulletExample();
-        Entity enemy = entitiesExamples.getEnemyExample();
-        List<Entity> entities = new ArrayList<>();
+        final Entity bullet = EntitiesExamples.getEnemyBulletExample();
+        final Entity enemy = EntitiesExamples.getEnemyExample();
+        final List<Entity> entities = new ArrayList<>();
         entities.add(bullet);
         entities.add(enemy);
         Assertions.assertFalse(collisionSystem.resolve(entities));
@@ -104,9 +104,9 @@ public class TestCollisionSystem {
 
     @Test
     void testCollisionWhereOneEntityIsDead() {
-        Entity enemy = entitiesExamples.getAlreadyDeadEnemyExample();
-        Entity player = entitiesExamples.getPlayerExample();
-        List<Entity> entities = new ArrayList<>();
+        final Entity enemy = EntitiesExamples.getAlreadyDeadEnemyExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
         entities.add(enemy);
         entities.add(player);
         Assertions.assertFalse(collisionSystem.resolve(entities));

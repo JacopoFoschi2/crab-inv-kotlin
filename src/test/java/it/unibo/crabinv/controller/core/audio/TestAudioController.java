@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class TestAudioController {
+class TestAudioController {
     private SoundService mockSound;
     private AudioController controller;
 
@@ -33,8 +33,8 @@ public class TestAudioController {
 
     @Test
     void testVolumeChange() {
-        double newModelVolume = 0.5;
-        int newControllerVolume = 50;
+        final double newModelVolume = 0.5;
+        final int newControllerVolume = 50;
         controller.setBGMVolume(newControllerVolume);
         controller.setSFXVolume(newControllerVolume);
         Mockito.verify(mockSound).setBGMVolume(newModelVolume);
@@ -80,10 +80,7 @@ public class TestAudioController {
 
     @Test
     void testInvalidVolumeDoesNotCallModel() {
-        try {
-            controller.setBGMVolume(-10);
-        } catch (Exception ignored) {}
-
+        controller.setBGMVolume(-10);
         Mockito.verifyNoInteractions(mockSound);
     }
 

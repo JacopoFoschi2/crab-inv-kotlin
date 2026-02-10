@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestPlayer {
+class TestPlayer {
     Player player;
 
     @BeforeEach
@@ -26,13 +26,13 @@ public class TestPlayer {
     }
 
     @Test
-    void TestPlayerMovement() {
+    void testPlayerMovement() {
         player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
     }
 
     @Test
-    void TestOutOfBounds() {
+    void testOutOfBounds() {
         player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
         player.move(Delta.DECREASE);
@@ -44,32 +44,32 @@ public class TestPlayer {
     }
 
     @Test
-    void TestNoMovement() {
+    void testNoMovement() {
         player.move(Delta.NO_ACTION);
         Assertions.assertEquals(0, player.getX());
     }
 
     @Test
-    void TestShoot() {
+    void testShoot() {
         Assertions.assertTrue(player.isAbleToShoot());
         player.shoot();
         Assertions.assertFalse(player.isAbleToShoot());
     }
 
     @Test
-    void TestDeathByDamage() {
+    void testDeathByDamage() {
         player.takeDamage(999);
         Assertions.assertFalse(player.isAlive());
     }
 
     @Test
-    void TestDeathByDestroy() {
+    void testDeathByDestroy() {
         player.destroy();
         Assertions.assertFalse(player.isAlive());
     }
 
     @Test
-    void TestReload() {
+    void testReload() {
         player.shoot();
         Assertions.assertFalse(player.isAbleToShoot());
         player.tick();
