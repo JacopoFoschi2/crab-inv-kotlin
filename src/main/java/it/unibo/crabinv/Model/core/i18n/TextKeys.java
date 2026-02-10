@@ -37,7 +37,7 @@ public enum TextKeys {
 
     private final String key;
 
-    TextKeys(String key) {
+    TextKeys(final String key) {
         this.key = key;
     }
 
