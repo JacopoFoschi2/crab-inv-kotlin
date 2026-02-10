@@ -33,8 +33,7 @@ public abstract class AbstractEntity implements Entity {
             final CollisionGroups collisionGroup,
             final double radius,
             final EntitySprites sprite) {
-        setX(x);
-        setY(y);
+        setPosition(x, y);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;
@@ -129,25 +128,7 @@ public abstract class AbstractEntity implements Entity {
      * @param newY the new y coordinate
      */
     protected void setPosition(final double newX, final double newY) {
-        setX(x);
-        setY(y);
-    }
-
-    /**
-     * Sets the x parameter to the new value.
-     *
-     * @param newX the new x
-     */
-    private void setX(final double newX) {
         this.x = newX;
-    }
-
-    /**
-     * Sets the y parameter to the new value.
-     *
-     * @param newY the new y
-     */
-    private void setY(final double newY) {
         this.y = newY;
     }
 }
