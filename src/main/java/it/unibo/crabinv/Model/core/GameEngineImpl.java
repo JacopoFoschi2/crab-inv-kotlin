@@ -77,7 +77,7 @@ public class GameEngineImpl implements GameEngine {
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)
                 .build();
-        this.elapsedTicks = 0; //TODO controllare se necessario salvare in GameSession
+        this.elapsedTicks = 0;
         this.gameEngineState = GameEngineState.RUNNING;
     }
 
@@ -101,7 +101,6 @@ public class GameEngineImpl implements GameEngine {
                 levelCheck();
                 checkGameOver();
                 checkWin();
-                System.out.println(this.gameEngineState + " " + this.gameSession.getPlayerHealth());
                 this.elapsedTicks++;
             }
             case PAUSED, GAME_OVER, WIN -> {
@@ -244,7 +243,6 @@ public class GameEngineImpl implements GameEngine {
      * Checks win conditions, calls win procedures if needed
      */
     private void checkWin() {
-        System.out.println(this.getEnemyList().isEmpty() + " " + this.level.isLevelFinished() + " " + this.level.getCurrentWave());
         if (this.getEnemyList().isEmpty() &&
                 this.level.getCurrentWave().isWaveFinished() &&
                 this.gameSession.getPlayerHealth() > 0) {

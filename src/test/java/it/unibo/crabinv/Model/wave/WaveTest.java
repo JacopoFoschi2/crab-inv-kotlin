@@ -35,12 +35,17 @@ class WaveTest {
 
         final EnemyType type = EnemyType.values()[0];
 
+        double spawnYNorm   = 0.8;
+        double bottomYNorm  = 0.2;
+
         final Wave wave = new WaveImpl(
                 List.of(type),
                 List.of(0),
                 enemyFactory,
                 rewardsService,
-                5
+                5,
+                spawnYNorm,
+                bottomYNorm
         );
 
         // 1) primo tick: spawna 1 nemico, quindi non può essere finita

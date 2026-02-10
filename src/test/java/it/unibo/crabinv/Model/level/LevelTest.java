@@ -32,6 +32,11 @@ class LevelTest {
         }
 
         @Override
+        public List<Wave> getAllWaves() {
+            return List.of();
+        }
+
+        @Override
         public Wave getNextWave() {
             return waves.remove();
         }
