@@ -68,12 +68,12 @@ public class SceneManager {
      * Sets the shop screen as the shown one
      */
     public void showShop(){
-        root.getChildren().setAll(new ShopMenu(this,loc,audio, save.getUserProfile(),
+        root.getChildren().setAll(new ShopMenu(this,loc,audio, save, repo,
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
     public void showMemorial(){
-        root.getChildren().setAll(new MemorialScreen(this,loc,audio, save.getPlayerMemorial()));
+        //root.getChildren().setAll(new MemorialScreen(this,loc,audio, save.getPlayerMemorial()));
     }
 
     /**

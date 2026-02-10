@@ -2,17 +2,21 @@ package it.unibo.crabinv.View;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.Controller.save.SaveControllerImpl;
 import it.unibo.crabinv.Model.powerUpsShop.*;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
 import it.unibo.crabinv.Model.core.i18n.TextKeys;
+import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.Model.save.UserProfile;
 import it.unibo.crabinv.SceneManager;
 
+import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ShopMenu {
@@ -20,6 +24,8 @@ public class ShopMenu {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
+    private final Save save;
+    private final SaveRepository repo;
     private final UserProfile profile;
     private final Shop shop = new ShopLogic();
     private final List<PowerUp> powerUps;
@@ -28,13 +34,16 @@ public class ShopMenu {
     public ShopMenu(SceneManager sceneManager,
                     LocalizationController loc,
                     AudioController audio,
-                    UserProfile profile,
+                    Save save,
+                    SaveRepository repo,
                     List<PowerUp> powerUps) {
 
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
-        this.profile = profile;
+        this.save = save;
+        this.repo = repo;
+        this.profile = save.getUserProfile();
         this.powerUps = powerUps;
     }
 
@@ -126,6 +135,11 @@ public class ShopMenu {
             if (shop.purchase(profile, powerUp)) {
                 updateCurrency();
                 updateLevelLabel(level, powerUp);
+                try {
+                    new SaveControllerImpl(repo).updateSave(save);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
