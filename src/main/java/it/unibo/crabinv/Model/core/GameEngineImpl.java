@@ -71,7 +71,7 @@ public class GameEngineImpl implements GameEngine {
                 .collisionGroup(CollisionGroups.FRIENDLY)
                 .radius(PLAYER_RADIUS)
                 .speed(this.gameSession.getPlayerSpeed())
-                .fireRate(PLAYER_FIRERATE)
+                .fireRate(this.gameSession.getPlayerFireRate())
                 .minBound(this.getWorldMinX())
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)
