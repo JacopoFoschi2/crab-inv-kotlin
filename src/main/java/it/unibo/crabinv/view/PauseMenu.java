@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import static it.unibo.crabinv.view.ViewParameters.DEFAULT_PAUSE_WIDTH;
 import static it.unibo.crabinv.view.ViewParameters.DEFAULT_SPACING;
+import static it.unibo.crabinv.view.ViewParameters.SETTINGS_ALIGMENT;
 
 /**
  * Provides the method to create the pause menu GUI.
@@ -26,7 +27,6 @@ public class PauseMenu {
     private final AudioController audio;
     private final Runnable resumeMethod;
     private final Runnable gameOver;
-    private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
     /**
@@ -47,7 +47,7 @@ public class PauseMenu {
         this.audio = audio;
         this.resumeMethod = resumeMethod;
         this.gameOver = gameOver;
-        components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
+        components = new SettingComponentsGenerator(sceneManager, loc, audio, SETTINGS_ALIGMENT);
     }
 
     /**
@@ -62,7 +62,7 @@ public class PauseMenu {
         final Label title = new Label(loc.getString(TextKeys.PAUSE));
         title.getStyleClass().add("title");
         final VBox mainColumn = new VBox(DEFAULT_SPACING);
-        mainColumn.setAlignment(settingsAlignment);
+        mainColumn.setAlignment(SETTINGS_ALIGMENT);
         final HBox bgmVolume = components.createVolumeSlider(
                 audio.getBGMVolume(),
                 audio::setBGMVolume,
