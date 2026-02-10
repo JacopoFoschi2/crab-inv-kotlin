@@ -27,19 +27,16 @@ public record SessionRecordImpl(
         );
     }
 
-    /** {@inheritDoc} */
     @Override
     public long getStartingTimeStamp() {
         return this.timeStamp;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getLastLevel() {
         return this.lastLevel;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getLastCurrency() {
         return this.lastCurrency;
