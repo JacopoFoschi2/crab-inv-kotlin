@@ -14,6 +14,7 @@ import it.unibo.crabinv.Model.entities.player.Player;
 public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
     private final AudioController audio;
     private final GameEngine engine;
+
     /**
      * Sets the controller linking it to a set player.
      *
@@ -27,6 +28,12 @@ public class PlayerController extends EntityAbstractController<Player> implement
         this.engine = engine;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param firePressed tells the controller if the user requested to fire
+     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
+     */
     @Override
     public void update(final boolean firePressed, final Delta delta) {
         tick();
