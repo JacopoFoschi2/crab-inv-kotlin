@@ -1,6 +1,9 @@
 package it.unibo.crabinv.Model.save;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Implementation of {@link PlayerMemorial}
@@ -10,21 +13,17 @@ public class PlayerMemorialImpl implements PlayerMemorial {
 
     private final Map<Long, SessionRecord> memorial;
 
-    /**
-     * Constructor
-     */
     public PlayerMemorialImpl() {
         this.memorial = new LinkedHashMap<>();
     }
 
-    /** {@inheritDoc} */
     @Override
     public List<SessionRecord> getMemorialList() {
         return new ArrayList<>(memorial.values());
     }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      * <p>If no SessionRecord is found will return null
      */
     @Override
@@ -32,11 +31,6 @@ public class PlayerMemorialImpl implements PlayerMemorial {
         return memorial.getOrDefault(sessionTimeStamp, null);
     }
 
-    /**
-     * {@inheritDoc}
-     * @param record the SessionRecord to add
-     * @throws IllegalArgumentException if SessionRecord is null
-     */
     @Override
     public void addMemorialRecord(SessionRecord record) {
         if (record == null) {
@@ -44,6 +38,5 @@ public class PlayerMemorialImpl implements PlayerMemorial {
         }
         long keyRecord = record.getStartingTimeStamp();
         memorial.put(keyRecord, record);
-
     }
 }

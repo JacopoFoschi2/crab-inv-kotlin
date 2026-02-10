@@ -11,7 +11,8 @@ package it.unibo.crabinv.Model.save;
 public record SessionRecordImpl(
         long timeStamp,
         int lastLevel,
-        int lastCurrency
+        int lastCurrency,
+        boolean gameWon
 ) implements SessionRecord {
     /**
      * Convenience constructor for SessionRecordImpl from a gameOver=true GameSessionImpl
@@ -21,7 +22,8 @@ public record SessionRecordImpl(
         this(
                 gameSession.getStartingTimeStamp(),
                 gameSession.getCurrentLevel(),
-                gameSession.getCurrency()
+                gameSession.getCurrency(),
+                gameSession.isGameWon()
         );
     }
 
@@ -41,5 +43,10 @@ public record SessionRecordImpl(
     @Override
     public int getLastCurrency() {
         return this.lastCurrency;
+    }
+
+    @Override
+    public boolean getWonGame() {
+        return this.gameWon;
     }
 }

@@ -75,12 +75,7 @@ public class MetaGameControllerImpl implements MetaGameController {
         if (gameSession == null) {
             return gameSnapshot;
         }
-        if (gameSession.isGameOver()) {
-            this.sessionController.gameOverGameSession();
-            this.gameLoopController = null;
-            this.inputController = null;
-            updateSave();
-        }
+        checkAndManageGameEnd(gameSession);
         return gameSnapshot;
     }
 
@@ -108,4 +103,15 @@ public class MetaGameControllerImpl implements MetaGameController {
     public void updateSave() throws IOException {
         new SaveControllerImpl(saveRepository).updateSave(this.sessionController.getSave());
     }
+
+    private void checkAndManageGameEnd(GameSession gameSession) throws IOException {
+        if (gameSession.isGameOver() || gameSession.isGameWon()) {
+            this.sessionController.gameOverGameSession();
+            this.gameLoopController = null;
+            this.inputController = null;
+            updateSave();
+        }
+
+    }
+
 }
