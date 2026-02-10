@@ -2,7 +2,7 @@ package it.unibo.crabinv.Model.entities.entity;
 
 /**
  * Provides all the deltas that the entity that wishes to move should handle.
- * The selected delta affects the movement by either decreasing or increasing its coordinate in the axis
+ * The selected delta affects the movement by either decreasing or increasing its coordinate in the axis.
  */
 public enum Delta {
     DECREASE(-1),
@@ -10,7 +10,8 @@ public enum Delta {
     INCREASE(1);
 
     private final int value;
-    Delta(int value) {
+
+    Delta(final int value) {
         this.value = value;
     }
 
