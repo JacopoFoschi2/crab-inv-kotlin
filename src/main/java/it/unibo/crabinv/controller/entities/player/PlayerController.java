@@ -11,7 +11,7 @@ import it.unibo.crabinv.model.entities.player.Player;
 /**
  * Provides all the apis to control a {@link Player}.
  */
-public class PlayerEntityController extends AbstractEntityController<Player> implements EntityCapableOfInputController {
+public class PlayerController extends AbstractEntityController<Player> implements EntityCapableOfInputController {
     private final AudioController audio;
     private final GameEngine engine;
 
@@ -22,7 +22,7 @@ public class PlayerEntityController extends AbstractEntityController<Player> imp
      * @param audio the audioController used to play sounds
      * @param engine the engine used to spawn bullets
      */
-    public PlayerEntityController(final Player player, final AudioController audio, final GameEngine engine) {
+    public PlayerController(final Player player, final AudioController audio, final GameEngine engine) {
         super(player);
         this.audio = audio;
         this.engine = engine;

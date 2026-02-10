@@ -2,7 +2,7 @@ package it.unibo.crabinv.controller.core;
 
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.collision.CollisionController;
-import it.unibo.crabinv.controller.entities.player.PlayerEntityController;
+import it.unibo.crabinv.controller.entities.player.PlayerController;
 import it.unibo.crabinv.controller.input.InputController;
 import it.unibo.crabinv.controller.input.InputControllerPlayer;
 import it.unibo.crabinv.controller.input.InputMapperImpl;
@@ -57,7 +57,7 @@ public class MetaGameControllerImpl implements MetaGameController {
         this.gameLoopController = new GameLoopControllerImpl(
                 gameEngine,
                 this.inputController,
-                new PlayerEntityController(
+                new PlayerController(
                         gameEngine.getPlayer(),
                         sharedAudio, // Usiamo lo stesso sharedAudio
                         this.gameEngine),

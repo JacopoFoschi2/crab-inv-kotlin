@@ -1,8 +1,8 @@
 package it.unibo.crabinv.controller.core;
 
 import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.entities.enemy.EnemyEntityController;
-import it.unibo.crabinv.controller.entities.player.PlayerEntityController;
+import it.unibo.crabinv.controller.entities.enemy.EnemyController;
+import it.unibo.crabinv.controller.entities.player.PlayerController;
 import it.unibo.crabinv.controller.input.InputController;
 import it.unibo.crabinv.model.core.GameEngine;
 import it.unibo.crabinv.model.core.GameEngineState;
@@ -24,16 +24,16 @@ public class GameLoopControllerImpl implements GameLoopController {
     private final int maxTicksPerFrame;
     private final GameEngine gameEngine;
     private final InputController inputController;
-    private final PlayerEntityController playerController;
+    private final PlayerController playerController;
     private final AudioController audioController;
     private long accumulatedMillis;
     private long totalElapsedTicks;
     private GameSnapshot latestSnapshot;
-    private Map<Enemy, EnemyEntityController> enemyControllerMap;
+    private Map<Enemy, EnemyController> enemyControllerMap;
 
     public GameLoopControllerImpl(GameEngine gameEngine,
                                   InputController inputController,
-                                  PlayerEntityController playerController,
+                                  PlayerController playerController,
                                   AudioController audioController) {
 
         this.tickDurationMillis = STANDARD_TICK_MILLIS;
@@ -161,10 +161,10 @@ public class GameLoopControllerImpl implements GameLoopController {
     private void enemyUpdate() {
         List<Enemy> enemyList = this.gameEngine.getEnemyList();
         for (Enemy enemy : enemyList) {
-            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyEntityController(e, this.audioController,gameEngine));
+            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController,gameEngine));
         }
         for (Enemy enemy : enemyList) {
-            EnemyEntityController enemyController = enemyControllerMap.get(enemy);
+            EnemyController enemyController = enemyControllerMap.get(enemy);
             if (enemyController != null) {
                 enemyController.update(Delta.INCREASE);
             }

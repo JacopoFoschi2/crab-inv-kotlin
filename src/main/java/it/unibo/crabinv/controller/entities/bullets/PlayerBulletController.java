@@ -5,16 +5,16 @@ import it.unibo.crabinv.model.entities.bullets.BulletPlayer;
 import it.unibo.crabinv.model.entities.entity.Delta;
 
 /**
- * It's the PlayerBulletEntityController that handles the PlayerBullets.
+ * It's the PlayerBulletController that handles the PlayerBullets.
  */
-public final class PlayerBulletEntityController extends AbstractEntityController<BulletPlayer> implements BulletController {
+public final class PlayerBulletController extends AbstractEntityController<BulletPlayer> implements BulletController {
 
     /**
-     * It's the constructor of the EnemyBulletEntityController.
+     * It's the constructor of the EnemyBulletController.
      *
      * @param entity it's the entity needed to modify it
      */
-    public PlayerBulletEntityController(final BulletPlayer entity) {
+    public PlayerBulletController(final BulletPlayer entity) {
         super(entity);
     }
 

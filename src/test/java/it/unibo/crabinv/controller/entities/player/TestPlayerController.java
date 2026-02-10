@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestPlayerController {
     Player player;
-    PlayerEntityController playerController;
+    PlayerController playerController;
     @Mock
     AudioController audioMock;
 
@@ -41,7 +41,7 @@ public class TestPlayerController {
                 .maxBound(2)
                 .sprite(EntitySprites.PLAYER)
                 .build();
-        playerController = new PlayerEntityController(player, audioMock, engineMock);
+        playerController = new PlayerController(player, audioMock, engineMock);
     }
 
     @Test
