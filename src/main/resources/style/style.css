@@ -184,3 +184,27 @@
     -fx-background-color: rgba(0,0,0,0.6);
 }
 
+.list-view {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E0E0E0;
+    -fx-padding: 5 10 5 10;
+}
+
+.list-view:focused .list-cell:focused {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E0E0E0;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: rgba(255,255,255,0.08);
+}
