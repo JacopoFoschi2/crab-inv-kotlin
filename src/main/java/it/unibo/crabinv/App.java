@@ -81,7 +81,7 @@ public final class App extends Application {
     /**
      * Provides the launcher of the application.
      */
-    public static class Main {
+    public static final class Main {
         /**
          * Prevents instantiation.
          */
