@@ -3,7 +3,7 @@ package it.unibo.crabinv.persistence.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import it.unibo.crabinv.Model.save.*;
+import it.unibo.crabinv.model.save.*;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
 import java.io.IOException;

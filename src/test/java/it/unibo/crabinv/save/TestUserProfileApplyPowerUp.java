@@ -1,8 +1,8 @@
 package it.unibo.crabinv.save;
 
-import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
-import it.unibo.crabinv.Model.save.PlayerBaseStats;
-import it.unibo.crabinv.Model.save.UserProfileImpl;
+import it.unibo.crabinv.model.powerUpsShop.PowerUpType;
+import it.unibo.crabinv.model.save.PlayerBaseStats;
+import it.unibo.crabinv.model.save.UserProfileImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;

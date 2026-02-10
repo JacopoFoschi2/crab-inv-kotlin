@@ -1,6 +1,6 @@
 package it.unibo.crabinv.core.config;
 
-import it.unibo.crabinv.Model.core.i18n.SupportedLocales;
+import it.unibo.crabinv.model.core.i18n.SupportedLocales;
 
 /**
  * Helper class that copies the current state of volume and localization to

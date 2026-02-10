@@ -1,0 +1,19 @@
+package it.unibo.crabinv.model.save;
+
+public enum StartingSaveValues {
+    LEVEL(1),
+    CURRENCY(0),
+    BASE_LEVEL_POWER_UP(1);
+
+    private final int value;
+
+    StartingSaveValues(int value) {
+        this.value = value;
+    }
+
+    public int getIntValue() {
+        return value;
+    }
+}
+
+

@@ -1,9 +1,9 @@
 package it.unibo.crabinv;
 
-import it.unibo.crabinv.Controller.core.audio.AudioController;
-import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
-import it.unibo.crabinv.Model.core.i18n.Localization;
+import it.unibo.crabinv.controller.core.audio.AudioController;
+import it.unibo.crabinv.controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.model.core.audio.JavaFXSoundManager;
+import it.unibo.crabinv.model.core.i18n.Localization;
 import it.unibo.crabinv.core.config.AppSettings;
 import it.unibo.crabinv.core.config.SettingsFileManager;
 import javafx.application.Application;
@@ -82,8 +82,13 @@ public final class App extends Application {
      * Provides the launcher of the application.
      */
     public static class Main {
+        /**
+         * Prevents instantiation.
+         */
+        private Main() { }
+
         static void main(final String... args) {
-            Application.launch(App.class, args);
+            launch(App.class, args);
         }
     }
 }
