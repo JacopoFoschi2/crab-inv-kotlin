@@ -1,13 +1,13 @@
 package it.unibo.crabinv.save;
 
-import it.unibo.crabinv.Controller.save.SaveControllerImpl;
-import it.unibo.crabinv.Controller.save.SessionController;
-import it.unibo.crabinv.Controller.save.SessionControllerImpl;
-import it.unibo.crabinv.Model.powerUpsShop.PowerUpType;
-import it.unibo.crabinv.Model.save.GameSession;
-import it.unibo.crabinv.Model.save.PlayerMemorial;
-import it.unibo.crabinv.Model.save.Save;
-import it.unibo.crabinv.Model.save.SessionRecord;
+import it.unibo.crabinv.controller.save.SaveControllerImpl;
+import it.unibo.crabinv.controller.save.SessionController;
+import it.unibo.crabinv.controller.save.SessionControllerImpl;
+import it.unibo.crabinv.model.powerUpsShop.PowerUpType;
+import it.unibo.crabinv.model.save.GameSession;
+import it.unibo.crabinv.model.save.PlayerMemorial;
+import it.unibo.crabinv.model.save.Save;
+import it.unibo.crabinv.model.save.SessionRecord;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import org.junit.jupiter.api.Assertions;

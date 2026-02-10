@@ -1,13 +1,13 @@
 package it.unibo.crabinv;
 
-import it.unibo.crabinv.Controller.core.audio.AudioController;
-import it.unibo.crabinv.Controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.Controller.save.SaveControllerImpl;
-import it.unibo.crabinv.Model.core.audio.SFXTracks;
-import it.unibo.crabinv.Model.powerUpsShop.PowerUpFactory;
-import it.unibo.crabinv.Model.core.audio.BGMTracks;
-import it.unibo.crabinv.Model.save.Save;
-import it.unibo.crabinv.View.*;
+import it.unibo.crabinv.controller.core.audio.AudioController;
+import it.unibo.crabinv.controller.core.i18n.LocalizationController;
+import it.unibo.crabinv.controller.save.SaveControllerImpl;
+import it.unibo.crabinv.model.core.audio.SFXTracks;
+import it.unibo.crabinv.model.powerUpsShop.PowerUpFactory;
+import it.unibo.crabinv.model.core.audio.BGMTracks;
+import it.unibo.crabinv.model.save.Save;
+import it.unibo.crabinv.view.*;
 import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
