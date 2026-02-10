@@ -14,7 +14,7 @@ public class WaveSequence implements WaveProvider {
      *
      * @param waveList the list of the waves
      */
-    public WaveSequence(List<Wave> waveList) {
+    public WaveSequence(final List<Wave> waveList) {
         this.waveList = waveList;
     }
 
@@ -29,11 +29,9 @@ public class WaveSequence implements WaveProvider {
             Wave nextWave = this.waveList.get(currentWaveIndex);
             this.currentWaveIndex++;
             return nextWave;
-        }
-        else{
+        } else {
             throw new IndexOutOfBoundsException("Out of bounds index:" + this.currentWaveIndex);
         }
-
     }
 
     /**
@@ -43,11 +41,7 @@ public class WaveSequence implements WaveProvider {
      */
     @Override
     public boolean hasMoreWaves() {
-        if (this.currentWaveIndex < this.waveList.size()){
-            return true;
-        } else {
-            return false;
-        }
+        return this.currentWaveIndex < this.waveList.size();
     }
 
     /**

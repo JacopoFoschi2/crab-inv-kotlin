@@ -33,5 +33,5 @@ public interface Wave {
      *
      * @param spawnY the new Y spawn coordinates
      */
-    void setSpawnY(final double spawnY);
+    void setSpawnY(double spawnY);
 }
