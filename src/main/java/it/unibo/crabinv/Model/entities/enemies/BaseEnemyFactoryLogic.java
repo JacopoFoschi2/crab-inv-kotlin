@@ -7,7 +7,7 @@ public class BaseEnemyFactoryLogic implements EnemyFactory{
     final int ENEMY_MAX_HEALTH = 1;
     final double ENEMY_RADIUS = 0.015;
     final double ENEMY_SPEED = 0.00085;
-    final int ENEMY_FIRERATE = 27;
+    final int ENEMY_FIRERATE = 30;
 
     @Override
     public Enemy createEnemy(EnemyType type, double x, double y, double minBound, double maxBound) {
