@@ -9,19 +9,20 @@ import java.io.Writer;
 import java.nio.file.Files;
 
 /**
- * Provides the apis to load or save the settings.json file ensuring state permanence
+ * Provides the apis to load or save the settings.json file ensuring state permanence.
  */
 public final class SettingsFileManager {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * Ensures the class doesn't get instantiated
+     * Ensures the class doesn't get instantiated.
      */
-    private SettingsFileManager() {}
+    private SettingsFileManager() { }
 
     /**
-     * <h3>To be used upon app launch</h3>
+     * <h3>To be used upon app launch.</h3>
      * Attempts to load the app settings
+     *
      * @return null if the file doesn't exist yet, or the previously set settings
      */
     public static AppSettings load() {
@@ -37,8 +38,9 @@ public final class SettingsFileManager {
     }
 
     /**
-     * <h3>To be used upon app closing</h3>
+     * <h3>To be used upon app closing.</h3>
      * Saves the current settings into settings.json file
+     *
      * @param settings the {@link AppSettings} record that stores all the current settings
      */
     public static void save(AppSettings settings) {
