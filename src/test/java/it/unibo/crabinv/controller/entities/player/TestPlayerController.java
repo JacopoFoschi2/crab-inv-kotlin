@@ -13,15 +13,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class TestPlayerController {
-    Player player;
-    PlayerController playerController;
-    @Mock
-    AudioController audioMock;
-
-    @Mock
-    GameEngine engineMock;
-
     static final int INITIAL_HEALTH = 3;
+    private Player player;
+    private PlayerController playerController;
+    @Mock
+    private AudioController audioMock;
+    @Mock
+    private GameEngine engineMock;
 
     @BeforeEach
     void setup() {
@@ -46,29 +44,33 @@ class TestPlayerController {
 
     @Test
     void testMovement() {
+        final int expectedX = 1;
         playerController.update(false, Delta.INCREASE);
-        Assertions.assertEquals(1, player.getX());
+        Assertions.assertEquals(expectedX, player.getX());
     }
 
     @Test
     void testMovementAndShot() {
+        final int expectedX = -1;
         playerController.update(true, Delta.DECREASE);
-        Assertions.assertEquals(-1, player.getX());
+        Assertions.assertEquals(expectedX, player.getX());
         Assertions.assertFalse(player.isAbleToShoot());
     }
 
     @Test
     void testMoveOutOfBounds() {
+        final int expectedMinBound = -2;
+        final int expectedMaxBound = 2;
         playerController.update(false, Delta.DECREASE);
         playerController.update(false, Delta.DECREASE);
         playerController.update(false, Delta.DECREASE);
-        Assertions.assertEquals(-2, player.getX()); // minBound
+        Assertions.assertEquals(expectedMinBound, player.getX()); // minBound
         playerController.update(false, Delta.INCREASE);
         playerController.update(false, Delta.INCREASE);
         playerController.update(false, Delta.INCREASE);
         playerController.update(false, Delta.INCREASE);
         playerController.update(false, Delta.INCREASE);
-        Assertions.assertEquals(2, player.getX()); // maxBound
+        Assertions.assertEquals(expectedMaxBound, player.getX()); // maxBound
     }
 
     @Test

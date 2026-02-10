@@ -70,7 +70,7 @@ public class LanguageSelection {
         final Image flag = new Image(path);
         final ImageView flagImg = new ImageView(flag);
         flagImg.setFitWidth(width);
-        flagImg.setFitHeight((width / 3) * 2);
+        flagImg.setFitHeight(width / 3 * 2);
         final Label language = new Label(locale.getLocalizedName());
         language.getStyleClass().add("label");
         final VBox composition = new VBox(flagImg, language);

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 final class TestCollisionSystem {
-    CollisionSystem collisionSystem = new CollisionSystem();
-    private static class EntitiesExamples {
+    private final CollisionSystem collisionSystem = new CollisionSystem();
+
+    private static final class EntitiesExamples {
         public static EnemyImpl getEnemyExample() {
             return EnemyImpl.builder()
                     .x(0)
@@ -24,6 +25,7 @@ final class TestCollisionSystem {
                     .health(1)
                     .build();
         }
+
         public static Player getPlayerExample() {
             return Player.builder()
                     .x(0)
@@ -34,6 +36,7 @@ final class TestCollisionSystem {
                     .health(1)
                     .build();
         }
+
         public static BulletPlayer getPlayerBulletExample() {
             return BulletPlayer.builder()
                     .x(0)
@@ -44,6 +47,7 @@ final class TestCollisionSystem {
                     .health(1)
                     .build();
         }
+
         public static BulletEnemy getEnemyBulletExample() {
             return BulletEnemy.builder()
                     .x(0)
@@ -54,6 +58,7 @@ final class TestCollisionSystem {
                     .health(1)
                     .build();
         }
+
         public static EnemyImpl getAlreadyDeadEnemyExample() {
             return EnemyImpl.builder()
                     .x(0)

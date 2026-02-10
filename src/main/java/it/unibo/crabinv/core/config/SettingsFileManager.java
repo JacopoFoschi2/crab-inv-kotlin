@@ -33,7 +33,7 @@ public final class SettingsFileManager {
         try (Reader reader = Files.newBufferedReader(AppPaths.getSettings())) {
             return GSON.fromJson(reader, AppSettings.class);
         } catch (final IOException e) {
-            throw new RuntimeException("Cannot load settings", e);
+            return null;
         }
     }
 
@@ -49,8 +49,7 @@ public final class SettingsFileManager {
             try (Writer writer = Files.newBufferedWriter(AppPaths.getSettings())) {
                 GSON.toJson(settings, AppSettings.class, writer);
             }
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
+        } catch (final IOException _) {
         }
     }
 }

@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class TestJavaFXSoundManager {
+    private final static double DEFAULT_VOLUME = 1.0;
+    private final static double TEST_VOLUME = 0.5;
     private final SoundService soundManager = new JavaFXSoundManager();
-    private final double defaultVolume = 1.0;
-    private final double testVolume = 0.5;
 
     @Test
     void testBGMMute() {
@@ -24,15 +24,15 @@ class TestJavaFXSoundManager {
 
     @Test
     void testBGMVolumeChange() {
-        Assertions.assertEquals(defaultVolume,  soundManager.getBGMVolume());
-        soundManager.setBGMVolume(testVolume);
-        Assertions.assertEquals(testVolume, soundManager.getBGMVolume());
+        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.getBGMVolume());
+        soundManager.setBGMVolume(TEST_VOLUME);
+        Assertions.assertEquals(TEST_VOLUME, soundManager.getBGMVolume());
     }
 
     @Test
     void testSFXVolumeChange() {
-        Assertions.assertEquals(defaultVolume,  soundManager.getSFXVolume());
-        soundManager.setSFXVolume(testVolume);
-        Assertions.assertEquals(testVolume, soundManager.getSFXVolume());
+        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.getSFXVolume());
+        soundManager.setSFXVolume(TEST_VOLUME);
+        Assertions.assertEquals(TEST_VOLUME, soundManager.getSFXVolume());
     }
 }
