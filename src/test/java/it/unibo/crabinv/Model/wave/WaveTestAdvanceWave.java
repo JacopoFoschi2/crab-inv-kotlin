@@ -59,8 +59,8 @@ class GameEngineWaveProgressionTest {
                 anyDouble()
         )).thenAnswer(inv -> enemiesToCreate.remove());
 
-        double spawnYNorm   = 0.8;
-        double bottomYNorm  = 0.2;
+        double spawnYNorm   = 0.2;
+        double bottomYNorm  = 0.8;
 
         // CollisionController che "uccide" tutti i nemici presenti
         final CollisionController collisionController = mock(CollisionController.class);
@@ -88,10 +88,6 @@ class GameEngineWaveProgressionTest {
         engine.init(session, levelFactory, enemyFactory, rewardsService, collisionController);
 
         // Tick 1: spawna wave1 e poi collisioni uccidono enemy1 (ma cleanup della wave1 avverrà nel tick successivo)
-        engine.tick();
-
-        // Tick 2: wave1 cleanup -> finisce -> advanceWave.
-        // Con la fix: la wave2 viene tickata subito e quindi spawna enemy2 nello stesso tick.
         engine.tick();
 
         assertFalse(engine.getEnemyList().isEmpty(),

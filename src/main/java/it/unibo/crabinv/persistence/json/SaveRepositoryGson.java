@@ -15,7 +15,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
- * Gson based Implementation of SaveRepository for json file persistence
+ * Gson based Implementation of SaveRepository for json file persistence.
  */
 public class SaveRepositoryGson implements SaveRepository {
 
@@ -23,18 +23,18 @@ public class SaveRepositoryGson implements SaveRepository {
     private final Path saveDirectory;
     private final SaveFactory saveFactory;
 
-
     /**
-     * LITE Constructor to be used by Main, requires only saveDirectory, uses default SaveFactory
+     * LITE Constructor to be used by Main, requires only saveDirectory, uses default SaveFactory.
+     *
      * @param saveDirectory the directory where the json files will be stored
      * @throws IOException if an I/O error occurs
      */
-    public SaveRepositoryGson(Path saveDirectory) throws IOException{
+    public SaveRepositoryGson(final Path saveDirectory) throws IOException {
         this(saveDirectory, new SaveFactoryImpl());
     }
 
     /**
-     * FULL Constructor, needed to initialize the Gson.builder and SaveFactory
+     * FULL Constructor, needed to initialize the Gson.builder and SaveFactory.
      *
      * @param saveDirectory the directory where the json files will be stored
      * @throws IOException if an I/O error occurs
@@ -46,19 +46,19 @@ public class SaveRepositoryGson implements SaveRepository {
         builder.setPrettyPrinting();
         builder.registerTypeAdapter(Save.class, (JsonDeserializer<Save>)
                 (json, type, context) ->
-                context.deserialize(json, SaveImpl.class));
+                        context.deserialize(json, SaveImpl.class));
         builder.registerTypeAdapter(GameSession.class, (JsonDeserializer<GameSession>)
                 (json, type, context) ->
-                context.deserialize(json, GameSessionImpl.class));
+                        context.deserialize(json, GameSessionImpl.class));
         builder.registerTypeAdapter(UserProfile.class, (JsonDeserializer<UserProfile>)
                 (json, type, context) ->
-                context.deserialize(json, UserProfileImpl.class));
+                        context.deserialize(json, UserProfileImpl.class));
         builder.registerTypeAdapter(PlayerMemorial.class, (JsonDeserializer<PlayerMemorial>)
                 (json, type, context) ->
-                context.deserialize(json, PlayerMemorialImpl.class));
+                        context.deserialize(json, PlayerMemorialImpl.class));
         builder.registerTypeAdapter(SessionRecord.class, (JsonDeserializer<SessionRecord>)
                 (json, type, context) ->
-                context.deserialize(json, SessionRecordImpl.class));
+                        context.deserialize(json, SessionRecordImpl.class));
         this.gson = builder.create();
     }
 
