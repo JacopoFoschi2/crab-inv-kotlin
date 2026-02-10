@@ -17,8 +17,10 @@ import javafx.scene.layout.VBox;
 
 import java.util.Objects;
 
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_SPACING;
+
 /**
- * Provides the languageSelection GUI
+ * Provides the languageSelection GUI.
  */
 public class LanguageSelection {
     private final SceneManager sceneManager;
@@ -26,9 +28,13 @@ public class LanguageSelection {
     private final AudioController audio;
 
     /**
-     * Ensures the GUI uses the global configuration
+     * Ensures the GUI uses the global configuration.
+     *
+     * @param sceneManager the sceneManager used to change scenes
+     * @param loc the localizationController used to fetch strings
+     * @param audio the audioController used to play sounds
      */
-    public LanguageSelection(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
+    public LanguageSelection(final SceneManager sceneManager, final LocalizationController loc, final AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
@@ -38,14 +44,14 @@ public class LanguageSelection {
      * @return the view ready to be set inside a stage
      */
     public Pane getView() {
-        StackPane pane = new StackPane();
-        VBox mainColumn = new VBox(20);
-        Label title = new Label("SELECT LANGUAGE");
+        final StackPane pane = new StackPane();
+        final VBox mainColumn = new VBox(DEFAULT_SPACING);
+        final Label title = new Label("SELECT LANGUAGE");
         title.getStyleClass().add("title");
-        HBox languageSelection = new HBox(10);
-        double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 1);
+        final HBox languageSelection = new HBox(DEFAULT_SPACING);
+        final double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 1);
         for (SupportedLocales supportedLocale : SupportedLocales.values()) {
-            languageSelection.getChildren().add(generateLanguageButton(widthOfButton, loc, supportedLocale));
+            languageSelection.getChildren().add(generateLanguageButton(widthOfButton, supportedLocale));
         }
         languageSelection.setAlignment(Pos.CENTER);
         mainColumn.getChildren().addAll(title, languageSelection);
@@ -55,19 +61,21 @@ public class LanguageSelection {
     }
 
     /**
+     * @param width the width of the flag
+     * @param locale the locale the button should represent
      * @return a button that shows the flag it represents and it's localised name
      */
-    private Button generateLanguageButton(double width, LocalizationController loc, SupportedLocales locale) {
+    private Button generateLanguageButton(final double width, final SupportedLocales locale) {
         var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
-        Image flag = new Image(path);
-        ImageView flagImg = new ImageView(flag);
+        final Image flag = new Image(path);
+        final ImageView flagImg = new ImageView(flag);
         flagImg.setFitWidth(width);
         flagImg.setFitHeight((width / 3) * 2);
-        Label language = new Label(locale.getLocalizedName());
+        final Label language = new Label(locale.getLocalizedName());
         language.getStyleClass().add("label");
-        VBox composition = new VBox(flagImg, language);
+        final VBox composition = new VBox(flagImg, language);
         composition.setAlignment(Pos.CENTER);
-        Button languageButton = new Button();
+        final Button languageButton = new Button();
         languageButton.setGraphic(composition);
         languageButton.focusedProperty().addListener((_, _, newValue) -> {
             if (newValue) {

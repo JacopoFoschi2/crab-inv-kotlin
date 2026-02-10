@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_SLIDER_INCREMENTS;
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_SPACING;
+
 /**
  * Provides the methods to create all settings components.
  */
@@ -60,11 +63,11 @@ public class SettingComponentsGenerator {
             final IntConsumer setVolume,
             final Consumer<SFXTracks> onFocused,
             final TextKeys key) {
-        final HBox sliderBox = new HBox(20);
+        final HBox sliderBox = new HBox(DEFAULT_SPACING);
         sliderBox.setAlignment(settingsAlignment);
         final Slider slider = new Slider(0, 100, volume);
-        slider.setBlockIncrement(5);
-        slider.valueProperty().addListener((_,_,newValue) -> {
+        slider.setBlockIncrement(DEFAULT_SLIDER_INCREMENTS);
+        slider.valueProperty().addListener((_, _, newValue) -> {
             audio.playSFX(SFXTracks.SLIDER);
             setVolume.accept(newValue.intValue());
         });
@@ -95,12 +98,12 @@ public class SettingComponentsGenerator {
     }
 
     /**
-     * Creates the working language selector
+     * Creates the working language selector.
      *
      * @return the HBox containing both the spinner and its related label
      */
     public HBox createLanguageSelector() {
-        final HBox box = new HBox(20);
+        final HBox box = new HBox(DEFAULT_SPACING);
         final Spinner<SupportedLocales> languageSpinner = createSpinner();
         final Label label = new Label(loc.getString(TextKeys.LANGUAGE));
         box.getChildren().addAll(languageSpinner, label);
@@ -108,7 +111,7 @@ public class SettingComponentsGenerator {
     }
 
     /**
-     * Creates a spinner of the supported locales
+     * Creates a spinner of the supported locales.
      *
      * @return the working spinner
      */
@@ -120,7 +123,7 @@ public class SettingComponentsGenerator {
         final Spinner<SupportedLocales> spinner = new Spinner<>(factory);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
         spinner.getValueFactory().setValue(loc.getLanguage());
-        spinner.getValueFactory().valueProperty().addListener(_->{
+        spinner.getValueFactory().valueProperty().addListener(_ -> {
             loc.setLanguage(spinner.getValueFactory().getValue());
             sceneManager.showSettings();
         });

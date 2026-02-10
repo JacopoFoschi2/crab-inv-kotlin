@@ -14,6 +14,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_PAUSE_WIDTH;
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_SPACING;
 
 /**
  * Provides the method to create the pause menu GUI.
@@ -54,25 +56,33 @@ public class PauseMenu {
     public Pane getView() {
         final StackPane pane = new StackPane();
         pane.getStyleClass().add("pause-pane");
-        final VBox content = new VBox(30);
+        final VBox content = new VBox(DEFAULT_SPACING);
         content.setAlignment(Pos.CENTER);
-        content.setMaxWidth(400);
+        content.setMaxWidth(DEFAULT_PAUSE_WIDTH);
         final Label title = new Label(loc.getString(TextKeys.PAUSE));
         title.getStyleClass().add("title");
-        final VBox mainColumn = new VBox(15);
+        final VBox mainColumn = new VBox(DEFAULT_SPACING);
         mainColumn.setAlignment(settingsAlignment);
-        final HBox bgmVolume = components.createVolumeSlider(audio.getBGMVolume(), audio::setBGMVolume, audio::playSFX, TextKeys.BGM_VOLUME);
-        final HBox sfxVolume = components.createVolumeSlider(audio.getSFXVolume(), audio::setSFXVolume, audio::playSFX, TextKeys.SFX_VOLUME);
+        final HBox bgmVolume = components.createVolumeSlider(
+                audio.getBGMVolume(),
+                audio::setBGMVolume,
+                audio::playSFX,
+                TextKeys.BGM_VOLUME);
+        final HBox sfxVolume = components.createVolumeSlider(
+                audio.getSFXVolume(),
+                audio::setSFXVolume,
+                audio::playSFX,
+                TextKeys.SFX_VOLUME);
         final CheckBox bgmMute = components.createMute(TextKeys.BGM_MUTE, audio.isBGMMuted(), audio::toggleBGMMute);
         final CheckBox sfxMute = components.createMute(TextKeys.SFX_MUTE, audio.isSFXMuted(), audio::toggleSFXMute);
         mainColumn.getChildren().addAll(bgmVolume, sfxVolume, bgmMute, sfxMute);
-        for (var child : mainColumn.getChildren()) {
+        for (final var child : mainColumn.getChildren()) {
             child.focusedProperty().addListener(_ ->
                     audio.playSFX(SFXTracks.MENU_HOVER));
         }
         final Button resume = createPauseMenuButton(loc.getString(TextKeys.RESUME), resumeMethod, sceneManager::hidePauseMenu);
         final Button exit = createPauseMenuButton(loc.getString(TextKeys.ABANDON), gameOver, sceneManager::showMainMenu);
-        final HBox buttons = new HBox(20, resume, exit);
+        final HBox buttons = new HBox(DEFAULT_SPACING, resume, exit);
         buttons.setAlignment(Pos.CENTER);
         content.getChildren().addAll(title, mainColumn, buttons);
         pane.getChildren().add(content);
