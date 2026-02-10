@@ -9,13 +9,18 @@ import java.util.List;
 
 public final class WaveAlpha extends WaveImpl {
     public WaveAlpha(final EnemyFactory enemyFactory,
-                     final RewardsService rewardsService) {
+                     final RewardsService rewardsService,
+                     final double spawnYNorm,
+                     final double bottomXNorm) {
         super(
                 List.of(EnemyType.SERVANT, EnemyType.SERVANT, EnemyType.SERVANT, EnemyType.SERVANT ),
                 List.of(4, 5, 6, 7),
                 enemyFactory,
                 rewardsService,
-                12
+                12,
+                spawnYNorm,
+                bottomXNorm
+
         );
     }
 }

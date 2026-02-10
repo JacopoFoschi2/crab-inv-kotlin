@@ -21,7 +21,6 @@ public class TestInputControllerPlayer {
 
         assertFalse(snap.isShooting());
         assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
-        assertEquals(Delta.NO_ACTION, snap.getYMovementDelta());
     }
 
     @Test
@@ -90,6 +89,5 @@ public class TestInputControllerPlayer {
         InputSnapshot snap = controller.getInputState();
         assertFalse(snap.isShooting());
         assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
-        assertEquals(Delta.NO_ACTION, snap.getYMovementDelta());
     }
 }

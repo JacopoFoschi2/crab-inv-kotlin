@@ -2,6 +2,8 @@ package it.unibo.crabinv.Controller.entities.player;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.entities.player.PlayerController;
+import it.unibo.crabinv.Model.core.GameEngine;
+import it.unibo.crabinv.Model.core.GameEngineImpl;
 import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.Delta;
@@ -29,7 +31,8 @@ public class TestPlayerController {
                 .minBound(-2)
                 .maxBound(2)
                 .build();
-        playerController = new PlayerController(player,new AudioController(new JavaFXSoundManager()));
+        playerController = new PlayerController(player, new AudioController(new JavaFXSoundManager()), new GameEngineImpl() {
+        });
     }
 
     @Test

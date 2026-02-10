@@ -32,4 +32,9 @@ public class WaveSequence implements WaveProvider{
             return false;
         }
     }
+
+    @Override
+    public List<Wave> getAllWaves(){
+        return List.copyOf(waveList);
+    }
 }

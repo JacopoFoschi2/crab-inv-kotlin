@@ -4,15 +4,12 @@ import it.unibo.crabinv.Model.entities.enemies.Enemy;
 import it.unibo.crabinv.Model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.Model.entities.enemies.EnemyType;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.RewardsService;
-import it.unibo.crabinv.Model.entities.entity.Delta;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class WaveImpl implements Wave {
-
-    private static final double DEFAULT_TOP_MARGIN_Y_MULT = 0.05;
 
     private final List<EnemyType> enemy;
     private final List<Integer> spawnSlots;
@@ -22,33 +19,9 @@ public class WaveImpl implements Wave {
     private final EnemyFactory enemyFactory;
     private final RewardsService rewardsService;
 
-    private final double spawnYNorm; //is also the upper bound of Y
+    private double spawnYNorm; //is also the upper bound of Y
     private final double bottomYNorm;
     private boolean spawned;
-
-    /**
-     * LITE Constructor for preset creation
-     *
-     * @param enemies        the composition of the wave
-     * @param spawnSlots     the slots for the enemies
-     * @param enemyFactory   the factory used to create enemies
-     * @param rewardsService the reward handler
-     * @param maxSpawnSlots  the number of available slots for spawn
-     */
-    public WaveImpl(final List<EnemyType> enemies,
-                    final List<Integer> spawnSlots,
-                    final EnemyFactory enemyFactory,
-                    final RewardsService rewardsService,
-                    final int maxSpawnSlots) {
-        this(
-                enemies,
-                spawnSlots,
-                enemyFactory,
-                rewardsService,
-                maxSpawnSlots,
-                DEFAULT_TOP_MARGIN_Y_MULT,
-                1.0);
-    }
 
     /**
      * FULL Constructor with all parameters
@@ -119,8 +92,8 @@ public class WaveImpl implements Wave {
     }
 
     @Override
-    public int getMaxSpawnSlots() {
-        return this.maxSpawnSlots;
+    public void setSpawnY(double spawnY){
+        this.spawnYNorm = spawnY;
     }
 
     /**

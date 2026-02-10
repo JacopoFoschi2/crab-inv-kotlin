@@ -2,6 +2,8 @@ package it.unibo.crabinv.Model.levels;
 
 import it.unibo.crabinv.Model.entities.enemies.wave.Wave;
 
+import java.util.List;
+
 /**
  * Interface that establishes how a level should be and which methods has
  */

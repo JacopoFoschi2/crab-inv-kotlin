@@ -2,9 +2,7 @@ package it.unibo.crabinv.Model.core;
 
 import it.unibo.crabinv.Controller.core.collision.CollisionController;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.Model.core.collisions.CollisionSystem;
 import it.unibo.crabinv.Model.entities.bullets.Bullet;
-import it.unibo.crabinv.Model.entities.bullets.BulletEnemy;
 import it.unibo.crabinv.Model.entities.bullets.BulletFactory;
 import it.unibo.crabinv.Model.entities.bullets.PlayerBulletFactory;
 import it.unibo.crabinv.Model.entities.enemies.Enemy;
@@ -30,10 +28,11 @@ public class GameEngineImpl implements GameEngine {
     private static final double WORLD_MAX_X = 1.0 - PLAYER_HALF_SIZE_NORM;
     private static final double PLAYER_START_X = 0.5;
     private static final double PLAYER_FIXED_Y = 0.90;
-    private  final  double PLAYER_SPRITE_BULLET_SPAWN = 0.05;
-    private  final  double PLAYER_RADIUS = 0.01;
-    private  final  double PLAYER_FIRERATE = 0.01;
-
+    private final double PLAYER_SPRITE_BULLET_SPAWN = 0.05;
+    private final double PLAYER_RADIUS = 0.01;
+    private final double PLAYER_FIRERATE = 0.01;
+    private final List<Bullet> activeBullets = new ArrayList<>();
+    private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
     private GameSession gameSession;
     private int currentLevel;
     private LevelFactory levelFactory;
@@ -41,9 +40,9 @@ public class GameEngineImpl implements GameEngine {
     private Player player;
     private long elapsedTicks;
     private GameEngineState gameEngineState;
-    private final List<Bullet> activeBullets = new ArrayList<>();
-    private BulletFactory playerBulletFactory = new PlayerBulletFactory();
     private CollisionController collisionController;
+    private EnemyFactory enemyFactory;
+    private RewardsService rewardsService;
 
     public GameEngineImpl() {
     }
@@ -53,12 +52,14 @@ public class GameEngineImpl implements GameEngine {
                      LevelFactory levelFactory,
                      EnemyFactory enemyFactory,
                      RewardsService rewardsService,
-                     CollisionController collisionController){
+                     CollisionController collisionController) {
         this.gameSession = gameSession;
         this.levelFactory = levelFactory;
         this.currentLevel = gameSession.getCurrentLevel();
         this.collisionController = collisionController;
-        this.level = levelFactory.createLevel(this.currentLevel, enemyFactory, rewardsService);
+        this.enemyFactory = enemyFactory;
+        this.rewardsService = rewardsService;
+        this.level = createLevel();
         player = Player.builder()
                 .x(PLAYER_START_X)
                 .y(PLAYER_FIXED_Y)
@@ -89,19 +90,13 @@ public class GameEngineImpl implements GameEngine {
         }
         switch (this.gameEngineState) {
             case RUNNING -> {
-
-                WaveCheck();
                 bulletsUpdate();
                 collisionUpdate();
-                //TODO IMPLEMENTARE LE SEGUENTI COMPONENTI DI GAME_ENGINE
-                //enemyUpdate() ? o integrare in waveUpdate(), in teoria non serve....
-                //enemyHealthUpdate(); //calcola tutte le modifiche alle vite degli enemy
-                //playerHealthUpdate(); //calcola tutte le modifiche alla vita del player
+                //enemyToGroundCheck();
                 checkGameOver();
+                waveCheck();
+                levelCheck();
                 this.elapsedTicks++;
-                //if nemici su asse y giocatore -> -1hp
-                //if hp == 0 -> is gameOver = gameOver()
-                //if nemici == 0, prossima wave
             }
             case PAUSED, GAME_OVER -> {
             }
@@ -111,7 +106,7 @@ public class GameEngineImpl implements GameEngine {
     @Override
     public GameSnapshot snapshot() {
         checkGameStarted();
-        return createSnapshot(populateSnapshot());//TODO inserire snapshot bullet in populateSnapshot().populateBullet()
+        return createSnapshot(populateSnapshot());
     }
 
     @Override
@@ -172,20 +167,54 @@ public class GameEngineImpl implements GameEngine {
         return wave.getAliveEnemies();
     }
 
-    private void WaveCheck() {
+    private void waveCheck() {
+        if (this.level.isLevelFinished()) {
+            return;
+        }
 
-        if (!this.level.isLevelFinished()) {
-            final Wave currentWave = this.level.getCurrentWave();
-            if (currentWave != null) {
-                currentWave.tickUpdate();
-                if (currentWave.isWaveFinished()) {
-                    this.level.advanceWave();
-                }
-            }
+        final Wave wave = this.level.getCurrentWave();
+        if (wave == null) {
+            return;
+        }
+
+        wave.tickUpdate();
+
+        if (wave.isWaveFinished()) {
+            this.level.advanceWave();
         }
     }
+
+    /**
+     * Checks if the current level is over and advances to the next one
+     */
+    private void levelCheck() {
+        if (this.level.isLevelFinished()) {
+            gameSession.advanceLevel();
+            this.currentLevel = gameSession.getCurrentLevel();
+            this.level = createLevel();
+        }
+    }
+
+    /**
+     * Creates a new level using the {@link LevelFactory}
+     *
+     * @return the newly created Level
+     */
+    private Level createLevel() {
+        return this.level = levelFactory.createLevel(this.currentLevel, this.enemyFactory, this.rewardsService);
+    }
+
+    private void enemyToGroundCheck() {
+
+    }
+
+    //TODO PUBLIC OVERRIDE
+    private void winGame() {
+        System.out.println("You win");
+    }
+
     private void bulletsUpdate() {
-        for(Bullet b : activeBullets){
+        for (Bullet b : activeBullets) {
             b.move(Delta.DECREASE);
         }
         activeBullets.removeIf(b -> b.getY() < 0 || b.getY() > 1.0);
