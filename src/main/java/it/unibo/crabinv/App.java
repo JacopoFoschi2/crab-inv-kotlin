@@ -19,28 +19,28 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Provides the application with the methods it needs to run
+ * Provides the application with the methods it needs to run.
  */
-public class App extends Application {
+public final class App extends Application {
     private final LocalizationController loc = new LocalizationController(new Localization());
     private final AudioController audio = new AudioController(new JavaFXSoundManager());
 
     @Override
-    public void start(Stage mainStage) throws IOException {
+    public void start(final Stage mainStage) throws IOException {
         //Tweaks the initial config of the stage
         mainStage.initStyle(StageStyle.UNDECORATED);
         mainStage.setMaximized(true);
         //The bounds of the screen
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        Scene mainScene;
-        StackPane root = new StackPane();
+        final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        final Scene mainScene;
+        final StackPane root = new StackPane();
         mainScene = new Scene(root);
-        SceneManager manager = new SceneManager(root, loc, audio, bounds);
+        final SceneManager manager = new SceneManager(root, loc, audio, bounds);
         mainScene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
         );
         //Attempts to read the settings.json file and handles setting them
-        AppSettings settings = SettingsFileManager.load();
+        final AppSettings settings = SettingsFileManager.load();
         if (settings != null) {
             loc.setLanguage(settings.locales());
             audio.setBGMVolume(settings.bgmVolume());
@@ -67,7 +67,7 @@ public class App extends Application {
     @Override
     public void stop() throws Exception {
         //used for saving the state of the settings before closing the app
-        AppSettings settings = new AppSettings(
+        final AppSettings settings = new AppSettings(
                 audio.getBGMVolume(),
                 audio.getSFXVolume(),
                 audio.isBGMMuted(),
@@ -79,10 +79,10 @@ public class App extends Application {
     }
 
     /**
-     * Provides the launcher of the application
+     * Provides the launcher of the application.
      */
     public static class Main {
-        static void main(String... args) {
+        static void main(final String... args) {
             Application.launch(App.class, args);
         }
     }
