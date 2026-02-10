@@ -1,6 +1,6 @@
 package it.unibo.crabinv.persistence.repository;
 
-import it.unibo.crabinv.Model.save.*;
+import it.unibo.crabinv.model.save.*;
 
 import java.nio.file.Path;
 import java.util.List;

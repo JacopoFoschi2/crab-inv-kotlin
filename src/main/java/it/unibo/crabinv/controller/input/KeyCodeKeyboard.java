@@ -1,0 +1,30 @@
+package it.unibo.crabinv.controller.input;
+
+public enum KeyCodeKeyboard {
+    LEFT(37),
+    RIGHT(39),
+    UP(38),
+    DOWN(40),
+    SHOOT(32), //SPACEBAR
+    PAUSE(27), //ESC
+    UNPAUSE(8); //BACKSPACE
+
+    private final int keyCode;
+
+    KeyCodeKeyboard(int keyCode) {
+        this.keyCode = keyCode;
+    }
+
+    public static KeyCodeKeyboard findKeyCode(int code) {
+        for (KeyCodeKeyboard k : values()) {
+            if (k.keyCode == code) {
+                return k;
+            }
+        }
+        return null;
+    }
+
+    public int getKeyCode() {
+        return keyCode;
+    }
+}
