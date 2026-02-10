@@ -40,7 +40,7 @@ public class SaveRepositoryGson implements SaveRepository {
      * @throws IOException if an I/O error occurs
      */
     public SaveRepositoryGson(Path saveDirectory, SaveFactory saveFactory) throws IOException {
-        this.saveDirectory = (Files.exists(saveDirectory) ? saveDirectory : Files.createDirectory(saveDirectory));
+        this.saveDirectory = (Files.exists(saveDirectory) ? saveDirectory : Files.createDirectories(saveDirectory));
         this.saveFactory = Objects.requireNonNull(saveFactory);
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
