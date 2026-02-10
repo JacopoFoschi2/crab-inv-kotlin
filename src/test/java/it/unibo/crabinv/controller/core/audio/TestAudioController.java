@@ -80,7 +80,9 @@ class TestAudioController {
 
     @Test
     void testInvalidVolumeDoesNotCallModel() {
-        controller.setBGMVolume(-10);
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> controller.setBGMVolume(-10));
         Mockito.verifyNoInteractions(mockSound);
     }
 
