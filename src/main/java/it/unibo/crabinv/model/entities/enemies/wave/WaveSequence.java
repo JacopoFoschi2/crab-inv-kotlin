@@ -3,17 +3,26 @@ package it.unibo.crabinv.model.entities.enemies.wave;
 import java.util.List;
 
 /**
- * It's the implementation of waveProvider.44
+ * It's the implementation of waveProvider.
  */
-public class WaveSequence implements WaveProvider{
-
-    private List<Wave> waveList;
+public class WaveSequence implements WaveProvider {
+    private final List<Wave> waveList;
     private int currentWaveIndex = 0;
 
-    public WaveSequence(List<Wave> waveList){
+    /**
+     * Constructor of WaveSequence
+     *
+     * @param waveList the list of the waves
+     */
+    public WaveSequence(List<Wave> waveList) {
         this.waveList = waveList;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the next wave
+     */
     @Override
     public Wave getNextWave() {
         if (hasMoreWaves()) {
@@ -27,17 +36,27 @@ public class WaveSequence implements WaveProvider{
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return true if it has more waves
+     */
     @Override
     public boolean hasMoreWaves() {
-        if(this.currentWaveIndex < this.waveList.size()){
+        if (this.currentWaveIndex < this.waveList.size()){
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the list of the waves
+     */
     @Override
-    public List<Wave> getAllWaves(){
+    public List<Wave> getAllWaves() {
         return List.copyOf(waveList);
     }
 }

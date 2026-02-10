@@ -24,7 +24,7 @@ public class EnemyRewardService implements RewardsService {
      * @param enemy the dead enemy
      */
     @Override
-    public void rewardEnemyDeath(final Enemy enemy) {
+    public void rewardEnemyDeath(Enemy enemy) {
         profile.addCurrency(enemy.getReward());
     }
 }

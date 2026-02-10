@@ -12,5 +12,5 @@ public interface RewardsService {
      *
      * @param enemy the dead enemy
      */
-    void rewardEnemyDeath (final Enemy enemy);
+    void rewardEnemyDeath(final Enemy enemy);
 }
