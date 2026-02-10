@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Controller.entities.enemy;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
-import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.Controller.entities.entity.EntityNotCapableOfInputController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
@@ -11,9 +11,9 @@ import it.unibo.crabinv.Model.entities.entity.Delta;
 import java.util.Random;
 
 /**
- * It's the EnemyController, should control each enemy.
+ * It's the EnemyEntityController, should control each enemy.
  */
-public final class EnemyController extends EntityAbstractController<Enemy> implements EntityNotCapableOfInputController {
+public final class EnemyEntityController extends AbstractEntityController<Enemy> implements EntityNotCapableOfInputController {
     private static final double ENEMY_SHOOTING_CHANCE = 0.007;
     private final AudioController audio;
     private final GameEngine engine;
@@ -26,9 +26,9 @@ public final class EnemyController extends EntityAbstractController<Enemy> imple
      * @param audio the audio that it's needed in the class.
      * @param engine the game engine.
      */
-    public EnemyController(final Enemy enemy,
-                           final AudioController audio,
-                           final GameEngine engine) {
+    public EnemyEntityController(final Enemy enemy,
+                                 final AudioController audio,
+                                 final GameEngine engine) {
         super(enemy);
         this.audio = audio;
         this.engine = engine;

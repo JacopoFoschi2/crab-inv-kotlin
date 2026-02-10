@@ -121,10 +121,10 @@ public class GameScreen {
             closeEngineStep2();
             switch (state) {
                 case GAME_OVER -> {
-                    sceneManager.showGameOver(GameOver.MESSAGE_TYPE.GAME_OVER);
+                    sceneManager.showGameOver(GameOver.MessageTypes.GAME_OVER);
                 }
                 case WIN -> {
-                    sceneManager.showGameOver(GameOver.MESSAGE_TYPE.VICTORY);
+                    sceneManager.showGameOver(GameOver.MessageTypes.VICTORY);
                 }
             }
         }

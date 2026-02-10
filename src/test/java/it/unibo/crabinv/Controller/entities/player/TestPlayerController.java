@@ -1,10 +1,7 @@
 package it.unibo.crabinv.Controller.entities.player;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
-import it.unibo.crabinv.Controller.entities.player.PlayerController;
 import it.unibo.crabinv.Model.core.GameEngine;
-import it.unibo.crabinv.Model.core.GameEngineImpl;
-import it.unibo.crabinv.Model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.Model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 import it.unibo.crabinv.Model.entities.entity.EntitySprites;
@@ -17,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestPlayerController {
     Player player;
-    PlayerController playerController;
+    PlayerEntityController playerController;
     @Mock
     AudioController audioMock;
 
@@ -44,7 +41,7 @@ public class TestPlayerController {
                 .maxBound(2)
                 .sprite(EntitySprites.PLAYER)
                 .build();
-        playerController = new PlayerController(player, audioMock, engineMock);
+        playerController = new PlayerEntityController(player, audioMock, engineMock);
     }
 
     @Test

@@ -33,8 +33,8 @@ public abstract class AbstractEntity implements Entity {
             final CollisionGroups collisionGroup,
             final double radius,
             final EntitySprites sprite) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;
@@ -42,51 +42,81 @@ public abstract class AbstractEntity implements Entity {
         this.sprite = sprite;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAlive() {
         return health > 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealth() {
         return health;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaxHealth() {
         return maxHealth;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void takeDamage(final int damage) {
         health -= damage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void destroy() {
         health = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getX() {
         return x;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getY() {
         return y;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CollisionGroups getCollisionGroup() {
         return collisionGroup;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getRadius() {
         return radius;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSprite() {
         return sprite.getImagePath();
@@ -95,11 +125,29 @@ public abstract class AbstractEntity implements Entity {
     /**
      * "Teleports" the entity to the set position, to be used with caution.
      *
-     * @param x the new x coordinate
-     * @param y the new y coordinate
+     * @param newX the new x coordinate
+     * @param newY the new y coordinate
      */
-    protected void setPosition(final double x, final double y) {
-        this.x = x;
-        this.y = y;
+    protected void setPosition(final double newX, final double newY) {
+        setX(x);
+        setY(y);
+    }
+
+    /**
+     * Sets the x parameter to the new value.
+     *
+     * @param newX the new x
+     */
+    private void setX(final double newX) {
+        this.x = newX;
+    }
+
+    /**
+     * Sets the y parameter to the new value.
+     *
+     * @param newY the new y
+     */
+    private void setY(final double newY) {
+        this.y = newY;
     }
 }

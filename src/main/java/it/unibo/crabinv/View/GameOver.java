@@ -13,15 +13,27 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Provides the method to show the game over screen
+ * Provides the method to show the game over screen.
  */
 public class GameOver {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
-    private final MESSAGE_TYPE messageType;
+    private final MessageTypes messageType;
 
-    public GameOver(SceneManager sceneManager, LocalizationController loc, AudioController audio, MESSAGE_TYPE messageType) {
+    /**
+     * Creates a new GameOver screen.
+     *
+     * @param sceneManager the instance of sceneManager for page change
+     * @param loc the instance of loc for string fetch
+     * @param audio the instance of audio for sounds
+     * @param messageType the message type, either victory or game over
+     */
+    public GameOver(
+            final SceneManager sceneManager,
+            final LocalizationController loc,
+            final AudioController audio,
+            final MessageTypes messageType) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
@@ -29,19 +41,19 @@ public class GameOver {
     }
 
     /**
-     * @return the pane showing the game over screen
+     * @return the pane showing the game over screen.
      */
     public Pane getView() {
-        StackPane pane = new StackPane();
-        VBox mainColumn = new VBox(100);
-        Label message = new Label();
+        final StackPane pane = new StackPane();
+        final VBox mainColumn = new VBox(100);
+        final Label message = new Label();
         message.getStyleClass().add("menu-title");
-        if (messageType == MESSAGE_TYPE.VICTORY) {
+        if (messageType == MessageTypes.VICTORY) {
             message.setText(loc.getString(TextKeys.VICTORY));
         } else {
             message.setText(loc.getString(TextKeys.GAME_OVER));
         }
-        Button returnToMenu = new Button(loc.getString(TextKeys.RETURN_TO_MENU));
+        final Button returnToMenu = new Button(loc.getString(TextKeys.RETURN_TO_MENU));
         returnToMenu.getStyleClass().add("app-button");
         returnToMenu.focusedProperty().addListener(_ -> audio.playSFX(SFXTracks.MENU_HOVER));
         returnToMenu.setOnAction(e -> {
@@ -55,9 +67,9 @@ public class GameOver {
     }
 
     /**
-     * Provides the types of game overs there are
+     * Provides the types of game overs there are.
      */
-    public enum MESSAGE_TYPE {
+    public enum MessageTypes {
         GAME_OVER,
         VICTORY
     }

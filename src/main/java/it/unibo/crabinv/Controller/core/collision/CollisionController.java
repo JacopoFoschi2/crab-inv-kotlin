@@ -28,7 +28,7 @@ public class CollisionController {
      * @param entities the list of entities on screen
      */
     public void resolve(final List<Entity> entities) {
-        if(collisionSystem.resolve(entities)) {
+        if (collisionSystem.resolve(entities)) {
             audio.playSFX(SFXTracks.EXPLOSION);
         }
     }

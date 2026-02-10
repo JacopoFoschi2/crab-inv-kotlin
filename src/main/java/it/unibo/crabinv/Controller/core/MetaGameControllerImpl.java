@@ -2,7 +2,7 @@ package it.unibo.crabinv.Controller.core;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
 import it.unibo.crabinv.Controller.core.collision.CollisionController;
-import it.unibo.crabinv.Controller.entities.player.PlayerController;
+import it.unibo.crabinv.Controller.entities.player.PlayerEntityController;
 import it.unibo.crabinv.Controller.input.InputController;
 import it.unibo.crabinv.Controller.input.InputControllerPlayer;
 import it.unibo.crabinv.Controller.input.InputMapperImpl;
@@ -17,7 +17,6 @@ import it.unibo.crabinv.Model.entities.enemies.BaseEnemyFactoryLogic;
 import it.unibo.crabinv.Model.entities.enemies.rewardService.EnemyRewardService;
 import it.unibo.crabinv.Model.levels.LevelFactoryImpl;
 import it.unibo.crabinv.Model.save.GameSession;
-import it.unibo.crabinv.Model.save.Save;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
 import java.io.IOException;
@@ -58,7 +57,7 @@ public class MetaGameControllerImpl implements MetaGameController {
         this.gameLoopController = new GameLoopControllerImpl(
                 gameEngine,
                 this.inputController,
-                new PlayerController(
+                new PlayerEntityController(
                         gameEngine.getPlayer(),
                         sharedAudio, // Usiamo lo stesso sharedAudio
                         this.gameEngine),

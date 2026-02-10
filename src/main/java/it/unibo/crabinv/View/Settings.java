@@ -7,10 +7,18 @@ import it.unibo.crabinv.Model.core.i18n.TextKeys;
 import it.unibo.crabinv.SceneManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
-import static it.unibo.crabinv.View.ViewParameters.*;
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_INSETS;
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_PAUSE_WIDTH;
+import static it.unibo.crabinv.View.ViewParameters.DEFAULT_SPACING;
 
 /**
  * Provides the settings interface of the application.

@@ -12,7 +12,7 @@ import java.nio.file.Files;
  * Provides the apis to load or save the settings.json file ensuring state permanence.
  */
 public final class SettingsFileManager {
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     /**
      * Ensures the class doesn't get instantiated.
@@ -31,8 +31,8 @@ public final class SettingsFileManager {
         }
 
         try (Reader reader = Files.newBufferedReader(AppPaths.getSettings())) {
-            return gson.fromJson(reader, AppSettings.class);
-        } catch (IOException e) {
+            return GSON.fromJson(reader, AppSettings.class);
+        } catch (final IOException e) {
             throw new RuntimeException("Cannot load settings", e);
         }
     }
@@ -43,13 +43,13 @@ public final class SettingsFileManager {
      *
      * @param settings the {@link AppSettings} record that stores all the current settings
      */
-    public static void save(AppSettings settings) {
+    public static void save(final AppSettings settings) {
         try {
             Files.createDirectories(AppPaths.getRoot());
-            try (Writer writer = Files.newBufferedWriter(AppPaths.getSettings())){
-                gson.toJson(settings, AppSettings.class, writer);
+            try (Writer writer = Files.newBufferedWriter(AppPaths.getSettings())) {
+                GSON.toJson(settings, AppSettings.class, writer);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }

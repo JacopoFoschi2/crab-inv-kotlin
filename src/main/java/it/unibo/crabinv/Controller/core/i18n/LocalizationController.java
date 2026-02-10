@@ -8,7 +8,7 @@ import it.unibo.crabinv.Model.core.i18n.TextKeys;
  * Provides all the apis to control the localization.
  */
 public class LocalizationController {
-    Localization loc;
+    private final Localization loc;
 
     /**
      * Binds the controller to it's model {@link Localization}.
@@ -36,6 +36,7 @@ public class LocalizationController {
     }
 
     /**
+     * @param key the key you want to take the string from
      * @return the string associated to the key in input in the set language
      */
     public String getString(final TextKeys key) {

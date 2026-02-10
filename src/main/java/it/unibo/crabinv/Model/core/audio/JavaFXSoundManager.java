@@ -32,9 +32,12 @@ public class JavaFXSoundManager implements SoundService {
         isSFXMuted = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void playBGM(final BGMTracks music) {
-        String musicName = music.getPath();
+        final String musicName = music.getPath();
         if (musicPlayer != null) {
             if (Objects.equals(currentTrack, musicName)) {
                 return;
@@ -52,6 +55,9 @@ public class JavaFXSoundManager implements SoundService {
         musicPlayer.play();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resumeBGM() {
         if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
@@ -59,6 +65,9 @@ public class JavaFXSoundManager implements SoundService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void pauseBGM() {
         if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -66,6 +75,9 @@ public class JavaFXSoundManager implements SoundService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBGMVolume(final double volume) {
         if (volume < 0.0 || volume > 1.0) {
@@ -77,11 +89,17 @@ public class JavaFXSoundManager implements SoundService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getBGMVolume() {
         return bgmVolume;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void toggleMuteBGM() {
         isBGMMuted = !isBGMMuted;
@@ -90,21 +108,30 @@ public class JavaFXSoundManager implements SoundService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isBGMMuted() {
         return isBGMMuted;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void playSFX(SFXTracks effect) {
-        String effectName = effect.getPath();
+    public void playSFX(final SFXTracks effect) {
+        final String effectName = effect.getPath();
         handleCache(effectName, sfxCache, AudioClip::new);
-        if(!isSFXMuted) {
-            AudioClip sfx = sfxCache.get(effectName);
+        if (!isSFXMuted) {
+            final AudioClip sfx = sfxCache.get(effectName);
             sfx.play(sfxVolume);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSFXVolume(final double volume) {
         if (volume < 0.0 || volume > 1.0) {
@@ -113,16 +140,25 @@ public class JavaFXSoundManager implements SoundService {
         this.sfxVolume = volume;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSFXVolume() {
         return sfxVolume;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void toggleMuteSFX() {
         isSFXMuted = !isSFXMuted;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isSFXMuted() {
         return isSFXMuted;
@@ -138,11 +174,11 @@ public class JavaFXSoundManager implements SoundService {
      */
     private <T> void handleCache(final String effectName, final Map<String, T> cache, final Function<String, T> create) {
         if (!cache.containsKey(effectName)) {
-            var resource = getClass().getResource(effectName);
+            final var resource = getClass().getResource(effectName);
             if (resource == null) {
                 throw new IllegalArgumentException("Resource not found: " + effectName);
             }
-            T effect = create.apply(resource.toExternalForm());
+            final T effect = create.apply(resource.toExternalForm());
             cache.put(effectName, effect);
         }
     }

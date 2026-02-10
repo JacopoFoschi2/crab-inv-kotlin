@@ -64,7 +64,7 @@ public class Player extends AbstractEntity implements Shooter, Movable {
     public void move(final Delta delta) {
         final double movement = delta.getValue() * speed;
         double newX = this.getX() + movement;
-        if (newX <  minBound) {
+        if (newX < minBound) {
             newX = minBound;
         } else if (newX > maxBound) {
             newX = maxBound;

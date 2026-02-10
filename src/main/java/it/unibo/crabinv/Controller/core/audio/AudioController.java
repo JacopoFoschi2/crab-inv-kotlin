@@ -66,7 +66,7 @@ public class AudioController {
      * @return the current BGM volume
      */
     public int getBGMVolume() {
-        double volume = soundManager.getBGMVolume();
+        final double volume = soundManager.getBGMVolume();
         return (int) (volume * 100);
     }
 
@@ -103,7 +103,7 @@ public class AudioController {
         if (volume < 0 || volume > 100) {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
-        double realVolume = (double) volume / 100;
+        final double realVolume = (double) volume / 100;
         soundManager.setSFXVolume(realVolume);
     }
 
@@ -111,7 +111,7 @@ public class AudioController {
      * @return the current SFX volume
      */
     public int getSFXVolume() {
-        double volume = soundManager.getSFXVolume();
+        final double volume = soundManager.getSFXVolume();
         return (int) (volume * 100);
     }
 

@@ -50,7 +50,7 @@ public class LanguageSelection {
         title.getStyleClass().add("title");
         final HBox languageSelection = new HBox(DEFAULT_SPACING);
         final double widthOfButton = sceneManager.getWidth() / (SupportedLocales.values().length + 1);
-        for (SupportedLocales supportedLocale : SupportedLocales.values()) {
+        for (final SupportedLocales supportedLocale : SupportedLocales.values()) {
             languageSelection.getChildren().add(generateLanguageButton(widthOfButton, supportedLocale));
         }
         languageSelection.setAlignment(Pos.CENTER);
@@ -66,7 +66,7 @@ public class LanguageSelection {
      * @return a button that shows the flag it represents and it's localised name
      */
     private Button generateLanguageButton(final double width, final SupportedLocales locale) {
-        var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
+        final var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
         final Image flag = new Image(path);
         final ImageView flagImg = new ImageView(flag);
         flagImg.setFitWidth(width);

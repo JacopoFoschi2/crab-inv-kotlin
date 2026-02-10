@@ -1,7 +1,7 @@
 package it.unibo.crabinv.Controller.entities.player;
 
 import it.unibo.crabinv.Controller.core.audio.AudioController;
-import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
+import it.unibo.crabinv.Controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.Controller.entities.entity.EntityCapableOfInputController;
 import it.unibo.crabinv.Model.core.GameEngine;
 import it.unibo.crabinv.Model.core.audio.SFXTracks;
@@ -11,7 +11,7 @@ import it.unibo.crabinv.Model.entities.player.Player;
 /**
  * Provides all the apis to control a {@link Player}.
  */
-public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
+public class PlayerEntityController extends AbstractEntityController<Player> implements EntityCapableOfInputController {
     private final AudioController audio;
     private final GameEngine engine;
 
@@ -22,7 +22,7 @@ public class PlayerController extends EntityAbstractController<Player> implement
      * @param audio the audioController used to play sounds
      * @param engine the engine used to spawn bullets
      */
-    public PlayerController(final Player player, final AudioController audio, final GameEngine engine) {
+    public PlayerEntityController(final Player player, final AudioController audio, final GameEngine engine) {
         super(player);
         this.audio = audio;
         this.engine = engine;

@@ -4,8 +4,10 @@ import it.unibo.crabinv.Model.entities.entity.Entity;
 
 /**
  * Provides the methods an EntityController should implement.
+ *
+ * @param <T> the {@link Entity} implementation the controller should control
  */
-public abstract class EntityAbstractController<T extends Entity> implements EntityController {
+public abstract class AbstractEntityController<T extends Entity> implements EntityController {
     private final T entity;
 
     /**
@@ -13,35 +15,53 @@ public abstract class EntityAbstractController<T extends Entity> implements Enti
      *
      * @param entity an entity implementation
      */
-    public EntityAbstractController(final T entity) {
+    public AbstractEntityController(final T entity) {
         this.entity = entity;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAlive() {
         return getEntity().isAlive();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void takeDamage(int damage) {
+    public void takeDamage(final int damage) {
         getEntity().takeDamage(damage);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHealth() {
         return getEntity().getHealth();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaxHealth() {
         return getEntity().getMaxHealth();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getX() {
         return getEntity().getX();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getY() {
         return getEntity().getY();

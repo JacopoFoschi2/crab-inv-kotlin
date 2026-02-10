@@ -1,20 +1,20 @@
 package it.unibo.crabinv.Controller.entities.bullets;
 
-import it.unibo.crabinv.Controller.entities.entity.EntityAbstractController;
-import it.unibo.crabinv.Model.entities.bullets.BulletEnemy;
+import it.unibo.crabinv.Controller.entities.entity.AbstractEntityController;
+import it.unibo.crabinv.Model.entities.bullets.BulletPlayer;
 import it.unibo.crabinv.Model.entities.entity.Delta;
 
 /**
- * It's the EnemyBulletController and it handles the enemyBullets.
+ * It's the PlayerBulletEntityController that handles the PlayerBullets.
  */
-public final class EnemyBulletController extends EntityAbstractController<BulletEnemy> implements BulletController {
+public final class PlayerBulletEntityController extends AbstractEntityController<BulletPlayer> implements BulletController {
 
     /**
-     * It's the constructor of the EnemyBulletController.
+     * It's the constructor of the EnemyBulletEntityController.
      *
      * @param entity it's the entity needed to modify it
      */
-    public EnemyBulletController(final BulletEnemy entity) {
+    public PlayerBulletEntityController(final BulletPlayer entity) {
         super(entity);
     }
 
@@ -40,4 +40,5 @@ public final class EnemyBulletController extends EntityAbstractController<Bullet
     private void move(final Delta delta) {
         super.getEntity().move(delta);
     }
+
 }
