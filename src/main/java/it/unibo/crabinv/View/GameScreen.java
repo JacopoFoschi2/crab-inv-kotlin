@@ -89,15 +89,15 @@ public class GameScreen {
                     return;
                 }
 
+                hp.setText("HP: " + sessionController.getGameSession().getPlayerHealth());
+                money.setText("Coins: " + sessionController.getGameSession().getCurrency());
+
                 final long frameElapsedMillis = Math.max(0L, (now - lastNow) / 1_000_000L);
                 try {
                     gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-                hp.setText("HP: " + sessionController.getGameSession().getPlayerHealth());
-                money.setText("Coins: " + sessionController.getGameSession().getCurrency());
 
                 final GameEngineState currentEngineState = metaGameController.getGameEngineState();
                 if (currentEngineState != lastEngineState) {
