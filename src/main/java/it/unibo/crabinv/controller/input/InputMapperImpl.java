@@ -10,7 +10,7 @@ import it.unibo.crabinv.model.entities.entity.Delta;
 public class InputMapperImpl implements InputMapper {
 
     @Override
-    public Delta mapToXDelta(int inputCode) {
+    public final Delta mapToXDelta(int inputCode) {
         KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
         if (key == null) return Delta.NO_ACTION;
 
@@ -21,22 +21,30 @@ public class InputMapperImpl implements InputMapper {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mapToShoot(int inputCode) {
-        KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
+    public final boolean mapToShoot(final int inputCode) {
+        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
         return key == KeyCodeKeyboard.SHOOT;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mapToPause(int inputCode) {
-        KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
+    public final boolean mapToPause(final int inputCode) {
+        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
         return key == KeyCodeKeyboard.PAUSE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean mapToUnPause(int inputCode) {
-        KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
+    public final boolean mapToUnPause(final int inputCode) {
+        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
         return key == KeyCodeKeyboard.UNPAUSE;
     }
-
 }

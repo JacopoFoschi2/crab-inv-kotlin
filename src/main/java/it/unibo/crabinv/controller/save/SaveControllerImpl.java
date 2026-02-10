@@ -8,22 +8,34 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class SaveControllerImpl implements SaveController {
+/**
+ * Implementation of {@link SaveController}.
+ */
+public record SaveControllerImpl(SaveRepository saveRepository) implements SaveController {
 
-    private final SaveRepository saveRepository;
-
-    public SaveControllerImpl(SaveRepository saveRepository) {
+    /**
+     * Constructor for {@link SaveControllerImpl}.
+     *
+     * @param saveRepository the {@link SaveRepository} to be used
+     */
+    public SaveControllerImpl(final SaveRepository saveRepository) {
         this.saveRepository = Objects.requireNonNull(saveRepository);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public SaveRepository getSaveRepository() {
+    public final SaveRepository saveRepository() {
         return this.saveRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Save saveControlAndLoad() throws IOException {
-        List<Save> saveList = this.saveRepository.list();
+    public final Save saveControlAndLoad() throws IOException {
+        final List<Save> saveList = this.saveRepository.list();
         if (saveList.isEmpty()) {
             return createSave();
         } else if (saveList.size() == 1) {
@@ -33,32 +45,46 @@ public class SaveControllerImpl implements SaveController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Save createSave() throws IOException {
-        Save newSaveFile = this.saveRepository.newSave();
+    public final Save createSave() throws IOException {
+        final Save newSaveFile = this.saveRepository.newSave();
         this.saveRepository.saveSaveFile(newSaveFile);
         return newSaveFile;
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Save selectSave(List<Save> saveList) {
+    public final Save selectSave(final List<Save> saveList) {
         return saveList.getLast();
         // Placeholder for user-directed save selection if implemented
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void updateSave(Save save) throws IOException {
+    public final void updateSave(final Save save) throws IOException {
         this.saveRepository.saveSaveFile(save);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Save loadSave(UUID saveId) throws IOException {
+    public final Save loadSave(final UUID saveId) throws IOException {
         return this.saveRepository.loadSaveFile(saveId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void deleteSave(UUID saveId) throws IOException {
+    public final void deleteSave(final UUID saveId) throws IOException {
         this.saveRepository.delete(saveId);
     }
 }

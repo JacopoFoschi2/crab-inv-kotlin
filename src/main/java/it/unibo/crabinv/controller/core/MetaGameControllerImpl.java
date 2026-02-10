@@ -38,8 +38,11 @@ public class MetaGameControllerImpl implements MetaGameController {
         this.inputController = null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void startGame() {
+    public final void startGame() {
         GameSession gameSession = Objects.requireNonNull(
                 this.sessionController.newGameSession(),
                 "GameSession cannot be null");
@@ -64,8 +67,11 @@ public class MetaGameControllerImpl implements MetaGameController {
                 sharedAudio);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public GameSnapshot stepCheck(long frameElapsedMillis) throws IOException {
+    public final GameSnapshot stepCheck(long frameElapsedMillis) throws IOException {
         if (gameLoopController == null) {
             throw new IllegalStateException("No Game is currently active");
         }
@@ -78,31 +84,52 @@ public class MetaGameControllerImpl implements MetaGameController {
         return gameSnapshot;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public InputController getInputController(){
+    public final InputController getInputController() {
         return Objects.requireNonNull(this.inputController, "inputController cannot be null");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public GameLoopController getGameLoopController(){
+    public final GameLoopController getGameLoopController() {
         return Objects.requireNonNull(this.gameLoopController, "GameLoopController cannot be null");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public GameEngineState getGameEngineState() {
+    public final GameEngineState getGameEngineState() {
         return this.gameEngine.getGameState();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void endGame(){
+    public final void endGame() {
         this.gameEngine.gameOver();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void updateSave() throws IOException {
-        new SaveControllerImpl(saveRepository).updateSave(this.sessionController.getSave());
+    public final void updateSave() throws IOException {
+        new SaveControllerImpl(saveRepository).updateSave(this.sessionController.save());
     }
 
+    /**
+     * Checks if the {@link GameSession} has a Game over or win status.
+     *
+     * @param gameSession the {@link GameSession} to check
+     * @throws IOException if an IO error occurs
+     */
     private void checkAndManageGameEnd(GameSession gameSession) throws IOException {
         if (gameSession.isGameOver() || gameSession.isGameWon()) {
             this.sessionController.gameOverGameSession();

@@ -5,7 +5,7 @@ import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider;
 // Adapted from MoseBarbieri's LevelLogic
 
 /**
- * It's the implementation of the level.
+ * Implementation of {@link Level}.
  */
 public final class LevelImpl implements Level {
     private final WaveProvider waveProvider;
@@ -21,16 +21,25 @@ public final class LevelImpl implements Level {
         advanceWave();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Wave getCurrentWave() {
         return this.currentWave;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void advanceWave() {
         this.currentWave = waveProvider.hasMoreWaves() ? waveProvider.getNextWave() : null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isLevelFinished() {
         return currentWave == null;
