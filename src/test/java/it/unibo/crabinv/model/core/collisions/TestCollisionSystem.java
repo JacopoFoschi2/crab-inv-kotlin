@@ -67,7 +67,7 @@ public class TestCollisionSystem {
     }
 
     @Test
-    public void testCollisionBetweenLiveEnemies() {
+    void testCollisionBetweenLiveEnemies() {
         Entity enemy = entitiesExamples.getEnemyExample();
         Entity player = entitiesExamples.getPlayerExample();
         List<Entity> entities = new ArrayList<>();
@@ -79,7 +79,7 @@ public class TestCollisionSystem {
     }
 
     @Test
-    public void testCollisionBetweenFriendlies() {
+    void testCollisionBetweenFriendlies() {
         Entity bullet = entitiesExamples.getPlayerBulletExample();
         Entity player = entitiesExamples.getPlayerExample();
         List<Entity> entities = new ArrayList<>();
@@ -91,7 +91,7 @@ public class TestCollisionSystem {
     }
 
     @Test
-    public void testCollisionBetweenEnemies() {
+    void testCollisionBetweenEnemies() {
         Entity bullet = entitiesExamples.getEnemyBulletExample();
         Entity enemy = entitiesExamples.getEnemyExample();
         List<Entity> entities = new ArrayList<>();
@@ -103,7 +103,7 @@ public class TestCollisionSystem {
     }
 
     @Test
-    public void testCollisionWhereOneEntityIsDead() {
+    void testCollisionWhereOneEntityIsDead() {
         Entity enemy = entitiesExamples.getAlreadyDeadEnemyExample();
         Entity player = entitiesExamples.getPlayerExample();
         List<Entity> entities = new ArrayList<>();

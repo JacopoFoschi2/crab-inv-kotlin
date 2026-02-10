@@ -24,7 +24,7 @@ public class TestPlayerController {
     static final int INITIAL_HEALTH = 3;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
 
         player = Player.builder()
@@ -45,20 +45,20 @@ public class TestPlayerController {
     }
 
     @Test
-    public void TestMovement() {
+    void testMovement() {
         playerController.update(false, Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
     }
 
     @Test
-    public void TestMovementAndShot() {
+    void testMovementAndShot() {
         playerController.update(true, Delta.DECREASE);
         Assertions.assertEquals(-1, player.getX());
         Assertions.assertFalse(player.isAbleToShoot());
     }
 
     @Test
-    public void testMoveOutOfBounds() {
+    void testMoveOutOfBounds() {
         playerController.update(false, Delta.DECREASE);
         playerController.update(false, Delta.DECREASE);
         playerController.update(false, Delta.DECREASE);
@@ -72,7 +72,7 @@ public class TestPlayerController {
     }
 
     @Test
-    public void testShootCooldown() {
+    void testShootCooldown() {
         playerController.update(true, Delta.NO_ACTION);
         Assertions.assertFalse(player.isAbleToShoot());
         playerController.update(false, Delta.NO_ACTION);
@@ -80,7 +80,7 @@ public class TestPlayerController {
     }
 
     @Test
-    public void testDamage() {
+    void testDamage() {
         int damage1 = 1;
         int damage2 = 2;
         playerController.takeDamage(damage1);

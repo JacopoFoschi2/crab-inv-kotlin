@@ -19,7 +19,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void TestCorrectSetup() {
+    void testCorrectSetup() {
         Mockito.when(mockSound.isBGMMuted()).thenReturn(false);
         Mockito.when(mockSound.isSFXMuted()).thenReturn(false);
         Mockito.when(mockSound.getBGMVolume()).thenReturn(1.0);
@@ -32,7 +32,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void TestVolumeChange() {
+    void testVolumeChange() {
         double newModelVolume = 0.5;
         int newControllerVolume = 50;
         controller.setBGMVolume(newControllerVolume);
@@ -42,7 +42,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void TestToggleMute() {
+    void testToggleMute() {
         controller.toggleBGMMute();
         controller.toggleSFXMute();
         Mockito.verify(mockSound).toggleMuteBGM();
@@ -50,20 +50,20 @@ public class TestAudioController {
     }
 
     @Test
-    public void testPlayBGM() {
+    void testPlayBGM() {
         controller.playBGM(BGMTracks.MENU);
         Mockito.verify(mockSound).playBGM(BGMTracks.MENU);
     }
 
     @Test
-    public void testPauseBGM() {
+    void testPauseBGM() {
         controller.playBGM(BGMTracks.LEVEL);
         controller.pauseBGM();
         Mockito.verify(mockSound).pauseBGM();
     }
 
     @Test
-    public void testResumeBGM() {
+    void testResumeBGM() {
         controller.playBGM(BGMTracks.LEVEL);
         controller.pauseBGM();
         controller.resumeBGM();
@@ -71,7 +71,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void testInvalidVolumeThrows() {
+    void testInvalidVolumeThrows() {
         Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> controller.setBGMVolume(150)
@@ -79,7 +79,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void testInvalidVolumeDoesNotCallModel() {
+    void testInvalidVolumeDoesNotCallModel() {
         try {
             controller.setBGMVolume(-10);
         } catch (Exception ignored) {}
@@ -88,13 +88,13 @@ public class TestAudioController {
     }
 
     @Test
-    public void testPlaySFX() {
+    void testPlaySFX() {
         controller.playSFX(SFXTracks.EXPLOSION);
         Mockito.verify(mockSound).playSFX(SFXTracks.EXPLOSION);
     }
 
     @Test
-    public void testToggleMuteMultipleTimes() {
+    void testToggleMuteMultipleTimes() {
         controller.toggleBGMMute();
         controller.toggleBGMMute();
         controller.toggleSFXMute();
@@ -104,7 +104,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void testVolumeThenMute() {
+    void testVolumeThenMute() {
         controller.setBGMVolume(80);
         controller.setSFXVolume(60);
         controller.toggleBGMMute();
@@ -116,7 +116,7 @@ public class TestAudioController {
     }
 
     @Test
-    public void testNullSoundServiceThrows() {
+    void testNullSoundServiceThrows() {
         Assertions.assertThrows(
                 NullPointerException.class,
                 () -> new AudioController(null)

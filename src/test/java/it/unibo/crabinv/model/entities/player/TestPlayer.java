@@ -10,7 +10,7 @@ public class TestPlayer {
     Player player;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         player = Player.builder()
                 .x(0)
                 .y(0)
@@ -26,13 +26,13 @@ public class TestPlayer {
     }
 
     @Test
-    public void TestPlayerMovement() {
+    void TestPlayerMovement() {
         player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
     }
 
     @Test
-    public void TestOutOfBounds() {
+    void TestOutOfBounds() {
         player.move(Delta.INCREASE);
         Assertions.assertEquals(1, player.getX());
         player.move(Delta.DECREASE);
@@ -44,32 +44,32 @@ public class TestPlayer {
     }
 
     @Test
-    public void TestNoMovement() {
+    void TestNoMovement() {
         player.move(Delta.NO_ACTION);
         Assertions.assertEquals(0, player.getX());
     }
 
     @Test
-    public void TestShoot() {
+    void TestShoot() {
         Assertions.assertTrue(player.isAbleToShoot());
         player.shoot();
         Assertions.assertFalse(player.isAbleToShoot());
     }
 
     @Test
-    public void TestDeathByDamage() {
+    void TestDeathByDamage() {
         player.takeDamage(999);
         Assertions.assertFalse(player.isAlive());
     }
 
     @Test
-    public void TestDeathByDestroy() {
+    void TestDeathByDestroy() {
         player.destroy();
         Assertions.assertFalse(player.isAlive());
     }
 
     @Test
-    public void TestReload() {
+    void TestReload() {
         player.shoot();
         Assertions.assertFalse(player.isAbleToShoot());
         player.tick();

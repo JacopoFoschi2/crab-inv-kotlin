@@ -9,28 +9,28 @@ public class TestJavaFXSoundManager {
     private final double TEST_VOLUME = 0.5;
 
     @Test
-    public void testBGMMute() {
+    void testBGMMute() {
         Assertions.assertFalse(soundManager.isBGMMuted());
         soundManager.toggleMuteBGM();
         Assertions.assertTrue(soundManager.isBGMMuted());
     }
 
     @Test
-    public void testSFXMute() {
+    void testSFXMute() {
         Assertions.assertFalse(soundManager.isSFXMuted());
         soundManager.toggleMuteSFX();
         Assertions.assertTrue(soundManager.isSFXMuted());
     }
 
     @Test
-    public void testBGMVolumeChange() {
+    void testBGMVolumeChange() {
         Assertions.assertEquals(DEFAULT_VOLUME,  soundManager.getBGMVolume());
         soundManager.setBGMVolume(TEST_VOLUME);
         Assertions.assertEquals(TEST_VOLUME, soundManager.getBGMVolume());
     }
 
     @Test
-    public void testSFXVolumeChange() {
+    void testSFXVolumeChange() {
         Assertions.assertEquals(DEFAULT_VOLUME,  soundManager.getSFXVolume());
         soundManager.setSFXVolume(TEST_VOLUME);
         Assertions.assertEquals(TEST_VOLUME, soundManager.getSFXVolume());
