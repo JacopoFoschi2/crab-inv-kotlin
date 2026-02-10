@@ -1,7 +1,7 @@
 package it.unibo.crabinv.controller.entities.player;
 
 import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
+import it.unibo.crabinv.controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.controller.entities.entity.EntityCapableOfInputController;
 import it.unibo.crabinv.model.core.GameEngine;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
@@ -11,10 +11,9 @@ import it.unibo.crabinv.model.entities.player.Player;
 /**
  * Provides all the apis to control a {@link Player}.
  */
-public class PlayerController extends AbstractEntityController<Player> implements EntityCapableOfInputController {
+public class PlayerController extends EntityAbstractController<Player> implements EntityCapableOfInputController {
     private final AudioController audio;
     private final GameEngine engine;
-
     /**
      * Sets the controller linking it to a set player.
      *
@@ -28,12 +27,6 @@ public class PlayerController extends AbstractEntityController<Player> implement
         this.engine = engine;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param firePressed tells the controller if the user requested to fire
-     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
-     */
     @Override
     public void update(final boolean firePressed, final Delta delta) {
         tick();

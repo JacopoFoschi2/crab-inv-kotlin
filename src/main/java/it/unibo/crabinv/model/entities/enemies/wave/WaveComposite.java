@@ -7,17 +7,24 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Contains multiple {@link Wave} allowing the Game Engine to treat them as one
+ * Contains multiple {@link Wave} allowing the Game Engine to treat them as one.
  */
-public class WaveComposite implements Wave{
-
+public final class WaveComposite implements Wave {
     private final List<Wave> waves;
 
-    public WaveComposite(List<Wave> waves) {
+    /**
+     * It's the constructor for the WaveComposite.
+     *
+     * @param waves list of all the waves
+     */
+    public WaveComposite(final List<Wave> waves) {
         Objects.requireNonNull(waves, "waves cannot be null");
         this.waves = List.copyOf(waves);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void tickUpdate() {
         for (final Wave wave : waves) {
@@ -26,6 +33,11 @@ public class WaveComposite implements Wave{
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the list of the enemies
+     */
     @Override
     public List<Enemy> getAliveEnemies() {
         final List<Enemy> allWavesEnemies = new ArrayList<>();
@@ -35,6 +47,11 @@ public class WaveComposite implements Wave{
         return allWavesEnemies;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return true if the wave is finished
+     */
     @Override
     public boolean isWaveFinished() {
         for (final Wave wave : waves) {
@@ -45,8 +62,13 @@ public class WaveComposite implements Wave{
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param spawnY the new Y spawn coordinates
+     */
     @Override
-    public void setSpawnY(double spawnY) {
+    public void setSpawnY(final double spawnY) {
         //Does nothing, SpawnY should be already set before entering WaveComposite
     }
 }

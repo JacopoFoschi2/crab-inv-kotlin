@@ -1,13 +1,13 @@
 package it.unibo.crabinv.controller.entities.bullets;
 
-import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
+import it.unibo.crabinv.controller.entities.entity.EntityAbstractController;
 import it.unibo.crabinv.model.entities.bullets.BulletPlayer;
 import it.unibo.crabinv.model.entities.entity.Delta;
 
 /**
  * It's the PlayerBulletController that handles the PlayerBullets.
  */
-public final class PlayerBulletController extends AbstractEntityController<BulletPlayer> implements BulletController {
+public final class PlayerBulletController extends EntityAbstractController<BulletPlayer> implements BulletController {
 
     /**
      * It's the constructor of the EnemyBulletController.
