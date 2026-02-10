@@ -35,8 +35,8 @@ class WaveTest {
 
         final EnemyType type = EnemyType.values()[0];
 
-        double spawnYNorm   = 0.8;
-        double bottomYNorm  = 0.2;
+        double spawnYNorm   = 0.2;
+        double bottomYNorm  = 0.8;
 
         final Wave wave = new WaveImpl(
                 List.of(type),

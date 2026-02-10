@@ -21,6 +21,9 @@ import it.unibo.crabinv.Model.save.GameSession;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Constructor for the {@link GameEngine}.
+ */
 public class GameEngineImpl implements GameEngine {
 
     private static final double PLAYER_SPRITE_MULT = 0.08;
@@ -31,8 +34,6 @@ public class GameEngineImpl implements GameEngine {
     private static final double PLAYER_FIXED_Y = 0.90;
     private static final double ENTITY_SPRITE_BULLET_SPAWN = 0.05;
     private static final double PLAYER_RADIUS = 0.01;
-    private static final int PLAYER_FIRERATE = 30;
-    private static final double ENEMY_BULLET_SPAWN = 0.005;
     private final List<Bullet> activeBullets = new ArrayList<>();
     private final BulletFactory playerBulletFactory = new PlayerBulletFactory();
     private final BulletFactory enemyBulletFactory = new EnemyBulletFactory();
@@ -47,15 +48,27 @@ public class GameEngineImpl implements GameEngine {
     private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
 
+    /**
+     * Starts the {@link GameEngine}.
+     */
     public GameEngineImpl() {
     }
 
+    /**
+     * Initializes the parameters of the {@link GameEngine}.
+     *
+     * @param gameSession         the {@link GameSession} from which the {@link GameEngine} will be initialized.
+     * @param levelFactory        the {@link LevelFactory} used by the {@link GameEngine}.
+     * @param enemyFactory        the {@link EnemyFactory} used by the {@link GameEngine}.
+     * @param rewardsService      the {@link RewardsService} used by the {@link GameEngine}.
+     * @param collisionController the {@link CollisionController} used by the {@link GameEngine}.
+     */
     @Override
-    public void init(GameSession gameSession,
-                     LevelFactory levelFactory,
-                     EnemyFactory enemyFactory,
-                     RewardsService rewardsService,
-                     CollisionController collisionController) {
+    public final void init(final GameSession gameSession,
+                           final LevelFactory levelFactory,
+                           final EnemyFactory enemyFactory,
+                           final RewardsService rewardsService,
+                           final CollisionController collisionController) {
         this.gameSession = gameSession;
         this.levelFactory = levelFactory;
         this.currentLevel = gameSession.getCurrentLevel();
@@ -63,7 +76,7 @@ public class GameEngineImpl implements GameEngine {
         this.enemyFactory = enemyFactory;
         this.rewardsService = rewardsService;
         this.level = createLevel();
-        player = Player.builder()
+        this.player = Player.builder()
                 .x(PLAYER_START_X)
                 .y(PLAYER_FIXED_Y)
                 .maxHealth(this.gameSession.getPlayerHealth())
@@ -82,7 +95,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public void tick() {
+    public final void tick() {
         if (this.gameSession == null) {
             throw new IllegalStateException("call newGame() before tick()");
         }
@@ -109,45 +122,45 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public GameSnapshot snapshot() {
+    public final GameSnapshot snapshot() {
         checkGameStarted();
         return createSnapshot(populateSnapshot());
     }
 
     @Override
-    public GameEngineState getGameState() {
+    public final GameEngineState getGameState() {
         return this.gameEngineState;
     }
 
     @Override
-    public void gameOver() {
+    public final void gameOver() {
         this.gameEngineState = GameEngineState.GAME_OVER;
         this.gameSession.markGameOver();
     }
 
     @Override
-    public void winGame() {
+    public final void winGame() {
         this.gameEngineState = GameEngineState.WIN;
         this.gameSession.markGameWon();
 
     }
 
     @Override
-    public void pauseGame() {
+    public final void pauseGame() {
         if (this.gameEngineState == GameEngineState.RUNNING) {
             this.gameEngineState = GameEngineState.PAUSED;
         }
     }
 
     @Override
-    public void resumeGame() {
+    public final void resumeGame() {
         if (this.gameEngineState == GameEngineState.PAUSED) {
             this.gameEngineState = GameEngineState.RUNNING;
         }
     }
 
     @Override
-    public Player getPlayer() {
+    public final Player getPlayer() {
         if (this.player == null) {
             throw new IllegalStateException("call newGame() before getPlayer()");
         }
@@ -155,17 +168,17 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public double getWorldMinX() {
+    public final double getWorldMinX() {
         return WORLD_MIN_X;
     }
 
     @Override
-    public double getWorldMaxX() {
+    public final double getWorldMaxX() {
         return WORLD_MAX_X;
     }
 
     @Override
-    public List<Enemy> getEnemyList() {
+    public final List<Enemy> getEnemyList() {
         if (this.level == null || this.level.isLevelFinished()) {
             return List.of();
         }
@@ -197,7 +210,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Checks if the current level is over and advances to the next one
+     * Checks if the current level is over and advances to the next one.
      */
     private void levelCheck() {
         if (this.level.isLevelFinished()) {
@@ -209,20 +222,20 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Creates a new level using the {@link LevelFactory}
+     * Creates a new level using the {@link LevelFactory}.
      *
-     * @return the newly created Level
+     * @return the newly created Level.
      */
     private Level createLevel() {
         return this.level = levelFactory.createLevel(this.currentLevel, this.enemyFactory, this.rewardsService);
     }
 
     /**
-     * Checks if an enemy reaches the Y of the player, destroys the enemy and subtracts player health
+     * Checks if an enemy reaches the Y of the player, destroys the enemy and subtracts player health.
      */
     private void enemyToGroundCheck() {
-        List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
-        for (Enemy enemy : enemyList) {
+        final List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
+        for (final Enemy enemy : enemyList) {
             if (enemy.getY() == this.player.getY()) {
                 this.gameSession.subPlayerHealth(1);
                 enemy.destroy();
@@ -231,21 +244,22 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Checks game over conditions, calls game over procedures if needed
+     * Checks game over conditions, calls game over procedures if needed.
      */
     private void checkGameOver() {
-        if (this.gameSession.getPlayerHealth() <= 0 && this.gameEngineState != GameEngineState.GAME_OVER) {
+        if (this.gameSession.getPlayerHealth() <= 0
+                && this.gameEngineState != GameEngineState.GAME_OVER) {
             gameOver();
         }
     }
 
     /**
-     * Checks win conditions, calls win procedures if needed
+     * Checks win conditions, calls win procedures if needed.
      */
     private void checkWin() {
-        if (this.getEnemyList().isEmpty() &&
-                this.level.getCurrentWave().isWaveFinished() &&
-                this.gameSession.getPlayerHealth() > 0) {
+        if (this.getEnemyList().isEmpty()
+                && this.level.getCurrentWave().isWaveFinished()
+                && this.gameSession.getPlayerHealth() > 0) {
             winGame();
         }
     }
@@ -306,7 +320,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Checks if there is an active {@link GameSession}
+     * Checks if there is an active {@link GameSession}.
      */
     private void checkGameStarted() {
         if (this.gameSession == null) {
@@ -315,8 +329,9 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Creates a {@link List<RenderObjectSnapshot>} of all game entities
-     * @return the {@link List<RenderObjectSnapshot>} filled with the entities
+     * Creates a {@link List<RenderObjectSnapshot>} of all game entities.
+     *
+     * @return the {@link List<RenderObjectSnapshot>} filled with the entities.
      */
     private List<RenderObjectSnapshot> populateSnapshot() {
         final List<RenderObjectSnapshot> renderObjects = new ArrayList<>();
@@ -327,9 +342,10 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Creates a {@link GameSnapshot} from a {@link List<RenderObjectSnapshot>}, used by the {@link GameEngine}
-     * @param renderObjects
-     * @return
+     * Creates a {@link GameSnapshot} from a {@link List<RenderObjectSnapshot>}, used by the {@link GameEngine}.
+     *
+     * @param renderObjects the {@link List<RenderObjectSnapshot>}.
+     * @return the {@link GameSnapshot}.
      */
     private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
         if (this.gameSession == null) {
@@ -339,16 +355,18 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Adds the player entity to the {@link List<RenderObjectSnapshot>} of entities to be rendered
-     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     * Adds the player entity to the {@link List<RenderObjectSnapshot>} of entities to be rendered.
+     *
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered.
      */
     private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
         renderObjects.add(new RenderObjectSnapshot(player.getSprite(), player.getX(), player.getY()));
     }
 
     /**
-     * Adds the enemy entities to the {@link List<RenderObjectSnapshot>} of entities to be rendered
-     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
+     * Adds the enemy entities to the {@link List<RenderObjectSnapshot>} of entities to be rendered.
+     *
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered.
      */
     private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
         if (this.level != null && !this.level.isLevelFinished()) {
