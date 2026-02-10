@@ -15,6 +15,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
     private final AudioController audio;
     private final GameEngine engine;
     private final Random rand = new Random();
+    private final double ENEMY_SHOOTING_CHANCE = 0.007;
 
     public EnemyController(Enemy enemy, AudioController audio, GameEngine engine) {
         super(enemy);
@@ -30,7 +31,7 @@ public class EnemyController extends EntityAbstractController<Enemy> implements 
         tick();
         move(delta);
 
-        if (rand.nextDouble() < 0.007) {
+        if (rand.nextDouble() < ENEMY_SHOOTING_CHANCE) {
             shoot();
         }
     }
