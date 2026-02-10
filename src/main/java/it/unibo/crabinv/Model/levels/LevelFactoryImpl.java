@@ -31,7 +31,6 @@ public class LevelFactoryImpl implements LevelFactory {
             case 1 -> List.of(
                     new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
             );
-            /*
             case 2 -> List.of(
                     new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN),
                     new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
@@ -41,8 +40,6 @@ public class LevelFactoryImpl implements LevelFactory {
                     new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN),
                     new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
             );
-
-             */
             default -> List.of();
         };
 
