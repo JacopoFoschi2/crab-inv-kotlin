@@ -74,7 +74,7 @@ public class SceneManager {
     }
 
     public void showMemorial(){
-        //root.getChildren().setAll(new MemorialScreen(this,loc,audio, save.getPlayerMemorial()));
+        root.getChildren().setAll(new MemorialScreen(this,loc,audio,save).getView());
     }
 
     /**
