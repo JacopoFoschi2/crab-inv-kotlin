@@ -1,20 +1,26 @@
 package it.unibo.crabinv.view;
 
+import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.save.SaveControllerImpl;
-import it.unibo.crabinv.model.powerups.*;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.core.i18n.TextKeys;
+import it.unibo.crabinv.model.powerups.PowerUp;
+import it.unibo.crabinv.model.powerups.PowerUpType;
+import it.unibo.crabinv.model.powerups.Shop;
+import it.unibo.crabinv.model.powerups.ShopLogic;
 import it.unibo.crabinv.model.save.Save;
 import it.unibo.crabinv.model.save.UserProfile;
-import it.unibo.crabinv.SceneManager;
-
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
