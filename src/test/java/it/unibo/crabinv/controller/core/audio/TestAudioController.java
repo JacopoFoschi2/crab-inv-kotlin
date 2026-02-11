@@ -113,12 +113,4 @@ class TestAudioController {
         Mockito.verify(mockSound).toggleMuteBGM();
         Mockito.verify(mockSound).toggleMuteSFX();
     }
-
-    @Test
-    void testNullSoundServiceThrows() {
-        Assertions.assertThrows(
-                NullPointerException.class,
-                () -> new AudioController(null)
-        );
-    }
 }

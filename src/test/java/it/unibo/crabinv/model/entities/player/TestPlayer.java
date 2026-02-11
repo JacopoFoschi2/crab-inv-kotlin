@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestPlayer {
-    Player player;
+    private Player player;
+    private final static int BIG_DAMAGE = 999;
 
     @BeforeEach
     void setup() {
@@ -58,7 +59,7 @@ class TestPlayer {
 
     @Test
     void testDeathByDamage() {
-        player.takeDamage(999);
+        player.takeDamage(BIG_DAMAGE);
         Assertions.assertFalse(player.isAlive());
     }
 

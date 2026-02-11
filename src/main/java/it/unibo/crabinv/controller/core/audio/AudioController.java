@@ -14,12 +14,8 @@ public class AudioController {
      * Creates the instance of AudioController.
      *
      * @param soundManager the implementation of SoundManager you want to use
-     * @throws NullPointerException if you feed it a null value
      */
     public AudioController(final SoundService soundManager) {
-        if (soundManager == null) {
-            throw new NullPointerException("soundManager == null");
-        }
         this.soundManager = soundManager;
     }
 

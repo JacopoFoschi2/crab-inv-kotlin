@@ -40,10 +40,8 @@ public class CollisionSystem {
      * @return true if the two entities collided, false if not
      */
     private boolean isColliding(final Entity entity1, final Entity entity2) {
-        if (entity1.isAlive() && entity2.isAlive()) {
-            if (entity1.getCollisionGroup() != entity2.getCollisionGroup()) {
-                return solveCollision(entity1, entity2);
-            }
+        if (entity1.isAlive() && entity2.isAlive() && entity1.getCollisionGroup() != entity2.getCollisionGroup()) {
+            return solveCollision(entity1, entity2);
         }
         return false;
     }
