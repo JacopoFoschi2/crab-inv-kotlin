@@ -90,7 +90,7 @@ public final class ShopMenu {
         descriptionBox.setAlignment(Pos.CENTER);
         descriptionBox.getStyleClass().add("shop-description-box");
 
-        currencyLabel = new Label();
+        final Label currencyLabel = new Label();
         updateCurrency();
         final FlowPane powerUpsBox = new FlowPane();
         powerUpsBox.setHgap(ViewParameters.DEFAULT_SPACING);
