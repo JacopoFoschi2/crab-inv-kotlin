@@ -24,8 +24,8 @@ public interface MetaGameController {
      * Controls the status of the components, calls a save update when the game ends.
      *
      * @param frameElapsedMillis the milliseconds elapsed of the frame
-     * @throws IOException if an IO error occurs during the save update
      * @return the GameSnapshot to check and save when needed
+     * @throws IOException if an IO error occurs during the save update
      */
     GameSnapshot stepCheck(long frameElapsedMillis) throws IOException;
 
@@ -56,7 +56,7 @@ public interface MetaGameController {
     void endGame();
 
     /**
-     * Updates the {@link Save}
+     * Updates the {@link Save}.
      *
      * @throws IOException if an IO error occurs during the save update
      */
