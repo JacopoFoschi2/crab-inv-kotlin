@@ -32,8 +32,17 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
      * @param maxBound the maximum bound gave by the engine
      * @param sprite the sprite of the enemy
      */
-    public EnemyImpl(double x, double y, int maxHealth, double radius, final EnemyType type, int fireRate,
-                     double speed, double minBound, double maxBound, EntitySprites sprite) {
+    public EnemyImpl(
+            final double x,
+            final double y,
+            final int maxHealth,
+            final double radius,
+            final EnemyType type,
+            final int fireRate,
+            final double speed,
+            final double minBound,
+            final double maxBound,
+            final EntitySprites sprite) {
         super(x, y, maxHealth, CollisionGroups.HOSTILE, radius, sprite);
         this.type = type;
         this.fireRate = fireRate;
@@ -68,8 +77,8 @@ public class EnemyImpl extends AbstractEntity implements Enemy {
      * @param delta the delta of movement, which is either +1, 0 or -1, to be then applied to either the x or y axis
      */
     @Override
-    public void move(Delta delta) {
-        double movement = delta.getValue() * speed;
+    public void move(final Delta delta) {
+        final double movement = delta.getValue() * speed;
         double newY = this.getY() + movement;
         if (newY < minBound) {
             newY = minBound;

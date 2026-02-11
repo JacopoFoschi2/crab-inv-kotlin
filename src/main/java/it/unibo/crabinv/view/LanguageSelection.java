@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
@@ -34,6 +35,7 @@ public class LanguageSelection {
      * @param loc the localizationController used to fetch strings
      * @param audio the audioController used to play sounds
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by the owner
     public LanguageSelection(final SceneManager sceneManager, final LocalizationController loc, final AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
@@ -66,7 +68,7 @@ public class LanguageSelection {
      * @return a button that shows the flag it represents and it's localised name
      */
     private Button generateLanguageButton(final double width, final SupportedLocales locale) {
-        final var path = Objects.requireNonNull(getClass().getResourceAsStream(locale.getImagePath()));
+        final var path = Objects.requireNonNull(LanguageSelection.class.getResourceAsStream(locale.getImagePath()));
         final Image flag = new Image(path);
         final ImageView flagImg = new ImageView(flag);
         flagImg.setFitWidth(width);

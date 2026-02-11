@@ -1,5 +1,6 @@
 package it.unibo.crabinv;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.save.SaveControllerImpl;
@@ -46,6 +47,7 @@ public class SceneManager {
      * @param audio the global audio controller
      * @param bounds the bounds of the screen
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public SceneManager(
             final StackPane root,
             final LocalizationController loc,

@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.core.i18n;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.core.i18n.Localization;
 import it.unibo.crabinv.model.core.i18n.SupportedLocales;
 import it.unibo.crabinv.model.core.i18n.TextKeys;
@@ -13,8 +14,9 @@ public class LocalizationController {
     /**
      * Binds the controller to it's model {@link Localization}.
      *
-     * @param loc the instance of localization
+     * @param loc the injected instance of localization
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // Localization is injected and owned by the caller.
     public LocalizationController(final Localization loc) {
         this.loc = loc;
     }
