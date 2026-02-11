@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.entities.enemy;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.controller.entities.entity.EntityNotCapableOfInputController;
@@ -26,6 +27,7 @@ public final class EnemyController extends AbstractEntityController<Enemy> imple
      * @param audio the audio that it's needed in the class.
      * @param engine the game engine.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public EnemyController(final Enemy enemy,
                            final AudioController audio,
                            final GameEngine engine) {
@@ -35,7 +37,7 @@ public final class EnemyController extends AbstractEntityController<Enemy> imple
     }
 
     /**
-     * Updates the status of the enemy.
+     * {@inheritDoc}
      */
     @Override
     public void update(final Delta delta) {
