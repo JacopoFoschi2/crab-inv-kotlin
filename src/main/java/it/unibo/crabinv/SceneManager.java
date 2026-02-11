@@ -89,7 +89,7 @@ public class SceneManager {
      *
      * @param message the type of message to be displayed, either game over or victory
      */
-    public void showGameOver(final GameOver.MESSAGE_TYPE message) {
+    public void showGameOver(final GameOver.MessageTypes message) {
         root.getChildren().setAll(new GameOver(this, loc, audio, message).getView());
     }
 
