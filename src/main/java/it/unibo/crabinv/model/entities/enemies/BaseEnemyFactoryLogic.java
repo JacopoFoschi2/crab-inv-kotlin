@@ -6,10 +6,10 @@ import it.unibo.crabinv.model.entities.entity.EntitySprites;
  * It's the implementation of the Enemy factory.
  */
 public final class BaseEnemyFactoryLogic implements EnemyFactory {
-    private final static int ENEMY_MAX_HEALTH = 1;
-    private final static double ENEMY_RADIUS = 0.015;
-    private final static double ENEMY_SPEED = 0.00085;
-    private final static int ENEMY_FIRERATE = 30;
+    private static final int ENEMY_MAX_HEALTH = 1;
+    private static final double ENEMY_RADIUS = 0.015;
+    private static final double ENEMY_SPEED = 0.000_85;
+    private static final int ENEMY_FIRERATE = 30;
 
     @Override
     public Enemy createEnemy(final EnemyType type,

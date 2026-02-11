@@ -5,6 +5,7 @@ import it.unibo.crabinv.model.save.UserProfile;
 /**
  * It's the interface that implements the shop and its methods.
  */
+@FunctionalInterface
 public interface Shop {
     /**
      * @param profile variable that keeps track in the profile which power up has been taken

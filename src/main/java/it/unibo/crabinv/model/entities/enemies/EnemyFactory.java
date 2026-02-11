@@ -3,6 +3,7 @@ package it.unibo.crabinv.model.entities.enemies;
 /**
  * It's the interface that creates the factory for the enemies.
  */
+@FunctionalInterface
 public interface EnemyFactory {
     /**
      * Function that creates the enemy based on the type.

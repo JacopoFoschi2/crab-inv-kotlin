@@ -6,6 +6,7 @@ import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 /**
  * It's the interface that makes the factory method.
  */
+@FunctionalInterface
 public interface LevelFactory {
     /**
      * It's the method which creates the level.
