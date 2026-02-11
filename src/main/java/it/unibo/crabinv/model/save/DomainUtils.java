@@ -1,12 +1,19 @@
 package it.unibo.crabinv.model.save;
 
 /**
- * Helper methods for save related classes
+ * Helper methods for save related classes.
  */
 public final class DomainUtils {
 
     /**
+     * Private constructor to avoid construction.
+     */
+    private DomainUtils() {
+    }
+
+    /**
      * Ensures that {@code amount} is non‑negative.
+     *
      * @throws IllegalArgumentException if {@code amount} is negative
      */
     public static void requireNonNegativeAmount(int amount) {
@@ -15,26 +22,28 @@ public final class DomainUtils {
         }
     }
 
-    public static void requireNonNegativeSubtraction(int initialAmount, int subAmount){
-        int result = initialAmount-subAmount;
-        if (result < 0){
+    /**
+     * Ensures that the subtraction between {@code initialAmount} and {@code subAmount} is not negative.
+     *
+     * @param initialAmount the initial amount
+     * @param subAmount     the amount to sub
+     * @throws IllegalArgumentException if {@code amount} is negative
+     */
+    public static void requireNonNegativeSubtraction(int initialAmount, int subAmount) {
+        int result = initialAmount - subAmount;
+        if (result < 0) {
             throw new IllegalArgumentException("result would be negative: result:" + result);
         }
     }
 
-    private DomainUtils(){
-    }
-
-
     /**
-     * Subtracts {@code amountToSub} from {@code currentAmount} but never
-     * goes below zero (clamped).
+     * Subtracts {@code amountToSub} from {@code currentAmount} but never goes below zero (clamped).
      *
      * @param currentAmount the current value
      * @param amountToSub   the amount to subtract (must be ≥0)
      * @return the result clamped to zero
      */
-    public static int subClampedToZero(int currentAmount, int amountToSub) {
+    public static int subClampedToZero(final int currentAmount, final int amountToSub) {
         DomainUtils.requireNonNegativeAmount(amountToSub);
         return Math.max(0, currentAmount - amountToSub);
     }

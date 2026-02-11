@@ -22,6 +22,9 @@ import it.unibo.crabinv.persistence.repository.SaveRepository;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Implementation of {@link MetaGameController}.
+ */
 public class MetaGameControllerImpl implements MetaGameController {
 
     private final SessionController sessionController;
@@ -30,6 +33,12 @@ public class MetaGameControllerImpl implements MetaGameController {
     private InputController inputController;
     private GameLoopController gameLoopController;
 
+    /**
+     * Constructor of {@link MetaGameControllerImpl}.
+     *
+     * @param sessionController the {@link SessionController} used by the {@link MetaGameControllerImpl}
+     * @param saveRepository    the {@link SaveRepository} used by the {@link MetaGameControllerImpl}
+     */
     public MetaGameControllerImpl(SessionController sessionController, SaveRepository saveRepository) {
         this.sessionController = Objects.requireNonNull(sessionController, "SessionController cannot be null");
         this.saveRepository = Objects.requireNonNull(saveRepository, "SaveRepository cannot be null");
@@ -54,15 +63,13 @@ public class MetaGameControllerImpl implements MetaGameController {
                 new EnemyRewardService(gameSession),
                 new CollisionController(sharedAudio)
         );
-
         this.inputController = new InputControllerPlayer(new InputMapperImpl());
-
         this.gameLoopController = new GameLoopControllerImpl(
                 gameEngine,
                 this.inputController,
                 new PlayerController(
                         gameEngine.getPlayer(),
-                        sharedAudio, // Usiamo lo stesso sharedAudio
+                        sharedAudio,
                         this.gameEngine),
                 sharedAudio);
     }
@@ -71,12 +78,12 @@ public class MetaGameControllerImpl implements MetaGameController {
      * {@inheritDoc}
      */
     @Override
-    public final GameSnapshot stepCheck(long frameElapsedMillis) throws IOException {
+    public final GameSnapshot stepCheck(final long frameElapsedMillis) throws IOException {
         if (gameLoopController == null) {
             throw new IllegalStateException("No Game is currently active");
         }
-        GameSnapshot gameSnapshot = this.gameLoopController.step(frameElapsedMillis);
-        GameSession gameSession = this.sessionController.getGameSession();
+        final GameSnapshot gameSnapshot = this.gameLoopController.step(frameElapsedMillis);
+        final GameSession gameSession = this.sessionController.getGameSession();
         if (gameSession == null) {
             return gameSnapshot;
         }
@@ -130,14 +137,12 @@ public class MetaGameControllerImpl implements MetaGameController {
      * @param gameSession the {@link GameSession} to check
      * @throws IOException if an IO error occurs
      */
-    private void checkAndManageGameEnd(GameSession gameSession) throws IOException {
+    private void checkAndManageGameEnd(final GameSession gameSession) throws IOException {
         if (gameSession.isGameOver() || gameSession.isGameWon()) {
             this.sessionController.gameOverGameSession();
             this.gameLoopController = null;
             this.inputController = null;
             updateSave();
         }
-
     }
-
 }

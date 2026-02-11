@@ -17,6 +17,7 @@ public final class ViewParameters {
     public static final int DEFAULT_INSETS_PANE = 20;
     public static final int DEFAULT_INSETS = 30;
     public static final Pos SETTINGS_ALIGMENT = Pos.CENTER_LEFT;
+    public static final int DEFAULT_HUD_MARGIN = 10;
 
     /**
      * Ensures the class isn't wrongly instantiated.

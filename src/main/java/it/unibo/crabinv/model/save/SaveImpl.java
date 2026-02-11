@@ -5,7 +5,8 @@ import it.unibo.crabinv.model.powerups.PowerUpType;
 import java.util.UUID;
 
 /**
- * Implementation of {@link Save}
+ * Implementation of {@link Save}.
+ *
  * Identifies the save with a UUID (for identification) and a timeStamp (for sorting),
  * references to all other save-related interfaces
  */
@@ -17,13 +18,13 @@ public class SaveImpl implements Save{
     private GameSession gameSession; //Not to be assigned at Save creation
 
     /**
-     * Constructor, creates and assigns UUID and timeStamp
+     * Constructor for {@link SaveImpl}, also creates and assigns UUID and timeStamp.
      */
-    public SaveImpl(UUID saveId,
-                    long creationTimeStamp,
-                    UserProfile userProfile,
-                    PlayerMemorial playerMemorial,
-                    GameSession gameSession){
+    public SaveImpl(final UUID saveId,
+                    final long creationTimeStamp,
+                    final UserProfile userProfile,
+                    final PlayerMemorial playerMemorial,
+                    final GameSession gameSession){
         this.saveId = saveId;
         this.creationTimeStamp = creationTimeStamp;
         this.userProfile = userProfile;
@@ -31,48 +32,63 @@ public class SaveImpl implements Save{
         this.gameSession = gameSession;
     }
 
-
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public UUID getSaveId() {
+    public final UUID getSaveId() {
         return saveId;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public long getCreationTimeStamp() {
+    public final long getCreationTimeStamp() {
         return creationTimeStamp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void newGameSession() {
+    public final void newGameSession() {
         this.gameSession = new GameSessionImpl(
                 StartingSaveValues.CURRENCY.getIntValue(),
                 this.userProfile.applyAddPowerUp(PowerUpType.HEALTH_UP),
                 this.userProfile.applyMultiplyPowerUp(PowerUpType.SPEED_UP),
                 this.userProfile.applyDividePowerUp(PowerUpType.FIRERATE_UP));
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void closeGameSession() {
+    public final void closeGameSession() {
         this.gameSession = null;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public GameSession getGameSession() {
+    public final GameSession getGameSession() {
         return gameSession;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public UserProfile getUserProfile() {
+    public final UserProfile getUserProfile() {
         return userProfile;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PlayerMemorial getPlayerMemorial() {
+    public final PlayerMemorial getPlayerMemorial() {
         return playerMemorial;
     }
 }

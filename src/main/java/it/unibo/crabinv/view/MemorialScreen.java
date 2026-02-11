@@ -1,12 +1,13 @@
 package it.unibo.crabinv.view;
 
+import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.core.i18n.TextKeys;
+import it.unibo.crabinv.model.save.PlayerMemorial;
 import it.unibo.crabinv.model.save.Save;
 import it.unibo.crabinv.model.save.SessionRecord;
-import it.unibo.crabinv.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,10 +16,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+/**
+ * Creates the View to show the data of {@link PlayerMemorial}.
+ */
 public class MemorialScreen {
 
     private final SceneManager sceneManager;
@@ -29,27 +37,35 @@ public class MemorialScreen {
     private Button btnReturn;
     private int lastSelectedIdx = -1;
 
-    public MemorialScreen(SceneManager sceneManager,
-                          LocalizationController loc,
-                          AudioController audio,
-                          Save save) {
+    /**
+     * Constructor for the {@link MemorialScreen}.
+     *
+     * @param sceneManager the {@link SceneManager} used by the {@link MemorialScreen}
+     * @param loc          the {@link LocalizationController} used by the {@link MemorialScreen}
+     * @param audio        the {@link AudioController} used by the {@link MemorialScreen}
+     * @param save         the {@link Save} used by the {@link MemorialScreen}
+     */
+    public MemorialScreen(final SceneManager sceneManager,
+                          final LocalizationController loc,
+                          final AudioController audio,
+                          final Save save) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
         this.save = save;
     }
 
-    public Pane getView() {
-        List<SessionRecord> records = this.save.getPlayerMemorial().getMemorialList();
+    public final Pane getView() {
+        final List<SessionRecord> records = this.save.getPlayerMemorial().getMemorialList();
         listView.setItems(FXCollections.observableArrayList(records));
         listView.setCellFactory(lv -> new ListCell<>() {
             @Override
-            protected void updateItem(SessionRecord rec, boolean empty) {
+            protected void updateItem(final SessionRecord rec, final boolean empty) {
                 super.updateItem(rec, empty);
                 if (empty || rec == null) {
                     setText(null);
                 } else {
-                    String status = rec.getWonGame() ? "Vinto" : "Perso";
+                    final String status = rec.getWonGame() ? "Vinto" : "Perso";
                     setText(String.format(
                             "%tF %tT – Livello %d – Monete %d – %s",
                             rec.getStartingTimeStamp(),
@@ -65,10 +81,13 @@ public class MemorialScreen {
         listView.setFocusTraversable(true);
         listView.setMouseTransparent(true);
 
-        listView.setPrefWidth(500);
+        listView.setPrefWidth(ViewParameters.DEFAULT_WIDTH);
         listView.setMaxWidth(Region.USE_PREF_SIZE);
-        listView.setPadding(new Insets(10, 0, 10, 0));
-
+        listView.setPadding(
+                new Insets(ViewParameters.DEFAULT_INSETS_DESCRIPTION,
+                        0,
+                        ViewParameters.DEFAULT_INSETS_DESCRIPTION,
+                        0));
         btnReturn = new Button(loc.getString(TextKeys.RETURN));
         btnReturn.getStyleClass().add("app-button");
         btnReturn.setOnAction(_ -> {
@@ -77,8 +96,8 @@ public class MemorialScreen {
         });
 
         listView.setOnKeyPressed(e -> {
-            int size = listView.getItems().size();
-            int idx = listView.getSelectionModel().getSelectedIndex();
+            final int size = listView.getItems().size();
+            final int idx = listView.getSelectionModel().getSelectedIndex();
 
             if (e.getCode() == KeyCode.ESCAPE) {
                 btnReturn.requestFocus();
@@ -105,7 +124,8 @@ public class MemorialScreen {
                     }
                     e.consume();
                 }
-                default -> {}
+                default -> {
+                }
             }
             lastSelectedIdx = listView.getSelectionModel().getSelectedIndex();
         });
@@ -115,49 +135,42 @@ public class MemorialScreen {
                 e.consume();
                 return;
             }
-
             if (e.getCode() == KeyCode.UP) {
                 if (lastSelectedIdx >= 0 && lastSelectedIdx < listView.getItems().size()) {
                     listView.getSelectionModel().select(lastSelectedIdx);
                 } else {
-
                     listView.getSelectionModel().selectFirst();
                 }
                 listView.requestFocus();
                 e.consume();
             }
         });
-
-        VBox listContainer = new VBox(listView);
+        final VBox listContainer = new VBox(listView);
         listContainer.setAlignment(Pos.CENTER);
-        listContainer.setPrefSize(500, 300);
+        listContainer.setPrefSize(ViewParameters.DEFAULT_WIDTH, 300);
         VBox.setVgrow(listView, Priority.NEVER);
-
-        StackPane root = new StackPane();
-
-        Label title = new Label(loc.getString(TextKeys.RUN_LOG));
+        final StackPane root = new StackPane();
+        final Label title = new Label(loc.getString(TextKeys.RUN_LOG));
         title.getStyleClass().add("title");
         StackPane.setAlignment(title, Pos.TOP_CENTER);
-        StackPane.setMargin(title, new Insets(20, 0, 0, 0));
-
-        VBox mainColumn = new VBox(25);
+        StackPane.setMargin(title, new Insets(ViewParameters.DEFAULT_INSETS_PANE, 0, 0, 0));
+        final VBox mainColumn = new VBox(ViewParameters.DEFAULT_HEADER_SPACING);
         mainColumn.setAlignment(Pos.CENTER);
         mainColumn.getChildren().add(listContainer);
         StackPane.setAlignment(mainColumn, Pos.CENTER);
-
         StackPane.setAlignment(btnReturn, Pos.BOTTOM_CENTER);
         StackPane.setMargin(btnReturn, new Insets(0, 0, 60, 0));
-
         root.getChildren().addAll(title, mainColumn, btnReturn);
-
         listView.focusedProperty().addListener((obs, oldV, newV) -> {
-            if (newV) audio.playSFX(SFXTracks.MENU_HOVER);
+            if (newV) {
+                audio.playSFX(SFXTracks.MENU_HOVER);
+            }
         });
         btnReturn.focusedProperty().addListener((obs, oldV, newV) -> {
-            if (newV) audio.playSFX(SFXTracks.MENU_HOVER);
+            if (newV) {
+                audio.playSFX(SFXTracks.MENU_HOVER);
+            }
         });
-
         return root;
-
     }
 }

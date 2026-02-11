@@ -3,38 +3,52 @@ package it.unibo.crabinv.model.save;
 import java.util.UUID;
 
 /**
- *  Retrieves all data from other save-related interfaces and keep identifiers
+ * Retrieves all data from other save-related interfaces and keep identifiers.
  */
 public interface Save {
 
-    /** @return UUID of the save */
+    /**
+     * Returns the {@link UUID} of to the {@link Save}.
+     *
+     * @return the {@link UUID} of to the {@link Save}
+     */
     UUID getSaveId();
 
-    /** @return timeStamp produced at the creation of the save */
+    /**
+     * Returns the {@code creationTimeStamp} {@link Save}.
+     *
+     * @return the {@code creationTimeStamp} {@link Save}
+     */
     long getCreationTimeStamp();
 
     /**
-     * Creates a new GameSession based on the UserProfile, does nothing if a GameSession is already present
+     * Creates a new GameSession based on the UserProfile.
      */
     void newGameSession();
 
     /**
-     * Closes the GameSession
+     * Closes the GameSession.
      */
     void closeGameSession();
 
-    /** @return GameSession bound to save */
+    /**
+     * Returns the {@link GameSession} bound to the {@link Save}.
+     *
+     * @return the {@link GameSession} bound to the {@link Save}
+     */
     GameSession getGameSession();
 
-    /** @return UserProfile bound to save */
+    /**
+     * Returns the {@link UserProfile} bound to the {@link Save}.
+     *
+     * @return the {@link UserProfile} bound to the {@link Save}
+     */
     UserProfile getUserProfile();
 
-    /** @return PlayerMemorial bound to save */
+    /**
+     * Returns the {@link PlayerMemorial} bound to the {@link Save}.
+     *
+     * @return the {@link PlayerMemorial} bound to the {@link Save}
+     */
     PlayerMemorial getPlayerMemorial();
 }
-
-
-
-
-
-

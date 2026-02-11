@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * It's the implemantation of the Wave.
+ * Implementation of {@link Wave}.
  */
 public class WaveImpl implements Wave {
     private final List<EnemyType> enemy;
@@ -68,36 +68,48 @@ public class WaveImpl implements Wave {
         if (bottomYNorm < spawnYNorm) {
             throw new IllegalArgumentException("bottomYNorm must be >= spawnYNorm");
         }
-
         this.maxSpawnSlots = maxSpawnSlots;
         this.spawnYNorm = spawnYNorm;
         this.bottomYNorm = bottomYNorm;
         this.spawned = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void tickUpdate() {
         spawnIfNeeded();
         cleanUpAndRewards();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Enemy> getAliveEnemies() {
         return List.copyOf(activeEnemies);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isWaveFinished() {
         return spawned && activeEnemies.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSpawnY(double spawnY){
         this.spawnYNorm = spawnY;
     }
 
     /**
-     * Spawns enemies that are still not spawned
+     * Spawns enemies that are still not spawned.
+     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
     private void spawnIfNeeded() {//Adapted from MoseBarbieri
         if (!this.spawned) {
@@ -118,7 +130,8 @@ public class WaveImpl implements Wave {
     }
 
     /**
-     * Removes dead enemies and assigns rewards to the player
+     * Removes dead enemies and assigns rewards to the player.
+     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
     private void cleanUpAndRewards() { //Adapted from MoseBarbieri
         activeEnemies.removeIf(enemy -> {
