@@ -1,4 +1,4 @@
-package it.unibo.crabinv.model.powerUpsShop;
+package it.unibo.crabinv.model.powerups;
 
 import it.unibo.crabinv.model.save.UserProfile;
 

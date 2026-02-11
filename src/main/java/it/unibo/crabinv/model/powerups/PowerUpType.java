@@ -1,4 +1,4 @@
-package it.unibo.crabinv.model.powerUpsShop;
+package it.unibo.crabinv.model.powerups;
 
 import it.unibo.crabinv.model.core.i18n.TextKeys;
 

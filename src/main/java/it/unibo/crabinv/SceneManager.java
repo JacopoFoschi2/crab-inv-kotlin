@@ -5,7 +5,7 @@ import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.save.SaveControllerImpl;
 import it.unibo.crabinv.model.core.audio.BGMTracks;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
-import it.unibo.crabinv.model.powerUpsShop.PowerUpFactory;
+import it.unibo.crabinv.model.powerups.PowerUpFactory;
 import it.unibo.crabinv.model.save.Save;
 import it.unibo.crabinv.view.GameOver;
 import it.unibo.crabinv.view.GameScreen;

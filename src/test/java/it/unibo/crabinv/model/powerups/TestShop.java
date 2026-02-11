@@ -1,4 +1,4 @@
-package it.unibo.crabinv.model.powerUpsShop;
+package it.unibo.crabinv.model.powerups;
 
 import it.unibo.crabinv.model.save.UserProfile;
 import it.unibo.crabinv.model.save.UserProfileImpl;
@@ -13,7 +13,7 @@ class TestShop {
     private static final int MAGIC_NUMBER_50 = 50;
 
     @Test
-    public void testSuccefulPurchase() {
+    void testSuccesfulPurchase() {
         final Shop shop = new ShopLogic();
         final UserProfile profile = new UserProfileImpl(new LinkedHashMap<>());
         final PowerUp powerUp = new PowerUpLogic(PowerUpType.HEALTH_UP, MAGIC_NUMBER_50, 3);
@@ -28,7 +28,7 @@ class TestShop {
     }
 
     @Test
-    public void testFailPurchaseForCurrency() {
+    void testFailPurchaseForCurrency() {
         final Shop shop = new ShopLogic();
         final UserProfile profile = new UserProfileImpl(new LinkedHashMap<>());
         final PowerUp powerUp = new PowerUpLogic(PowerUpType.HEALTH_UP, MAGIC_NUMBER_50, 3);
@@ -44,7 +44,7 @@ class TestShop {
     }
 
     @Test
-    public void testFailPurchaseForMaxLevel() {
+    void testFailPurchaseForMaxLevel() {
         final Shop shop = new ShopLogic();
         final UserProfile profile = new UserProfileImpl(new LinkedHashMap<>());
         final PowerUp powerUp = new PowerUpLogic(PowerUpType.HEALTH_UP, MAGIC_NUMBER_50, 3);

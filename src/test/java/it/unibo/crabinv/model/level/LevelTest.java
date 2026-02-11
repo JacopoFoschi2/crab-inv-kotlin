@@ -11,13 +11,76 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 class LevelTest {
 
+    @Test
+    void constructorShouldStartFromFirstWave() {
+        final Wave w1 = mock(Wave.class);
+        final Wave w2 = mock(Wave.class);
+        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
+
+        final Level level = new LevelImpl(provider);
+
+        assertSame(w1, level.getCurrentWave(), "The constructor should position itself in the first wave");
+        assertFalse(level.isLevelFinished(), "A level with a wave ongoing shouldn't be finished");
+    }
+
+    @Test
+    void advanceWaveShouldMoveToNextWaveAndThenFinish() {
+        final Wave w1 = mock(Wave.class);
+        final Wave w2 = mock(Wave.class);
+        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
+
+        final Level level = new LevelImpl(provider);
+        assertSame(w1, level.getCurrentWave());
+
+        level.advanceWave();
+        assertSame(w2, level.getCurrentWave(), "advanceWave() should go to the next wave");
+        assertFalse(level.isLevelFinished());
+
+        level.advanceWave();
+        assertNull(level.getCurrentWave(), "After all waves are finished, the current wave should become null");
+        assertTrue(level.isLevelFinished(), "If currentWave == null the level should be finished");
+
+        level.advanceWave();
+        assertNull(level.getCurrentWave(), "After level is finished, advanceWave() should maintain a finite status");
+        assertTrue(level.isLevelFinished());
+    }
+
+    @Test
+    void levelWithNoWavesShouldBeImmediatelyFinished() {
+        final WaveProvider provider = new QueueWaveProvider(List.of());
+
+        final Level level = new LevelImpl(provider);
+
+        assertNull(level.getCurrentWave(), "If the provider hasn't got any waves, it should be null");
+        assertTrue(level.isLevelFinished(), "If there aren't any waves, the level should be finished");
+    }
+
+    @Test
+    void shouldReturnWavesInOrderAndThenReportNoMoreWaves() {
+        final Wave w1 = mock(Wave.class);
+        final Wave w2 = mock(Wave.class);
+
+        final WaveProvider provider = new WaveSequence(List.of(w1, w2));
+
+        assertTrue(provider.hasMoreWaves());
+        assertSame(w1, provider.getNextWave());
+
+        assertTrue(provider.hasMoreWaves());
+        assertSame(w2, provider.getNextWave());
+
+        assertFalse(provider.hasMoreWaves());
+    }
+
     /**
-     * WaveProvider deterministico per testare l’avanzamento delle waves.
+     * WaveProvider used to test the advancement of waves.
      */
     private static final class QueueWaveProvider implements WaveProvider {
         private final Queue<Wave> waves;
@@ -40,66 +103,6 @@ class LevelTest {
         public Wave getNextWave() {
             return waves.remove();
         }
-    }
-
-    @Test
-    void constructorShouldStartFromFirstWave() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
-        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
-
-        final Level level = new LevelImpl(provider);
-
-        assertSame(w1, level.getCurrentWave(), "Il costruttore deve posizionare il livello sulla prima wave");
-        assertFalse(level.isLevelFinished(), "Un livello con wave corrente non deve essere finito");
-    }
-
-    @Test
-    void advanceWaveShouldMoveToNextWaveAndThenFinish() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
-        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
-
-        final Level level = new LevelImpl(provider);
-        assertSame(w1, level.getCurrentWave());
-
-        level.advanceWave();
-        assertSame(w2, level.getCurrentWave(), "advanceWave() deve passare alla wave successiva");
-        assertFalse(level.isLevelFinished());
-
-        level.advanceWave();
-        assertNull(level.getCurrentWave(), "Finite le wave, la currentWave deve diventare null");
-        assertTrue(level.isLevelFinished(), "Con currentWave == null il livello deve risultare finito");
-
-        level.advanceWave();
-        assertNull(level.getCurrentWave(), "Dopo la fine del livello, advanceWave() deve mantenere lo stato finito");
-        assertTrue(level.isLevelFinished());
-    }
-
-    @Test
-    void levelWithNoWavesShouldBeImmediatelyFinished() {
-        final WaveProvider provider = new QueueWaveProvider(List.of());
-
-        final Level level = new LevelImpl(provider);
-
-        assertNull(level.getCurrentWave(), "Se il provider non ha wave, currentWave deve essere null");
-        assertTrue(level.isLevelFinished(), "Se non ci sono wave, il livello deve risultare finito");
-    }
-
-    @Test
-    void shouldReturnWavesInOrderAndThenReportNoMoreWaves() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
-
-        final WaveProvider provider = new WaveSequence(List.of(w1, w2));
-
-        assertTrue(provider.hasMoreWaves());
-        assertSame(w1, provider.getNextWave());
-
-        assertTrue(provider.hasMoreWaves());
-        assertSame(w2, provider.getNextWave());
-
-        assertFalse(provider.hasMoreWaves());
     }
 }
 

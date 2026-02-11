@@ -4,7 +4,10 @@ import it.unibo.crabinv.model.entities.entity.Delta;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestInputRegistration {
+/**
+ * Tests if the registration of the input works correctly.
+ */
+class TestInputRegistration {
 
     @Test
     void pressingRightRegistersIncreaseAndReleaseClearsIt() {

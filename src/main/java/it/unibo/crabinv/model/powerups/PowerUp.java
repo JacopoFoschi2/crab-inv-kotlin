@@ -1,4 +1,4 @@
-package it.unibo.crabinv.model.powerUpsShop;
+package it.unibo.crabinv.model.powerups;
 
 /**
  * It's the interface that implements the methods for the powerUp.
@@ -30,5 +30,5 @@ public interface PowerUp {
      *
      * @return the type of the powerUp
      */
-    it.unibo.crabinv.model.powerUpsShop.PowerUpType getPowerUpType();
+    it.unibo.crabinv.model.powerups.PowerUpType getPowerUpType();
 }

@@ -1,4 +1,4 @@
-package it.unibo.crabinv.model.powerUpsShop;
+package it.unibo.crabinv.model.powerups;
 
 public class PowerUpLogic implements PowerUp{
     private final PowerUpType type;

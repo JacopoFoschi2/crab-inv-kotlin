@@ -1,17 +1,26 @@
 package it.unibo.crabinv.save;
-import it.unibo.crabinv.model.powerUpsShop.PowerUpType;
-import it.unibo.crabinv.model.save.*;
 
+import it.unibo.crabinv.model.powerups.PowerUpType;
+import it.unibo.crabinv.model.save.GameSessionImpl;
+import it.unibo.crabinv.model.save.PlayerBaseStats;
+import it.unibo.crabinv.model.save.StartingSaveValues;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GameSessionTest {
+/**
+ * Tests the game session.
+ */
+class GameSessionTest {
 
     private GameSessionImpl session;
+
     @BeforeEach
-    void init(){
+    void init() {
         session = new GameSessionImpl(
                 StartingSaveValues.CURRENCY.getIntValue(),
                 PlayerBaseStats.getIntValueOf(PowerUpType.HEALTH_UP),
@@ -22,13 +31,16 @@ public class GameSessionTest {
 
     @Test
     void testInitialState() {
+        final int addCurrency = 50;
+        final int subCurrency = 80;
+        final int subHealth = 5;
         assertEquals(1, session.getCurrentLevel());
         assertEquals(0, session.getCurrency());
-        session.addCurrency(50);
-        assertEquals(50, session.getCurrency());
-        assertThrows(IllegalArgumentException.class, () -> {session.subCurrency(80);});
+        session.addCurrency(addCurrency);
+        assertEquals(addCurrency, session.getCurrency());
+        assertThrows(IllegalArgumentException.class, () -> session.subCurrency(subCurrency));
         assertEquals(PlayerBaseStats.getIntValueOf(PowerUpType.HEALTH_UP), session.getPlayerHealth());
-        session.subPlayerHealth(5);
+        session.subPlayerHealth(subHealth);
         assertEquals(0, session.getPlayerHealth());
         session.advanceLevel();
         assertEquals(2, session.getCurrentLevel());
