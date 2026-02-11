@@ -14,6 +14,7 @@ import java.util.UUID;
  *
  * @param saveRepository the {@link SaveRepository} used by the {@link SaveControllerImpl}
  */
+@SuppressFBWarnings("EI_EXPOSE")//exposes internal representation by design
 public record SaveControllerImpl(SaveRepository saveRepository) implements SaveController {
 
     /**
@@ -24,14 +25,6 @@ public record SaveControllerImpl(SaveRepository saveRepository) implements SaveC
     @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by callergit
     public SaveControllerImpl(final SaveRepository saveRepository) {
         this.saveRepository = Objects.requireNonNull(saveRepository);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SaveRepository saveRepository() {
-        return this.saveRepository;
     }
 
     /**

@@ -1,7 +1,6 @@
 package it.unibo.crabinv.controller.save;
 
 import it.unibo.crabinv.model.save.Save;
-import it.unibo.crabinv.persistence.repository.SaveRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,13 +10,6 @@ import java.util.UUID;
  * Contract for a controller to manage the Save-related Operations.
  */
 public interface SaveController {
-
-    /**
-     * Returns the SaveRepository used by the SaveController.
-     *
-     * @return the SaveRepository in use
-     */
-    SaveRepository saveRepository();
 
     /**
      * Checks the save files (and if there are any) and loads the correct save.

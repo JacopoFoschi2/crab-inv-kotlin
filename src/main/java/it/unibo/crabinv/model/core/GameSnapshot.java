@@ -11,7 +11,9 @@ import java.util.List;
  * @param renderObjects the list of all game objects to be renderer
  * @param session the {@link GameSession} of the snapshot
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
+@SuppressFBWarnings({"EI_EXPOSE_REP2", "EI_EXPOSE"})
+//dependencies are injected and owned by caller,
+//exposes internal representation by design
 public record GameSnapshot(
         List<RenderObjectSnapshot> renderObjects,
         GameSession session) {

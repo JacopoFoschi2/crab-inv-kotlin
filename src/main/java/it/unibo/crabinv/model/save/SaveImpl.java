@@ -80,6 +80,7 @@ public class SaveImpl implements Save {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings("EI_EXPOSE")//exposes internal representation by design
     @Override
     public final GameSession getGameSession() {
         return gameSession;
@@ -88,6 +89,7 @@ public class SaveImpl implements Save {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings("EI_EXPOSE")//exposes internal representation by design
     @Override
     public final UserProfile getUserProfile() {
         return userProfile;
@@ -96,6 +98,7 @@ public class SaveImpl implements Save {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings("EI_EXPOSE")//exposes internal representation by design
     @Override
     public final PlayerMemorial getPlayerMemorial() {
         return playerMemorial;

@@ -186,6 +186,7 @@ public class GameEngineImpl implements GameEngine {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings("EI_EXPOSE")//exposes internal representation by design
     @Override
     public final Player getPlayer() {
         if (this.player == null) {
@@ -268,10 +269,10 @@ public class GameEngineImpl implements GameEngine {
      * Checks if an enemy reaches the Y of the player, destroys the enemy and subtracts player health.
      */
     private void enemyToGroundCheck() {
-        final double EPS = 0.01;
+        final double eps = 0.01;
         final List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
         for (final Enemy enemy : enemyList) {
-            if (Math.abs(enemy.getY() - this.player.getY()) < EPS) {
+            if (Math.abs(enemy.getY() - this.player.getY()) < eps) {
                 this.gameSession.subPlayerHealth(1);
                 enemy.destroy();
             }
