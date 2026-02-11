@@ -29,6 +29,7 @@ dependencies {
         }
     }
     implementation("com.google.code.gson:gson:2.10.1")
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")
     testCompileOnly("org.projectlombok:lombok:1.18.42")
