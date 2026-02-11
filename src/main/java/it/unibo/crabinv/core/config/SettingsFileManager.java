@@ -7,12 +7,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.util.logging.Logger;
 
 /**
  * Provides the apis to load or save the settings.json file ensuring state permanence.
  */
 public final class SettingsFileManager {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Logger LOGGER = Logger.getLogger(SettingsFileManager.class.getName());
 
     /**
      * Ensures the class doesn't get instantiated.
@@ -52,7 +54,7 @@ public final class SettingsFileManager {
         } catch (final IOException e) {
             //not important.
             //inability to save settings will just let you restart with a clean profile
-            e.printStackTrace();
+            LOGGER.warning("Unable to save settings: " + e.getMessage());
         }
     }
 }

@@ -14,6 +14,54 @@ import java.util.List;
 final class TestCollisionSystem {
     private final CollisionSystem collisionSystem = new CollisionSystem();
 
+    @Test
+    void testCollisionBetweenLiveEnemies() {
+        final Entity enemy = EntitiesExamples.getEnemyExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
+        entities.add(enemy);
+        entities.add(player);
+        Assertions.assertTrue(collisionSystem.resolve(entities));
+        Assertions.assertFalse(enemy.isAlive());
+        Assertions.assertFalse(player.isAlive());
+    }
+
+    @Test
+    void testCollisionBetweenFriendlies() {
+        final Entity bullet = EntitiesExamples.getPlayerBulletExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
+        entities.add(bullet);
+        entities.add(player);
+        Assertions.assertFalse(collisionSystem.resolve(entities));
+        Assertions.assertTrue(bullet.isAlive());
+        Assertions.assertTrue(player.isAlive());
+    }
+
+    @Test
+    void testCollisionBetweenEnemies() {
+        final Entity bullet = EntitiesExamples.getEnemyBulletExample();
+        final Entity enemy = EntitiesExamples.getEnemyExample();
+        final List<Entity> entities = new ArrayList<>();
+        entities.add(bullet);
+        entities.add(enemy);
+        Assertions.assertFalse(collisionSystem.resolve(entities));
+        Assertions.assertTrue(bullet.isAlive());
+        Assertions.assertTrue(enemy.isAlive());
+    }
+
+    @Test
+    void testCollisionWhereOneEntityIsDead() {
+        final Entity enemy = EntitiesExamples.getAlreadyDeadEnemyExample();
+        final Entity player = EntitiesExamples.getPlayerExample();
+        final List<Entity> entities = new ArrayList<>();
+        entities.add(enemy);
+        entities.add(player);
+        Assertions.assertFalse(collisionSystem.resolve(entities));
+        Assertions.assertFalse(enemy.isAlive());
+        Assertions.assertTrue(player.isAlive());
+    }
+
     private static final class EntitiesExamples {
         public static EnemyImpl getEnemyExample() {
             return EnemyImpl.builder()
@@ -69,53 +117,5 @@ final class TestCollisionSystem {
                     .health(0)
                     .build();
         }
-    }
-
-    @Test
-    void testCollisionBetweenLiveEnemies() {
-        final Entity enemy = EntitiesExamples.getEnemyExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(enemy);
-        entities.add(player);
-        Assertions.assertTrue(collisionSystem.resolve(entities));
-        Assertions.assertFalse(enemy.isAlive());
-        Assertions.assertFalse(player.isAlive());
-    }
-
-    @Test
-    void testCollisionBetweenFriendlies() {
-        final Entity bullet = EntitiesExamples.getPlayerBulletExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(bullet);
-        entities.add(player);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertTrue(bullet.isAlive());
-        Assertions.assertTrue(player.isAlive());
-    }
-
-    @Test
-    void testCollisionBetweenEnemies() {
-        final Entity bullet = EntitiesExamples.getEnemyBulletExample();
-        final Entity enemy = EntitiesExamples.getEnemyExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(bullet);
-        entities.add(enemy);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertTrue(bullet.isAlive());
-        Assertions.assertTrue(enemy.isAlive());
-    }
-
-    @Test
-    void testCollisionWhereOneEntityIsDead() {
-        final Entity enemy = EntitiesExamples.getAlreadyDeadEnemyExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(enemy);
-        entities.add(player);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertFalse(enemy.isAlive());
-        Assertions.assertTrue(player.isAlive());
     }
 }

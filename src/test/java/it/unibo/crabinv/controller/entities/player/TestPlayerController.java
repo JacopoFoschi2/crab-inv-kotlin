@@ -2,9 +2,7 @@ package it.unibo.crabinv.controller.entities.player;
 
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.model.core.GameEngine;
-import it.unibo.crabinv.model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.model.entities.entity.Delta;
-import it.unibo.crabinv.model.entities.entity.EntitySprites;
 import it.unibo.crabinv.model.entities.player.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +11,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class TestPlayerController {
+    static final int DEFAULT_COORDINATE = 0;
     static final int INITIAL_HEALTH = 3;
+    static final int DEFAULT_RADIUS = 10;
+    static final int DEFAULT_SPEED = 1;
+    static final int DEFAULT_FIRE_RATE = 1;
+    static final int DEFAULT_COUNTER = 0;
+    static final int MIN_BOUND = -2;
+    static final int MAX_BOUND = 2;
     private Player player;
     private PlayerController playerController;
     @Mock
@@ -26,18 +31,16 @@ class TestPlayerController {
         MockitoAnnotations.openMocks(this);
 
         player = Player.builder()
-                .x(0)
-                .y(0)
+                .x(DEFAULT_COORDINATE)
+                .y(DEFAULT_COORDINATE)
                 .maxHealth(INITIAL_HEALTH)
                 .health(INITIAL_HEALTH)
-                .collisionGroup(CollisionGroups.FRIENDLY)
-                .radius(10)
-                .speed(1)
-                .fireRate(1)
-                .shootingCounter(0)
-                .minBound(-2)
-                .maxBound(2)
-                .sprite(EntitySprites.PLAYER)
+                .radius(DEFAULT_RADIUS)
+                .speed(DEFAULT_SPEED)
+                .fireRate(DEFAULT_FIRE_RATE)
+                .shootingCounter(DEFAULT_COUNTER)
+                .minBound(MIN_BOUND)
+                .maxBound(MAX_BOUND)
                 .build();
         playerController = new PlayerController(player, audioMock, engineMock);
     }

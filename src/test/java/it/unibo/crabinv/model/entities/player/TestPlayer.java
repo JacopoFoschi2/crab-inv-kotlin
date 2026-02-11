@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestPlayer {
+    private static final int BIG_DAMAGE = 999;
     private Player player;
-    private final static int BIG_DAMAGE = 999;
 
     @BeforeEach
     void setup() {
