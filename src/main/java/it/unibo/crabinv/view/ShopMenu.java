@@ -38,7 +38,7 @@ public final class ShopMenu {
     private final UserProfile profile;
     private final Shop shop = new ShopLogic();
     private final List<PowerUp> powerUps;
-    private Label currencyLabel;
+    private final Label currencyLabel = new Label();
 
     /**
      * It's the constructor of the ShopMenu.
@@ -90,7 +90,6 @@ public final class ShopMenu {
         descriptionBox.setAlignment(Pos.CENTER);
         descriptionBox.getStyleClass().add("shop-description-box");
 
-        final Label currencyLabel = new Label();
         updateCurrency();
         final FlowPane powerUpsBox = new FlowPane();
         powerUpsBox.setHgap(ViewParameters.DEFAULT_SPACING);
