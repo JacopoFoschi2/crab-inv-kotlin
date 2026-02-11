@@ -48,10 +48,11 @@ public class SaveRepositoryGson implements SaveRepository {
      * FULL Constructor, needed to initialize the Gson.builder and SaveFactory.
      *
      * @param saveDirectory the directory where the JSON files will be stored
+     * @param saveFactory the {@link SaveFactory} used by the {@link SaveRepositoryGson}
      * @throws IOException if an I/O error occurs
      */
     public SaveRepositoryGson(final Path saveDirectory, final SaveFactory saveFactory) throws IOException {
-        this.saveDirectory = (Files.exists(saveDirectory) ? saveDirectory : Files.createDirectories(saveDirectory));
+        this.saveDirectory = Files.exists(saveDirectory) ? saveDirectory : Files.createDirectories(saveDirectory);
         this.saveFactory = Objects.requireNonNull(saveFactory);
         final GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
@@ -146,7 +147,7 @@ public class SaveRepositoryGson implements SaveRepository {
      * @param id the UUID selected
      * @return the Path to the corresponding JSON file
      */
-    private final Path getFilePath(final UUID id) {
+    private Path getFilePath(final UUID id) {
         return this.saveDirectory.resolve(id.toString() + ".json");
     }
 
@@ -166,10 +167,10 @@ public class SaveRepositoryGson implements SaveRepository {
                     rawSaveFile.getUserProfile(),
                     rawSaveFile.getPlayerMemorial(),
                     rawSaveFile.getGameSession());
-        } catch (IOException error) {
+        } catch (final IOException error) {
             System.err.println("Cannot load files: " + path);
             return null;
-        } catch (RuntimeException error) {
+        } catch (final RuntimeException error) {
             System.err.println("Invalid or empty file: " + path + ": " + error.getMessage());
             return null;
         }

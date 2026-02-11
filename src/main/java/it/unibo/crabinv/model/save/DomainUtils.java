@@ -14,9 +14,10 @@ public final class DomainUtils {
     /**
      * Ensures that {@code amount} is non‑negative.
      *
+     * @param amount the amount to check
      * @throws IllegalArgumentException if {@code amount} is negative
      */
-    public static void requireNonNegativeAmount(int amount) {
+    public static void requireNonNegativeAmount(final int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative: amount:" + amount);
         }
@@ -29,7 +30,7 @@ public final class DomainUtils {
      * @param subAmount     the amount to sub
      * @throws IllegalArgumentException if {@code amount} is negative
      */
-    public static void requireNonNegativeSubtraction(int initialAmount, int subAmount) {
+    public static void requireNonNegativeSubtraction(final int initialAmount, final int subAmount) {
         int result = initialAmount - subAmount;
         if (result < 0) {
             throw new IllegalArgumentException("result would be negative: result:" + result);
@@ -48,4 +49,3 @@ public final class DomainUtils {
         return Math.max(0, currentAmount - amountToSub);
     }
 }
-

@@ -24,9 +24,9 @@ public interface SaveFactory {
      * @param gameSession the GameSession of the save (can be null)
      * @return the loaded save
      */
-    Save restoreSave(final UUID saveId,
-                     final long creationTimeStamp,
-                     final UserProfile userProfile,
-                     final PlayerMemorial playerMemorial,
-                     final GameSession gameSession);
+    Save restoreSave(UUID saveId,
+                     long creationTimeStamp,
+                     UserProfile userProfile,
+                     PlayerMemorial playerMemorial,
+                     GameSession gameSession);
 }

@@ -257,7 +257,8 @@ public class GameEngineImpl implements GameEngine {
      * @return the newly created Level.
      */
     private Level createLevel() {
-        return this.level = levelFactory.createLevel(this.currentLevel, this.enemyFactory, this.rewardsService);
+        this.level = levelFactory.createLevel(this.currentLevel, this.enemyFactory, this.rewardsService);
+        return this.level;
     }
 
     /**
@@ -295,7 +296,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void bulletsUpdate() {
-        for (Bullet b : activeBullets) {
+        for (final Bullet b : activeBullets) {
             if (b.getCollisionGroup() == CollisionGroups.FRIENDLY) {
                 b.move(Delta.DECREASE);
             } else {
@@ -307,9 +308,9 @@ public class GameEngineImpl implements GameEngine {
 
     private void collisionUpdate() {
         if (this.collisionController == null) return;
-        int healthBefore = player.getHealth();
+        final int healthBefore = player.getHealth();
 
-        List<Entity> allEntities = new ArrayList<>();
+        final List<Entity> allEntities = new ArrayList<>();
         allEntities.add(player);
         if (level.getCurrentWave() != null) {
             allEntities.addAll(level.getCurrentWave().getAliveEnemies());
@@ -317,7 +318,7 @@ public class GameEngineImpl implements GameEngine {
         allEntities.addAll(activeBullets);
         collisionController.resolve(allEntities);
 
-        int damageTaken = healthBefore - player.getHealth();
+        final int damageTaken = healthBefore - player.getHealth();
 
         if (damageTaken > 0) {
             this.gameSession.subPlayerHealth(damageTaken);
@@ -325,9 +326,9 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public void spawnPlayerBullet() {
-        double bulletX = this.player.getX();
-        double bulletY = this.player.getY() - ENTITY_SPRITE_BULLET_SPAWN;
+    public final void spawnPlayerBullet() {
+        final double bulletX = this.player.getX();
+        final double bulletY = this.player.getY() - ENTITY_SPRITE_BULLET_SPAWN;
         activeBullets.add(playerBulletFactory.createBullet(bulletX, bulletY,
                 0.0,
                 1.0
@@ -335,7 +336,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     @Override
-    public void spawnEnemyBullet(Enemy enemy) {
+    public final void spawnEnemyBullet(final Enemy enemy) {
         this.activeBullets.add(enemyBulletFactory.createBullet(enemy.getX(),
                 enemy.getY() + ENTITY_SPRITE_BULLET_SPAWN,
                 0.0,
@@ -344,7 +345,7 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void populateBullets(final List<RenderObjectSnapshot> renderObjects) {
-        for (Bullet b : activeBullets) {
+        for (final Bullet b : activeBullets) {
             renderObjects.add(new RenderObjectSnapshot(b.getSprite(), b.getX(), b.getY()));
         }
     }

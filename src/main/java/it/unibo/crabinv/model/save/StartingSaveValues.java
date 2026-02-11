@@ -17,7 +17,7 @@ public enum StartingSaveValues {
      *
      * @param value the value to associate with the constant
      */
-    StartingSaveValues(int value) {
+    StartingSaveValues(final int value) {
         this.value = value;
     }
 

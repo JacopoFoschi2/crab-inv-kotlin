@@ -27,7 +27,7 @@ public class SaveFactoryImpl implements SaveFactory {
     /**
      * {@inheritDoc}
      *
-     * <p> {@code GameSession} parameter CAN be null
+     * <p>{@code GameSession} parameter CAN be null
      */
     @Override
     public Save restoreSave(final UUID saveId,

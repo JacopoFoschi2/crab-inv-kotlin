@@ -61,7 +61,7 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public final void updatePowerUp(final PowerUpType powerUpType, int level) {
+    public final void updatePowerUp(final PowerUpType powerUpType, final int level) {
         DomainUtils.requireNonNegativeAmount(level);
         this.powerUpMap.put(powerUpType, level);
     }
@@ -130,7 +130,7 @@ public class UserProfileImpl implements UserProfile {
      *
      * @param newPowerUpMap the power up map used to update the current one
      */
-    private void updatePowerUpMap(final Map<PowerUpType, Integer> newPowerUpMap){
+    private void updatePowerUpMap(final Map<PowerUpType, Integer> newPowerUpMap) {
         this.powerUpMap = newPowerUpMap;
     }
 }

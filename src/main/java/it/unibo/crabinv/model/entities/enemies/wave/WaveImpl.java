@@ -103,13 +103,14 @@ public class WaveImpl implements Wave {
      * {@inheritDoc}
      */
     @Override
-    public void setSpawnY(double spawnY){
+    public void setSpawnY(final double spawnY) {
         this.spawnYNorm = spawnY;
     }
 
     /**
      * Spawns enemies that are still not spawned.
-     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
+     * <p>
+     * Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
     private void spawnIfNeeded() {//Adapted from MoseBarbieri
         if (!this.spawned) {
@@ -131,7 +132,8 @@ public class WaveImpl implements Wave {
 
     /**
      * Removes dead enemies and assigns rewards to the player.
-     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
+     * <p>
+     * Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
     private void cleanUpAndRewards() { //Adapted from MoseBarbieri
         activeEnemies.removeIf(enemy -> {

@@ -19,7 +19,7 @@ public enum PlayerBaseStats {
      * @param value       the {@code double} value of the element
      * @param powerUpType the {@link PowerUpType} that can alter the stat
      */
-    PlayerBaseStats(double value, PowerUpType powerUpType) {
+    PlayerBaseStats(double value, final PowerUpType powerUpType) {
         this.value = value;
         this.powerUpType = powerUpType;
     }
@@ -30,8 +30,8 @@ public enum PlayerBaseStats {
      * @param powerUpType the {@code PowerUpType} to look up
      * @return the associated {@code double} value
      */
-    public static double getDoubleValueOf(PowerUpType powerUpType) {
-        for (PlayerBaseStats stat : values()) {
+    public static double getDoubleValueOf(final PowerUpType powerUpType) {
+        for (final PlayerBaseStats stat : values()) {
             if (stat.powerUpType == powerUpType) {
                 return stat.getDoubleValue();
             }

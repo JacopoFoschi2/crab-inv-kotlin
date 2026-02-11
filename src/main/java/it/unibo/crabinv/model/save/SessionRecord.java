@@ -12,14 +12,12 @@ public interface SessionRecord {
      */
     long getStartingTimeStamp();
 
-
     /**
      * Returns the current level at the moment of the creation of the record.
      *
      * @return the last level entered
      */
     int getLastLevel();
-
 
     /**
      * Returns the currency at the moment of the creation of the record.

@@ -30,10 +30,11 @@ public class PlayerMemorialImpl implements PlayerMemorial {
 
     /**
      * {@inheritDoc}
-     * <p>If no SessionRecord is found it will return null
+     * <p>
+     * If no SessionRecord is found, it will return null.
      */
     @Override
-    public SessionRecord getMemorialRecord(long sessionTimeStamp) {
+    public SessionRecord getMemorialRecord(final long sessionTimeStamp) {
         return memorial.getOrDefault(sessionTimeStamp, null);
     }
 

@@ -144,7 +144,7 @@ public class GameScreen {
     }
 
     /**
-     * Exposes the resume method of the gameLoop to be used by the resume menu
+     * Exposes the resume method of the gameLoop to be used by the resume menu.
      *
      * @return the runnable of the resume method
      */

@@ -6,11 +6,11 @@ import java.util.UUID;
 
 /**
  * Implementation of {@link Save}.
- *
+ *<p>
  * Identifies the save with a UUID (for identification) and a timeStamp (for sorting),
  * references to all other save-related interfaces
  */
-public class SaveImpl implements Save{
+public class SaveImpl implements Save {
     private final UUID saveId;
     private final long creationTimeStamp;
     private final UserProfile userProfile;
@@ -19,12 +19,18 @@ public class SaveImpl implements Save{
 
     /**
      * Constructor for {@link SaveImpl}, also creates and assigns UUID and timeStamp.
+     *
+     * @param saveId the {@link UUID} of the {@link SaveImpl}
+     * @param creationTimeStamp creation timestamp of the {@link SaveImpl}
+     * @param userProfile {@link UserProfile} of the {@link SaveImpl}
+     * @param playerMemorial {@link PlayerMemorial} of the {@link SaveImpl}
+     * @param gameSession {@link GameSession} of the {@link SaveImpl}
      */
     public SaveImpl(final UUID saveId,
                     final long creationTimeStamp,
                     final UserProfile userProfile,
                     final PlayerMemorial playerMemorial,
-                    final GameSession gameSession){
+                    final GameSession gameSession) {
         this.saveId = saveId;
         this.creationTimeStamp = creationTimeStamp;
         this.userProfile = userProfile;

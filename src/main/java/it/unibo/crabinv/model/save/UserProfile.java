@@ -43,25 +43,35 @@ public interface UserProfile {
      *
      * @param powerUpType the name of the power up
      * @param level       the level to apply to the powerUp
-     *
      */
     void updatePowerUp(PowerUpType powerUpType, int level);
 
     /**
      * Applies the power ups by multiplication.
+     *
      * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
+     *
+     * @param powerUpType the {@link PowerUpType} to be modified
+     * @return the modified value of the {@link PowerUpType}
      */
     double applyMultiplyPowerUp(PowerUpType powerUpType);
 
     /**
      * Applies the power ups by division.
+     *
      * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
+     *
+     * @param powerUpType the {@link PowerUpType} to be modified
+     * @return the modified value of the {@link PowerUpType}
      */
     double applyDividePowerUp(PowerUpType powerUpType);
 
     /**
      * Applies the power ups by addition.
      * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
+     *
+     * @param powerUpType the {@link PowerUpType} to be modified
+     * @return the modified value of the {@link PowerUpType}
      */
     double applyAddPowerUp(PowerUpType powerUpType);
 }

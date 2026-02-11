@@ -1,8 +1,7 @@
 package it.unibo.crabinv.model.save;
 
 /**
- * Represents a single game session,
- * exposes level, currency, and player stats.
+ * Represents a single game session, exposes level, currency, and player stats.
  */
 
 public interface GameSession {
@@ -43,12 +42,12 @@ public interface GameSession {
     int getPlayerHealth();
 
     /**
-     * @return current player speed
+     * @return current player speed.
      */
     double getPlayerSpeed();
 
     /**
-     * @return current player fire rate
+     * @return current player fire rate.
      */
     int getPlayerFireRate();
 
@@ -68,28 +67,30 @@ public interface GameSession {
     void markGameWon();
 
     /**
-     * Adds an amount to current Currency
+     * Adds an amount to current Currency.
+     *
      * @param amount the currency to add
      */
     void addCurrency(int amount);
 
     /**
-     * Subtracts an amount to current Currency
+     * Subtracts an amount to current Currency.
+     *
      * @param amount the currency to subtract
      */
     void subCurrency(int amount);
 
     /**
-     * Adds an amount to current PlayerHealth
+     * Adds an amount to current PlayerHealth.
+     *
      * @param amount the amount to add
      */
     void addPlayerHealth(int amount);
 
     /**
-     * Subtracts an amount from current PlayerHealth
+     * Subtracts an amount from current PlayerHealth.
+     *
      * @param amount the amount to subtract
      */
     void subPlayerHealth(int amount);
-
 }
-

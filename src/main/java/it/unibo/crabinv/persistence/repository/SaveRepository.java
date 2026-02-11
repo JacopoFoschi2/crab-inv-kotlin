@@ -1,6 +1,7 @@
 package it.unibo.crabinv.persistence.repository;
 
-import it.unibo.crabinv.model.save.*;
+import it.unibo.crabinv.model.save.Save;
+import it.unibo.crabinv.model.save.SaveFactory;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -12,12 +13,14 @@ public interface SaveRepository {
 
     /**
      * Retrieves the directory in use for the management of {@link Save} files.
+     *
      * @return the directory in use
      */
     Path getSaveDirectory();
 
     /**
      * Retrieves the SaveFactory used for the save file actions.
+     *
      * @return the SaveFactory in use
      */
     SaveFactory getSaveFactory();

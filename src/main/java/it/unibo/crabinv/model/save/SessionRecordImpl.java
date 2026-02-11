@@ -6,6 +6,7 @@ package it.unibo.crabinv.model.save;
  * @param timeStamp    the starting timeStamp of the {@link GameSession}
  * @param lastLevel    currentLevel at the moment of the record creation
  * @param lastCurrency the currency at the moment of the record creation
+ * @param gameWon true if the game has been won
  */
 public record SessionRecordImpl(
         long timeStamp,

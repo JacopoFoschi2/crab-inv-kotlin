@@ -55,6 +55,11 @@ public class MemorialScreen {
         this.save = save;
     }
 
+    /**
+     * Getter for the view of the {@link MemorialScreen}.
+     *
+     * @return the {@link Pane} of the {@link MemorialScreen}
+     */
     public final Pane getView() {
         final List<SessionRecord> records = this.save.getPlayerMemorial().getMemorialList();
         listView.setItems(FXCollections.observableArrayList(records));
@@ -147,7 +152,7 @@ public class MemorialScreen {
         });
         final VBox listContainer = new VBox(listView);
         listContainer.setAlignment(Pos.CENTER);
-        listContainer.setPrefSize(ViewParameters.DEFAULT_WIDTH, 300);
+        listContainer.setPrefSize(ViewParameters.DEFAULT_WIDTH, ViewParameters.DEFAULT_WIDTH);
         VBox.setVgrow(listView, Priority.NEVER);
         final StackPane root = new StackPane();
         final Label title = new Label(loc.getString(TextKeys.RUN_LOG));
@@ -159,7 +164,7 @@ public class MemorialScreen {
         mainColumn.getChildren().add(listContainer);
         StackPane.setAlignment(mainColumn, Pos.CENTER);
         StackPane.setAlignment(btnReturn, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(btnReturn, new Insets(0, 0, 60, 0));
+        StackPane.setMargin(btnReturn, new Insets(0, 0, ViewParameters.DEFAULT_INSETS, 0));
         root.getChildren().addAll(title, mainColumn, btnReturn);
         listView.focusedProperty().addListener((obs, oldV, newV) -> {
             if (newV) {

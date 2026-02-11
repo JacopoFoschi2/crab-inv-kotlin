@@ -3,7 +3,7 @@ package it.unibo.crabinv.model.input;
 import it.unibo.crabinv.model.entities.entity.Delta;
 
 /**
- * Constructor of the {@link InputSnapshotImpl}
+ * Constructor of the {@link InputSnapshotImpl}.
  */
 public final class InputSnapshotImpl implements InputSnapshot {
     private final boolean shootPressed;
@@ -11,6 +11,14 @@ public final class InputSnapshotImpl implements InputSnapshot {
     private final boolean pausePressed;
     private final boolean unPausePressed;
 
+    /**
+     * Constructor of {@link InputSnapshotImpl}.
+     *
+     * @param shootPressed true if the shoot action is requested
+     * @param xMovementDelta the {@link Delta} of the input
+     * @param pausePressed  true if the pause action is requested
+     * @param unPausePressed  true if the resume action is requested
+     */
     public InputSnapshotImpl(final boolean shootPressed,
                              final Delta xMovementDelta,
                              final boolean pausePressed,
