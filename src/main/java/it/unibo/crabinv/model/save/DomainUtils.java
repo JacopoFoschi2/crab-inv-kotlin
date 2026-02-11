@@ -31,7 +31,7 @@ public final class DomainUtils {
      * @throws IllegalArgumentException if {@code amount} is negative
      */
     public static void requireNonNegativeSubtraction(final int initialAmount, final int subAmount) {
-        int result = initialAmount - subAmount;
+        final int result = initialAmount - subAmount;
         if (result < 0) {
             throw new IllegalArgumentException("result would be negative: result:" + result);
         }

@@ -18,20 +18,25 @@ public final class WaveAlpha extends WaveImpl {
      * @param rewardsService {@link RewardsService} used by the {@link WaveBeta}
      * @param spawnYNorm     the Y-axis coordinates spawn
      * @param bottomXNorm    the Y-axis coordinates of the bottom border
+     * @param maxSpawnSlots  the max number of spawn slots
      */
     public WaveAlpha(final EnemyFactory enemyFactory,
                      final RewardsService rewardsService,
                      final double spawnYNorm,
-                     final double bottomXNorm) {
+                     final double bottomXNorm,
+                     final int maxSpawnSlots) {
         super(
                 List.of(EnemyType.SERVANT,
                         EnemyType.SERVANT,
                         EnemyType.SERVANT,
                         EnemyType.SERVANT),
-                List.of(4, 5, 6, 7),
+                List.of(WaveSlot.S4.getWaveSlot(),
+                        WaveSlot.S5.getWaveSlot(),
+                        WaveSlot.S6.getWaveSlot(),
+                        WaveSlot.S7.getWaveSlot()),
                 enemyFactory,
                 rewardsService,
-                12,
+                maxSpawnSlots,
                 spawnYNorm,
                 bottomXNorm
         );

@@ -10,5 +10,5 @@ package it.unibo.crabinv.model.core;
 public record RenderObjectSnapshot(
         String imagePath,
         double x,
-        double y
-){}
+        double y) {
+}

@@ -10,7 +10,7 @@ import java.util.List;
  * @param renderObjects the list of all game objects to be renderer
  * @param session the {@link GameSession} of the snapshot
  */
-public record GameSnapshot (
+public record GameSnapshot(
         List<RenderObjectSnapshot> renderObjects,
-        GameSession session
-){}
+        GameSession session) {
+}

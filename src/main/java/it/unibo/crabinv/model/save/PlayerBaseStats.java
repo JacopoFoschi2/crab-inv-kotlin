@@ -19,7 +19,7 @@ public enum PlayerBaseStats {
      * @param value       the {@code double} value of the element
      * @param powerUpType the {@link PowerUpType} that can alter the stat
      */
-    PlayerBaseStats(double value, final PowerUpType powerUpType) {
+    PlayerBaseStats(final double value, final PowerUpType powerUpType) {
         this.value = value;
         this.powerUpType = powerUpType;
     }

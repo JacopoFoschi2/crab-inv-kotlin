@@ -39,7 +39,7 @@ public class MetaGameControllerImpl implements MetaGameController {
      * @param sessionController the {@link SessionController} used by the {@link MetaGameControllerImpl}
      * @param saveRepository    the {@link SaveRepository} used by the {@link MetaGameControllerImpl}
      */
-    public MetaGameControllerImpl(SessionController sessionController, SaveRepository saveRepository) {
+    public MetaGameControllerImpl(final SessionController sessionController, final SaveRepository saveRepository) {
         this.sessionController = Objects.requireNonNull(sessionController, "SessionController cannot be null");
         this.saveRepository = Objects.requireNonNull(saveRepository, "SaveRepository cannot be null");
         this.gameEngine = new GameEngineImpl();
@@ -52,10 +52,10 @@ public class MetaGameControllerImpl implements MetaGameController {
      */
     @Override
     public final void startGame() {
-        GameSession gameSession = Objects.requireNonNull(
+        final GameSession gameSession = Objects.requireNonNull(
                 this.sessionController.newGameSession(),
                 "GameSession cannot be null");
-        AudioController sharedAudio = new AudioController(new JavaFXSoundManager());
+        final AudioController sharedAudio = new AudioController(new JavaFXSoundManager());
         this.gameEngine.init(
                 gameSession,
                 new LevelFactoryImpl(),

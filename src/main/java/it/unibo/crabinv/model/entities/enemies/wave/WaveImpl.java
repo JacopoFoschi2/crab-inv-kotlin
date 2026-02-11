@@ -109,10 +109,10 @@ public class WaveImpl implements Wave {
 
     /**
      * Spawns enemies that are still not spawned.
-     * <p>
-     * Created by Mose Barbieri, adapted by Jonathan Crescentini
+     *
+     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
-    private void spawnIfNeeded() {//Adapted from MoseBarbieri
+    private void spawnIfNeeded() {
         if (!this.spawned) {
             for (int i = 0; i < enemy.size(); i++) {
                 final int slot = spawnSlots.get(i);
@@ -132,13 +132,13 @@ public class WaveImpl implements Wave {
 
     /**
      * Removes dead enemies and assigns rewards to the player.
-     * <p>
-     * Created by Mose Barbieri, adapted by Jonathan Crescentini
+     *
+     * <p>Created by Mose Barbieri, adapted by Jonathan Crescentini
      */
     private void cleanUpAndRewards() { //Adapted from MoseBarbieri
-        activeEnemies.removeIf(enemy -> {
-            if (!enemy.isAlive()) {
-                rewardsService.rewardEnemyDeath(enemy);
+        activeEnemies.removeIf(enemyToCheck -> {
+            if (!enemyToCheck.isAlive()) {
+                rewardsService.rewardEnemyDeath(enemyToCheck);
                 return true;
             }
             return false;

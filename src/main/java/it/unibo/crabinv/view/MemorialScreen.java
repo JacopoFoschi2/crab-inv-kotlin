@@ -26,6 +26,8 @@ import java.util.List;
 
 /**
  * Creates the View to show the data of {@link PlayerMemorial}.
+ *
+ * <p>Initial generation with AI, adapted to work correctly
  */
 public class MemorialScreen {
 

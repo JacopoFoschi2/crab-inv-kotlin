@@ -25,6 +25,7 @@ public interface MetaGameController {
      *
      * @param frameElapsedMillis the milliseconds elapsed of the frame
      * @throws IOException if an IO error occurs during the save update
+     * @return the GameSnapshot to check and save when needed
      */
     GameSnapshot stepCheck(long frameElapsedMillis) throws IOException;
 

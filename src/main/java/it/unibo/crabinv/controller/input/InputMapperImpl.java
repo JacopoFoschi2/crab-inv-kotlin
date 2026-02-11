@@ -5,15 +5,16 @@ import it.unibo.crabinv.model.entities.entity.Delta;
 /**
  * {@inheritDoc}
  *
- * <p>Uses {@link KeyCodeKeyboard} to bind keyboard keypresses to actions</p>
+ * <p>Uses {@link KeyCodeKeyboard} to bind keyboard keypresses to actions.
  */
 public class InputMapperImpl implements InputMapper {
 
     @Override
-    public final Delta mapToXDelta(int inputCode) {
-        KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
-        if (key == null) return Delta.NO_ACTION;
-
+    public final Delta mapToXDelta(final int inputCode) {
+        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
+        if (key == null) {
+            return Delta.NO_ACTION;
+        }
         return switch (key) {
             case LEFT -> Delta.DECREASE;
             case RIGHT -> Delta.INCREASE;

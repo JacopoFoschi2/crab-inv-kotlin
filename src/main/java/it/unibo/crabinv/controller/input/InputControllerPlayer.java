@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Implementation of the {@link InputController} for controlling the {@link Player}
+ * Implementation of the {@link InputController} for controlling the {@link Player}.
  */
 public class InputControllerPlayer implements InputController {
 

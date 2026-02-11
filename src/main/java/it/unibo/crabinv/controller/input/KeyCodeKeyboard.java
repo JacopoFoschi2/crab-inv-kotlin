@@ -30,7 +30,7 @@ public enum KeyCodeKeyboard {
      * @return the corresponding {@link KeyCodeKeyboard} or null if it doesn't exist
      */
     public static KeyCodeKeyboard findKeyCode(final int code) {
-        for (KeyCodeKeyboard k : values()) {
+        for (final KeyCodeKeyboard k : values()) {
             if (k.keyCode == code) {
                 return k;
             }

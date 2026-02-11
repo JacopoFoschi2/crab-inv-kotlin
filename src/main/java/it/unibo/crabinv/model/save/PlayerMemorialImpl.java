@@ -30,8 +30,8 @@ public class PlayerMemorialImpl implements PlayerMemorial {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * If no SessionRecord is found, it will return null.
+     *
+     * <p>If no {@link SessionRecord} is found, it will return null.
      */
     @Override
     public SessionRecord getMemorialRecord(final long sessionTimeStamp) {
@@ -46,7 +46,7 @@ public class PlayerMemorialImpl implements PlayerMemorial {
         if (record == null) {
             throw new IllegalArgumentException("record null not allowed");
         }
-        long keyRecord = record.getStartingTimeStamp();
+        final long keyRecord = record.getStartingTimeStamp();
         memorial.put(keyRecord, record);
     }
 }

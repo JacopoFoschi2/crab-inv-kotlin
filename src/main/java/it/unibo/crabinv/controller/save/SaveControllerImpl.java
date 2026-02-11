@@ -10,6 +10,8 @@ import java.util.UUID;
 
 /**
  * Implementation of {@link SaveController}.
+ *
+ * @param saveRepository the {@link SaveRepository} used by the {@link SaveControllerImpl}
  */
 public record SaveControllerImpl(SaveRepository saveRepository) implements SaveController {
 

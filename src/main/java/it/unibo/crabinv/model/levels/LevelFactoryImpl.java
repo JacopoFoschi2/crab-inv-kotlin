@@ -19,6 +19,7 @@ public final class LevelFactoryImpl implements LevelFactory {
     private static final double SPAWN_STEP = 0.05;
     private static final double DEFAULT_TOP_MARGIN = 0.05;
     private static final double DEFAULT_BOT_MARGIN = 0.90;
+    private static final int MAX_SLOTS = 12;
 
     @Override
     public Level createLevel(final int levelId,
@@ -31,16 +32,16 @@ public final class LevelFactoryImpl implements LevelFactory {
         Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
         final List<Wave> initWaves = switch (levelId) {
             case 1 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
+                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
             );
             case 2 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
+                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
             );
             case 3 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
+                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
             );
             default -> List.of();
         };

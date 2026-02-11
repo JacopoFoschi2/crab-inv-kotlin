@@ -197,7 +197,7 @@ public class GameLoopControllerImpl implements GameLoopController {
      *
      * @param nextStepTicks the ticks for the next step.
      */
-    private void updateSnapshot(int nextStepTicks) {
+    private void updateSnapshot(final int nextStepTicks) {
         this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis;
         this.latestSnapshot = this.gameEngine.snapshot();
     }

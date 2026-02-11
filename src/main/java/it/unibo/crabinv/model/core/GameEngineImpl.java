@@ -57,24 +57,24 @@ public class GameEngineImpl implements GameEngine {
     /**
      * Initializes the parameters of the {@link GameEngine}.
      *
-     * @param gameSession         the {@link GameSession} from which the {@link GameEngine} will be initialized.
-     * @param levelFactory        the {@link LevelFactory} used by the {@link GameEngine}.
-     * @param enemyFactory        the {@link EnemyFactory} used by the {@link GameEngine}.
-     * @param rewardsService      the {@link RewardsService} used by the {@link GameEngine}.
-     * @param collisionController the {@link CollisionController} used by the {@link GameEngine}.
+     * @param gameSessionParam         the {@link GameSession} from which the {@link GameEngine} will be initialized.
+     * @param levelFactoryParam        the {@link LevelFactory} used by the {@link GameEngine}.
+     * @param enemyFactoryParam        the {@link EnemyFactory} used by the {@link GameEngine}.
+     * @param rewardsServiceParam      the {@link RewardsService} used by the {@link GameEngine}.
+     * @param collisionControllerParam the {@link CollisionController} used by the {@link GameEngine}.
      */
     @Override
-    public final void init(final GameSession gameSession,
-                           final LevelFactory levelFactory,
-                           final EnemyFactory enemyFactory,
-                           final RewardsService rewardsService,
-                           final CollisionController collisionController) {
-        this.gameSession = gameSession;
-        this.levelFactory = levelFactory;
-        this.currentLevel = gameSession.getCurrentLevel();
-        this.collisionController = collisionController;
-        this.enemyFactory = enemyFactory;
-        this.rewardsService = rewardsService;
+    public final void init(final GameSession gameSessionParam,
+                           final LevelFactory levelFactoryParam,
+                           final EnemyFactory enemyFactoryParam,
+                           final RewardsService rewardsServiceParam,
+                           final CollisionController collisionControllerParam) {
+        this.gameSession = gameSessionParam;
+        this.levelFactory = levelFactoryParam;
+        this.currentLevel = gameSessionParam.getCurrentLevel();
+        this.collisionController = collisionControllerParam;
+        this.enemyFactory = enemyFactoryParam;
+        this.rewardsService = rewardsServiceParam;
         this.level = createLevel();
         this.player = Player.builder()
                 .x(PLAYER_START_X)
@@ -307,7 +307,9 @@ public class GameEngineImpl implements GameEngine {
     }
 
     private void collisionUpdate() {
-        if (this.collisionController == null) return;
+        if (this.collisionController == null) {
+            return;
+        }
         final int healthBefore = player.getHealth();
 
         final List<Entity> allEntities = new ArrayList<>();

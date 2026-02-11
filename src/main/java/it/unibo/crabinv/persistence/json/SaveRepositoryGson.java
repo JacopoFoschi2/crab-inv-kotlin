@@ -3,6 +3,7 @@ package it.unibo.crabinv.persistence.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonParseException;
 import it.unibo.crabinv.model.save.GameSession;
 import it.unibo.crabinv.model.save.GameSessionImpl;
 import it.unibo.crabinv.model.save.PlayerMemorial;
@@ -48,7 +49,7 @@ public class SaveRepositoryGson implements SaveRepository {
      * FULL Constructor, needed to initialize the Gson.builder and SaveFactory.
      *
      * @param saveDirectory the directory where the JSON files will be stored
-     * @param saveFactory the {@link SaveFactory} used by the {@link SaveRepositoryGson}
+     * @param saveFactory   the {@link SaveFactory} used by the {@link SaveRepositoryGson}
      * @throws IOException if an I/O error occurs
      */
     public SaveRepositoryGson(final Path saveDirectory, final SaveFactory saveFactory) throws IOException {
@@ -103,7 +104,7 @@ public class SaveRepositoryGson implements SaveRepository {
      */
     @Override
     public final void saveSaveFile(final Save save) throws IOException {
-        Path filePath = getFilePath(save.getSaveId());
+        final Path filePath = getFilePath(save.getSaveId());
         try (java.io.Writer writer = Files.newBufferedWriter(filePath)) {
             this.gson.toJson(save, writer);
         }
@@ -170,7 +171,7 @@ public class SaveRepositoryGson implements SaveRepository {
         } catch (final IOException error) {
             System.err.println("Cannot load files: " + path);
             return null;
-        } catch (final RuntimeException error) {
+        } catch (final JsonParseException error) {
             System.err.println("Invalid or empty file: " + path + ": " + error.getMessage());
             return null;
         }

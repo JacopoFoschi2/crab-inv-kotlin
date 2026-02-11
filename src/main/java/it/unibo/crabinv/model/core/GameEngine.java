@@ -18,10 +18,11 @@ public interface GameEngine {
     /**
      * Initializes the instance of the game.
      *
-     * @param gameSession    the {@link GameSession} from which the {@link GameEngine} will be initialized
-     * @param levelFactory   the {@link LevelFactory} used by the {@link GameEngine}
-     * @param enemyFactory   the {@link EnemyFactory} used by the {@link GameEngine}
-     * @param rewardsService the {@link RewardsService} used by the {@link GameEngine}
+     * @param gameSession         the {@link GameSession} from which the {@link GameEngine} will be initialized
+     * @param levelFactory        the {@link LevelFactory} used by the {@link GameEngine}
+     * @param enemyFactory        the {@link EnemyFactory} used by the {@link GameEngine}
+     * @param rewardsService      the {@link RewardsService} used by the {@link GameEngine}
+     * @param collisionController the {@link CollisionController} used by the {@link GameEngine}
      */
     void init(GameSession gameSession,
               LevelFactory levelFactory,

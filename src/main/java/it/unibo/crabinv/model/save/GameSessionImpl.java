@@ -21,7 +21,8 @@ public class GameSessionImpl implements GameSession {
     private final int playerFireRate;
 
     /**
-     * Constructor, to be used in a controller to load an existing GameSession
+     * Constructor, to be used in a controller to load an existing GameSession.
+     *
      * @param currency the currency to assign to the player of the GameSession
      * @param playerHealth the Health to assign to the player of the GameSession
      * @param playerSpeed the Speed to assign to the player of the GameSession
@@ -30,7 +31,7 @@ public class GameSessionImpl implements GameSession {
     public GameSessionImpl(final int currency,
                            final double playerHealth,
                            final double playerSpeed,
-                           final double playerFireRate){
+                           final double playerFireRate) {
         this.currentLevel = StartingSaveValues.LEVEL.getIntValue();
         this.gameOver = false;
         this.gameWon = false;

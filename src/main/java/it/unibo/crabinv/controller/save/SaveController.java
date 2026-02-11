@@ -1,6 +1,6 @@
 package it.unibo.crabinv.controller.save;
 
-import it.unibo.crabinv.model.save.*;
+import it.unibo.crabinv.model.save.Save;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
 import java.io.IOException;
@@ -45,19 +45,22 @@ public interface SaveController {
      * Updates the SaveFile.
      *
      * @param save the up-to-date Save to be saved
-     * @exception IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     void updateSave(Save save) throws IOException;
 
     /**
      * Loads a selected save file to be used by the game.
      *
+     * @param saveId the identifier of the file to load
      * @return the loaded save
      */
     Save loadSave(UUID saveId) throws IOException;
 
     /**
      * Deletes the selected file.
+     *
+     * @param saveId the identifier of the file to delete
      */
     void deleteSave(UUID saveId) throws IOException;
 }

@@ -7,7 +7,9 @@ import it.unibo.crabinv.model.save.SessionRecord;
 import it.unibo.crabinv.model.save.SessionRecordImpl;
 
 /**
- * Implementation of {@link SessionController}
+ * Implementation of {@link SessionController}.
+ *
+ * @param save the {@link Save} used by the {@link SessionControllerImpl}
  */
 public record SessionControllerImpl(Save save) implements SessionController {
 
@@ -50,9 +52,9 @@ public record SessionControllerImpl(Save save) implements SessionController {
      */
     @Override
     public final void gameOverGameSession() {
-        GameSession gameSession = save.getGameSession();
-        PlayerMemorial playerMemorial = save.getPlayerMemorial();
-        SessionRecord sessionRecord = new SessionRecordImpl(
+        final GameSession gameSession = save.getGameSession();
+        final PlayerMemorial playerMemorial = save.getPlayerMemorial();
+        final SessionRecord sessionRecord = new SessionRecordImpl(
                 gameSession.getStartingTimeStamp(),
                 gameSession.getCurrentLevel(),
                 gameSession.getCurrency(),

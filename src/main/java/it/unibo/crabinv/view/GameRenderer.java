@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Renderer to be shown in the {@link GameScreen}.
+ *
+ * <p>Initial generation with AI, adapted to work correctly
+ */
 public final class GameRenderer {
 
     private static final double SPRITE_MULT = 0.08;
@@ -18,10 +23,20 @@ public final class GameRenderer {
     private final GraphicsContext gc;
     private final Map<String, Image> imageCache = new HashMap<>();
 
+    /**
+     * Constructor of {@link GameRenderer}.
+     *
+     * @param gc the {@link GraphicsContext} used by the {@link GameRenderer}
+     */
     public GameRenderer(final GraphicsContext gc) {
         this.gc = Objects.requireNonNull(gc, "gc must not be null");
     }
 
+    /**
+     * Renderer based on the {@link GameSnapshot} received.
+     *
+     * @param snapshot received from the game and used to render
+     */
     public void render(final GameSnapshot snapshot) {
         Objects.requireNonNull(snapshot, "snapshot must not be null");
         final double canvasW = gc.getCanvas().getWidth();
@@ -65,6 +80,7 @@ public final class GameRenderer {
         final Image img = imageCache.computeIfAbsent(imagePath, this::loadImage);
         gc.drawImage(img, x, y, spriteW, spriteH);
     }
+
     private Image loadImage(final String imagePath) {
         final InputStream is = getClass().getResourceAsStream(imagePath);
         if (is == null) {

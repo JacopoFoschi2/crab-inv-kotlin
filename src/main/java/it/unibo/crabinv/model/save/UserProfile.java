@@ -37,9 +37,8 @@ public interface UserProfile {
      */
     int getPowerUpLevel(PowerUpType powUpType);
 
-
     /**
-     * Sets the selected powerUp to the the updated level number.
+     * Sets the selected powerUp to the updated level number.
      *
      * @param powerUpType the name of the power up
      * @param level       the level to apply to the powerUp
@@ -68,6 +67,7 @@ public interface UserProfile {
 
     /**
      * Applies the power ups by addition.
+     *
      * <p>Created by Mose Barbieri, moved and adapted by Jonathan Crescentini
      *
      * @param powerUpType the {@link PowerUpType} to be modified

@@ -103,18 +103,18 @@ public class UserProfileImpl implements UserProfile {
     /**
      * Initializes or validates a powerUpMap.
      *
-     * @param powerUpMap the existing powerUpMap to validate, can be null
+     * @param newPowerUpMap the existing powerUpMap to validate, can be null
      * @return the new validated powerUpMap
      */
-    private Map<PowerUpType, Integer> initPowerUpMap(final Map<PowerUpType, Integer> powerUpMap) {
+    private Map<PowerUpType, Integer> initPowerUpMap(final Map<PowerUpType, Integer> newPowerUpMap) {
         final Map<PowerUpType, Integer> validMap = new java.util.EnumMap<>(PowerUpType.class);
-        if (powerUpMap.isEmpty()) {
+        if (newPowerUpMap.isEmpty()) {
             for (final PowerUpType type : PowerUpType.values()) {
                 validMap.put(type, StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue());
             }
         } else {
             for (final PowerUpType type : PowerUpType.values()) {
-                Integer level = (powerUpMap.get(type) == null) ? null : powerUpMap.get(type);
+                Integer level = (newPowerUpMap.get(type) == null) ? null : newPowerUpMap.get(type);
                 level = level != null && level >= StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue()
                                 ? level
                                 : StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue();
