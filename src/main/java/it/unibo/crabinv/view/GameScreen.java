@@ -1,14 +1,14 @@
 package it.unibo.crabinv.view;
 
 import it.unibo.crabinv.SceneManager;
-import it.unibo.crabinv.controller.core.MetaGameController;
-import it.unibo.crabinv.controller.core.MetaGameControllerImpl;
-import it.unibo.crabinv.controller.save.SessionController;
-import it.unibo.crabinv.controller.save.SessionControllerImpl;
-import it.unibo.crabinv.model.core.GameEngine;
-import it.unibo.crabinv.model.core.GameEngineState;
-import it.unibo.crabinv.model.save.Save;
-import it.unibo.crabinv.persistence.repository.SaveRepository;
+import it.unibo.crabinv.controller.core.metagame.MetaGameController;
+import it.unibo.crabinv.controller.core.metagame.MetaGameControllerImpl;
+import it.unibo.crabinv.controller.core.save.SessionController;
+import it.unibo.crabinv.controller.core.save.SessionControllerImpl;
+import it.unibo.crabinv.model.core.engine.GameEngine;
+import it.unibo.crabinv.model.core.engine.GameEngineState;
+import it.unibo.crabinv.model.core.save.Save;
+import it.unibo.crabinv.core.persistence.repository.SaveRepository;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

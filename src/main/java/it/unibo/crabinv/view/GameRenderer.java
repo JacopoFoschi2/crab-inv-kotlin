@@ -1,7 +1,7 @@
 package it.unibo.crabinv.view;
 
-import it.unibo.crabinv.model.core.GameSnapshot;
-import it.unibo.crabinv.model.core.RenderObjectSnapshot;
+import it.unibo.crabinv.model.core.snapshot.GameSnapshot;
+import it.unibo.crabinv.model.core.snapshot.RenderObjectSnapshot;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

@@ -1,7 +1,7 @@
 package it.unibo.crabinv.model.wave;
 
 import it.unibo.crabinv.controller.core.collision.CollisionController;
-import it.unibo.crabinv.model.core.GameEngineImpl;
+import it.unibo.crabinv.model.core.engine.GameEngineImpl;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.model.entities.enemies.EnemyType;
@@ -13,7 +13,7 @@ import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence;
 import it.unibo.crabinv.model.entities.entity.Entity;
 import it.unibo.crabinv.model.levels.LevelFactory;
 import it.unibo.crabinv.model.levels.LevelImpl;
-import it.unibo.crabinv.model.save.GameSession;
+import it.unibo.crabinv.model.core.save.GameSession;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;

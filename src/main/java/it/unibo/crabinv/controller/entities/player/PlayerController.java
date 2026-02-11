@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.controller.entities.entity.EntityCapableOfInputController;
-import it.unibo.crabinv.model.core.GameEngine;
+import it.unibo.crabinv.model.core.engine.GameEngine;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.entities.entity.Delta;
 import it.unibo.crabinv.model.entities.player.Player;

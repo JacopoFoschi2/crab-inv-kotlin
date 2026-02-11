@@ -2,7 +2,7 @@ package it.unibo.crabinv.model.entities.enemies.rewardservice;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
-import it.unibo.crabinv.model.save.GameSession;
+import it.unibo.crabinv.model.core.save.GameSession;
 
 /**
  * It's the implementation of the reward service.

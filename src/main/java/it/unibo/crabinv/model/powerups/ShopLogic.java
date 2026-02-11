@@ -1,6 +1,6 @@
 package it.unibo.crabinv.model.powerups;
 
-import it.unibo.crabinv.model.save.UserProfile;
+import it.unibo.crabinv.model.core.save.UserProfile;
 
 /**
  * It's the logic of the shop.

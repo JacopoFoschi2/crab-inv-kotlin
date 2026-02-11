@@ -1,7 +1,7 @@
 package it.unibo.crabinv.model.powerups;
 
-import it.unibo.crabinv.model.save.UserProfile;
-import it.unibo.crabinv.model.save.UserProfileImpl;
+import it.unibo.crabinv.model.core.save.UserProfile;
+import it.unibo.crabinv.model.core.save.UserProfileImpl;
 import org.junit.jupiter.api.Test;
 import java.util.LinkedHashMap;
 import static org.junit.jupiter.api.Assertions.assertFalse;
