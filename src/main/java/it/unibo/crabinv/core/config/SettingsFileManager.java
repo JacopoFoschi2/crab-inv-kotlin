@@ -49,7 +49,10 @@ public final class SettingsFileManager {
             try (Writer writer = Files.newBufferedWriter(AppPaths.getSettings())) {
                 GSON.toJson(settings, AppSettings.class, writer);
             }
-        } catch (final IOException _) {
+        } catch (final IOException e) {
+            //not important.
+            //inability to save settings will just let you restart with a clean profile
+            e.printStackTrace();
         }
     }
 }

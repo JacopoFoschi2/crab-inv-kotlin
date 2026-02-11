@@ -3,11 +3,18 @@ package it.unibo.crabinv;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.save.SaveControllerImpl;
+import it.unibo.crabinv.model.core.audio.BGMTracks;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.powerUpsShop.PowerUpFactory;
-import it.unibo.crabinv.model.core.audio.BGMTracks;
 import it.unibo.crabinv.model.save.Save;
-import it.unibo.crabinv.view.*;
+import it.unibo.crabinv.view.GameOver;
+import it.unibo.crabinv.view.GameScreen;
+import it.unibo.crabinv.view.LanguageSelection;
+import it.unibo.crabinv.view.MainMenu;
+import it.unibo.crabinv.view.MemorialScreen;
+import it.unibo.crabinv.view.PauseMenu;
+import it.unibo.crabinv.view.Settings;
+import it.unibo.crabinv.view.ShopMenu;
 import it.unibo.crabinv.core.config.AppPaths;
 import it.unibo.crabinv.persistence.json.SaveRepositoryGson;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
@@ -39,7 +46,11 @@ public class SceneManager {
      * @param audio the global audio controller
      * @param bounds the bounds of the screen
      */
-    public SceneManager(StackPane root, LocalizationController loc, AudioController audio, Rectangle2D bounds) throws IOException {
+    public SceneManager(
+            final StackPane root,
+            final LocalizationController loc,
+            final AudioController audio,
+            final Rectangle2D bounds) throws IOException {
         this.root = root;
         this.loc = loc;
         this.audio = audio;
@@ -68,13 +79,16 @@ public class SceneManager {
     /**
      * Sets the shop screen as the shown one.
      */
-    public void showShop(){
+    public void showShop() {
         root.getChildren().setAll(new ShopMenu(this, loc, audio, save, repo,
                 PowerUpFactory.createShopPowerUps()).getView());
     }
 
-    public void showMemorial(){
-        root.getChildren().setAll(new MemorialScreen(this,loc,audio,save).getView());
+    /**
+     * Sets the memorial screen as the shown one.
+     */
+    public void showMemorial() {
+        root.getChildren().setAll(new MemorialScreen(this, loc, audio, save).getView());
     }
 
     /**
@@ -96,12 +110,12 @@ public class SceneManager {
     /**
      * Sets the Game Screen as the shown one.
      */
-    public void showGame(){
-        GameScreen gameScreen = new GameScreen(this, loc, audio, save, repo);
-        Node gameView = gameScreen.getView();
+    public void showGame() {
+        final GameScreen gameScreen = new GameScreen(this, loc, audio, save, repo);
+        final Node gameView = gameScreen.getView();
         pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume(), gameScreen.getGameOver()).getView();
         pauseMenu.setVisible(false);
-        root.getChildren().setAll(gameView,pauseMenu);
+        root.getChildren().setAll(gameView, pauseMenu);
         audio.playBGM(BGMTracks.LEVEL);
     }
 
