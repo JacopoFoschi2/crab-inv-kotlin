@@ -6,17 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Implementation of {@link PlayerMemorial}
+ * Implementation of {@link PlayerMemorial}.
  * Contains and manages the list of all saved SessionRecord
  */
 public class PlayerMemorialImpl implements PlayerMemorial {
 
     private final Map<Long, SessionRecord> memorial;
 
+    /**
+     * Constructor, creates an empty memorial.
+     */
     public PlayerMemorialImpl() {
         this.memorial = new LinkedHashMap<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<SessionRecord> getMemorialList() {
         return new ArrayList<>(memorial.values());
@@ -24,15 +30,18 @@ public class PlayerMemorialImpl implements PlayerMemorial {
 
     /**
      * {@inheritDoc}
-     * <p>If no SessionRecord is found will return null
+     * <p>If no SessionRecord is found it will return null
      */
     @Override
     public SessionRecord getMemorialRecord(long sessionTimeStamp) {
         return memorial.getOrDefault(sessionTimeStamp, null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addMemorialRecord(SessionRecord record) {
+    public void addMemorialRecord(final SessionRecord record) {
         if (record == null) {
             throw new IllegalArgumentException("record null not allowed");
         }

@@ -5,14 +5,19 @@ import it.unibo.crabinv.model.powerups.PowerUpType;
 import java.util.Map;
 
 /**
- * {@inheritDoc}
+ * Implementation of {@link UserProfile}.
  */
 public class UserProfileImpl implements UserProfile {
 
     private Map<PowerUpType, Integer> powerUpMap;
     private int currency;
 
-    public UserProfileImpl(Map<PowerUpType, Integer> powerUpMap) {
+    /**
+     * Constructor of {@link UserProfileImpl}.
+     *
+     * @param powerUpMap the power up map associated with this User Profile
+     */
+    public UserProfileImpl(final Map<PowerUpType, Integer> powerUpMap) {
         this.powerUpMap = initPowerUpMap(powerUpMap);
         this.currency = StartingSaveValues.CURRENCY.getIntValue();
     }
@@ -21,7 +26,7 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public int getCurrency() {
+    public final int getCurrency() {
         return this.currency;
     }
 
@@ -29,7 +34,7 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public void addCurrency(int amount) {
+    public final void addCurrency(final int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
         this.currency += amount;
     }
@@ -38,7 +43,7 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public void subCurrency(int amount) {
+    public final void subCurrency(final int amount) {
         DomainUtils.requireNonNegativeAmount(amount);
         DomainUtils.requireNonNegativeSubtraction(this.currency, amount);
         this.currency -= amount;
@@ -48,7 +53,7 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public int getPowerUpLevel(PowerUpType powerUpType) {
+    public final int getPowerUpLevel(final PowerUpType powerUpType) {
         return this.powerUpMap.get(powerUpType);
     }
 
@@ -56,37 +61,52 @@ public class UserProfileImpl implements UserProfile {
      * {@inheritDoc}
      */
     @Override
-    public void updatePowerUp(PowerUpType powerUpType, int level) {
+    public final void updatePowerUp(final PowerUpType powerUpType, int level) {
         DomainUtils.requireNonNegativeAmount(level);
         this.powerUpMap.put(powerUpType, level);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double applyMultiplyPowerUp(PowerUpType powerUpType) {
+    public final double applyMultiplyPowerUp(final PowerUpType powerUpType) {
         return PlayerBaseStats.getDoubleValueOf(powerUpType) * powerUpType.getStatMultiplier() * getLevel(powerUpType);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double applyDividePowerUp(PowerUpType powerUpType) {
+    public final double applyDividePowerUp(final PowerUpType powerUpType) {
         return PlayerBaseStats.getDoubleValueOf(powerUpType) / (powerUpType.getStatMultiplier() * getLevel(powerUpType));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double applyAddPowerUp(PowerUpType powerUpType) {
+    public final double applyAddPowerUp(final PowerUpType powerUpType) {
         return PlayerBaseStats.getDoubleValueOf(powerUpType) + powerUpType.getStatMultiplier() * getLevel(powerUpType);
     }
 
-    private int getLevel(PowerUpType powerUpType) {
+    /**
+     * Returns the level associated with the power up of the power up map of the {@link UserProfile}.
+     *
+     * @param powerUpType the power up type
+     * @return the level of the power up
+     */
+    private int getLevel(final PowerUpType powerUpType) {
         return this.powerUpMap.get(powerUpType);
     }
 
     /**
-     * Initializes or validates a powerUpMap
+     * Initializes or validates a powerUpMap.
      *
      * @param powerUpMap the existing powerUpMap to validate, can be null
      * @return the new validated powerUpMap
      */
-    private Map<PowerUpType, Integer> initPowerUpMap(Map<PowerUpType, Integer> powerUpMap) {
+    private Map<PowerUpType, Integer> initPowerUpMap(final Map<PowerUpType, Integer> powerUpMap) {
         final Map<PowerUpType, Integer> validMap = new java.util.EnumMap<>(PowerUpType.class);
         if (powerUpMap.isEmpty()) {
             for (final PowerUpType type : PowerUpType.values()) {
@@ -95,10 +115,9 @@ public class UserProfileImpl implements UserProfile {
         } else {
             for (final PowerUpType type : PowerUpType.values()) {
                 Integer level = (powerUpMap.get(type) == null) ? null : powerUpMap.get(type);
-                level =
-                        level != null && level >= StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue() ?
-                        level :
-                        StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue();
+                level = level != null && level >= StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue()
+                                ? level
+                                : StartingSaveValues.BASE_LEVEL_POWER_UP.getIntValue();
                 validMap.put(type, level);
                 updatePowerUpMap(validMap);
             }
@@ -106,7 +125,12 @@ public class UserProfileImpl implements UserProfile {
         return validMap;
     }
 
-    private void updatePowerUpMap(Map<PowerUpType, Integer> newPowerUpMap){
+    /**
+     * Updates the power up map of the {@link UserProfile}.
+     *
+     * @param newPowerUpMap the power up map used to update the current one
+     */
+    private void updatePowerUpMap(final Map<PowerUpType, Integer> newPowerUpMap){
         this.powerUpMap = newPowerUpMap;
     }
 }

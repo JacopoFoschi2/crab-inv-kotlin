@@ -94,6 +94,9 @@ public class GameEngineImpl implements GameEngine {
         this.gameEngineState = GameEngineState.RUNNING;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void tick() {
         if (this.gameSession == null) {
@@ -121,23 +124,35 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final GameSnapshot snapshot() {
         checkGameStarted();
         return createSnapshot(populateSnapshot());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final GameEngineState getGameState() {
         return this.gameEngineState;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void gameOver() {
         this.gameEngineState = GameEngineState.GAME_OVER;
         this.gameSession.markGameOver();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void winGame() {
         this.gameEngineState = GameEngineState.WIN;
@@ -145,6 +160,9 @@ public class GameEngineImpl implements GameEngine {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void pauseGame() {
         if (this.gameEngineState == GameEngineState.RUNNING) {
@@ -152,6 +170,9 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void resumeGame() {
         if (this.gameEngineState == GameEngineState.PAUSED) {
@@ -159,6 +180,9 @@ public class GameEngineImpl implements GameEngine {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final Player getPlayer() {
         if (this.player == null) {
@@ -167,16 +191,25 @@ public class GameEngineImpl implements GameEngine {
         return this.player;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final double getWorldMinX() {
         return WORLD_MIN_X;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final double getWorldMaxX() {
         return WORLD_MAX_X;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final List<Enemy> getEnemyList() {
         if (this.level == null || this.level.isLevelFinished()) {
@@ -193,14 +226,11 @@ public class GameEngineImpl implements GameEngine {
         if (this.level.isLevelFinished()) {
             return;
         }
-
         final Wave wave = this.level.getCurrentWave();
         if (wave == null) {
             return;
         }
-
         wave.tickUpdate();
-
         if (wave.isWaveFinished()) {
             if (wave.getAliveEnemies().isEmpty()) {
                 this.level.advanceWave();
@@ -313,7 +343,7 @@ public class GameEngineImpl implements GameEngine {
         ));
     }
 
-    private void populateBullets(List<RenderObjectSnapshot> renderObjects) {
+    private void populateBullets(final List<RenderObjectSnapshot> renderObjects) {
         for (Bullet b : activeBullets) {
             renderObjects.add(new RenderObjectSnapshot(b.getSprite(), b.getX(), b.getY()));
         }
@@ -331,7 +361,7 @@ public class GameEngineImpl implements GameEngine {
     /**
      * Creates a {@link List<RenderObjectSnapshot>} of all game entities.
      *
-     * @return the {@link List<RenderObjectSnapshot>} filled with the entities.
+     * @return the {@link List<RenderObjectSnapshot>} filled with the entities
      */
     private List<RenderObjectSnapshot> populateSnapshot() {
         final List<RenderObjectSnapshot> renderObjects = new ArrayList<>();
@@ -344,10 +374,10 @@ public class GameEngineImpl implements GameEngine {
     /**
      * Creates a {@link GameSnapshot} from a {@link List<RenderObjectSnapshot>}, used by the {@link GameEngine}.
      *
-     * @param renderObjects the {@link List<RenderObjectSnapshot>}.
-     * @return the {@link GameSnapshot}.
+     * @param renderObjects the {@link List<RenderObjectSnapshot>}
+     * @return the {@link GameSnapshot}
      */
-    private GameSnapshot createSnapshot(List<RenderObjectSnapshot> renderObjects) {
+    private GameSnapshot createSnapshot(final List<RenderObjectSnapshot> renderObjects) {
         if (this.gameSession == null) {
             throw new IllegalStateException("newGame() needed before snapshot()");
         }
@@ -357,18 +387,18 @@ public class GameEngineImpl implements GameEngine {
     /**
      * Adds the player entity to the {@link List<RenderObjectSnapshot>} of entities to be rendered.
      *
-     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered.
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
      */
-    private void populatePlayer(List<RenderObjectSnapshot> renderObjects) {
+    private void populatePlayer(final List<RenderObjectSnapshot> renderObjects) {
         renderObjects.add(new RenderObjectSnapshot(player.getSprite(), player.getX(), player.getY()));
     }
 
     /**
      * Adds the enemy entities to the {@link List<RenderObjectSnapshot>} of entities to be rendered.
      *
-     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered.
+     * @param renderObjects the {@link List<RenderObjectSnapshot>} of entities to be rendered
      */
-    private void populateEnemies(List<RenderObjectSnapshot> renderObjects) {
+    private void populateEnemies(final List<RenderObjectSnapshot> renderObjects) {
         if (this.level != null && !this.level.isLevelFinished()) {
             final Wave wave = level.getCurrentWave();
             if (wave != null) {
@@ -378,6 +408,4 @@ public class GameEngineImpl implements GameEngine {
             }
         }
     }
-
 }
-

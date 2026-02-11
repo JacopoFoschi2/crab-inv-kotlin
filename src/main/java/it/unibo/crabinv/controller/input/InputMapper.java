@@ -3,12 +3,12 @@ package it.unibo.crabinv.controller.input;
 import it.unibo.crabinv.model.entities.entity.Delta;
 
 /**
- * Checks if the key pressed is bound to any action
+ * Checks if the key pressed is bound to any action.
  */
 public interface InputMapper {
 
     /**
-     * Checks if the inputCode of the key pressed is bound to X-axis movement
+     * Checks if the inputCode of the key pressed is bound to X-axis movement.
      *
      * @param inputCode of the key pressed
      * @return the X-axis movement
@@ -16,7 +16,7 @@ public interface InputMapper {
     Delta mapToXDelta(int inputCode);
 
     /**
-     * Checks if the inputCode of the key pressed is bound to shoot action
+     * Checks if the inputCode of the key pressed is bound to shoot action.
      *
      * @param inputCode of the key pressed
      * @return boolean based on the action being requested or not
@@ -24,7 +24,7 @@ public interface InputMapper {
     boolean mapToShoot(int inputCode);
 
     /**
-     * Checks if the inputCode of the key pressed is bound to pause action
+     * Checks if the inputCode of the key pressed is bound to pause action.
      *
      * @param inputCode of the key pressed
      * @return boolean based on the action being requested or not
@@ -32,7 +32,7 @@ public interface InputMapper {
     boolean mapToPause(int inputCode);
 
     /**
-     * Checks if the inputCode of the key pressed is bound to resume action
+     * Checks if the inputCode of the key pressed is bound to resume action.
      *
      * @param inputCode of the key pressed
      * @return boolean based on the action being requested or not

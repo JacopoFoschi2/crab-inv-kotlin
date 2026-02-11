@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.MetaGameController;
 import it.unibo.crabinv.controller.core.MetaGameControllerImpl;
 import it.unibo.crabinv.controller.core.audio.AudioController;
@@ -9,7 +10,6 @@ import it.unibo.crabinv.controller.save.SessionControllerImpl;
 import it.unibo.crabinv.model.core.GameEngine;
 import it.unibo.crabinv.model.core.GameEngineState;
 import it.unibo.crabinv.model.save.Save;
-import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
@@ -24,6 +24,9 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * View {@code} Class to show the game when running.
+ */
 public class GameScreen {
 
     private final SceneManager sceneManager;
@@ -37,6 +40,15 @@ public class GameScreen {
     private GameRenderer gameRenderer;
     private GameEngineState lastEngineState;
 
+    /**
+     * Constructor of {@link GameScreen}.
+     *
+     * @param sceneManager the {@link SceneManager} used by the {@link GameScreen}
+     * @param loc          the {@link LocalizationController} used by the {@link GameScreen}
+     * @param audio        the {@link AudioController} used by the {@link GameScreen}
+     * @param save         the {@link Save} used by the {@link GameScreen}
+     * @param repo         the {@link SaveRepository} used by the {@link GameScreen}
+     */
     public GameScreen(final SceneManager sceneManager,
                       final LocalizationController loc,
                       final AudioController audio,
@@ -50,26 +62,28 @@ public class GameScreen {
         this.lastEngineState = null;
     }
 
-    public Node getView() {
+    /**
+     * The Node of the {@link GameScreen} view.
+     *
+     * @return the Node of the {@link GameScreen} view
+     */
+    public final Node getView() {
         final StackPane root = new StackPane();
         final double width = sceneManager.getWidth();
         final double height = sceneManager.getHeight();
         this.canvas = new Canvas(width, height);
-        Label hp = new Label();
-        Label money = new Label();
-        VBox hud = new VBox(10, hp, money);
+        final Label hp = new Label();
+        final Label money = new Label();
+        final VBox hud = new VBox(ViewParameters.DEFAULT_HUD_MARGIN, hp, money);
         StackPane.setAlignment(hud, Pos.TOP_LEFT);
-        StackPane.setMargin(hud, new Insets(20));
+        StackPane.setMargin(hud, new Insets(ViewParameters.DEFAULT_INSETS_PANE));
         root.getChildren().addAll(canvas, hud);
-
         final SessionController sessionController = new SessionControllerImpl(this.save);
         metaGameController = new MetaGameControllerImpl(sessionController, repo);
         this.gameRenderer = new GameRenderer(canvas.getGraphicsContext2D());
-
         metaGameController.startGame();
         metaGameController.getInputController();
         this.lastEngineState = metaGameController.getGameEngineState();
-
         canvas.setFocusTraversable(true);
         canvas.setOnKeyPressed(e -> {
             metaGameController.getInputController().onKeyPressed(e.getCode().getCode());
@@ -80,41 +94,40 @@ public class GameScreen {
         });
         canvas.setOnKeyReleased(e -> metaGameController.getInputController().onKeyReleased(e.getCode().getCode()));
         this.timer = new AnimationTimer() {
-            private long lastNow = 0;
+            private long lastNow;
 
             @Override
-            public void handle(long now) {
+            public void handle(final long now) {
                 if (lastNow == 0) {
                     lastNow = now;
                     return;
                 }
-
                 hp.setText("HP: " + sessionController.getGameSession().getPlayerHealth());
                 money.setText("Coins: " + sessionController.getGameSession().getCurrency());
-
                 final long frameElapsedMillis = Math.max(0L, (now - lastNow) / 1_000_000L);
                 try {
                     gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (final IOException error) {
+                    throw new RuntimeException(error);
                 }
-
                 final GameEngineState currentEngineState = metaGameController.getGameEngineState();
                 if (currentEngineState != lastEngineState) {
                     lastEngineState = currentEngineState;
                     engineStatusTrigger(currentEngineState);
                 }
-
                 lastNow = now;
             }
         };
         timer.start();
-
         javafx.application.Platform.runLater(canvas::requestFocus);
-
         return root;
     }
 
+    /**
+     * Checks the Win/Game Over Conditions of the {@link GameEngine} and triggers the relative screens.
+     *
+     * @param state the {@link GameEngineState} of the {@link GameEngine}
+     */
     private void engineStatusTrigger(final GameEngineState state) {
         if (state == GameEngineState.GAME_OVER || state == GameEngineState.WIN) {
             closeEngineStep1();
@@ -145,14 +158,14 @@ public class GameScreen {
     }
 
     /**
-     * Executes the first part of closing procedures for the {@link GameEngine}
+     * Executes the first part of closing procedures for the {@link GameEngine}.
      */
     private void closeEngineStep1() {
         timer.stop();
     }
 
     /**
-     * Executes the second part of closing procedures for the {@link GameEngine}
+     * Executes the second part of closing procedures for the {@link GameEngine}.
      */
     private void closeEngineStep2() {
         timer = null;
@@ -162,7 +175,7 @@ public class GameScreen {
     }
 
     /**
-     * Exposes the gameOver method of the gameLoop to be used by the resume menu
+     * Exposes the gameOver method of the gameLoop to be used by the resume menu.
      *
      * @return the runnable of the gameOver method
      */

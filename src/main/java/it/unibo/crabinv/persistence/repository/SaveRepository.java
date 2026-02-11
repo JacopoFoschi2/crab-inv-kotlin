@@ -6,53 +6,58 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * Manages the persistence of Save objects.
+ * Contract for the management and persistence of {@link Save}.
  */
 public interface SaveRepository {
 
     /**
-     * Retrieves the SaveDirectory where to manipulate save files
-     * @return the SaveDirectory in use
+     * Retrieves the directory in use for the management of {@link Save} files.
+     * @return the directory in use
      */
     Path getSaveDirectory();
 
     /**
-     * Retrieves the SaveFactory used for the save file actions
+     * Retrieves the SaveFactory used for the save file actions.
      * @return the SaveFactory in use
      */
     SaveFactory getSaveFactory();
 
     /**
-     * Creates and returns a Save
-     * @return the newly created Save
+     * Creates and returns a {@link Save}.
+     *
+     * @return the newly created {@link Save}
      */
     Save newSave();
 
     /**
-     * Saves (Persists) the Save specified
-     * @param save the Save to save
+     * Saves (Persists) the Save specified.
+     *
+     * @param save the {@link Save} to save
      * @throws java.io.IOException if an I/O error occurs
      */
     void saveSaveFile(Save save) throws java.io.IOException;
 
     /**
-     * Lists all the Save objects found
-     * @return the list of all Save objects found
+     * Lists all the {@link Save} objects found.
+     *
+     * @return the list of all {@link Save} objects found
      * @throws java.io.IOException if an I/O error occurs
      */
     List<Save> list() throws java.io.IOException;
 
     /**
-     * Load the Save specified by the UUID passed
-     * @param saveUUID the identifier to select the Save
-     * @return the Save identified
+     * Load the Save specified by the UUID passed.
+     *
+     * @param saveUUID the identifier to select the {@link Save}
+     * @return the {@link Save} identified
      * @throws java.io.IOException if an I/O error occurs
      */
     Save loadSaveFile(java.util.UUID saveUUID) throws java.io.IOException;
 
     /**
-     * Deletes the Save specified by the UUID passed
-     * @param saveUUID the identifier to select the Save
+     * Deletes the {@link Save} specified by the UUID passed.
+     *
+     * @param saveUUID the identifier to select the {@link Save}
      * @throws java.io.IOException if an I/O error occurs
      */
     void delete(java.util.UUID saveUUID) throws java.io.IOException;

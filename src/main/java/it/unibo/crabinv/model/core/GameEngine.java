@@ -1,7 +1,7 @@
 package it.unibo.crabinv.model.core;
 
-import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.controller.core.collision.CollisionController;
+import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 import it.unibo.crabinv.model.entities.player.Player;
@@ -11,12 +11,12 @@ import it.unibo.crabinv.model.save.GameSession;
 import java.util.List;
 
 /**
- * Defines the contract for the game simulation
+ * Defines the contract for the game simulation.
  */
 public interface GameEngine {
 
     /**
-     * Initializes the instance of the game
+     * Initializes the instance of the game.
      *
      * @param gameSession    the {@link GameSession} from which the {@link GameEngine} will be initialized
      * @param levelFactory   the {@link LevelFactory} used by the {@link GameEngine}
@@ -30,64 +30,80 @@ public interface GameEngine {
               CollisionController collisionController);
 
     /**
-     * Defines the logic of the simulation and advances one tick
+     * Defines the logic of the simulation and advances one tick.
      */
     void tick();
 
     /**
-     * @return the snapshot of the current state
+     * Returns the {@link GameSnapshot} of the current state.
+     *
+     * @return the {@link GameSnapshot} of the current state
      */
     GameSnapshot snapshot();
 
     /**
+     * Returns the current GameEngineState.
+     *
      * @return the current GameEngineState
      */
     GameEngineState getGameState();
 
     /**
-     * Marks the current attempt as game over
+     * Marks the current attempt as game over.
      */
     void gameOver();
 
     /**
-     * Marks the current attempt as won
+     * Marks the current attempt as won.
      */
     void winGame();
 
     /**
-     * Pauses the game, blocks the game logic to the latest snapshot
+     * Pauses the game, blocks the game logic to the latest snapshot.
      */
     void pauseGame();
 
     /**
-     * Resumes the game, resumes the game logic
+     * Resumes the game, resumes the game logic.
      */
     void resumeGame();
 
     /**
-     * @return the {@link Player} in the game engine
+     * Returns the {@link Player} of the {@link GameEngine}.
+     *
+     * @return the {@link Player} in the {@link GameEngine}
      */
     Player getPlayer();
 
     /**
+     * Return the min coordinates of the world.
+     *
      * @return the min coordinates of the world
      */
     double getWorldMinX();
 
     /**
+     * Returns the max coordinates of the world.
+     *
      * @return the max coordinates of the world
      */
     double getWorldMaxX();
 
+    /**
+     * Returns the {@link List} of {@link Enemy} in the {@link GameEngine}.
+     *
+     * @return the {@link List<Enemy>} in the {@link GameEngine}
+     */
     List<Enemy> getEnemyList();
 
     /**
-     * Creates the bullets for the GameEngine
+     * Creates the bullets for the GameEngine.
      */
     void spawnPlayerBullet();
 
     /**
-     * Spawns the bullet for the enemies
+     * Spawns the bullet for the enemies.
+     *
      * @param enemy to know the position of it to make the bullet come from it
      */
     void spawnEnemyBullet(Enemy enemy);

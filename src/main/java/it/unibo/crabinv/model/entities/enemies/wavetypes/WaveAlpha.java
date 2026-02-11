@@ -7,6 +7,9 @@ import it.unibo.crabinv.model.entities.enemies.wave.WaveImpl;
 
 import java.util.List;
 
+/**
+ * Preset of a {@link WaveImpl}.
+ */
 public final class WaveAlpha extends WaveImpl {
     public WaveAlpha(final EnemyFactory enemyFactory,
                      final RewardsService rewardsService,
@@ -20,7 +23,6 @@ public final class WaveAlpha extends WaveImpl {
                 12,
                 spawnYNorm,
                 bottomXNorm
-
         );
     }
 }

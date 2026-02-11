@@ -1,18 +1,27 @@
 package it.unibo.crabinv.controller.input;
 
 import it.unibo.crabinv.model.entities.entity.Delta;
+import it.unibo.crabinv.model.entities.player.Player;
 import it.unibo.crabinv.model.input.InputSnapshot;
 import it.unibo.crabinv.model.input.InputSnapshotImpl;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Implementation of the {@link InputController} for controlling the {@link Player}
+ */
 public class InputControllerPlayer implements InputController {
 
     private final Set<Integer> pressedKeys;
     private final InputMapper mapper;
 
-    public InputControllerPlayer(InputMapper mapper) {
+    /**
+     * Constructor for the {@link InputControllerPlayer}.
+     *
+     * @param mapper the {@link InputMapper} used by the {@link InputControllerPlayer}
+     */
+    public InputControllerPlayer(final InputMapper mapper) {
         if (mapper == null) {
             throw new NullPointerException("mapper is null");
         }
@@ -20,9 +29,12 @@ public class InputControllerPlayer implements InputController {
         this.pressedKeys = new HashSet<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onKeyPressed(int keyCode) {
-        boolean validKey =
+    public void onKeyPressed(final int keyCode) {
+        final boolean validKey =
                 mapper.mapToShoot(keyCode)
                         || mapper.mapToXDelta(keyCode) != Delta.NO_ACTION
                         || mapper.mapToPause(keyCode)
@@ -32,23 +44,29 @@ public class InputControllerPlayer implements InputController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onKeyReleased(int keyCode) {
+    public final void onKeyReleased(final int keyCode) {
         this.pressedKeys.remove(keyCode);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public InputSnapshot getInputState() {
-        boolean isPausePressed = pressedKeys.stream()
+    public final InputSnapshot getInputState() {
+        final boolean isPausePressed = pressedKeys.stream()
                 .anyMatch(mapper::mapToPause);
-        boolean isUnPausePressed = pressedKeys.stream()
+        final boolean isUnPausePressed = pressedKeys.stream()
                 .anyMatch(mapper::mapToUnPause);
-        boolean isShooting = pressedKeys.stream()
+        final boolean isShooting = pressedKeys.stream()
                 .anyMatch(mapper::mapToShoot);
-        boolean isInputRight = pressedKeys.stream()
+        final boolean isInputRight = pressedKeys.stream()
                 .map(mapper::mapToXDelta)
                 .anyMatch(delta -> delta == Delta.INCREASE);
-        boolean isInputLeft = pressedKeys.stream()
+        final boolean isInputLeft = pressedKeys.stream()
                 .map(mapper::mapToXDelta)
                 .anyMatch(delta -> delta == Delta.DECREASE);
         Delta xMovementDelta = Delta.NO_ACTION;

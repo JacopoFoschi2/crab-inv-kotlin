@@ -29,11 +29,19 @@ public class GameLoopControllerImpl implements GameLoopController {
     private final InputController inputController;
     private final PlayerController playerController;
     private final AudioController audioController;
+    private final Map<Enemy, EnemyController> enemyControllerMap;
     private long accumulatedMillis;
     private long totalElapsedTicks;
     private GameSnapshot latestSnapshot;
-    private final Map<Enemy, EnemyController> enemyControllerMap;
 
+    /**
+     * Constructor for the {@link GameLoopControllerImpl}.
+     *
+     * @param gameEngine       the {@link GameEngine} used by the {@link GameLoopControllerImpl}
+     * @param inputController  the {@link GameEngine} used by the {@link GameLoopControllerImpl}
+     * @param playerController the {@link GameEngine} used by the {@link GameLoopControllerImpl}
+     * @param audioController  the {@link GameEngine} used by the {@link GameLoopControllerImpl}
+     */
     public GameLoopControllerImpl(final GameEngine gameEngine,
                                   final InputController inputController,
                                   final PlayerController playerController,
@@ -123,13 +131,12 @@ public class GameLoopControllerImpl implements GameLoopController {
         }
     }
 
-
     /**
      * Adds the milliseconds of the last frame to the accumulated milliseconds.
      *
      * @param frameElapsedMillis the milliseconds to add.
      */
-    private void accumulateTime(long frameElapsedMillis) {
+    private void accumulateTime(final long frameElapsedMillis) {
         this.accumulatedMillis += frameElapsedMillis;
     }
 
@@ -144,7 +151,7 @@ public class GameLoopControllerImpl implements GameLoopController {
      *
      * @param nextStepTicks the ticks the Game Engine must calculate.
      */
-    private void executeTicks(int nextStepTicks) {
+    private void executeTicks(final int nextStepTicks) {
         for (int i = 0; i < nextStepTicks; i++) {
             playerUpdate();
             enemyUpdate();
@@ -164,12 +171,12 @@ public class GameLoopControllerImpl implements GameLoopController {
      * Updates the Active enemies' data.
      */
     private void enemyUpdate() {
-        List<Enemy> enemyList = this.gameEngine.getEnemyList();
-        for (Enemy enemy : enemyList) {
+        final List<Enemy> enemyList = this.gameEngine.getEnemyList();
+        for (final Enemy enemy : enemyList) {
             enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController, gameEngine));
         }
-        for (Enemy enemy : enemyList) {
-            EnemyController enemyController = enemyControllerMap.get(enemy);
+        for (final Enemy enemy : enemyList) {
+            final EnemyController enemyController = enemyControllerMap.get(enemy);
             if (enemyController != null) {
                 enemyController.update(Delta.INCREASE);
             }

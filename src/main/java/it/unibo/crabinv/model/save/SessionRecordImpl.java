@@ -1,13 +1,12 @@
 package it.unibo.crabinv.model.save;
 
 /**
- * Record-Class Implementation of SessionRecord
+ * Record-Class Implementation of {@link SessionRecord}.
  *
- * @param timeStamp    the starting timeStamp of the gameSession
- * @param lastLevel    currentLevel at the moment of the record
- * @param lastCurrency the currency at the moment of the record
+ * @param timeStamp    the starting timeStamp of the {@link GameSession}
+ * @param lastLevel    currentLevel at the moment of the record creation
+ * @param lastCurrency the currency at the moment of the record creation
  */
-
 public record SessionRecordImpl(
         long timeStamp,
         int lastLevel,
@@ -15,10 +14,11 @@ public record SessionRecordImpl(
         boolean gameWon
 ) implements SessionRecord {
     /**
-     * Convenience constructor for SessionRecordImpl from a gameOver=true GameSessionImpl
-     * @param gameSession the session to record
+     * Constructor for {@link SessionRecordImpl} from a {@code gameOver=true} {@link GameSessionImpl}.
+     *
+     * @param gameSession the {@link GameSessionImpl} to record
      */
-    public SessionRecordImpl(GameSessionImpl gameSession) {
+    public SessionRecordImpl(final GameSessionImpl gameSession) {
         this(
                 gameSession.getStartingTimeStamp(),
                 gameSession.getCurrentLevel(),
@@ -27,21 +27,33 @@ public record SessionRecordImpl(
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getStartingTimeStamp() {
         return this.timeStamp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLastLevel() {
         return this.lastLevel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLastCurrency() {
         return this.lastCurrency;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getWonGame() {
         return this.gameWon;

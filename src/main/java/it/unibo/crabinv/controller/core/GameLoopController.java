@@ -25,13 +25,15 @@ public interface GameLoopController {
     /**
      * Calculates the game engine next step {@link GameSnapshot} to be passed onto the renderer.
      * Advances the game logic by the calculated step.
+     *
      * @param frameElapsedMillis the milliseconds accumulated between two frames, must be positive.
      * @return the calculated {@link GameSnapshot}
      */
     GameSnapshot step(long frameElapsedMillis);
 
     /**
-     * Returns the {@link GameSnapshot} to be rendered, does not advance the game logic
+     * Returns the {@link GameSnapshot} to be rendered, does not advance the game logic.
+     *
      * @return the latest {@link GameSnapshot}
      */
     GameSnapshot getLatestSnapshot();
@@ -45,6 +47,4 @@ public interface GameLoopController {
      * Requests the {@link GameEngine} to resume the game.
      */
     void resume();
-
-
 }

@@ -8,11 +8,12 @@ import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider;
 import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence;
 import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveAlpha;
 import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveBeta;
+
 import java.util.List;
 import java.util.Objects;
 
 /**
- * It's the implementation of the LevleFactory.
+ * Implementation of {@link LevelFactory}.
  */
 public final class LevelFactoryImpl implements LevelFactory {
     private static final double SPAWN_STEP = 0.05;
@@ -28,7 +29,6 @@ public final class LevelFactoryImpl implements LevelFactory {
         }
         Objects.requireNonNull(enemyFactory, "enemyFactory cannot be null");
         Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
-
         final List<Wave> initWaves = switch (levelId) {
             case 1 -> List.of(
                     new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN)
@@ -44,16 +44,13 @@ public final class LevelFactoryImpl implements LevelFactory {
             );
             default -> List.of();
         };
-
         final List<Wave> waves = initWaves.stream()
                 .peek((Wave wave) -> {
                     final int i = initWaves.indexOf(wave);
                     wave.setSpawnY(SPAWN_STEP * i + DEFAULT_TOP_MARGIN);
                 })
                 .toList();
-
         final Wave allWaves = new WaveComposite(waves);
-
         final WaveProvider provider = new WaveSequence(List.of(allWaves));
         return new LevelImpl(provider);
     }

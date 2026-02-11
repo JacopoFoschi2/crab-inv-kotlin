@@ -3,7 +3,18 @@ package it.unibo.crabinv.persistence.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import it.unibo.crabinv.model.save.*;
+import it.unibo.crabinv.model.save.GameSession;
+import it.unibo.crabinv.model.save.GameSessionImpl;
+import it.unibo.crabinv.model.save.PlayerMemorial;
+import it.unibo.crabinv.model.save.PlayerMemorialImpl;
+import it.unibo.crabinv.model.save.Save;
+import it.unibo.crabinv.model.save.SaveFactory;
+import it.unibo.crabinv.model.save.SaveFactoryImpl;
+import it.unibo.crabinv.model.save.SaveImpl;
+import it.unibo.crabinv.model.save.SessionRecord;
+import it.unibo.crabinv.model.save.SessionRecordImpl;
+import it.unibo.crabinv.model.save.UserProfile;
+import it.unibo.crabinv.model.save.UserProfileImpl;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
 import java.io.IOException;
@@ -15,7 +26,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
- * Gson based Implementation of SaveRepository for json file persistence.
+ * Gson-based Implementation of SaveRepository for JSON file persistence.
  */
 public class SaveRepositoryGson implements SaveRepository {
 
@@ -26,7 +37,7 @@ public class SaveRepositoryGson implements SaveRepository {
     /**
      * LITE Constructor to be used by Main, requires only saveDirectory, uses default SaveFactory.
      *
-     * @param saveDirectory the directory where the json files will be stored
+     * @param saveDirectory the directory where the JSON files will be stored
      * @throws IOException if an I/O error occurs
      */
     public SaveRepositoryGson(final Path saveDirectory) throws IOException {
@@ -36,13 +47,13 @@ public class SaveRepositoryGson implements SaveRepository {
     /**
      * FULL Constructor, needed to initialize the Gson.builder and SaveFactory.
      *
-     * @param saveDirectory the directory where the json files will be stored
+     * @param saveDirectory the directory where the JSON files will be stored
      * @throws IOException if an I/O error occurs
      */
-    public SaveRepositoryGson(Path saveDirectory, SaveFactory saveFactory) throws IOException {
+    public SaveRepositoryGson(final Path saveDirectory, final SaveFactory saveFactory) throws IOException {
         this.saveDirectory = (Files.exists(saveDirectory) ? saveDirectory : Files.createDirectories(saveDirectory));
         this.saveFactory = Objects.requireNonNull(saveFactory);
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         builder.registerTypeAdapter(Save.class, (JsonDeserializer<Save>)
                 (json, type, context) ->
@@ -63,14 +74,91 @@ public class SaveRepositoryGson implements SaveRepository {
     }
 
     /**
-     * Helper, returns a validated Save object from a file using GSON
+     * {@inheritDoc}
+     */
+    @Override
+    public final Path getSaveDirectory() {
+        return this.saveDirectory;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SaveFactory getSaveFactory() {
+        return this.saveFactory;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Save newSave() {
+        return saveFactory.createNewSave();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void saveSaveFile(final Save save) throws IOException {
+        Path filePath = getFilePath(save.getSaveId());
+        try (java.io.Writer writer = Files.newBufferedWriter(filePath)) {
+            this.gson.toJson(save, writer);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final List<Save> list() throws IOException {
+        try (Stream<Path> s = Files.list(saveDirectory)) {
+            return s.filter(saveFile -> saveFile.toString().endsWith(".json"))
+                    .map(this::pathToSaveHandler)
+                    .filter(java.util.Objects::nonNull)
+                    .toList();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Save loadSaveFile(final UUID saveUUID) throws IOException {
+        final Path filePath = getFilePath(saveUUID);
+        return java.util.Optional.ofNullable(pathToSaveHandler(filePath))
+                .orElseThrow(() -> new IOException("Cannot find save: " + saveUUID));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void delete(final UUID saveUUID) throws IOException {
+        final Path filePath = getFilePath(saveUUID);
+        Files.deleteIfExists(filePath);
+    }
+
+    /**
+     * Helper method that returns the Path to the file containing the UUID selected.
+     *
+     * @param id the UUID selected
+     * @return the Path to the corresponding JSON file
+     */
+    private final Path getFilePath(final UUID id) {
+        return this.saveDirectory.resolve(id.toString() + ".json");
+    }
+
+    /**
+     * Helper method that returns a validated Save object from a file using GSON.
      *
      * @param path the file path
      * @return the Save object, or IOException if an I/O error occurs
      */
-    private Save pathToSaveHandler(Path path) {
+    private Save pathToSaveHandler(final Path path) {
         try (java.io.BufferedReader reader = Files.newBufferedReader(path)) {
-            Save rawSaveFile = gson.fromJson(reader, Save.class);
+            final Save rawSaveFile = gson.fromJson(reader, Save.class);
             Objects.requireNonNull(rawSaveFile);
             return saveFactory.restoreSave(
                     rawSaveFile.getSaveId(),
@@ -85,76 +173,5 @@ public class SaveRepositoryGson implements SaveRepository {
             System.err.println("Invalid or empty file: " + path + ": " + error.getMessage());
             return null;
         }
-    }
-
-    /**
-     * Helper class, returns the Path to the file containing the UUID selected
-     *
-     * @param id the UUID selected
-     * @return the Path to the corresponding json file
-     */
-    private Path getFilePath(UUID id) {
-        return this.saveDirectory.resolve(id.toString() + ".json");
-    }
-
-    @Override
-    public Path getSaveDirectory() {
-        return this.saveDirectory;
-    }
-
-    @Override
-    public SaveFactory getSaveFactory() {
-        return this.saveFactory;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Save newSave() {
-        return saveFactory.createNewSave();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void saveSaveFile(Save save) throws IOException {
-        Path filePath = getFilePath(save.getSaveId());
-        try (java.io.Writer writer = Files.newBufferedWriter(filePath)) {
-            this.gson.toJson(save, writer);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Save> list() throws IOException {
-        try (Stream<Path> s = Files.list(saveDirectory)) {
-            return s.filter(saveFile -> saveFile.toString().endsWith(".json"))
-                    .map(this::pathToSaveHandler)
-                    .filter(java.util.Objects::nonNull)
-                    .toList();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Save loadSaveFile(UUID saveUUID) throws IOException {
-        Path filePath = getFilePath(saveUUID);
-        return java.util.Optional.ofNullable(pathToSaveHandler(filePath))
-                .orElseThrow(() -> new IOException("Cannot find save: " + saveUUID));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(UUID saveUUID) throws IOException {
-        Path filePath = getFilePath(saveUUID);
-        Files.deleteIfExists(filePath);
     }
 }
