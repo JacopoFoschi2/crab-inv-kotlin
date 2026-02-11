@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
@@ -29,6 +30,7 @@ public final class MainMenu {
      * @param loc the needed manager for the translation
      * @param audio the audio manager needed for the sounds of the buttons
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public MainMenu(final SceneManager sceneManager,
                     final LocalizationController loc,
                     final AudioController audio) {
