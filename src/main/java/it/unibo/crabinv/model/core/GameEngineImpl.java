@@ -50,6 +50,7 @@ public class GameEngineImpl implements GameEngine {
     /**
      * Starts the {@link GameEngine} creating an empty instance.
      * Uses the {@code init()} method to initialize the {@link GameEngine}
+     *
      * @see #init(GameSession, LevelFactory, EnemyFactory, RewardsService, CollisionController)
      */
     public GameEngineImpl() {

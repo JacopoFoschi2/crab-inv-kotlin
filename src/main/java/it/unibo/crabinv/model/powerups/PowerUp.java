@@ -30,5 +30,5 @@ public interface PowerUp {
      *
      * @return the type of the powerUp
      */
-    it.unibo.crabinv.model.powerups.PowerUpType getPowerUpType();
+    PowerUpType getPowerUpType();
 }
