@@ -138,7 +138,8 @@
 }
 
 .shop-description-box {
-    -fx-padding: 30 0 40 0;
+    -fx-max-width: 400;
+    -fx-min-height: 220;
 }
 
 .powerup-card {
