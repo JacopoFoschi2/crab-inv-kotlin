@@ -113,10 +113,9 @@ public class GameLoopControllerImpl implements GameLoopController {
      * Controls if the game is in the correct state to be resumed.
      */
     private void checkResume() {
-        if (this.gameEngine.getGameState() == GameEngineState.PAUSED) {
-            if (inputController.getInputState().isUnpause()) {
+        if (this.gameEngine.getGameState() == GameEngineState.PAUSED
+                && inputController.getInputState().isUnpause()) {
                 resume();
-            }
         }
     }
 
@@ -124,10 +123,9 @@ public class GameLoopControllerImpl implements GameLoopController {
      * Controls if the game is in the correct state to be paused.
      */
     private void checkPause() {
-        if (inputController.getInputState().isPause()) {
-            if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
+        if (inputController.getInputState().isPause()
+                && this.gameEngine.getGameState() == GameEngineState.RUNNING) {
                 pause();
-            }
         }
     }
 

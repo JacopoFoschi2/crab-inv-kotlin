@@ -25,7 +25,7 @@ public record SessionControllerImpl(Save save) implements SessionController {
      * {@inheritDoc}
      */
     @Override
-    public final Save save() {
+    public Save save() {
         return this.save;
     }
 
@@ -33,7 +33,7 @@ public record SessionControllerImpl(Save save) implements SessionController {
      * {@inheritDoc}
      */
     @Override
-    public final GameSession getGameSession() {
+    public GameSession getGameSession() {
         return this.save.getGameSession();
     }
 
@@ -41,7 +41,7 @@ public record SessionControllerImpl(Save save) implements SessionController {
      * {@inheritDoc}
      */
     @Override
-    public final GameSession newGameSession() {
+    public GameSession newGameSession() {
         this.save.closeGameSession();
         this.save.newGameSession();
         return this.save.getGameSession();
@@ -51,7 +51,7 @@ public record SessionControllerImpl(Save save) implements SessionController {
      * {@inheritDoc}
      */
     @Override
-    public final void gameOverGameSession() {
+    public void gameOverGameSession() {
         final GameSession gameSession = save.getGameSession();
         final PlayerMemorial playerMemorial = save.getPlayerMemorial();
         final SessionRecord sessionRecord = new SessionRecordImpl(

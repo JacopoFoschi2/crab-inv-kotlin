@@ -56,7 +56,7 @@ public record SessionRecordImpl(
      * {@inheritDoc}
      */
     @Override
-    public boolean getWonGame() {
+    public boolean isGameWon() {
         return this.gameWon;
     }
 }

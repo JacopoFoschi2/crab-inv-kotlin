@@ -3,8 +3,6 @@ package it.unibo.crabinv.view;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.MetaGameController;
 import it.unibo.crabinv.controller.core.MetaGameControllerImpl;
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.save.SessionController;
 import it.unibo.crabinv.controller.save.SessionControllerImpl;
 import it.unibo.crabinv.model.core.GameEngine;
@@ -22,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Objects;
 
 /**
@@ -30,13 +29,10 @@ import java.util.Objects;
 public class GameScreen {
 
     private final SceneManager sceneManager;
-    private final LocalizationController loc;
-    private final AudioController audio;
     private final Save save;
     private final SaveRepository repo;
     private MetaGameController metaGameController;
     private AnimationTimer timer;
-    private Canvas canvas;
     private GameRenderer gameRenderer;
     private GameEngineState lastEngineState;
 
@@ -44,19 +40,13 @@ public class GameScreen {
      * Constructor of {@link GameScreen}.
      *
      * @param sceneManager the {@link SceneManager} used by the {@link GameScreen}
-     * @param loc          the {@link LocalizationController} used by the {@link GameScreen}
-     * @param audio        the {@link AudioController} used by the {@link GameScreen}
      * @param save         the {@link Save} used by the {@link GameScreen}
      * @param repo         the {@link SaveRepository} used by the {@link GameScreen}
      */
     public GameScreen(final SceneManager sceneManager,
-                      final LocalizationController loc,
-                      final AudioController audio,
                       final Save save,
                       final SaveRepository repo) {
         this.sceneManager = Objects.requireNonNull(sceneManager, "sceneManager must not be null");
-        this.loc = Objects.requireNonNull(loc, "loc must not be null");
-        this.audio = Objects.requireNonNull(audio, "audio must not be null");
         this.save = Objects.requireNonNull(save, "save must not be null");
         this.repo = Objects.requireNonNull(repo, "SaveRepository must not be null");
         this.lastEngineState = null;
@@ -71,7 +61,7 @@ public class GameScreen {
         final StackPane root = new StackPane();
         final double width = sceneManager.getWidth();
         final double height = sceneManager.getHeight();
-        this.canvas = new Canvas(width, height);
+        final Canvas canvas = new Canvas(width, height);
         final Label hp = new Label();
         final Label money = new Label();
         final VBox hud = new VBox(ViewParameters.DEFAULT_HUD_MARGIN, hp, money);
@@ -108,7 +98,7 @@ public class GameScreen {
                 try {
                     gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
                 } catch (final IOException error) {
-                    throw new RuntimeException(error);
+                    throw new UncheckedIOException(error);
                 }
                 final GameEngineState currentEngineState = metaGameController.getGameEngineState();
                 if (currentEngineState != lastEngineState) {
@@ -138,6 +128,9 @@ public class GameScreen {
                 }
                 case WIN -> {
                     sceneManager.showGameOver(GameOver.MessageTypes.VICTORY);
+                }
+                default -> {
+
                 }
             }
         }
@@ -169,7 +162,6 @@ public class GameScreen {
      */
     private void closeEngineStep2() {
         timer = null;
-        canvas = null;
         gameRenderer = null;
         metaGameController = null;
     }

@@ -31,5 +31,5 @@ public interface SessionRecord {
      *
      * @return if the game has been won
      */
-    boolean getWonGame();
+    boolean isGameWon();
 }

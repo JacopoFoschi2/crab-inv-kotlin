@@ -42,16 +42,18 @@ public class GameEngineImpl implements GameEngine {
     private LevelFactory levelFactory;
     private Level level;
     private Player player;
-    private long elapsedTicks;
     private GameEngineState gameEngineState;
     private CollisionController collisionController;
     private EnemyFactory enemyFactory;
     private RewardsService rewardsService;
 
     /**
-     * Starts the {@link GameEngine}.
+     * Starts the {@link GameEngine} creating an empty instance.
+     * Uses the {@code init()} method to initialize the {@link GameEngine}
+     * @see #init(GameSession, LevelFactory, EnemyFactory, RewardsService, CollisionController)
      */
     public GameEngineImpl() {
+        //Empty Constructor.
     }
 
     /**
@@ -90,7 +92,6 @@ public class GameEngineImpl implements GameEngine {
                 .maxBound(this.getWorldMaxX())
                 .sprite(EntitySprites.PLAYER)
                 .build();
-        this.elapsedTicks = 0;
         this.gameEngineState = GameEngineState.RUNNING;
     }
 
@@ -117,7 +118,6 @@ public class GameEngineImpl implements GameEngine {
                 levelCheck();
                 checkGameOver();
                 checkWin();
-                this.elapsedTicks++;
             }
             case PAUSED, GAME_OVER, WIN -> {
             }

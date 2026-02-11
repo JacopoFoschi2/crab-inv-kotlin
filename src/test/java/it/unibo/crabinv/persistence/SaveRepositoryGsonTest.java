@@ -82,8 +82,8 @@ class SaveRepositoryGsonTest {
         Assertions.assertEquals(testRecord.getLastCurrency(),
                 loadedRecord.getLastCurrency(),
                 "Last currency must be preserved");
-        Assertions.assertEquals(testRecord.getWonGame(),
-                loadedRecord.getWonGame(),
+        Assertions.assertEquals(testRecord.isGameWon(),
+                loadedRecord.isGameWon(),
                 "Game won flag must be preserved");
     }
 

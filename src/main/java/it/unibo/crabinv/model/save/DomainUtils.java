@@ -45,7 +45,7 @@ public final class DomainUtils {
      * @return the result clamped to zero
      */
     public static int subClampedToZero(final int currentAmount, final int amountToSub) {
-        DomainUtils.requireNonNegativeAmount(amountToSub);
+        requireNonNegativeAmount(amountToSub);
         return Math.max(0, currentAmount - amountToSub);
     }
 }

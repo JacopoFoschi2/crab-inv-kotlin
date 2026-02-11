@@ -118,7 +118,7 @@ public class SaveRepositoryGson implements SaveRepository {
         try (Stream<Path> s = Files.list(saveDirectory)) {
             return s.filter(saveFile -> saveFile.toString().endsWith(".json"))
                     .map(this::pathToSaveHandler)
-                    .filter(java.util.Objects::nonNull)
+                    .filter(Objects::nonNull)
                     .toList();
         }
     }
@@ -168,11 +168,7 @@ public class SaveRepositoryGson implements SaveRepository {
                     rawSaveFile.getUserProfile(),
                     rawSaveFile.getPlayerMemorial(),
                     rawSaveFile.getGameSession());
-        } catch (final IOException error) {
-            System.err.println("Cannot load files: " + path);
-            return null;
-        } catch (final JsonParseException error) {
-            System.err.println("Invalid or empty file: " + path + ": " + error.getMessage());
+        } catch (final IOException | JsonParseException error) {
             return null;
         }
     }

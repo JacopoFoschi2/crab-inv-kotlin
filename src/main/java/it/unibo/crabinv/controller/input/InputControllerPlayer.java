@@ -6,6 +6,7 @@ import it.unibo.crabinv.model.input.InputSnapshot;
 import it.unibo.crabinv.model.input.InputSnapshotImpl;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -22,10 +23,7 @@ public class InputControllerPlayer implements InputController {
      * @param mapper the {@link InputMapper} used by the {@link InputControllerPlayer}
      */
     public InputControllerPlayer(final InputMapper mapper) {
-        if (mapper == null) {
-            throw new NullPointerException("mapper is null");
-        }
-        this.mapper = mapper;
+        this.mapper = Objects.requireNonNull(mapper);
         this.pressedKeys = new HashSet<>();
     }
 

@@ -113,7 +113,7 @@ public class SceneManager {
      * Sets the Game Screen as the shown one.
      */
     public void showGame() {
-        final GameScreen gameScreen = new GameScreen(this, loc, audio, save, repo);
+        final GameScreen gameScreen = new GameScreen(this, save, repo);
         final Node gameView = gameScreen.getView();
         pauseMenu = new PauseMenu(this, loc, audio, gameScreen.getResume(), gameScreen.getGameOver()).getView();
         pauseMenu.setVisible(false);

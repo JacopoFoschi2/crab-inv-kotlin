@@ -72,7 +72,7 @@ public class MemorialScreen {
                 if (empty || rec == null) {
                     setText(null);
                 } else {
-                    final String status = rec.getWonGame() ? "Vinto" : "Perso";
+                    final String status = rec.isGameWon() ? "Vinto" : "Perso";
                     setText(String.format(
                             "%tF %tT – Livello %d – Monete %d – %s",
                             rec.getStartingTimeStamp(),
