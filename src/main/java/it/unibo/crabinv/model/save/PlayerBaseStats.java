@@ -1,6 +1,6 @@
 package it.unibo.crabinv.model.save;
 
-import it.unibo.crabinv.model.powerUpsShop.PowerUpType;
+import it.unibo.crabinv.model.powerups.PowerUpType;
 
 public enum PlayerBaseStats {
     SPEED(0.01, PowerUpType.SPEED_UP),

@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import static it.unibo.crabinv.view.ViewParameters.DEFAULT_INSETS;
 import static it.unibo.crabinv.view.ViewParameters.DEFAULT_PAUSE_WIDTH;
 import static it.unibo.crabinv.view.ViewParameters.DEFAULT_SPACING;
+import static it.unibo.crabinv.view.ViewParameters.SETTINGS_ALIGMENT;
 
 /**
  * Provides the settings interface of the application.
@@ -27,7 +28,6 @@ public class Settings {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
-    private final Pos settingsAlignment = Pos.CENTER_LEFT;
     private final SettingComponentsGenerator components;
 
     /**
@@ -39,7 +39,7 @@ public class Settings {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
-        components = new SettingComponentsGenerator(sceneManager, loc, audio, settingsAlignment);
+        components = new SettingComponentsGenerator(sceneManager, loc, audio, SETTINGS_ALIGMENT);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Settings {
         grid.addColumn(1, mainColumn);
         grid.addColumn(2);
         grid.setAlignment(Pos.CENTER);
-        mainColumn.setAlignment(settingsAlignment);
+        mainColumn.setAlignment(SETTINGS_ALIGMENT);
         final HBox languageSpinner = components.createLanguageSelector();
         final HBox bgmVolume = components.createVolumeSlider(
                 audio.getBGMVolume(),

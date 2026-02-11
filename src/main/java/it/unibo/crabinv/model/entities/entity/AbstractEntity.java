@@ -33,7 +33,8 @@ public abstract class AbstractEntity implements Entity {
             final CollisionGroups collisionGroup,
             final double radius,
             final EntitySprites sprite) {
-        setPosition(x, y);
+        this.x = x;
+        this.y = y;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.collisionGroup = collisionGroup;

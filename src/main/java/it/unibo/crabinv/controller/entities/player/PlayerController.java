@@ -30,9 +30,6 @@ public class PlayerController extends AbstractEntityController<Player> implement
 
     /**
      * {@inheritDoc}
-     *
-     * @param firePressed tells the controller if the user requested to fire
-     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
     @Override
     public void update(final boolean firePressed, final Delta delta) {

@@ -16,17 +16,17 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private final double maxBound;
 
     /**
-     * Constructs the bullet.
+     * Constructs the basic bullet.
      *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param maxHealth the max health of the bullet
-     * @param collisionGroup the collision group of the bullet
-     * @param radius the radius of the bullet, used to compute collisions
+     * @param x the x coordinate at spawn
+     * @param y the y coordinate at spawn
+     * @param maxHealth the max health
+     * @param collisionGroup the collision group the bullet is part of
+     * @param radius the radius needed to compute collision
      * @param speed the speed of the bullet
-     * @param minBound the minimal bounds of the bullet
-     * @param maxBound the maximum bounds of the bullet
-     * @param sprite the bullet's sprite
+     * @param minBound the minimal bounds of the screen
+     * @param maxBound the maximum bounds of the screen
+     * @param sprite the path to the sprite in resources
      */
     public AbstractBullet(
             final double x,

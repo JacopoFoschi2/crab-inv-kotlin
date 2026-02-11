@@ -3,7 +3,7 @@ package it.unibo.crabinv.save;
 import it.unibo.crabinv.controller.save.SaveControllerImpl;
 import it.unibo.crabinv.controller.save.SessionController;
 import it.unibo.crabinv.controller.save.SessionControllerImpl;
-import it.unibo.crabinv.model.powerUpsShop.PowerUpType;
+import it.unibo.crabinv.model.powerups.PowerUpType;
 import it.unibo.crabinv.model.save.GameSession;
 import it.unibo.crabinv.model.save.PlayerMemorial;
 import it.unibo.crabinv.model.save.Save;
@@ -18,18 +18,23 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.UUID;
 
+/**
+ * Tests if the persistence works correctly.
+ */
 class SavePersistenceFlowTest {
-
+    private static final int MAX_SPEED_UP = 3;
+    private static final int MAX_FIRERATE_UP = 2;
+    private static final int MAX_HEALTH_UP = 5;
     @TempDir
-    Path tempDir;
+    private Path tempDir;
 
     @Test
-    void testFullSaveFlow_creation_load_powerups_session_gameOver_memorial_and_persistence() throws IOException {
+    void testFullSaveFlowCreationLoadPowerUpsSessionGameOverMemorialAndPersistence() throws IOException {
         // Arrange: repository + create a new Save
-        SaveRepository repository = new SaveRepositoryGson(tempDir);
-        SaveControllerImpl saveController = new SaveControllerImpl(repository);
+        final SaveRepository repository = new SaveRepositoryGson(tempDir);
+        final SaveControllerImpl saveController = new SaveControllerImpl(repository);
 
-        Save save = saveController.createSave();
+        final Save save = saveController.createSave();
 
         // Assert: save created correctly
         Assertions.assertNotNull(save, "Save must be created");
@@ -39,32 +44,33 @@ class SavePersistenceFlowTest {
         Assertions.assertNotNull(save.getPlayerMemorial(), "PlayerMemorial must not be null");
 
         // Act + Assert: modify powerups in UserProfile
-        save.getUserProfile().updatePowerUp(PowerUpType.SPEED_UP, 3);
-        save.getUserProfile().updatePowerUp(PowerUpType.FIRERATE_UP, 2);
-        save.getUserProfile().updatePowerUp(PowerUpType.HEALTH_UP, 5);
+        save.getUserProfile().updatePowerUp(PowerUpType.SPEED_UP, MAX_SPEED_UP);
+        save.getUserProfile().updatePowerUp(PowerUpType.FIRERATE_UP, MAX_FIRERATE_UP);
+        save.getUserProfile().updatePowerUp(PowerUpType.HEALTH_UP, MAX_HEALTH_UP);
 
-        Assertions.assertEquals(3, save.getUserProfile().getPowerUpLevel(PowerUpType.SPEED_UP));
-        Assertions.assertEquals(2, save.getUserProfile().getPowerUpLevel(PowerUpType.FIRERATE_UP));
-        Assertions.assertEquals(5, save.getUserProfile().getPowerUpLevel(PowerUpType.HEALTH_UP));
+        Assertions.assertEquals(MAX_SPEED_UP, save.getUserProfile().getPowerUpLevel(PowerUpType.SPEED_UP));
+        Assertions.assertEquals(MAX_FIRERATE_UP, save.getUserProfile().getPowerUpLevel(PowerUpType.FIRERATE_UP));
+        Assertions.assertEquals(MAX_HEALTH_UP, save.getUserProfile().getPowerUpLevel(PowerUpType.HEALTH_UP));
 
         // Act: create/load a GameSession through SessionController
-        SessionController sessionController = new SessionControllerImpl(save);
-        GameSession gameSession = sessionController.newGameSession();
+        final SessionController sessionController = new SessionControllerImpl(save);
+        final GameSession gameSession = sessionController.newGameSession();
 
         Assertions.assertNotNull(gameSession, "GameSession must be created/loaded");
         Assertions.assertNotNull(save.getGameSession(), "GameSession must be bound to Save");
 
         // Mutate session a bit to have meaningful values
+        final int addCurrency = 42;
         gameSession.advanceLevel();
-        gameSession.addCurrency(42);
+        gameSession.addCurrency(addCurrency);
 
-        long sessionStartTs = gameSession.getStartingTimeStamp();
-        int expectedLastLevel = gameSession.getCurrentLevel();
-        int expectedLastCurrency = gameSession.getCurrency();
+        final long sessionStartTs = gameSession.getStartingTimeStamp();
+        final int expectedLastLevel = gameSession.getCurrentLevel();
+        final int expectedLastCurrency = gameSession.getCurrency();
 
         // Act: close with game over and add to memorial
-        PlayerMemorial memorialBefore = save.getPlayerMemorial();
-        int memorialSizeBefore = memorialBefore.getMemorialList().size();
+        final PlayerMemorial memorialBefore = save.getPlayerMemorial();
+        final int memorialSizeBefore = memorialBefore.getMemorialList().size();
 
         gameSession.markGameOver();
         sessionController.gameOverGameSession();
@@ -72,36 +78,42 @@ class SavePersistenceFlowTest {
         // Assert: session closed, memorial updated
         Assertions.assertNull(save.getGameSession(), "After gameOverGameSession(), GameSession must be closed (null)");
 
-        PlayerMemorial memorialAfter = save.getPlayerMemorial();
+        final PlayerMemorial memorialAfter = save.getPlayerMemorial();
         Assertions.assertEquals(
                 memorialSizeBefore + 1,
                 memorialAfter.getMemorialList().size(),
                 "PlayerMemorial must contain one more record after game over"
         );
 
-        SessionRecord record = memorialAfter.getMemorialRecord(sessionStartTs);
+        final SessionRecord record = memorialAfter.getMemorialRecord(sessionStartTs);
         Assertions.assertNotNull(record, "Memorial must contain a record for the ended session");
         Assertions.assertEquals(sessionStartTs, record.getStartingTimeStamp(), "Record timestamp must match session start");
         Assertions.assertEquals(expectedLastLevel, record.getLastLevel(), "Record last level must match session last level");
-        Assertions.assertEquals(expectedLastCurrency, record.getLastCurrency(), "Record last currency must match session last currency");
+        Assertions.assertEquals(
+                expectedLastCurrency,
+                record.getLastCurrency(),
+                "Record last currency must match session last currency");
 
         // Act: persist Save and reload it
-        UUID saveId = save.getSaveId();
+        final UUID saveId = save.getSaveId();
         repository.saveSaveFile(save);
-        Save loaded = repository.loadSaveFile(saveId);
+        final Save loaded = repository.loadSaveFile(saveId);
 
         // Assert: loaded Save is consistent and data persisted
         Assertions.assertNotNull(loaded, "Loaded save must not be null");
         Assertions.assertEquals(saveId, loaded.getSaveId(), "Loaded save must preserve UUID");
-        Assertions.assertEquals(save.getCreationTimeStamp(), loaded.getCreationTimeStamp(), "Loaded save must preserve creation timestamp");
+        Assertions.assertEquals(
+                save.getCreationTimeStamp(),
+                loaded.getCreationTimeStamp(),
+                "Loaded save must preserve creation timestamp");
 
         // PowerUps persisted
-        Assertions.assertEquals(3, loaded.getUserProfile().getPowerUpLevel(PowerUpType.SPEED_UP));
-        Assertions.assertEquals(2, loaded.getUserProfile().getPowerUpLevel(PowerUpType.FIRERATE_UP));
-        Assertions.assertEquals(5, loaded.getUserProfile().getPowerUpLevel(PowerUpType.HEALTH_UP));
+        Assertions.assertEquals(MAX_SPEED_UP, loaded.getUserProfile().getPowerUpLevel(PowerUpType.SPEED_UP));
+        Assertions.assertEquals(MAX_FIRERATE_UP, loaded.getUserProfile().getPowerUpLevel(PowerUpType.FIRERATE_UP));
+        Assertions.assertEquals(MAX_HEALTH_UP, loaded.getUserProfile().getPowerUpLevel(PowerUpType.HEALTH_UP));
 
         // Memorial persisted
-        SessionRecord loadedRecord = loaded.getPlayerMemorial().getMemorialRecord(sessionStartTs);
+        final SessionRecord loadedRecord = loaded.getPlayerMemorial().getMemorialRecord(sessionStartTs);
         Assertions.assertNotNull(loadedRecord, "Loaded memorial must contain the previously saved session record");
         Assertions.assertEquals(expectedLastLevel, loadedRecord.getLastLevel());
         Assertions.assertEquals(expectedLastCurrency, loadedRecord.getLastCurrency());

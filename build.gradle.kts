@@ -48,5 +48,5 @@ tasks.build {
 }
 
 application {
-    mainClass.set("it.unibo.crabinv.App\$Main")
+    mainClass.set($$"it.unibo.crabinv.App$Main")
 }

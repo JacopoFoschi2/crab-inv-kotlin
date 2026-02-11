@@ -3,7 +3,7 @@
 ## Guida
 
 - La navigazione di questo gioco va svolta esclusivamente tramite la tastiera
-- Scorrere i menù con Tab o le frecce direzionali e selezionare le opzioni con lo Spazio o il tasto Invio
+- Scorrere i menù principalmente con Tab o anche con le frecce direzionali e selezionare le opzioni con lo Spazio o il tasto Invio
 - Controllare il giocatore con le frecce direzionali sinistra e destra, sparare con Spazio.
 - Per mettere in pausa durante il gioco premere Esc e spostare il focus dal gioco con Tab
 

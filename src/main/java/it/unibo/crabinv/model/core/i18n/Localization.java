@@ -30,9 +30,11 @@ public final class Localization {
     }
 
     /**
-     * Creates new clean Localization.
+     * Default constructor to create a new clean localization.
      */
-    public Localization() { }
+    public Localization() {
+        //this constructor is intentionally empty
+    }
 
     /**
      * Changes currently loaded locale.

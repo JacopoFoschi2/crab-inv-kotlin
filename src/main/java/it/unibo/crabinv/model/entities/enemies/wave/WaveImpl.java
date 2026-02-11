@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * It's the implemantation of the Wave.
+ */
 public class WaveImpl implements Wave {
-
     private final List<EnemyType> enemy;
     private final List<Integer> spawnSlots;
     private final int maxSpawnSlots;
-
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final EnemyFactory enemyFactory;
     private final RewardsService rewardsService;
-
     private double spawnYNorm; //is also the upper bound of Y
     private final double bottomYNorm;
     private boolean spawned;
 
     /**
-     * FULL Constructor with all parameters
+     * FULL Constructor with all parameters for the wave.
      *
      * @param enemies        the composition of the wave
      * @param spawnSlots     the slots for the enemies

@@ -11,8 +11,15 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyDouble;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class WaveTest {
 
@@ -35,8 +42,8 @@ class WaveTest {
 
         final EnemyType type = EnemyType.values()[0];
 
-        double spawnYNorm   = 0.2;
-        double bottomYNorm  = 0.8;
+        final double spawnYNorm = 0.2;
+        final double bottomYNorm = 0.8;
 
         final Wave wave = new WaveImpl(
                 List.of(type),
@@ -48,15 +55,12 @@ class WaveTest {
                 bottomYNorm
         );
 
-        // 1) primo tick: spawna 1 nemico, quindi non può essere finita
         wave.tickUpdate();
         assertFalse(wave.isWaveFinished());
         assertEquals(1, wave.getAliveEnemies().size());
 
-        // 2) il nemico muore "nel gioco"
         alive.set(false);
 
-        // 3) tick successivo: cleanup lo rimuove e la wave finisce
         wave.tickUpdate();
         assertTrue(wave.isWaveFinished());
         assertTrue(wave.getAliveEnemies().isEmpty());

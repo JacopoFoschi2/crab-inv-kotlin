@@ -4,20 +4,25 @@ import it.unibo.crabinv.model.entities.entity.Delta;
 import it.unibo.crabinv.model.input.InputSnapshot;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestInputControllerPlayer {
+/**
+ * Tests if the input works correctly.
+ */
+class TestInputControllerPlayer {
 
     private static InputControllerPlayer newController() {
-        InputMapper mapper = new InputMapperImpl();
+        final InputMapper mapper = new InputMapperImpl();
         return new InputControllerPlayer(mapper);
     }
 
     @Test
     void initialStateIsIdleAndNotShooting() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
-        InputSnapshot snap = controller.getInputState();
+        final InputSnapshot snap = controller.getInputState();
 
         assertFalse(snap.isShooting());
         assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
@@ -25,10 +30,10 @@ public class TestInputControllerPlayer {
 
     @Test
     void pressLeftMovesDecreaseOnX() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
         controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
-        InputSnapshot snap = controller.getInputState();
+        final InputSnapshot snap = controller.getInputState();
 
         assertEquals(Delta.DECREASE, snap.getXMovementDelta());
         assertFalse(snap.isShooting());
@@ -36,10 +41,10 @@ public class TestInputControllerPlayer {
 
     @Test
     void pressRightMovesIncreaseOnX() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
-        InputSnapshot snap = controller.getInputState();
+        final InputSnapshot snap = controller.getInputState();
 
         assertEquals(Delta.INCREASE, snap.getXMovementDelta());
         assertFalse(snap.isShooting());
@@ -47,18 +52,18 @@ public class TestInputControllerPlayer {
 
     @Test
     void leftAndRightTogetherCancelOut() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
         controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
-        InputSnapshot snap = controller.getInputState();
+        final InputSnapshot snap = controller.getInputState();
 
         assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
     }
 
     @Test
     void releasingOneOfConflictingKeysResolvesDirection() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
         controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
@@ -70,7 +75,7 @@ public class TestInputControllerPlayer {
 
     @Test
     void shootIsTrueWhileHeldAndFalseWhenReleased() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
         controller.onKeyPressed(KeyCodeKeyboard.SHOOT.getKeyCode());
         assertTrue(controller.getInputState().isShooting());
@@ -81,12 +86,12 @@ public class TestInputControllerPlayer {
 
     @Test
     void unmappedKeyIsIgnored() {
-        InputControllerPlayer controller = newController();
+        final InputControllerPlayer controller = newController();
 
-        int unmappedKeyCode = 9999;
+        final int unmappedKeyCode = 9999;
         controller.onKeyPressed(unmappedKeyCode);
 
-        InputSnapshot snap = controller.getInputState();
+        final InputSnapshot snap = controller.getInputState();
         assertFalse(snap.isShooting());
         assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
     }

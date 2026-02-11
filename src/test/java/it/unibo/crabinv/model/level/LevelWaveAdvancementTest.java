@@ -9,15 +9,25 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+/**
+ * Tests if the wave advances correctly.
+ */
 class LevelWaveAdvancementTest {
 
     /**
-     * Simula la logica essenziale di GameEngineImpl.WaveCheck():
+     * Simulates the core logic of GameEngineImpl.WaveCheck().
      * - tickUpdate()
-     * - se isWaveFinished() allora advanceWave()
+     * - if isWaveFinished() then advanceWave()
+     *
+     * @param level the level it should run
      */
     private static void waveCheckLikeEngine(final Level level) {
         if (!level.isLevelFinished()) {
@@ -36,7 +46,6 @@ class LevelWaveAdvancementTest {
         final Wave w1 = mock(Wave.class);
         final Wave w2 = mock(Wave.class);
 
-        // w1 risulta "finita" (anche subito) -> l'engine deve avanzare
         when(w1.isWaveFinished()).thenReturn(true);
         when(w2.isWaveFinished()).thenReturn(false);
 
@@ -47,7 +56,7 @@ class LevelWaveAdvancementTest {
 
         waveCheckLikeEngine(level);
 
-        assertSame(w2, level.getCurrentWave(), "Dopo che la prima wave è finita, deve partire la seconda");
+        assertSame(w2, level.getCurrentWave(), "After the first wave finishes, the second should start");
         verify(w1, atLeastOnce()).tickUpdate();
         verify(w1, atLeastOnce()).isWaveFinished();
     }
@@ -67,7 +76,7 @@ class LevelWaveAdvancementTest {
         assertSame(w2, level.getCurrentWave());
 
         waveCheckLikeEngine(level);
-        assertTrue(level.isLevelFinished(), "Finite tutte le wave, il livello deve risultare finito");
+        assertTrue(level.isLevelFinished(), "After all waves are finished, the level should end");
         assertNull(level.getCurrentWave());
     }
 }
