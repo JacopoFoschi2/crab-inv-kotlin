@@ -1,5 +1,6 @@
 package it.unibo.crabinv.model.core;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.collision.CollisionController;
 import it.unibo.crabinv.model.core.collisions.CollisionGroups;
 import it.unibo.crabinv.model.entities.bullets.Bullet;
@@ -66,6 +67,7 @@ public class GameEngineImpl implements GameEngine {
      * @param rewardsServiceParam      the {@link RewardsService} used by the {@link GameEngine}.
      * @param collisionControllerParam the {@link CollisionController} used by the {@link GameEngine}.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     @Override
     public final void init(final GameSession gameSessionParam,
                            final LevelFactory levelFactoryParam,
@@ -266,9 +268,10 @@ public class GameEngineImpl implements GameEngine {
      * Checks if an enemy reaches the Y of the player, destroys the enemy and subtracts player health.
      */
     private void enemyToGroundCheck() {
+        final double EPS = 0.01;
         final List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
         for (final Enemy enemy : enemyList) {
-            if (enemy.getY() == this.player.getY()) {
+            if (Math.abs(enemy.getY() - this.player.getY()) < EPS) {
                 this.gameSession.subPlayerHealth(1);
                 enemy.destroy();
             }

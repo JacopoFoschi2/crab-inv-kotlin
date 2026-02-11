@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
@@ -36,7 +37,6 @@ public class MemorialScreen {
     private final AudioController audio;
     private final Save save;
     private final ListView<SessionRecord> listView = new ListView<>();
-    private Button btnReturn;
     private int lastSelectedIdx = -1;
 
     /**
@@ -47,6 +47,7 @@ public class MemorialScreen {
      * @param audio        the {@link AudioController} used by the {@link MemorialScreen}
      * @param save         the {@link Save} used by the {@link MemorialScreen}
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public MemorialScreen(final SceneManager sceneManager,
                           final LocalizationController loc,
                           final AudioController audio,
@@ -95,7 +96,7 @@ public class MemorialScreen {
                         0,
                         ViewParameters.DEFAULT_INSETS_DESCRIPTION,
                         0));
-        btnReturn = new Button(loc.getString(TextKeys.RETURN));
+        final Button btnReturn = new Button(loc.getString(TextKeys.RETURN));
         btnReturn.getStyleClass().add("app-button");
         btnReturn.setOnAction(_ -> {
             sceneManager.showMainMenu();

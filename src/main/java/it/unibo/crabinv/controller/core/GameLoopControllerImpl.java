@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.core;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.entities.enemy.EnemyController;
 import it.unibo.crabinv.controller.entities.player.PlayerController;
@@ -42,6 +43,7 @@ public class GameLoopControllerImpl implements GameLoopController {
      * @param playerController the {@link GameEngine} used by the {@link GameLoopControllerImpl}
      * @param audioController  the {@link GameEngine} used by the {@link GameLoopControllerImpl}
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public GameLoopControllerImpl(final GameEngine gameEngine,
                                   final InputController inputController,
                                   final PlayerController playerController,

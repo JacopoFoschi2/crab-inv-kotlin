@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.save;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.save.Save;
 import it.unibo.crabinv.persistence.repository.SaveRepository;
 
@@ -20,6 +21,7 @@ public record SaveControllerImpl(SaveRepository saveRepository) implements SaveC
      *
      * @param saveRepository the {@link SaveRepository} to be used
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by callergit
     public SaveControllerImpl(final SaveRepository saveRepository) {
         this.saveRepository = Objects.requireNonNull(saveRepository);
     }

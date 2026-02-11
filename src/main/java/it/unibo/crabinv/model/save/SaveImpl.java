@@ -1,5 +1,6 @@
 package it.unibo.crabinv.model.save;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.powerups.PowerUpType;
 
 import java.util.UUID;
@@ -27,6 +28,7 @@ public class SaveImpl implements Save {
      * @param playerMemorial {@link PlayerMemorial} of the {@link SaveImpl}
      * @param gameSession {@link GameSession} of the {@link SaveImpl}
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public SaveImpl(final UUID saveId,
                     final long creationTimeStamp,
                     final UserProfile userProfile,

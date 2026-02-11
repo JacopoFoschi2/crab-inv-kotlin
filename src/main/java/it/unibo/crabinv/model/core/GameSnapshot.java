@@ -1,5 +1,6 @@
 package it.unibo.crabinv.model.core;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.save.GameSession;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @param renderObjects the list of all game objects to be renderer
  * @param session the {@link GameSession} of the snapshot
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
 public record GameSnapshot(
         List<RenderObjectSnapshot> renderObjects,
         GameSession session) {
