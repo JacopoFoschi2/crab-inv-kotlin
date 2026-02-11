@@ -1,37 +1,53 @@
 package it.unibo.crabinv.view;
 
+import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.core.i18n.TextKeys;
-import it.unibo.crabinv.SceneManager;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
-
-public class MainMenu {
+/**
+ * This is the view of the Main Menu.
+ * Part of this was adapted from LLM by Mosè Barbieri
+ */
+public final class MainMenu {
     private final SceneManager sceneManager;
     private final LocalizationController loc;
     private final AudioController audio;
 
-    public MainMenu(SceneManager sceneManager, LocalizationController loc, AudioController audio) {
+    /**
+     * It's the contstructor of the main menu.
+     *
+     * @param sceneManager it's the manager of the scenes, it moves them when needed
+     * @param loc the needed manager for the translation
+     * @param audio the audio manager needed for the sounds of the buttons
+     */
+    public MainMenu(final SceneManager sceneManager,
+                    final LocalizationController loc,
+                    final AudioController audio) {
         this.sceneManager = sceneManager;
         this.loc = loc;
         this.audio = audio;
     }
 
+    /**
+     * it's the getter of the view of the menu.
+     *
+     * @return the view of the menu
+     */
     public Pane getView() {
-        Pane pane = new StackPane();
-        VBox mainColumn = new VBox(30);
+        final Pane pane = new StackPane();
+        final VBox mainColumn = new VBox(ViewParameters.DEFAULT_SPACING_MAINMENU);
         mainColumn.setAlignment(Pos.CENTER);
 
-
-        Label title = new Label("Crab Invaders");
+        final Label title = new Label("Crab Invaders");
         title.getStyleClass().add("menu-title");
 
         mainColumn.getChildren().addAll(
@@ -46,8 +62,8 @@ public class MainMenu {
         return pane;
     }
 
-    private Button createMenuButton(TextKeys key, Runnable action) {
-        Button menuButton = new Button(loc.getString(key));
+    private Button createMenuButton(final TextKeys key, final Runnable action) {
+        final Button menuButton = new Button(loc.getString(key));
         menuButton.getStyleClass().add("app-button");
 
         menuButton.focusedProperty().addListener((_, _, newValue) -> {
@@ -63,6 +79,5 @@ public class MainMenu {
 
         return menuButton;
     }
-
 
 }

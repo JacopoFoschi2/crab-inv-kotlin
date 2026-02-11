@@ -8,7 +8,7 @@ import it.unibo.crabinv.model.entities.bullets.EnemyBulletFactory;
 import it.unibo.crabinv.model.entities.bullets.PlayerBulletFactory;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
-import it.unibo.crabinv.model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 import it.unibo.crabinv.model.entities.enemies.wave.Wave;
 import it.unibo.crabinv.model.entities.entity.Delta;
 import it.unibo.crabinv.model.entities.entity.Entity;

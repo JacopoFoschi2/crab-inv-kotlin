@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
  * Provides the default parameters for the views.
  */
 public final class ViewParameters {
+    public static final int DEFAULT_SPACING_MAINMENU = 30;
     public static final int DEFAULT_CARD_SPACING = 12;
     public static final int DEFAULT_HEADER_SPACING = 25;
     public static final int DEFAULT_WIDTH = 600;

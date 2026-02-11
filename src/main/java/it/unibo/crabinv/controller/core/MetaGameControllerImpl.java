@@ -14,7 +14,7 @@ import it.unibo.crabinv.model.core.GameEngineState;
 import it.unibo.crabinv.model.core.GameSnapshot;
 import it.unibo.crabinv.model.core.audio.JavaFXSoundManager;
 import it.unibo.crabinv.model.entities.enemies.BaseEnemyFactoryLogic;
-import it.unibo.crabinv.model.entities.enemies.rewardService.EnemyRewardService;
+import it.unibo.crabinv.model.entities.enemies.rewardservice.EnemyRewardService;
 import it.unibo.crabinv.model.levels.LevelFactoryImpl;
 import it.unibo.crabinv.model.save.GameSession;
 import it.unibo.crabinv.persistence.repository.SaveRepository;

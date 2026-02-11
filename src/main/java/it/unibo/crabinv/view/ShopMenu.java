@@ -159,7 +159,7 @@ public final class ShopMenu {
                 try {
                     new SaveControllerImpl(repo).updateSave(save);
                 } catch (final IOException e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalCallerException(e);
                 }
             }
         });

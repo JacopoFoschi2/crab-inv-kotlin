@@ -3,7 +3,7 @@ package it.unibo.crabinv.model.core;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.controller.core.collision.CollisionController;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
-import it.unibo.crabinv.model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 import it.unibo.crabinv.model.entities.player.Player;
 import it.unibo.crabinv.model.levels.LevelFactory;
 import it.unibo.crabinv.model.save.GameSession;
