@@ -59,7 +59,16 @@ public record SessionControllerImpl(Save save) implements SessionController {
                 gameSession.getCurrentLevel(),
                 gameSession.getCurrency(),
                 gameSession.isGameWon());
-        playerMemorial.addMemorialRecord(sessionRecord);
+        if (sessionRecord.isGameWon()) {
+            final SessionRecord winSessionRecord = new SessionRecordImpl(
+                    gameSession.getStartingTimeStamp(),
+                    gameSession.getCurrentLevel() - 1,
+                    gameSession.getCurrency(),
+                    gameSession.isGameWon());
+            playerMemorial.addMemorialRecord(winSessionRecord);
+        } else {
+            playerMemorial.addMemorialRecord(sessionRecord);
+        }
         this.save.getUserProfile().addCurrency(gameSession.getCurrency());
         this.save.closeGameSession();
     }

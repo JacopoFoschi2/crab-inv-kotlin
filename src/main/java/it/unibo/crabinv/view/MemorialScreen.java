@@ -87,7 +87,6 @@ public class MemorialScreen {
 
         listView.getSelectionModel().clearSelection();
         listView.setFocusTraversable(true);
-        listView.setMouseTransparent(true);
 
         listView.setPrefWidth(ViewParameters.DEFAULT_WIDTH);
         listView.setMaxWidth(Region.USE_PREF_SIZE);
