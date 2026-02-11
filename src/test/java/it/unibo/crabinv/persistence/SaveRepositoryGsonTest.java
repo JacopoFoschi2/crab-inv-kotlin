@@ -28,7 +28,7 @@ class SaveRepositoryGsonTest {
     private SaveRepository repository;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setup() throws IOException {
         repository = new SaveRepositoryGson(tempDir);
     }
 
