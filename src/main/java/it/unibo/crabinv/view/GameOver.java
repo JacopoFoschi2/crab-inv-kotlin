@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
@@ -29,6 +30,7 @@ public class GameOver {
      * @param audio the instance of audio for sounds
      * @param messageType the message type, either victory or game over
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public GameOver(
             final SceneManager sceneManager,
             final LocalizationController loc,

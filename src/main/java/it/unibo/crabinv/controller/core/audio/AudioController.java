@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.core.audio;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.model.core.audio.BGMTracks;
 import it.unibo.crabinv.model.core.audio.SFXTracks;
 import it.unibo.crabinv.model.core.audio.SoundService;
@@ -15,6 +16,7 @@ public class AudioController {
      *
      * @param soundManager the implementation of SoundManager you want to use
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // SoundService is injected and owned by the caller.
     public AudioController(final SoundService soundManager) {
         this.soundManager = soundManager;
     }

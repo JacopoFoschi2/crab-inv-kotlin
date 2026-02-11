@@ -1,5 +1,6 @@
 package it.unibo.crabinv.controller.entities.player;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.controller.entities.entity.EntityCapableOfInputController;
@@ -22,6 +23,7 @@ public class PlayerController extends AbstractEntityController<Player> implement
      * @param audio the audioController used to play sounds
      * @param engine the engine used to spawn bullets
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public PlayerController(final Player player, final AudioController audio, final GameEngine engine) {
         super(player);
         this.audio = audio;
