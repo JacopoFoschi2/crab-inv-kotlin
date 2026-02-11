@@ -2,16 +2,31 @@ package it.unibo.crabinv.model.entities.enemies;
 
 import it.unibo.crabinv.model.entities.entity.EntitySprites;
 
-public class BaseEnemyFactoryLogic implements EnemyFactory{
-    //TODO: make them better...
-    final int ENEMY_MAX_HEALTH = 1;
-    final double ENEMY_RADIUS = 0.015;
-    final double ENEMY_SPEED = 0.00085;
-    final int ENEMY_FIRERATE = 30;
+/**
+ * It's the implementation of the Enemy factory.
+ */
+public final class BaseEnemyFactoryLogic implements EnemyFactory {
+    private static final int ENEMY_MAX_HEALTH = 1;
+    private static final double ENEMY_RADIUS = 0.015;
+    private static final double ENEMY_SPEED = 0.000_85;
+    private static final int ENEMY_FIRERATE = 30;
 
     @Override
-    public Enemy createEnemy(EnemyType type, double x, double y, double minBound, double maxBound) {
-        return new EnemyImpl(x,y, ENEMY_MAX_HEALTH, ENEMY_RADIUS, type, ENEMY_FIRERATE, ENEMY_SPEED,
-                minBound, maxBound, EntitySprites.ENEMY_SERVANT);
+    public Enemy createEnemy(final EnemyType type,
+                             final double x,
+                             final double y,
+                             final double minBound,
+                             final double maxBound) {
+        return new EnemyImpl(
+                x,
+                y,
+                ENEMY_MAX_HEALTH,
+                ENEMY_RADIUS,
+                type,
+                ENEMY_FIRERATE,
+                ENEMY_SPEED,
+                minBound,
+                maxBound,
+                EntitySprites.ENEMY_SERVANT);
     }
 }

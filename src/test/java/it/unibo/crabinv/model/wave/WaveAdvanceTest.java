@@ -5,7 +5,7 @@ import it.unibo.crabinv.model.core.GameEngineImpl;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.model.entities.enemies.EnemyType;
-import it.unibo.crabinv.model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 import it.unibo.crabinv.model.entities.enemies.wave.Wave;
 import it.unibo.crabinv.model.entities.enemies.wave.WaveImpl;
 import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider;

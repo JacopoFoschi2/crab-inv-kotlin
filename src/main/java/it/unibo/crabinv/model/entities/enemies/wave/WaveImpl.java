@@ -3,7 +3,7 @@ package it.unibo.crabinv.model.entities.enemies.wave;
 import it.unibo.crabinv.model.entities.enemies.Enemy;
 import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
 import it.unibo.crabinv.model.entities.enemies.EnemyType;
-import it.unibo.crabinv.model.entities.enemies.rewardService.RewardsService;
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
 
 import java.util.ArrayList;
 import java.util.List;

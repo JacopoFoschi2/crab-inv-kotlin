@@ -3,6 +3,7 @@ package it.unibo.crabinv.model.entities.bullets;
 /**
  * Interface that establishes the factory of the bullet.
  */
+@FunctionalInterface
 public interface BulletFactory {
     /**
      * The method that creates the bullet.
