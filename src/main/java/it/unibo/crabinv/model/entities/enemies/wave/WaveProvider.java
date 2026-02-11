@@ -10,9 +10,7 @@ public interface WaveProvider {
     /**
      * Getter for the next available wave.
      *
-     * @return the next available wave, so if you call it a
-     * second time it gives the next one,
-     * not the one that you called and had before
+     * @return the next available wave
      */
     Wave getNextWave();
 

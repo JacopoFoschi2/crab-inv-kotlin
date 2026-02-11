@@ -2,39 +2,52 @@ package it.unibo.crabinv.model.entities.enemies.wave;
 
 import java.util.List;
 
-public class WaveSequence implements WaveProvider{
+/**
+ * It's the handler of the wave, made for future procedural Waves.
+ */
+public final class WaveSequence implements WaveProvider {
 
-    private List<Wave> waveList;
-    private int currentWaveIndex = 0;
+    private final List<Wave> waveList;
+    private int currentWaveIndex;
 
-    public WaveSequence(List<Wave> waveList){
+    /**
+     * It's the WaveSequence constructor method.
+     *
+     * @param waveList it's the wave list that the WaveSequence handles
+     */
+    public WaveSequence(final List<Wave> waveList) {
         this.waveList = waveList;
     }
 
     @Override
     public Wave getNextWave() {
         if (hasMoreWaves()) {
-            Wave nextWave = this.waveList.get(currentWaveIndex);
+            final Wave nextWave = this.waveList.get(currentWaveIndex);
             this.currentWaveIndex++;
             return nextWave;
-        }
-        else{
+        } else {
             throw new IndexOutOfBoundsException("Out of bounds index:" + this.currentWaveIndex);
         }
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return true if the wave index didn't arrive to the limit
+     */
     @Override
     public boolean hasMoreWaves() {
-        if(this.currentWaveIndex < this.waveList.size()){
-            return true;
-        }else {
-            return false;
-        }
+        return this.currentWaveIndex < this.waveList.size();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the list of all the waves
+     */
     @Override
-    public List<Wave> getAllWaves(){
+    public List<Wave> getAllWaves() {
         return List.copyOf(waveList);
     }
 }
