@@ -1,5 +1,6 @@
 package it.unibo.crabinv.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.SceneManager;
 import it.unibo.crabinv.controller.core.audio.AudioController;
 import it.unibo.crabinv.controller.core.i18n.LocalizationController;
@@ -49,6 +50,7 @@ public final class ShopMenu {
      * @param repo the repository of the save
      * @param powerUps the powerUps to see which ones are available
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public ShopMenu(final SceneManager sceneManager,
                     final LocalizationController loc,
                     final AudioController audio,
@@ -88,7 +90,7 @@ public final class ShopMenu {
         descriptionBox.setAlignment(Pos.CENTER);
         descriptionBox.getStyleClass().add("shop-description-box");
 
-        currencyLabel = new Label();
+        final Label currencyLabel = new Label();
         updateCurrency();
         final FlowPane powerUpsBox = new FlowPane();
         powerUpsBox.setHgap(ViewParameters.DEFAULT_SPACING);

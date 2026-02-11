@@ -1,6 +1,5 @@
 package it.unibo.crabinv.controller.entities.bullets;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
 import it.unibo.crabinv.model.entities.bullets.BulletEnemy;
 import it.unibo.crabinv.model.entities.entity.Delta;
@@ -15,7 +14,6 @@ public final class EnemyBulletController extends AbstractEntityController<Bullet
      *
      * @param entity it's the entity needed to modify it
      */
-    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public EnemyBulletController(final BulletEnemy entity) {
         super(entity);
     }

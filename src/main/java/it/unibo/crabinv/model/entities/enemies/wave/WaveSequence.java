@@ -1,5 +1,7 @@
 package it.unibo.crabinv.model.entities.enemies.wave;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.List;
 
 /**
@@ -15,6 +17,7 @@ public final class WaveSequence implements WaveProvider {
      *
      * @param waveList it's the wave list that the WaveSequence handles
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
     public WaveSequence(final List<Wave> waveList) {
         this.waveList = waveList;
     }
