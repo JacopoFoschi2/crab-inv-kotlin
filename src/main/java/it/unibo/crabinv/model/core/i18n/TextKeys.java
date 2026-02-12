@@ -33,7 +33,10 @@ public enum TextKeys {
     HEALTH_UP("health_up"),
     HEALTH_DESC("health_desc"),
     GAME_OVER("game_over"),
-    VICTORY("victory");
+    VICTORY("victory"),
+    LEVEL("level"),
+    WON("won"),
+    LOST("lost");
 
     private final String key;
 
