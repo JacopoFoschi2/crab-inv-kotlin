@@ -197,15 +197,6 @@
 }
 
 .list-view:focused .list-cell:focused {
-    -fx-background-color: -fx-accent;
+    -fx-background-color: #3EA6FF;
     -fx-text-fill: white;
-}
-
-.list-view .list-cell:selected {
-    -fx-background-color: transparent;
-    -fx-text-fill: #E0E0E0;
-}
-
-.list-view .list-cell:hover {
-    -fx-background-color: rgba(255,255,255,0.08);
 }
