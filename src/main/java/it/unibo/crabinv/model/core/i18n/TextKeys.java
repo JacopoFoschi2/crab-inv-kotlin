@@ -36,7 +36,8 @@ public enum TextKeys {
     VICTORY("victory"),
     LEVEL("level"),
     WON("won"),
-    LOST("lost");
+    LOST("lost"),
+    HP("hp");
 
     private final String key;
 

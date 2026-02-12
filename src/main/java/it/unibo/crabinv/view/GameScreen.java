@@ -1,12 +1,14 @@
 package it.unibo.crabinv.view;
 
 import it.unibo.crabinv.SceneManager;
+import it.unibo.crabinv.controller.core.i18n.LocalizationController;
 import it.unibo.crabinv.controller.core.metagame.MetaGameController;
 import it.unibo.crabinv.controller.core.metagame.MetaGameControllerImpl;
 import it.unibo.crabinv.controller.core.save.SessionController;
 import it.unibo.crabinv.controller.core.save.SessionControllerImpl;
 import it.unibo.crabinv.model.core.engine.GameEngine;
 import it.unibo.crabinv.model.core.engine.GameEngineState;
+import it.unibo.crabinv.model.core.i18n.TextKeys;
 import it.unibo.crabinv.model.core.save.Save;
 import it.unibo.crabinv.core.persistence.repository.SaveRepository;
 import javafx.animation.AnimationTimer;
@@ -27,7 +29,6 @@ import java.util.Objects;
  * View {@code} Class to show the game when running.
  */
 public class GameScreen {
-
     private final SceneManager sceneManager;
     private final Save save;
     private final SaveRepository repo;
@@ -35,21 +36,28 @@ public class GameScreen {
     private AnimationTimer timer;
     private GameRenderer gameRenderer;
     private GameEngineState lastEngineState;
+    private final String health;
+    private final String currency;
 
     /**
      * Constructor of {@link GameScreen}.
      *
      * @param sceneManager the {@link SceneManager} used by the {@link GameScreen}
+     * @param loc          the {@link LocalizationController} used to fetch strings
      * @param save         the {@link Save} used by the {@link GameScreen}
      * @param repo         the {@link SaveRepository} used by the {@link GameScreen}
      */
-    public GameScreen(final SceneManager sceneManager,
-                      final Save save,
-                      final SaveRepository repo) {
+    public GameScreen(
+            final SceneManager sceneManager,
+            final LocalizationController loc,
+            final Save save,
+            final SaveRepository repo) {
         this.sceneManager = Objects.requireNonNull(sceneManager, "sceneManager must not be null");
         this.save = Objects.requireNonNull(save, "save must not be null");
         this.repo = Objects.requireNonNull(repo, "SaveRepository must not be null");
         this.lastEngineState = null;
+        health = loc.getString(TextKeys.HP);
+        currency = loc.getString(TextKeys.CURRENCY);
     }
 
     /**
@@ -92,8 +100,8 @@ public class GameScreen {
                     lastNow = now;
                     return;
                 }
-                hp.setText("HP: " + sessionController.getGameSession().getPlayerHealth());
-                money.setText("Coins: " + sessionController.getGameSession().getCurrency());
+                hp.setText(health + ": " + sessionController.getGameSession().getPlayerHealth());
+                money.setText(currency + ": " + sessionController.getGameSession().getCurrency());
                 final long frameElapsedMillis = Math.max(0L, (now - lastNow) / 1_000_000L);
                 try {
                     gameRenderer.render(metaGameController.stepCheck(frameElapsedMillis));
