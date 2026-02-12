@@ -96,10 +96,14 @@ public class MemorialScreen {
             protected void updateItem(final SessionRecord rec, final boolean empty) {
                 super.updateItem(rec, empty);
                 setText(empty || rec == null ? null : String.format(
-                        "%tF %tT – " +
-                        loc.getString(TextKeys.LEVEL) +
-                        " %d – " +
-                        loc.getString(TextKeys.CURRENCY) +
+                        "%tF %tT – "
+                                +
+                        loc.getString(TextKeys.LEVEL)
+                                +
+                        " %d – "
+                                +
+                        loc.getString(TextKeys.CURRENCY)
+                                +
                         " %d – %s",
                         rec.getStartingTimeStamp(),
                         rec.getStartingTimeStamp(),
