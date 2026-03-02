@@ -1,5 +1,6 @@
 plugins {
     java
+    kotlin("jvm") version "2.3.0"
     application
     id("org.danilopianini.gradle-java-qa") version "1.166.0"
 }
@@ -12,6 +13,10 @@ val javaFXModules = listOf("base", "controls", "graphics", "media")
 
 java { // Useful to set Java version for Gradle tasks
     toolchain { languageVersion.set(JavaLanguageVersion.of(25)) }
+}
+
+kotlin {
+    jvmToolchain(25)
 }
 
 val javaFxVersion = 25
@@ -28,6 +33,7 @@ dependencies {
         }
     }
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation(kotlin("stdlib"))
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")
