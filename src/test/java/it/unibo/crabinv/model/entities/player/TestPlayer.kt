@@ -1,79 +1,84 @@
-package it.unibo.crabinv.model.entities.player;
+package it.unibo.crabinv.model.entities.player
 
-import it.unibo.crabinv.model.core.collisions.CollisionGroups;
-import it.unibo.crabinv.model.entities.entity.Delta;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import it.unibo.crabinv.model.core.collisions.CollisionGroups
+import it.unibo.crabinv.model.entities.entity.Delta
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-class TestPlayer {
-    private static final int BIG_DAMAGE = 999;
-    private Player player;
+internal class TestPlayer {
+    private var player: Player? = null
 
     @BeforeEach
-    void setup() {
-        player = Player.builder()
-                .x(0)
-                .y(0)
+    fun setup() {
+        player =
+            Player
+                .builder()
+                .x(0.0)
+                .y(0.0)
                 .maxHealth(3)
                 .health(3)
                 .collisionGroup(CollisionGroups.FRIENDLY)
-                .radius(10)
-                .speed(1)
+                .radius(10.0)
+                .speed(1.0)
                 .fireRate(1)
-                .minBound(-1)
-                .maxBound(1)
-                .build();
+                .minBound(-1.0)
+                .maxBound(1.0)
+                .build()
     }
 
     @Test
-    void testPlayerMovement() {
-        player.move(Delta.INCREASE);
-        Assertions.assertEquals(1, player.getX());
+    fun testPlayerMovement() {
+        player!!.move(Delta.INCREASE)
+        Assertions.assertEquals(1.0, player!!.x)
     }
 
     @Test
-    void testOutOfBounds() {
-        player.move(Delta.INCREASE);
-        Assertions.assertEquals(1, player.getX());
-        player.move(Delta.DECREASE);
-        Assertions.assertEquals(0, player.getX());
-        player.move(Delta.DECREASE);
-        Assertions.assertEquals(-1, player.getX());
-        player.move(Delta.DECREASE);
-        Assertions.assertEquals(-1, player.getX());
+    fun testOutOfBounds() {
+        player!!.move(Delta.INCREASE)
+        Assertions.assertEquals(1.0, player!!.x)
+        player!!.move(Delta.DECREASE)
+        Assertions.assertEquals(0.0, player!!.x)
+        player!!.move(Delta.DECREASE)
+        Assertions.assertEquals(-1.0, player!!.x)
+        player!!.move(Delta.DECREASE)
+        Assertions.assertEquals(-1.0, player!!.x)
     }
 
     @Test
-    void testNoMovement() {
-        player.move(Delta.NO_ACTION);
-        Assertions.assertEquals(0, player.getX());
+    fun testNoMovement() {
+        player!!.move(Delta.NO_ACTION)
+        Assertions.assertEquals(0.0, player!!.x)
     }
 
     @Test
-    void testShoot() {
-        Assertions.assertTrue(player.isAbleToShoot());
-        player.shoot();
-        Assertions.assertFalse(player.isAbleToShoot());
+    fun testShoot() {
+        Assertions.assertTrue(player!!.isAbleToShoot)
+        player!!.shoot()
+        Assertions.assertFalse(player!!.isAbleToShoot)
     }
 
     @Test
-    void testDeathByDamage() {
-        player.takeDamage(BIG_DAMAGE);
-        Assertions.assertFalse(player.isAlive());
+    fun testDeathByDamage() {
+        player!!.takeDamage(BIG_DAMAGE)
+        Assertions.assertFalse(player!!.isAlive)
     }
 
     @Test
-    void testDeathByDestroy() {
-        player.destroy();
-        Assertions.assertFalse(player.isAlive());
+    fun testDeathByDestroy() {
+        player!!.destroy()
+        Assertions.assertFalse(player!!.isAlive)
     }
 
     @Test
-    void testReload() {
-        player.shoot();
-        Assertions.assertFalse(player.isAbleToShoot());
-        player.tick();
-        Assertions.assertTrue(player.isAbleToShoot());
+    fun testReload() {
+        player!!.shoot()
+        Assertions.assertFalse(player!!.isAbleToShoot)
+        player!!.tick()
+        Assertions.assertTrue(player!!.isAbleToShoot)
+    }
+
+    companion object {
+        private const val BIG_DAMAGE = 999
     }
 }
