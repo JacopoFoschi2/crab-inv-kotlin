@@ -1,108 +1,95 @@
-package it.unibo.crabinv.model.level;
+package it.unibo.crabinv.model.level
 
-import it.unibo.crabinv.model.entities.enemies.wave.Wave;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence;
-import it.unibo.crabinv.model.levels.Level;
-import it.unibo.crabinv.model.levels.LevelImpl;
-import org.junit.jupiter.api.Test;
+import it.unibo.crabinv.model.entities.enemies.wave.Wave
+import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider
+import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence
+import it.unibo.crabinv.model.levels.Level
+import it.unibo.crabinv.model.levels.LevelImpl
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import java.util.ArrayDeque
+import java.util.Queue
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Queue;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
-class LevelTest {
-
+internal class LevelTest {
     @Test
-    void constructorShouldStartFromFirstWave() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
-        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
+    fun constructorShouldStartFromFirstWave() {
+        val w1 = Mockito.mock(Wave::class.java)
+        val w2 = Mockito.mock(Wave::class.java)
+        val provider: WaveProvider = QueueWaveProvider(listOf<Wave?>(w1, w2) as MutableList<Wave?>)
 
-        final Level level = new LevelImpl(provider);
+        val level: Level = LevelImpl(provider)
 
-        assertSame(w1, level.getCurrentWave(), "The constructor should position itself in the first wave");
-        assertFalse(level.isLevelFinished(), "A level with a wave ongoing shouldn't be finished");
+        Assertions.assertSame(w1, level.getCurrentWave(), "The constructor should position itself in the first wave")
+        Assertions.assertFalse(level.isLevelFinished(), "A level with a wave ongoing shouldn't be finished")
     }
 
     @Test
-    void advanceWaveShouldMoveToNextWaveAndThenFinish() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
-        final WaveProvider provider = new QueueWaveProvider(List.of(w1, w2));
+    fun advanceWaveShouldMoveToNextWaveAndThenFinish() {
+        val w1 = Mockito.mock(Wave::class.java)
+        val w2 = Mockito.mock(Wave::class.java)
+        val provider: WaveProvider = QueueWaveProvider(listOf<Wave?>(w1, w2) as MutableList<Wave?>)
 
-        final Level level = new LevelImpl(provider);
-        assertSame(w1, level.getCurrentWave());
+        val level: Level = LevelImpl(provider)
+        Assertions.assertSame(w1, level.getCurrentWave())
 
-        level.advanceWave();
-        assertSame(w2, level.getCurrentWave(), "advanceWave() should go to the next wave");
-        assertFalse(level.isLevelFinished());
+        level.advanceWave()
+        Assertions.assertSame(w2, level.getCurrentWave(), "advanceWave() should go to the next wave")
+        Assertions.assertFalse(level.isLevelFinished())
 
-        level.advanceWave();
-        assertNull(level.getCurrentWave(), "After all waves are finished, the current wave should become null");
-        assertTrue(level.isLevelFinished(), "If currentWave == null the level should be finished");
+        level.advanceWave()
+        Assertions.assertNull(
+            level.getCurrentWave(),
+            "After all waves are finished, the current wave should become null",
+        )
+        Assertions.assertTrue(level.isLevelFinished(), "If currentWave == null the level should be finished")
 
-        level.advanceWave();
-        assertNull(level.getCurrentWave(), "After level is finished, advanceWave() should maintain a finite status");
-        assertTrue(level.isLevelFinished());
+        level.advanceWave()
+        Assertions.assertNull(
+            level.getCurrentWave(),
+            "After level is finished, advanceWave() should maintain a finite status",
+        )
+        Assertions.assertTrue(level.isLevelFinished())
     }
 
     @Test
-    void levelWithNoWavesShouldBeImmediatelyFinished() {
-        final WaveProvider provider = new QueueWaveProvider(List.of());
+    fun levelWithNoWavesShouldBeImmediatelyFinished() {
+        val provider: WaveProvider = QueueWaveProvider(mutableListOf())
 
-        final Level level = new LevelImpl(provider);
+        val level: Level = LevelImpl(provider)
 
-        assertNull(level.getCurrentWave(), "If the provider hasn't got any waves, it should be null");
-        assertTrue(level.isLevelFinished(), "If there aren't any waves, the level should be finished");
+        Assertions.assertNull(level.getCurrentWave(), "If the provider hasn't got any waves, it should be null")
+        Assertions.assertTrue(level.isLevelFinished(), "If there aren't any waves, the level should be finished")
     }
 
     @Test
-    void shouldReturnWavesInOrderAndThenReportNoMoreWaves() {
-        final Wave w1 = mock(Wave.class);
-        final Wave w2 = mock(Wave.class);
+    fun shouldReturnWavesInOrderAndThenReportNoMoreWaves() {
+        val w1 = Mockito.mock(Wave::class.java)
+        val w2 = Mockito.mock(Wave::class.java)
 
-        final WaveProvider provider = new WaveSequence(List.of(w1, w2));
+        val provider: WaveProvider = WaveSequence(listOf<Wave?>(w1, w2))
 
-        assertTrue(provider.hasMoreWaves());
-        assertSame(w1, provider.getNextWave());
+        Assertions.assertTrue(provider.hasMoreWaves())
+        Assertions.assertSame(w1, provider.getNextWave())
 
-        assertTrue(provider.hasMoreWaves());
-        assertSame(w2, provider.getNextWave());
+        Assertions.assertTrue(provider.hasMoreWaves())
+        Assertions.assertSame(w2, provider.getNextWave())
 
-        assertFalse(provider.hasMoreWaves());
+        Assertions.assertFalse(provider.hasMoreWaves())
     }
 
     /**
      * WaveProvider used to test the advancement of waves.
      */
-    private static final class QueueWaveProvider implements WaveProvider {
-        private final Queue<Wave> waves;
+    private class QueueWaveProvider(
+        waves: MutableList<Wave?>,
+    ) : WaveProvider {
+        private val waves: Queue<Wave?> = ArrayDeque<Wave?>(waves)
 
-        private QueueWaveProvider(final List<Wave> waves) {
-            this.waves = new ArrayDeque<>(waves);
-        }
+        override fun hasMoreWaves(): Boolean = !waves.isEmpty()
 
-        @Override
-        public boolean hasMoreWaves() {
-            return !waves.isEmpty();
-        }
+        override fun getAllWaves(): MutableList<Wave?> = mutableListOf()
 
-        @Override
-        public List<Wave> getAllWaves() {
-            return List.of();
-        }
-
-        @Override
-        public Wave getNextWave() {
-            return waves.remove();
-        }
+        override fun getNextWave(): Wave? = waves.remove()
     }
 }
-
