@@ -3,6 +3,7 @@ plugins {
     kotlin("jvm") version "2.3.0"
     application
     id("org.danilopianini.gradle-java-qa") version "1.166.0"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
 
 repositories {
@@ -11,7 +12,8 @@ repositories {
 
 val javaFXModules = listOf("base", "controls", "graphics", "media")
 
-java { // Useful to set Java version for Gradle tasks
+java {
+    // Useful to set Java version for Gradle tasks
     toolchain { languageVersion.set(JavaLanguageVersion.of(25)) }
 }
 
