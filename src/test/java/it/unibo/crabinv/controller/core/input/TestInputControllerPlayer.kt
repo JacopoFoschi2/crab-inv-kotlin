@@ -1,98 +1,95 @@
-package it.unibo.crabinv.controller.core.input;
+package it.unibo.crabinv.controller.core.input
 
-import it.unibo.crabinv.model.core.input.InputSnapshot;
-import it.unibo.crabinv.model.entities.entity.Delta;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import it.unibo.crabinv.model.entities.entity.Delta
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 /**
  * Tests if the input works correctly.
  */
-class TestInputControllerPlayer {
+internal class TestInputControllerPlayer {
+    @Test
+    fun initialStateIsIdleAndNotShooting() {
+        val controller: InputControllerPlayer = newController()
 
-    private static InputControllerPlayer newController() {
-        final InputMapper mapper = new InputMapperImpl();
-        return new InputControllerPlayer(mapper);
+        val snap = controller.getInputState()
+
+        Assertions.assertFalse(snap.isShooting())
+        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
     }
 
     @Test
-    void initialStateIsIdleAndNotShooting() {
-        final InputControllerPlayer controller = newController();
+    fun pressLeftMovesDecreaseOnX() {
+        val controller: InputControllerPlayer = newController()
 
-        final InputSnapshot snap = controller.getInputState();
+        controller.onKeyPressed(KeyCodeKeyboard.LEFT.keyCode)
+        val snap = controller.getInputState()
 
-        assertFalse(snap.isShooting());
-        assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
+        Assertions.assertEquals(Delta.DECREASE, snap.getXMovementDelta())
+        Assertions.assertFalse(snap.isShooting())
     }
 
     @Test
-    void pressLeftMovesDecreaseOnX() {
-        final InputControllerPlayer controller = newController();
+    fun pressRightMovesIncreaseOnX() {
+        val controller: InputControllerPlayer = newController()
 
-        controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
-        final InputSnapshot snap = controller.getInputState();
+        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
+        val snap = controller.getInputState()
 
-        assertEquals(Delta.DECREASE, snap.getXMovementDelta());
-        assertFalse(snap.isShooting());
+        Assertions.assertEquals(Delta.INCREASE, snap.getXMovementDelta())
+        Assertions.assertFalse(snap.isShooting())
     }
 
     @Test
-    void pressRightMovesIncreaseOnX() {
-        final InputControllerPlayer controller = newController();
+    fun leftAndRightTogetherCancelOut() {
+        val controller: InputControllerPlayer = newController()
 
-        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
-        final InputSnapshot snap = controller.getInputState();
+        controller.onKeyPressed(KeyCodeKeyboard.LEFT.keyCode)
+        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
+        val snap = controller.getInputState()
 
-        assertEquals(Delta.INCREASE, snap.getXMovementDelta());
-        assertFalse(snap.isShooting());
+        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
     }
 
     @Test
-    void leftAndRightTogetherCancelOut() {
-        final InputControllerPlayer controller = newController();
+    fun releasingOneOfConflictingKeysResolvesDirection() {
+        val controller: InputControllerPlayer = newController()
 
-        controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
-        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
-        final InputSnapshot snap = controller.getInputState();
+        controller.onKeyPressed(KeyCodeKeyboard.LEFT.keyCode)
+        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
+        Assertions.assertEquals(Delta.NO_ACTION, controller.getInputState().getXMovementDelta())
 
-        assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
+        controller.onKeyReleased(KeyCodeKeyboard.RIGHT.keyCode)
+        Assertions.assertEquals(Delta.DECREASE, controller.getInputState().getXMovementDelta())
     }
 
     @Test
-    void releasingOneOfConflictingKeysResolvesDirection() {
-        final InputControllerPlayer controller = newController();
+    fun shootIsTrueWhileHeldAndFalseWhenReleased() {
+        val controller: InputControllerPlayer = newController()
 
-        controller.onKeyPressed(KeyCodeKeyboard.LEFT.getKeyCode());
-        controller.onKeyPressed(KeyCodeKeyboard.RIGHT.getKeyCode());
-        assertEquals(Delta.NO_ACTION, controller.getInputState().getXMovementDelta());
+        controller.onKeyPressed(KeyCodeKeyboard.SHOOT.keyCode)
+        Assertions.assertTrue(controller.getInputState().isShooting())
 
-        controller.onKeyReleased(KeyCodeKeyboard.RIGHT.getKeyCode());
-        assertEquals(Delta.DECREASE, controller.getInputState().getXMovementDelta());
+        controller.onKeyReleased(KeyCodeKeyboard.SHOOT.keyCode)
+        Assertions.assertFalse(controller.getInputState().isShooting())
     }
 
     @Test
-    void shootIsTrueWhileHeldAndFalseWhenReleased() {
-        final InputControllerPlayer controller = newController();
+    fun unmappedKeyIsIgnored() {
+        val controller: InputControllerPlayer = newController()
 
-        controller.onKeyPressed(KeyCodeKeyboard.SHOOT.getKeyCode());
-        assertTrue(controller.getInputState().isShooting());
+        val unmappedKeyCode = 9999
+        controller.onKeyPressed(unmappedKeyCode)
 
-        controller.onKeyReleased(KeyCodeKeyboard.SHOOT.getKeyCode());
-        assertFalse(controller.getInputState().isShooting());
+        val snap = controller.getInputState()
+        Assertions.assertFalse(snap.isShooting())
+        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
     }
 
-    @Test
-    void unmappedKeyIsIgnored() {
-        final InputControllerPlayer controller = newController();
-
-        final int unmappedKeyCode = 9999;
-        controller.onKeyPressed(unmappedKeyCode);
-
-        final InputSnapshot snap = controller.getInputState();
-        assertFalse(snap.isShooting());
-        assertEquals(Delta.NO_ACTION, snap.getXMovementDelta());
+    companion object {
+        private fun newController(): InputControllerPlayer {
+            val mapper: InputMapper = InputMapperImpl()
+            return InputControllerPlayer(mapper)
+        }
     }
 }
