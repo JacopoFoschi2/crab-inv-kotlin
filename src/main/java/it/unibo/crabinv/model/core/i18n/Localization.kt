@@ -1,49 +1,49 @@
-package it.unibo.crabinv.model.core.i18n;
+package it.unibo.crabinv.model.core.i18n
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.MissingResourceException
+import java.util.ResourceBundle
 
 /**
- * {@code Localization} is engineered to handle all localization cases across the application.
+ * `Localization` is engineered to handle all localization cases across the application.
  *
  * <h1>Changing localization</h1>
  *
- * <p>Localization changes are to be made with {@code loc.setLocale(locale)} selecting locale from
- * supported list</p>
+ *
+ * Localization changes are to be made with `loc.setLocale(locale)` selecting locale from
+ * supported list
  *
  * <h1>String fetching</h1>
  *
- * <p>To fetch a string from current locale use {@code loc.getString(key)} selecting key
- * from {@link TextKeys} enum</p>
+ *
+ * To fetch a string from current locale use `loc.getString(key)` selecting key
+ * from [TextKeys] enum
  */
-public final class Localization {
-    private ResourceBundle messages;
-    private SupportedLocales currentLocale;
+class Localization {
+    private var messages: ResourceBundle? = null
+    private var currentLocale: SupportedLocales? = null
 
     /**
      * Creates new Localization instance based on input locale.
      *
      * @param locale is to be chosen from SupportedLocales
      */
-    public Localization(final SupportedLocales locale) {
-        setLocale(locale);
+    constructor(locale: SupportedLocales) {
+        setLocale(locale)
     }
 
     /**
      * Default constructor to create a new clean localization.
      */
-    public Localization() {
-        //this constructor is intentionally empty
-    }
+    constructor()
 
     /**
      * Changes currently loaded locale.
      *
      * @param locale is to be chosen from SupportedLocales
      */
-    public void setLocale(final SupportedLocales locale) {
-        currentLocale = locale;
-        messages = ResourceBundle.getBundle("i18n.messages", currentLocale.getLocale());
+    fun setLocale(locale: SupportedLocales?) {
+        currentLocale = locale
+        messages = ResourceBundle.getBundle("i18n.messages", currentLocale!!.locale)
     }
 
     /**
@@ -52,20 +52,17 @@ public final class Localization {
      * @param key the key of the wanted string. Take it from TextKeys
      * @return the wanted string
      */
-    public String getString(final TextKeys key) {
+    fun getString(key: TextKeys): String =
         try {
-            return messages.getString(key.getKey());
-        } catch (final MissingResourceException e) {
-            return "KEY_" + key.getKey() + " MISSING FROM SELECTED LOCALE";
+            messages!!.getString(key.key)
+        } catch (_: MissingResourceException) {
+            "KEY_" + key.key + " MISSING FROM SELECTED LOCALE"
         }
-    }
 
     /**
      * Gets currently set Locale.
      *
      * @return currently set Locale
      */
-    public SupportedLocales getCurrentLocale() {
-        return currentLocale;
-    }
+    fun getCurrentLocale(): SupportedLocales = currentLocale!!
 }
