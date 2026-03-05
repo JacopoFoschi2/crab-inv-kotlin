@@ -1,70 +1,66 @@
-package it.unibo.crabinv.model.wave;
+package it.unibo.crabinv.model.wave
 
-import it.unibo.crabinv.model.entities.enemies.Enemy;
-import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
-import it.unibo.crabinv.model.entities.enemies.EnemyType;
-import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
-import it.unibo.crabinv.model.entities.enemies.wave.Wave;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveImpl;
-import org.junit.jupiter.api.Test;
+import it.unibo.crabinv.model.entities.enemies.Enemy
+import it.unibo.crabinv.model.entities.enemies.EnemyFactory
+import it.unibo.crabinv.model.entities.enemies.EnemyType
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService
+import it.unibo.crabinv.model.entities.enemies.wave.Wave
+import it.unibo.crabinv.model.entities.enemies.wave.WaveImpl
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
+import java.util.concurrent.atomic.AtomicBoolean
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyDouble;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-class WaveTest {
-
+internal class WaveTest {
     @Test
-    void waveShouldFinishAfterAllSpawnedEnemiesDie() {
-        final EnemyFactory enemyFactory = mock(EnemyFactory.class);
-        final RewardsService rewardsService = mock(RewardsService.class);
+    fun waveShouldFinishAfterAllSpawnedEnemiesDie() {
+        val enemyFactory = Mockito.mock(EnemyFactory::class.java)
+        val rewardsService = Mockito.mock(RewardsService::class.java)
 
-        final AtomicBoolean alive = new AtomicBoolean(true);
-        final Enemy enemy = mock(Enemy.class);
-        when(enemy.isAlive()).thenAnswer(inv -> alive.get());
+        val alive = AtomicBoolean(true)
+        val enemy = Mockito.mock(Enemy::class.java)
+        Mockito.`when`(enemy.isAlive()).thenAnswer(Answer { _: InvocationOnMock? -> alive.get() })
 
-        when(enemyFactory.createEnemy(
-                any(EnemyType.class),
-                anyDouble(),
-                anyDouble(),
-                anyDouble(),
-                anyDouble()
-        )).thenReturn(enemy);
+        Mockito
+            .`when`(
+                enemyFactory.createEnemy(
+                    ArgumentMatchers.any(EnemyType::class.java),
+                    ArgumentMatchers.anyDouble(),
+                    ArgumentMatchers.anyDouble(),
+                    ArgumentMatchers.anyDouble(),
+                    ArgumentMatchers.anyDouble(),
+                ),
+            ).thenReturn(enemy)
 
-        final EnemyType type = EnemyType.values()[0];
+        val type = EnemyType.entries[0]
 
-        final double spawnYNorm = 0.2;
-        final double bottomYNorm = 0.8;
+        val spawnYNorm = 0.2
+        val bottomYNorm = 0.8
 
-        final Wave wave = new WaveImpl(
-                List.of(type),
-                List.of(0),
+        val wave: Wave =
+            WaveImpl(
+                listOf<EnemyType?>(type),
+                mutableListOf<Int?>(0),
                 enemyFactory,
                 rewardsService,
                 5,
                 spawnYNorm,
-                bottomYNorm
-        );
+                bottomYNorm,
+            )
 
-        wave.tickUpdate();
-        assertFalse(wave.isWaveFinished());
-        assertEquals(1, wave.getAliveEnemies().size());
+        wave.tickUpdate()
+        Assertions.assertFalse(wave.isWaveFinished())
+        Assertions.assertEquals(1, wave.getAliveEnemies().size)
 
-        alive.set(false);
+        alive.set(false)
 
-        wave.tickUpdate();
-        assertTrue(wave.isWaveFinished());
-        assertTrue(wave.getAliveEnemies().isEmpty());
+        wave.tickUpdate()
+        Assertions.assertTrue(wave.isWaveFinished())
+        Assertions.assertTrue(wave.getAliveEnemies().isEmpty())
 
-        verify(rewardsService, times(1)).rewardEnemyDeath(enemy);
+        Mockito.verify(rewardsService, Mockito.times(1)).rewardEnemyDeath(enemy)
     }
 }
