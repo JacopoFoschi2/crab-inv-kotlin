@@ -1,10 +1,15 @@
-package it.unibo.crabinv.model.core.i18n;
+package it.unibo.crabinv.model.core.i18n
 
 /**
  * Provides all currently supported keys of localization.
- * These keys are to be used with {@code getKey()} method of {@link Localization} class.
+ * These keys are to be used with `getKey()` method of [Localization] class.
  */
-public enum TextKeys {
+enum class TextKeys(
+    /**
+     * @return the string associated to the key to make the request to the resource bundle
+     */
+    val key: String,
+) {
     PLAY("play"),
     SHOP("shop"),
     RUN_LOG("run_log"),
@@ -37,18 +42,5 @@ public enum TextKeys {
     LEVEL("level"),
     WON("won"),
     LOST("lost"),
-    HP("hp");
-
-    private final String key;
-
-    TextKeys(final String key) {
-        this.key = key;
-    }
-
-    /**
-     * @return the string associated to the key to make the request to the resource bundle
-     */
-    public String getKey() {
-        return key;
-    }
+    HP("hp"),
 }
