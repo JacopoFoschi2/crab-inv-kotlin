@@ -1,121 +1,123 @@
-package it.unibo.crabinv.model.core.collisions;
+package it.unibo.crabinv.model.core.collisions
 
-import it.unibo.crabinv.model.entities.bullets.BulletEnemy;
-import it.unibo.crabinv.model.entities.bullets.BulletPlayer;
-import it.unibo.crabinv.model.entities.enemies.EnemyImpl;
-import it.unibo.crabinv.model.entities.entity.Entity;
-import it.unibo.crabinv.model.entities.player.Player;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import it.unibo.crabinv.model.entities.bullets.BulletEnemy
+import it.unibo.crabinv.model.entities.bullets.BulletPlayer
+import it.unibo.crabinv.model.entities.enemies.EnemyImpl
+import it.unibo.crabinv.model.entities.entity.Entity
+import it.unibo.crabinv.model.entities.player.Player
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
-import java.util.ArrayList;
-import java.util.List;
-
-final class TestCollisionSystem {
-    private final CollisionSystem collisionSystem = new CollisionSystem();
+internal class TestCollisionSystem {
+    private val collisionSystem = CollisionSystem()
 
     @Test
-    void testCollisionBetweenLiveEnemies() {
-        final Entity enemy = EntitiesExamples.getEnemyExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(enemy);
-        entities.add(player);
-        Assertions.assertTrue(collisionSystem.resolve(entities));
-        Assertions.assertFalse(enemy.isAlive());
-        Assertions.assertFalse(player.isAlive());
+    fun testCollisionBetweenLiveEnemies() {
+        val enemy: Entity = EntitiesExamples.enemyExample
+        val player: Entity = EntitiesExamples.playerExample
+        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        entities.add(enemy)
+        entities.add(player)
+        Assertions.assertTrue(collisionSystem.resolve(entities))
+        Assertions.assertFalse(enemy.isAlive())
+        Assertions.assertFalse(player.isAlive())
     }
 
     @Test
-    void testCollisionBetweenFriendlies() {
-        final Entity bullet = EntitiesExamples.getPlayerBulletExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(bullet);
-        entities.add(player);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertTrue(bullet.isAlive());
-        Assertions.assertTrue(player.isAlive());
+    fun testCollisionBetweenFriendlies() {
+        val bullet: Entity = EntitiesExamples.playerBulletExample
+        val player: Entity = EntitiesExamples.playerExample
+        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        entities.add(bullet)
+        entities.add(player)
+        Assertions.assertFalse(collisionSystem.resolve(entities))
+        Assertions.assertTrue(bullet.isAlive())
+        Assertions.assertTrue(player.isAlive())
     }
 
     @Test
-    void testCollisionBetweenEnemies() {
-        final Entity bullet = EntitiesExamples.getEnemyBulletExample();
-        final Entity enemy = EntitiesExamples.getEnemyExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(bullet);
-        entities.add(enemy);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertTrue(bullet.isAlive());
-        Assertions.assertTrue(enemy.isAlive());
+    fun testCollisionBetweenEnemies() {
+        val bullet: Entity = EntitiesExamples.enemyBulletExample
+        val enemy: Entity = EntitiesExamples.enemyExample
+        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        entities.add(bullet)
+        entities.add(enemy)
+        Assertions.assertFalse(collisionSystem.resolve(entities))
+        Assertions.assertTrue(bullet.isAlive())
+        Assertions.assertTrue(enemy.isAlive())
     }
 
     @Test
-    void testCollisionWhereOneEntityIsDead() {
-        final Entity enemy = EntitiesExamples.getAlreadyDeadEnemyExample();
-        final Entity player = EntitiesExamples.getPlayerExample();
-        final List<Entity> entities = new ArrayList<>();
-        entities.add(enemy);
-        entities.add(player);
-        Assertions.assertFalse(collisionSystem.resolve(entities));
-        Assertions.assertFalse(enemy.isAlive());
-        Assertions.assertTrue(player.isAlive());
+    fun testCollisionWhereOneEntityIsDead() {
+        val enemy: Entity = EntitiesExamples.alreadyDeadEnemyExample
+        val player: Entity = EntitiesExamples.playerExample
+        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        entities.add(enemy)
+        entities.add(player)
+        Assertions.assertFalse(collisionSystem.resolve(entities))
+        Assertions.assertFalse(enemy.isAlive())
+        Assertions.assertTrue(player.isAlive())
     }
 
-    private static final class EntitiesExamples {
-        public static EnemyImpl getEnemyExample() {
-            return EnemyImpl.builder()
-                    .x(0)
-                    .y(0)
+    private object EntitiesExamples {
+        val enemyExample: EnemyImpl
+            get() =
+                EnemyImpl
+                    .builder()
+                    .x(0.0)
+                    .y(0.0)
                     .collisionGroup(CollisionGroups.HOSTILE)
-                    .radius(10)
+                    .radius(10.0)
                     .maxHealth(1)
                     .health(1)
-                    .build();
-        }
+                    .build()
 
-        public static Player getPlayerExample() {
-            return Player.builder()
-                    .x(0)
-                    .y(0)
+        val playerExample: Player
+            get() =
+                Player
+                    .builder()
+                    .x(0.0)
+                    .y(0.0)
                     .collisionGroup(CollisionGroups.FRIENDLY)
-                    .radius(10)
+                    .radius(10.0)
                     .maxHealth(1)
                     .health(1)
-                    .build();
-        }
+                    .build()
 
-        public static BulletPlayer getPlayerBulletExample() {
-            return BulletPlayer.builder()
-                    .x(0)
-                    .y(0)
-                    .radius(10)
+        val playerBulletExample: BulletPlayer
+            get() =
+                BulletPlayer
+                    .builder()
+                    .x(0.0)
+                    .y(0.0)
+                    .radius(10.0)
                     .collisionGroup(CollisionGroups.FRIENDLY)
                     .maxHealth(1)
                     .health(1)
-                    .build();
-        }
+                    .build()
 
-        public static BulletEnemy getEnemyBulletExample() {
-            return BulletEnemy.builder()
-                    .x(0)
-                    .y(0)
-                    .radius(10)
+        val enemyBulletExample: BulletEnemy
+            get() =
+                BulletEnemy
+                    .builder()
+                    .x(0.0)
+                    .y(0.0)
+                    .radius(10.0)
                     .collisionGroup(CollisionGroups.HOSTILE)
                     .maxHealth(1)
                     .health(1)
-                    .build();
-        }
+                    .build()
 
-        public static EnemyImpl getAlreadyDeadEnemyExample() {
-            return EnemyImpl.builder()
-                    .x(0)
-                    .y(0)
-                    .radius(10)
+        val alreadyDeadEnemyExample: EnemyImpl
+            get() =
+                EnemyImpl
+                    .builder()
+                    .x(0.0)
+                    .y(0.0)
+                    .radius(10.0)
                     .collisionGroup(CollisionGroups.HOSTILE)
                     .maxHealth(1)
                     .health(0)
-                    .build();
-        }
+                    .build()
     }
 }
