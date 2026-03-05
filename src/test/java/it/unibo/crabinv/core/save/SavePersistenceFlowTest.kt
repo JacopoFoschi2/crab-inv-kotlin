@@ -17,7 +17,7 @@ import java.nio.file.Path
  */
 internal class SavePersistenceFlowTest {
     @TempDir
-    private val tempDir: Path? = null
+    private var tempDir: Path? = null
 
     @Test
     @Throws(IOException::class)
