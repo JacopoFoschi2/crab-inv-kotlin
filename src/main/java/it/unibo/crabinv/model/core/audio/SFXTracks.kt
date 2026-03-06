@@ -1,9 +1,14 @@
-package it.unibo.crabinv.model.core.audio;
+package it.unibo.crabinv.model.core.audio
 
 /**
  * Provides a set list of present SFX Tracks and their relative path in resources.
  */
-public enum SFXTracks {
+enum class SFXTracks(
+    /**
+     * @return the resource path of the selected SFX
+     */
+    val path: String,
+) {
     MENU_OPEN("/audio/SFX/menu_open.mp3"),
     MENU_CLOSE("/audio/SFX/menu_close.mp3"),
     MENU_SELECT("/audio/SFX/menu_select.mp3"),
@@ -11,18 +16,5 @@ public enum SFXTracks {
     SHOT_ENEMY("/audio/SFX/shot_enemy.mp3"),
     SHOT_PLAYER("/audio/SFX/shot_player.mp3"),
     EXPLOSION("/audio/SFX/explosion.mp3"),
-    SLIDER("/audio/SFX/slider.mp3"),;
-
-    private final String path;
-
-    SFXTracks(final String path) {
-        this.path = path;
-    }
-
-    /**
-     * @return the resource path of the selected SFX
-     */
-    public String getPath() {
-        return path;
-    }
+    SLIDER("/audio/SFX/slider.mp3"),
 }
