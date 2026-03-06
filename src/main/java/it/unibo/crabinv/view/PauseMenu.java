@@ -66,13 +66,13 @@ public class PauseMenu {
         final VBox mainColumn = new VBox(DEFAULT_SPACING);
         mainColumn.setAlignment(SETTINGS_ALIGMENT);
         final HBox bgmVolume = components.createVolumeSlider(
-                audio.getBGMVolume(),
-                audio::setBGMVolume,
+                audio.getBgmVolume(),
+                audio::setBgmVolume,
                 audio::playSFX,
                 TextKeys.BGM_VOLUME);
         final HBox sfxVolume = components.createVolumeSlider(
-                audio.getSFXVolume(),
-                audio::setSFXVolume,
+                audio.getSfxVolume(),
+                audio::setSfxVolume,
                 audio::playSFX,
                 TextKeys.SFX_VOLUME);
         final CheckBox bgmMute = components.createMute(TextKeys.BGM_MUTE, audio.isBGMMuted(), audio::toggleBGMMute);

@@ -43,8 +43,8 @@ public final class App extends Application {
         final AppSettings settings = SettingsFileManager.load();
         if (settings != null) {
             loc.setLanguage(settings.locales());
-            audio.setBGMVolume(settings.bgmVolume());
-            audio.setSFXVolume(settings.sfxVolume());
+            audio.setBgmVolume(settings.bgmVolume());
+            audio.setSfxVolume(settings.sfxVolume());
             if (settings.isBGMMuted()) {
                 audio.toggleBGMMute();
             }
@@ -68,8 +68,8 @@ public final class App extends Application {
     public void stop() throws Exception {
         //used for saving the state of the settings before closing the app
         final AppSettings settings = new AppSettings(
-                audio.getBGMVolume(),
-                audio.getSFXVolume(),
+                audio.getBgmVolume(),
+                audio.getSfxVolume(),
                 audio.isBGMMuted(),
                 audio.isSFXMuted(),
                 loc.getLanguage()

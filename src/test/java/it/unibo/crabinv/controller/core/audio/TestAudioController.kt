@@ -15,7 +15,7 @@ internal class TestAudioController {
     @BeforeEach
     fun init() {
         mockSound = Mockito.mock(SoundService::class.java)
-        controller = AudioController(mockSound)
+        controller = AudioController(mockSound!!)
     }
 
     @Test
@@ -29,16 +29,16 @@ internal class TestAudioController {
 
         Assertions.assertFalse(controller!!.isBGMMuted)
         Assertions.assertFalse(controller!!.isSFXMuted)
-        Assertions.assertEquals(100, controller!!.getBGMVolume())
-        Assertions.assertEquals(100, controller!!.getSFXVolume())
+        Assertions.assertEquals(100, controller!!.bgmVolume)
+        Assertions.assertEquals(100, controller!!.bgmVolume)
     }
 
     @Test
     fun testVolumeChange() {
         val newModelVolume = 0.5
         val newControllerVolume = 50
-        controller!!.setBGMVolume(newControllerVolume)
-        controller!!.setSFXVolume(newControllerVolume)
+        controller!!.bgmVolume = newControllerVolume
+        controller!!.sfxVolume = newControllerVolume
         Mockito.verify<SoundService>(mockSound).bgmVolume = newModelVolume
         Mockito.verify<SoundService>(mockSound).sfxVolume = newModelVolume
     }
@@ -77,7 +77,7 @@ internal class TestAudioController {
         val tryVolume = 150
         Assertions.assertThrows(
             IllegalArgumentException::class.java,
-        ) { controller!!.setBGMVolume(tryVolume) }
+        ) { controller!!.bgmVolume = tryVolume }
     }
 
     @Test
@@ -85,7 +85,7 @@ internal class TestAudioController {
         val tryVolume = -10
         Assertions.assertThrows(
             IllegalArgumentException::class.java,
-        ) { controller!!.setBGMVolume(tryVolume) }
+        ) { controller!!.bgmVolume = tryVolume }
         Mockito.verifyNoInteractions(mockSound)
     }
 
@@ -112,8 +112,8 @@ internal class TestAudioController {
         val secondValue = 60
         val firstCorrective = firstValue.toDouble() / 100
         val secondCorrective = secondValue.toDouble() / 100
-        controller!!.setBGMVolume(firstValue)
-        controller!!.setSFXVolume(secondValue)
+        controller!!.bgmVolume = firstValue
+        controller!!.sfxVolume = secondValue
         controller!!.toggleBGMMute()
         controller!!.toggleSFXMute()
         Mockito.verify<SoundService>(mockSound).bgmVolume = firstCorrective
