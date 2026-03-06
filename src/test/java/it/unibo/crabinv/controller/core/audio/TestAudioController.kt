@@ -22,10 +22,10 @@ internal class TestAudioController {
     fun testCorrectSetup() {
         val defaultMute = false
         val defaultVolume = 1.0
-        Mockito.`when`(mockSound!!.isBGMMuted()).thenReturn(defaultMute)
-        Mockito.`when`(mockSound!!.isSFXMuted()).thenReturn(defaultMute)
-        Mockito.`when`(mockSound!!.getBGMVolume()).thenReturn(defaultVolume)
-        Mockito.`when`(mockSound!!.getSFXVolume()).thenReturn(defaultVolume)
+        Mockito.`when`(mockSound!!.isBGMMuted).thenReturn(defaultMute)
+        Mockito.`when`(mockSound!!.isSFXMuted).thenReturn(defaultMute)
+        Mockito.`when`(mockSound!!.bgmVolume).thenReturn(defaultVolume)
+        Mockito.`when`(mockSound!!.sfxVolume).thenReturn(defaultVolume)
 
         Assertions.assertFalse(controller!!.isBGMMuted)
         Assertions.assertFalse(controller!!.isSFXMuted)
@@ -39,8 +39,8 @@ internal class TestAudioController {
         val newControllerVolume = 50
         controller!!.setBGMVolume(newControllerVolume)
         controller!!.setSFXVolume(newControllerVolume)
-        Mockito.verify<SoundService>(mockSound).setBGMVolume(newModelVolume)
-        Mockito.verify<SoundService>(mockSound).setSFXVolume(newModelVolume)
+        Mockito.verify<SoundService>(mockSound).bgmVolume = newModelVolume
+        Mockito.verify<SoundService>(mockSound).sfxVolume = newModelVolume
     }
 
     @Test
@@ -116,8 +116,8 @@ internal class TestAudioController {
         controller!!.setSFXVolume(secondValue)
         controller!!.toggleBGMMute()
         controller!!.toggleSFXMute()
-        Mockito.verify<SoundService>(mockSound).setBGMVolume(firstCorrective)
-        Mockito.verify<SoundService>(mockSound).setSFXVolume(secondCorrective)
+        Mockito.verify<SoundService>(mockSound).bgmVolume = firstCorrective
+        Mockito.verify<SoundService>(mockSound).sfxVolume = secondCorrective
         Mockito.verify<SoundService>(mockSound).toggleMuteBGM()
         Mockito.verify<SoundService>(mockSound).toggleMuteSFX()
     }

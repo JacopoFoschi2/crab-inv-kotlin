@@ -8,30 +8,30 @@ internal class TestJavaFXSoundManager {
 
     @Test
     fun testBGMMute() {
-        Assertions.assertFalse(soundManager.isBGMMuted())
+        Assertions.assertFalse(soundManager.isBGMMuted)
         soundManager.toggleMuteBGM()
-        Assertions.assertTrue(soundManager.isBGMMuted())
+        Assertions.assertTrue(soundManager.isBGMMuted)
     }
 
     @Test
     fun testSFXMute() {
-        Assertions.assertFalse(soundManager.isSFXMuted())
+        Assertions.assertFalse(soundManager.isSFXMuted)
         soundManager.toggleMuteSFX()
-        Assertions.assertTrue(soundManager.isSFXMuted())
+        Assertions.assertTrue(soundManager.isSFXMuted)
     }
 
     @Test
     fun testBGMVolumeChange() {
-        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.getBGMVolume())
-        soundManager.setBGMVolume(TEST_VOLUME)
-        Assertions.assertEquals(TEST_VOLUME, soundManager.getBGMVolume())
+        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.bgmVolume)
+        soundManager.bgmVolume = TEST_VOLUME
+        Assertions.assertEquals(TEST_VOLUME, soundManager.bgmVolume)
     }
 
     @Test
     fun testSFXVolumeChange() {
-        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.getSFXVolume())
-        soundManager.setSFXVolume(TEST_VOLUME)
-        Assertions.assertEquals(TEST_VOLUME, soundManager.getSFXVolume())
+        Assertions.assertEquals(DEFAULT_VOLUME, soundManager.sfxVolume)
+        soundManager.sfxVolume = TEST_VOLUME
+        Assertions.assertEquals(TEST_VOLUME, soundManager.sfxVolume)
     }
 
     companion object {
