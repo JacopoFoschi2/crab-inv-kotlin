@@ -1,77 +1,53 @@
-package it.unibo.crabinv.model.core.audio;
+package it.unibo.crabinv.model.core.audio
 
 /**
  * Provides all the basic sound apis.
  */
-public interface SoundService {
+interface SoundService {
     /**
      * Disposes of currently playing music if there's any and starts playing the new track,
      * does nothing if the new track is the same as the previous one.
      *
-     * @param musicName the track you wish to play from {@link BGMTracks}
+     * @param musicName the track you wish to play from [BGMTracks]
      */
-    void playBGM(BGMTracks musicName);
+    fun playBGM(musicName: BGMTracks)
+
+    /** Starts playing the song if it was stopped. */
+    fun resumeBGM()
+
+    /** Pauses the current song. */
+    fun pauseBGM()
 
     /**
-     * Starts playing the song if it was stopped.
-     */
-    void resumeBGM();
-
-    /**
-     * Pauses the current song.
-     */
-    void pauseBGM();
-
-    /**
-     * sets the volume of current and future playing music.
+     * Volume of current and future playing music, between 0.0 and 1.0.
      *
-     * @param volume a double value between 0.0 and 1.0
-     * @throws IllegalArgumentException if the value inputted isn't between 0.0 and 1.0
+     * @throws IllegalArgumentException if the value isn't between 0.0 and 1.0
      */
-    void setBGMVolume(double volume);
+    var bgmVolume: Double
 
-    /**
-     * @return The currently set BGM volume
-     */
-    double getBGMVolume();
+    /** Toggles if BGM is muted. */
+    fun toggleMuteBGM()
 
-    /**
-     * Toggles if BGM is mute.
-     */
-    void toggleMuteBGM();
-
-    /**
-     * @return if BGM is mute
-     */
-    boolean isBGMMuted();
+    /** Whether BGM is muted. */
+    var isBGMMuted: Boolean
 
     /**
      * Plays the selected sound effect.
      *
-     * @param effectName the sound effect you wish to play from {@link SFXTracks}
+     * @param effectName the sound effect you wish to play from [SFXTracks]
      */
-    void playSFX(SFXTracks effectName);
+    fun playSFX(effectName: SFXTracks)
 
     /**
-     * sets the volume of sound effects.
+     * Volume of sound effects, between 0.0 and 1.0.
      *
-     * @param volume a double value between 0.0 and 1.0
-     * @throws IllegalArgumentException if the value inputted isn't between 0.0 and 1.0
+     * @throws IllegalArgumentException if the value isn't between 0.0 and 1.0
      */
-    void setSFXVolume(double volume);
+    var sfxVolume: Double
 
-    /**
-     * @return The currently set SFX volume
-     */
-    double getSFXVolume();
+    /** Toggles if SFX are muted. */
+    fun toggleMuteSFX()
 
-    /**
-     * Toggles if SFX are muted.
-     */
-    void toggleMuteSFX();
-
-    /**
-     * @return if SFX are muted
-     */
-    boolean isSFXMuted();
+    /** Whether SFX are muted. */
+    var isSFXMuted: Boolean
 }
