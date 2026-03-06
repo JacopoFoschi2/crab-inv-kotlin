@@ -1,185 +1,102 @@
-package it.unibo.crabinv.model.core.audio;
+package it.unibo.crabinv.model.core.audio
 
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
+import javafx.scene.media.AudioClip
+import javafx.scene.media.Media
+import javafx.scene.media.MediaPlayer
 
 /**
- * Provides an implementation of {@link SoundService} using JavaFX.
+ * Provides an implementation of [SoundService] using JavaFX.
  */
-public final class JavaFXSoundManager implements SoundService {
-    private double bgmVolume;
-    private double sfxVolume;
-    private boolean isBGMMuted;
-    private boolean isSFXMuted;
-    private MediaPlayer musicPlayer;
-    private String currentTrack;
-    private final Map<String, Media> bgmCache = new HashMap<>();
-    private final Map<String, AudioClip> sfxCache = new HashMap<>();
+class JavaFXSoundManager : SoundService {
+    override var bgmVolume: Double = 1.0
+        set(value) {
+            require(value in 0.0..1.0) { "Volume must be between 0.0 and 1.0" }
+            field = value
+            musicPlayer?.volume = value
+        }
 
-    /**
-     * Creates the SoundManager ensuring a coherent initial state.
-     */
-    public JavaFXSoundManager() {
-        setBGMVolume(1.0);
-        setSFXVolume(1.0);
-        isBGMMuted = false;
-        isSFXMuted = false;
-    }
+    override var sfxVolume: Double = 1.0
+        set(value) {
+            require(value in 0.0..1.0) { "Volume must be between 0.0 and 1.0" }
+            field = value
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void playBGM(final BGMTracks music) {
-        final String musicName = music.getPath();
+    override var isBGMMuted: Boolean = false
+        set(value) {
+            field = value
+            musicPlayer?.isMute = value
+        }
+
+    override var isSFXMuted: Boolean = false
+
+    private var musicPlayer: MediaPlayer? = null
+    private var currentTrack: String? = null
+    private val bgmCache: MutableMap<String, Media> = HashMap()
+    private val sfxCache: MutableMap<String, AudioClip> = HashMap()
+
+    override fun playBGM(musicName: BGMTracks) {
+        val path = musicName.path
         if (musicPlayer != null) {
-            if (Objects.equals(currentTrack, musicName)) {
-                return;
+            if (currentTrack == path) return
+            musicPlayer!!.stop()
+            musicPlayer!!.dispose()
+            musicPlayer = null
+        }
+        handleCache(path, bgmCache) { Media(it) }
+        musicPlayer =
+            MediaPlayer(bgmCache[path]).also {
+                it.volume = bgmVolume
+                it.isMute = isBGMMuted
+                it.cycleCount = MediaPlayer.INDEFINITE
+                it.play()
             }
-            musicPlayer.stop();
-            musicPlayer.dispose();
-            musicPlayer = null;
-        }
-        handleCache(musicName, bgmCache, Media::new);
-        musicPlayer = new MediaPlayer(bgmCache.get(musicName));
-        currentTrack = musicName;
-        musicPlayer.setVolume(bgmVolume);
-        musicPlayer.setMute(isBGMMuted);
-        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        musicPlayer.play();
+        currentTrack = path
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void resumeBGM() {
-        if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-            musicPlayer.play();
+    override fun resumeBGM() {
+        if (musicPlayer?.status == MediaPlayer.Status.PAUSED) {
+            musicPlayer!!.play()
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void pauseBGM() {
-        if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            musicPlayer.pause();
+    override fun pauseBGM() {
+        if (musicPlayer?.status == MediaPlayer.Status.PLAYING) {
+            musicPlayer!!.pause()
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setBGMVolume(final double volume) {
-        if (volume < 0.0 || volume > 1.0) {
-            throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
-        }
-        this.bgmVolume = volume;
-        if (musicPlayer != null) {
-            musicPlayer.setVolume(volume);
-        }
+    override fun toggleMuteBGM() {
+        isBGMMuted = !isBGMMuted
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getBGMVolume() {
-        return bgmVolume;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void toggleMuteBGM() {
-        isBGMMuted = !isBGMMuted;
-        if (musicPlayer != null) {
-            musicPlayer.setMute(isBGMMuted);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isBGMMuted() {
-        return isBGMMuted;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void playSFX(final SFXTracks effect) {
-        final String effectName = effect.getPath();
-        handleCache(effectName, sfxCache, AudioClip::new);
+    override fun playSFX(effectName: SFXTracks) {
+        val path = effectName.path
+        handleCache(path, sfxCache) { AudioClip(it) }
         if (!isSFXMuted) {
-            final AudioClip sfx = sfxCache.get(effectName);
-            sfx.play(sfxVolume);
+            sfxCache[path]!!.play(sfxVolume)
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setSFXVolume(final double volume) {
-        if (volume < 0.0 || volume > 1.0) {
-            throw new IllegalArgumentException("Volume must be between 0.0 and 1.0");
-        }
-        this.sfxVolume = volume;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getSFXVolume() {
-        return sfxVolume;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void toggleMuteSFX() {
-        isSFXMuted = !isSFXMuted;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isSFXMuted() {
-        return isSFXMuted;
+    override fun toggleMuteSFX() {
+        isSFXMuted = !isSFXMuted
     }
 
     /**
      * Handles the caching of either sound effects or music tracks.
      *
-     * @param effectName the key of the track
+     * @param name the key of the track
      * @param cache a map used to cache all the tracks used at runtime
-     * @param <T> the type of JavaFx sound construct you wish to create
-     * @param create the method used to create the aforementioned construct
+     * @param create the method used to create the JavaFX sound construct
      */
-    private <T> void handleCache(final String effectName, final Map<String, T> cache, final Function<String, T> create) {
-        if (!cache.containsKey(effectName)) {
-            final var resource = getClass().getResource(effectName);
-            if (resource == null) {
-                throw new IllegalArgumentException("Resource not found: " + effectName);
-            }
-            final T effect = create.apply(resource.toExternalForm());
-            cache.put(effectName, effect);
+    private fun <T> handleCache(
+        name: String,
+        cache: MutableMap<String, T>,
+        create: (String) -> T,
+    ) {
+        if (!cache.containsKey(name)) {
+            val resource = javaClass.getResource(name)
+            requireNotNull(resource) { "Resource not found: $name" }
+            cache[name] = create(resource.toExternalForm())
         }
     }
 }
