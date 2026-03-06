@@ -1,129 +1,70 @@
-package it.unibo.crabinv.controller.core.audio;
+package it.unibo.crabinv.controller.core.audio
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.crabinv.model.core.audio.BGMTracks;
-import it.unibo.crabinv.model.core.audio.SFXTracks;
-import it.unibo.crabinv.model.core.audio.SoundService;
+import it.unibo.crabinv.model.core.audio.BGMTracks
+import it.unibo.crabinv.model.core.audio.SFXTracks
+import it.unibo.crabinv.model.core.audio.SoundService
 
 /**
- * Provides a controller facade that lets you utilize any implementation of {@link SoundService} regardless of the library used.
+ * Provides a controller facade that lets you utilize any implementation of [SoundService] regardless of the library used.
+ *
+ * @param soundManager the implementation of SoundManager you want to use
  */
-public class AudioController {
-    private final SoundService soundManager;
-
-    /**
-     * Creates the instance of AudioController.
-     *
-     * @param soundManager the implementation of SoundManager you want to use
-     */
-    @SuppressFBWarnings("EI_EXPOSE_REP2") // SoundService is injected and owned by the caller.
-    public AudioController(final SoundService soundManager) {
-        this.soundManager = soundManager;
-    }
-
-    /**
-     * Plays the music.
-     *
-     * @param bgm the wanted track to play
-     */
-    public void playBGM(final BGMTracks bgm) {
-        soundManager.playBGM(bgm);
-    }
+class AudioController(
+    private val soundManager: SoundService,
+) {
+    /** Plays the music. @param bgm the wanted track to play */
+    fun playBGM(bgm: BGMTracks) = soundManager.playBGM(bgm)
 
     /**
      * Pauses the currently playing track for a later resume.
-     * Use it in instances such as the pause menu to pause the main music
+     * Use it in instances such as the pause menu to pause the main music.
      */
-    public void pauseBGM() {
-        soundManager.pauseBGM();
-    }
+    fun pauseBGM() = soundManager.pauseBGM()
 
     /**
      * Resumes the currently playing track that was previously paused.
      * Use it in instances such as when you resume the game after it was paused.
      */
-    public void resumeBGM() {
-        soundManager.resumeBGM();
-    }
+    fun resumeBGM() = soundManager.resumeBGM()
 
     /**
-     * Sets the music volume to the desired value.
+     * BGM volume as an integer between 0 and 100.
      *
-     * @param volume spans from 0 to 100
-     * @throws IllegalArgumentException if the volume inputted is incorrect
+     * @throws IllegalArgumentException if the value isn't between 0 and 100
      */
-    public void setBGMVolume(final int volume) {
-        if (volume < 0 || volume > 100) {
-            throw new IllegalArgumentException("Volume must be between 0 and 100");
+    var bgmVolume: Int
+        get() = (soundManager.bgmVolume * 100).toInt()
+        set(value) {
+            require(value in 0..100) { "Volume must be between 0 and 100" }
+            soundManager.bgmVolume = value.toDouble() / 100
         }
-        final double realVolume = (double) volume / 100;
-        soundManager.setBgmVolume(realVolume);
-    }
+
+    /** Whether BGM is currently muted. */
+    val isBGMMuted: Boolean
+        get() = soundManager.isBGMMuted
+
+    /** Toggles if the music should be muted or not. */
+    fun toggleBGMMute() = soundManager.toggleMuteBGM()
+
+    /** Plays sound effects. @param sfx the track you want to play */
+    fun playSFX(sfx: SFXTracks) = soundManager.playSFX(sfx)
 
     /**
-     * @return the current BGM volume
-     */
-    public int getBGMVolume() {
-        final double volume = soundManager.getBgmVolume();
-        return (int) (volume * 100);
-    }
-
-    /**
-     * Toggles if the music should be mute or not.
-     */
-    public void toggleBGMMute() {
-        soundManager.toggleMuteBGM();
-    }
-
-    /**
-     * @return if the music is currently muted or not
-     */
-    public boolean isBGMMuted() {
-        return soundManager.isBGMMuted();
-    }
-
-    /**
-     * Plays sound effects.
+     * SFX volume as an integer between 0 and 100.
      *
-     * @param sfx the track you want to play
+     * @throws IllegalArgumentException if the value isn't between 0 and 100
      */
-    public void playSFX(final SFXTracks sfx) {
-        soundManager.playSFX(sfx);
-    }
-
-    /**
-     * Sets the sound effects volume to the desired value.
-     *
-     * @param volume spans from 0 to 100
-     * @throws IllegalArgumentException if the volume inputted is incorrect
-     */
-    public void setSFXVolume(final int volume) {
-        if (volume < 0 || volume > 100) {
-            throw new IllegalArgumentException("Volume must be between 0 and 100");
+    var sfxVolume: Int
+        get() = (soundManager.sfxVolume * 100).toInt()
+        set(value) {
+            require(value in 0..100) { "Volume must be between 0 and 100" }
+            soundManager.sfxVolume = value.toDouble() / 100
         }
-        final double realVolume = (double) volume / 100;
-        soundManager.setSfxVolume(realVolume);
-    }
 
-    /**
-     * @return the current SFX volume
-     */
-    public int getSFXVolume() {
-        final double volume = soundManager.getSfxVolume();
-        return (int) (volume * 100);
-    }
+    /** Whether SFX are currently muted. */
+    val isSFXMuted: Boolean
+        get() = soundManager.isSFXMuted
 
-    /**
-     * Toggles if the sound effects should be muted or not.
-     */
-    public void toggleSFXMute() {
-        soundManager.toggleMuteSFX();
-    }
-
-    /**
-     * @return if sound effects are currently muted
-     */
-    public boolean isSFXMuted() {
-        return soundManager.isSFXMuted();
-    }
+    /** Toggles if the sound effects should be muted or not. */
+    fun toggleSFXMute() = soundManager.toggleMuteSFX()
 }
