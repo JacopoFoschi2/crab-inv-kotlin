@@ -57,14 +57,14 @@ public class AudioController {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
         final double realVolume = (double) volume / 100;
-        soundManager.setBGMVolume(realVolume);
+        soundManager.setBgmVolume(realVolume);
     }
 
     /**
      * @return the current BGM volume
      */
     public int getBGMVolume() {
-        final double volume = soundManager.getBGMVolume();
+        final double volume = soundManager.getBgmVolume();
         return (int) (volume * 100);
     }
 
@@ -102,14 +102,14 @@ public class AudioController {
             throw new IllegalArgumentException("Volume must be between 0 and 100");
         }
         final double realVolume = (double) volume / 100;
-        soundManager.setSFXVolume(realVolume);
+        soundManager.setSfxVolume(realVolume);
     }
 
     /**
      * @return the current SFX volume
      */
     public int getSFXVolume() {
-        final double volume = soundManager.getSFXVolume();
+        final double volume = soundManager.getSfxVolume();
         return (int) (volume * 100);
     }
 
