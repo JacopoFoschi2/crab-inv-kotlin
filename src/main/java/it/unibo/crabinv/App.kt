@@ -1,94 +1,89 @@
-package it.unibo.crabinv;
+package it.unibo.crabinv
 
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.model.core.audio.JavaFXSoundManager;
-import it.unibo.crabinv.model.core.i18n.Localization;
-import it.unibo.crabinv.core.config.AppSettings;
-import it.unibo.crabinv.core.config.SettingsFileManager;
-import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.io.IOException;
-import java.util.Objects;
+import it.unibo.crabinv.controller.core.audio.AudioController
+import it.unibo.crabinv.controller.core.i18n.LocalizationController
+import it.unibo.crabinv.core.config.AppSettings
+import it.unibo.crabinv.core.config.SettingsFileManager
+import it.unibo.crabinv.model.core.audio.JavaFXSoundManager
+import it.unibo.crabinv.model.core.i18n.Localization
+import javafx.application.Application
+import javafx.scene.Cursor
+import javafx.scene.Scene
+import javafx.scene.layout.StackPane
+import javafx.stage.Screen
+import javafx.stage.Stage
+import javafx.stage.StageStyle
+import java.io.IOException
+import java.util.Objects
 
 /**
  * Provides the application with the methods it needs to run.
  */
-public final class App extends Application {
-    private final LocalizationController loc = new LocalizationController(new Localization());
-    private final AudioController audio = new AudioController(new JavaFXSoundManager());
+class App : Application() {
+    private val loc = LocalizationController(Localization())
+    private val audio = AudioController(JavaFXSoundManager())
 
-    @Override
-    public void start(final Stage mainStage) throws IOException {
-        //Tweaks the initial config of the stage
-        mainStage.initStyle(StageStyle.UNDECORATED);
-        mainStage.setMaximized(true);
-        //The bounds of the screen
-        final Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        final Scene mainScene;
-        final StackPane root = new StackPane();
-        mainScene = new Scene(root);
-        final SceneManager manager = new SceneManager(root, loc, audio, bounds);
-        mainScene.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/style/style.css")).toExternalForm()
-        );
-        //Attempts to read the settings.json file and handles setting them
-        final AppSettings settings = SettingsFileManager.load();
+    @Throws(IOException::class)
+    override fun start(mainStage: Stage) {
+        // Tweaks the initial config of the stage
+        mainStage.initStyle(StageStyle.UNDECORATED)
+        mainStage.isMaximized = true
+        // The bounds of the screen
+        val bounds = Screen.getPrimary().visualBounds
+        val mainScene: Scene
+        val root = StackPane()
+        mainScene = Scene(root)
+        val manager = SceneManager(root, loc, audio, bounds)
+        mainScene.stylesheets.add(
+            Objects.requireNonNull(javaClass.getResource("/style/style.css")).toExternalForm(),
+        )
+        // Attempts to read the settings.json file and handles setting them
+        val settings = SettingsFileManager.load()
         if (settings != null) {
-            loc.setLanguage(settings.locales());
-            audio.setBgmVolume(settings.bgmVolume());
-            audio.setSfxVolume(settings.sfxVolume());
-            if (settings.isBGMMuted()) {
-                audio.toggleBGMMute();
+            loc.language = settings.locales
+            audio.bgmVolume = settings.bgmVolume
+            audio.sfxVolume = settings.sfxVolume
+            if (settings.isBGMMuted) {
+                audio.toggleBGMMute()
             }
-            if (settings.isSFXMuted()) {
-                audio.toggleSFXMute();
+            if (settings.isSFXMuted) {
+                audio.toggleSFXMute()
             }
         }
-        mainScene.setCursor(Cursor.NONE);
-        mainStage.setScene(mainScene);
-        mainStage.setTitle("Crab Invaders");
-        mainStage.setResizable(false);
-        if (loc.getLanguage() == null) {
-            manager.showLanguageSelection();
+        mainScene.cursor = Cursor.NONE
+        mainStage.scene = mainScene
+        mainStage.title = "Crab Invaders"
+        mainStage.isResizable = false
+        if (loc.language == null) {
+            manager.showLanguageSelection()
         } else {
-            manager.showMainMenu();
+            manager.showMainMenu()
         }
-        mainStage.show();
+        mainStage.show()
     }
 
-    @Override
-    public void stop() throws Exception {
-        //used for saving the state of the settings before closing the app
-        final AppSettings settings = new AppSettings(
-                audio.getBgmVolume(),
-                audio.getSfxVolume(),
-                audio.isBGMMuted(),
-                audio.isSFXMuted(),
-                loc.getLanguage()
-        );
-        SettingsFileManager.save(settings);
-        super.stop();
+    @Throws(Exception::class)
+    override fun stop() {
+        // used for saving the state of the settings before closing the app
+        val settings =
+            AppSettings(
+                audio.bgmVolume,
+                audio.sfxVolume,
+                audio.isBGMMuted,
+                audio.isSFXMuted,
+                loc.language,
+            )
+        SettingsFileManager.save(settings)
+        super.stop()
     }
 
     /**
      * Provides the launcher of the application.
      */
-    public static final class Main {
-        /**
-         * Prevents instantiation.
-         */
-        private Main() { }
-
-        static void main(final String... args) {
-            launch(App.class, args);
+    object Main {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            launch(App::class.java, *args)
         }
     }
 }
