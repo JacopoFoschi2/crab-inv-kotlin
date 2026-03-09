@@ -15,7 +15,7 @@ internal class TestCollisionSystem {
     fun testCollisionBetweenLiveEnemies() {
         val enemy: Entity = EntitiesExamples.enemyExample
         val player: Entity = EntitiesExamples.playerExample
-        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        val entities: MutableList<Entity> = ArrayList()
         entities.add(enemy)
         entities.add(player)
         Assertions.assertTrue(collisionSystem.resolve(entities))
@@ -27,7 +27,7 @@ internal class TestCollisionSystem {
     fun testCollisionBetweenFriendlies() {
         val bullet: Entity = EntitiesExamples.playerBulletExample
         val player: Entity = EntitiesExamples.playerExample
-        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        val entities: MutableList<Entity> = ArrayList()
         entities.add(bullet)
         entities.add(player)
         Assertions.assertFalse(collisionSystem.resolve(entities))
@@ -39,7 +39,7 @@ internal class TestCollisionSystem {
     fun testCollisionBetweenEnemies() {
         val bullet: Entity = EntitiesExamples.enemyBulletExample
         val enemy: Entity = EntitiesExamples.enemyExample
-        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        val entities: MutableList<Entity> = ArrayList()
         entities.add(bullet)
         entities.add(enemy)
         Assertions.assertFalse(collisionSystem.resolve(entities))
@@ -51,7 +51,7 @@ internal class TestCollisionSystem {
     fun testCollisionWhereOneEntityIsDead() {
         val enemy: Entity = EntitiesExamples.alreadyDeadEnemyExample
         val player: Entity = EntitiesExamples.playerExample
-        val entities: MutableList<Entity?> = ArrayList<Entity?>()
+        val entities: MutableList<Entity> = ArrayList()
         entities.add(enemy)
         entities.add(player)
         Assertions.assertFalse(collisionSystem.resolve(entities))
