@@ -1,10 +1,10 @@
-package it.unibo.crabinv.model.core.collisions;
+package it.unibo.crabinv.model.core.collisions
 
 /**
  * The factions of the game, used to compute collisions.
  */
-public enum CollisionGroups {
+enum class CollisionGroups {
     FRIENDLY,
     HOSTILE,
-    NEUTRAL
+    NEUTRAL,
 }
