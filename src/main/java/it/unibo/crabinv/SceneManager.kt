@@ -61,7 +61,7 @@ class SceneManager(
      * Sets the main menu screen as the shown one.
      */
     fun showMainMenu() {
-        root.children.setAll(MainMenu(this, loc, audio).getView())
+        root.children.setAll(MainMenu(this, loc, audio).view)
         audio.playBGM(BGMTracks.MENU)
     }
 
