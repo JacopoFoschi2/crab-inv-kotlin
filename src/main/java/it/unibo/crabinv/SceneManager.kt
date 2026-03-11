@@ -53,7 +53,7 @@ class SceneManager(
      * Sets the language selection screen as the shown one.
      */
     fun showLanguageSelection() {
-        root.children.setAll(LanguageSelection(this, loc, audio).getView())
+        root.children.setAll(LanguageSelection(this, loc, audio).view)
         audio.playBGM(BGMTracks.MENU)
     }
 
