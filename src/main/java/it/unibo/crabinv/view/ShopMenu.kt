@@ -42,7 +42,7 @@ class ShopMenu(
     private val audio: AudioController,
     private val save: Save,
     private val repo: SaveRepository?,
-    private val powerUps: MutableList<PowerUp>,
+    private val powerUps: List<PowerUp>,
 ) {
     private val profile: UserProfile = save.getUserProfile()
     private val shop: Shop = ShopLogic()

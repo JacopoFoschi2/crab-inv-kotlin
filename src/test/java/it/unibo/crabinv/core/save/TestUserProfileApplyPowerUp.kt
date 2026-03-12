@@ -10,7 +10,7 @@ import java.util.EnumMap
 internal class TestUserProfileApplyPowerUp {
     @Test
     fun applyMultiplyPowerUpComputesBaseTimesMultiplierTimesLevel() {
-        val levels: MutableMap<PowerUpType?, Int?> = EnumMap<PowerUpType?, Int?>(PowerUpType::class.java)
+        val levels: MutableMap<PowerUpType?, Int?> = EnumMap<PowerUpType, Int>(PowerUpType::class.java)
         levels[PowerUpType.SPEED_UP] = MAX_SPEED_UP
         levels[PowerUpType.FIRERATE_UP] = MAX_FIRERATE_UP
         levels[PowerUpType.HEALTH_UP] = MAX_HEALTH_UP
