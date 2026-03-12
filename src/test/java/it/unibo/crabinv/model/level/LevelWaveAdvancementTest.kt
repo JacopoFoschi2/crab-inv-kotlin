@@ -24,11 +24,11 @@ internal class LevelWaveAdvancementTest {
         val provider: WaveProvider = WaveSequence(listOf<Wave?>(w1, w2))
         val level: Level = LevelImpl(provider)
 
-        Assertions.assertSame(w1, level.getCurrentWave())
+        Assertions.assertSame(w1, level.currentWave)
 
         waveCheckLikeEngine(level)
 
-        Assertions.assertSame(w2, level.getCurrentWave(), "After the first wave finishes, the second should start")
+        Assertions.assertSame(w2, level.currentWave, "After the first wave finishes, the second should start")
         Mockito.verify(w1, Mockito.atLeastOnce()).tickUpdate()
         Mockito.verify(w1, Mockito.atLeastOnce()).isWaveFinished()
     }
@@ -45,11 +45,11 @@ internal class LevelWaveAdvancementTest {
         val level: Level = LevelImpl(provider)
 
         waveCheckLikeEngine(level)
-        Assertions.assertSame(w2, level.getCurrentWave())
+        Assertions.assertSame(w2, level.currentWave)
 
         waveCheckLikeEngine(level)
-        Assertions.assertTrue(level.isLevelFinished(), "After all waves are finished, the level should end")
-        Assertions.assertNull(level.getCurrentWave())
+        Assertions.assertTrue(level.isLevelFinished, "After all waves are finished, the level should end")
+        Assertions.assertNull(level.currentWave)
     }
 
     companion object {
@@ -60,8 +60,8 @@ internal class LevelWaveAdvancementTest {
          * @param level the level it should run
          */
         private fun waveCheckLikeEngine(level: Level) {
-            if (!level.isLevelFinished()) {
-                val currentWave = level.getCurrentWave()
+            if (!level.isLevelFinished) {
+                val currentWave = level.currentWave
                 if (currentWave != null) {
                     currentWave.tickUpdate()
                     if (currentWave.isWaveFinished()) {

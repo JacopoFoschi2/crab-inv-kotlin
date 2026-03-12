@@ -20,8 +20,8 @@ internal class LevelTest {
 
         val level: Level = LevelImpl(provider)
 
-        Assertions.assertSame(w1, level.getCurrentWave(), "The constructor should position itself in the first wave")
-        Assertions.assertFalse(level.isLevelFinished(), "A level with a wave ongoing shouldn't be finished")
+        Assertions.assertSame(w1, level.currentWave, "The constructor should position itself in the first wave")
+        Assertions.assertFalse(level.isLevelFinished, "A level with a wave ongoing shouldn't be finished")
     }
 
     @Test
@@ -31,25 +31,25 @@ internal class LevelTest {
         val provider: WaveProvider = QueueWaveProvider(listOf<Wave?>(w1, w2) as MutableList<Wave?>)
 
         val level: Level = LevelImpl(provider)
-        Assertions.assertSame(w1, level.getCurrentWave())
+        Assertions.assertSame(w1, level.currentWave)
 
         level.advanceWave()
-        Assertions.assertSame(w2, level.getCurrentWave(), "advanceWave() should go to the next wave")
-        Assertions.assertFalse(level.isLevelFinished())
+        Assertions.assertSame(w2, level.currentWave, "advanceWave() should go to the next wave")
+        Assertions.assertFalse(level.isLevelFinished)
 
         level.advanceWave()
         Assertions.assertNull(
-            level.getCurrentWave(),
+            level.currentWave,
             "After all waves are finished, the current wave should become null",
         )
-        Assertions.assertTrue(level.isLevelFinished(), "If currentWave == null the level should be finished")
+        Assertions.assertTrue(level.isLevelFinished, "If currentWave == null the level should be finished")
 
         level.advanceWave()
         Assertions.assertNull(
-            level.getCurrentWave(),
+            level.currentWave,
             "After level is finished, advanceWave() should maintain a finite status",
         )
-        Assertions.assertTrue(level.isLevelFinished())
+        Assertions.assertTrue(level.isLevelFinished)
     }
 
     @Test
@@ -58,8 +58,8 @@ internal class LevelTest {
 
         val level: Level = LevelImpl(provider)
 
-        Assertions.assertNull(level.getCurrentWave(), "If the provider hasn't got any waves, it should be null")
-        Assertions.assertTrue(level.isLevelFinished(), "If there aren't any waves, the level should be finished")
+        Assertions.assertNull(level.currentWave, "If the provider hasn't got any waves, it should be null")
+        Assertions.assertTrue(level.isLevelFinished, "If there aren't any waves, the level should be finished")
     }
 
     @Test
