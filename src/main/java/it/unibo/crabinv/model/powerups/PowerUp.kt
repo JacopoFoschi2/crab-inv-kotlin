@@ -1,34 +1,26 @@
-package it.unibo.crabinv.model.powerups;
+package it.unibo.crabinv.model.powerups
 
 /**
  * It's the interface that implements the methods for the powerUp.
  */
-public interface PowerUp {
+interface PowerUp {
     /**
-     * Method to get the cost of the single powerUp.
-     *
      * @return the cost of the powerUp
      */
-    int getCost();
+    val cost: Int
 
     /**
-     * Method to get to the maxLevel of the powerUp.
-     *
      * @return the max level of the powerUp
      */
-    int getMaxLevel();
+    val maxLevel: Int
 
     /**
-     * Method to get the powerUp's name.
-     *
      * @return the powerUp name
      */
-    String getPowerUpName();
+    val powerUpName: String
 
     /**
-     * Gets the type of the type of the power up.
-     *
      * @return the type of the powerUp
      */
-    PowerUpType getPowerUpType();
+    val powerUpType: PowerUpType
 }
