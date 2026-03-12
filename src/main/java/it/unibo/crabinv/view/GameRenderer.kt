@@ -1,94 +1,92 @@
-package it.unibo.crabinv.view;
+package it.unibo.crabinv.view
 
-import it.unibo.crabinv.model.core.snapshot.GameSnapshot;
-import it.unibo.crabinv.model.core.snapshot.RenderObjectSnapshot;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import it.unibo.crabinv.model.core.snapshot.GameSnapshot
+import javafx.scene.canvas.GraphicsContext
+import javafx.scene.image.Image
+import javafx.scene.paint.Color
+import java.util.Objects
+import kotlin.math.max
+import kotlin.math.min
 
 /**
- * Renderer to be shown in the {@link GameScreen}.
- *
- * <p>Initial generation with AI, adapted to work correctly
+ * Renderer to be shown in the [GameScreen].
+ * Initial generation with AI, adapted to work correctly
+ * @param gc the [GraphicsContext] used by the [GameRenderer]
  */
-public final class GameRenderer {
-
-    private static final double SPRITE_MULT = 0.08;
-
-    private final GraphicsContext gc;
-    private final Map<String, Image> imageCache = new HashMap<>();
-
-    /**
-     * Constructor of {@link GameRenderer}.
-     *
-     * @param gc the {@link GraphicsContext} used by the {@link GameRenderer}
-     */
-    public GameRenderer(final GraphicsContext gc) {
-        this.gc = Objects.requireNonNull(gc, "gc must not be null");
-    }
+class GameRenderer(
+    gc: GraphicsContext?,
+) {
+    private val gc: GraphicsContext = Objects.requireNonNull<GraphicsContext>(gc, "gc must not be null")
+    private val imageCache: MutableMap<String?, Image> = HashMap()
 
     /**
-     * Renderer based on the {@link GameSnapshot} received.
-     *
+     * Renderer based on the [GameSnapshot] received.
      * @param snapshot received from the game and used to render
      */
-    public void render(final GameSnapshot snapshot) {
-        Objects.requireNonNull(snapshot, "snapshot must not be null");
-        final double canvasW = gc.getCanvas().getWidth();
-        final double canvasH = gc.getCanvas().getHeight();
-        final double worldSquareSideDimension = Math.min(canvasW, canvasH);
-        final double offsetX = (canvasW - worldSquareSideDimension) / 2.0;
-        final double offsetY = (canvasH - worldSquareSideDimension) / 2.0;
-        clear(canvasW, canvasH);
-        gc.setStroke(Color.DARKGRAY);
-        gc.strokeRect(offsetX, offsetY, worldSquareSideDimension, worldSquareSideDimension);
-        for (final RenderObjectSnapshot obj : snapshot.renderObjects()) {
-            final double cx = offsetX + toPixels(obj.x(), worldSquareSideDimension);
-            final double cy = offsetY + toPixels(obj.y(), worldSquareSideDimension);
-            drawSpriteCentered(obj.imagePath(), cx, cy, worldSquareSideDimension);
+    fun render(snapshot: GameSnapshot?) {
+        Objects.requireNonNull<GameSnapshot?>(snapshot, "snapshot must not be null")
+        val canvasW = gc.canvas.width
+        val canvasH = gc.canvas.height
+        val worldSquareSideDimension = min(canvasW, canvasH)
+        val offsetX = (canvasW - worldSquareSideDimension) / 2.0
+        val offsetY = (canvasH - worldSquareSideDimension) / 2.0
+        clear(canvasW, canvasH)
+        gc.stroke = Color.DARKGRAY
+        gc.strokeRect(offsetX, offsetY, worldSquareSideDimension, worldSquareSideDimension)
+        for (obj in snapshot!!.renderObjects) {
+            val cx = offsetX + toPixels(obj.x, worldSquareSideDimension)
+            val cy = offsetY + toPixels(obj.y, worldSquareSideDimension)
+            drawSpriteCentered(obj.imagePath, cx, cy, worldSquareSideDimension)
         }
     }
 
-    private double toPixels(final double coordNorm, final double worldSquareSideDimension) {
-        final double clamped = Math.max(0.0, Math.min(1.0, coordNorm));
-        return clamped * worldSquareSideDimension;
+    private fun toPixels(
+        coordNorm: Double,
+        worldSquareSideDimension: Double,
+    ): Double {
+        val clamped = max(0.0, min(1.0, coordNorm))
+        return clamped * worldSquareSideDimension
     }
 
-    private void clear(final double canvasW, final double canvasH) {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvasW, canvasH);
+    private fun clear(
+        canvasW: Double,
+        canvasH: Double,
+    ) {
+        gc.fill = Color.BLACK
+        gc.fillRect(0.0, 0.0, canvasW, canvasH)
     }
 
-    private void drawSpriteCentered(final String imagePath,
-                                    final double centerX,
-                                    final double centerY,
-                                    final double worldSquareSideDimension) {
-        final double spriteW = worldSquareSideDimension * SPRITE_MULT;
-        final double spriteH = worldSquareSideDimension * SPRITE_MULT;
-        final double x = centerX - (spriteW / 2.0);
-        final double y = centerY - (spriteH / 2.0);
-        if (imagePath == null || imagePath.isBlank()) {
-            gc.setFill(Color.MAGENTA);
-            gc.fillRect(x, y, spriteW, spriteH);
-            return;
+    private fun drawSpriteCentered(
+        imagePath: String?,
+        centerX: Double,
+        centerY: Double,
+        worldSquareSideDimension: Double,
+    ) {
+        val spriteW: Double = worldSquareSideDimension * SPRITE_MULT
+        val spriteH: Double = worldSquareSideDimension * SPRITE_MULT
+        val x = centerX - (spriteW / 2.0)
+        val y = centerY - (spriteH / 2.0)
+        if (imagePath.isNullOrBlank()) {
+            gc.fill = Color.MAGENTA
+            gc.fillRect(x, y, spriteW, spriteH)
+            return
         }
-        final Image img = imageCache.computeIfAbsent(imagePath, this::loadImage);
-        gc.drawImage(img, x, y, spriteW, spriteH);
+        val img = imageCache.computeIfAbsent(imagePath) { imagePath: String? -> this.loadImage(imagePath!!) }
+        gc.drawImage(img, x, y, spriteW, spriteH)
     }
 
-    private Image loadImage(final String imagePath) {
-        final InputStream is = getClass().getResourceAsStream(imagePath);
-        if (is == null) {
-            return new Image(Objects.requireNonNull(
-                    getClass().getResourceAsStream("/uiImages/frameMenuButton.png"),
-                    "Fallback image missing too"
-            ));
-        }
-        return new Image(is);
+    private fun loadImage(imagePath: String): Image {
+        val `is` =
+            javaClass.getResourceAsStream(imagePath) ?: return Image(
+                Objects.requireNonNull(
+                    javaClass.getResourceAsStream("/uiImages/frameMenuButton.png"),
+                    "Fallback image missing too",
+                ),
+            )
+        return Image(`is`)
+    }
+
+    companion object {
+        private const val SPRITE_MULT = 0.08
     }
 }
