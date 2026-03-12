@@ -45,7 +45,7 @@ class SceneManager(
      * @return the eight of the screen
      */
     val height: Double = bounds.height
-    private val repo: SaveRepository = SaveRepositoryGson(AppPaths.getSaves())
+    private val repo: SaveRepository = SaveRepositoryGson(AppPaths.saves)
     private val save: Save = SaveControllerImpl(this.repo).saveControlAndLoad()
     private var pauseMenu: Pane? = null
 
