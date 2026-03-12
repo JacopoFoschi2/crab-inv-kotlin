@@ -1,200 +1,200 @@
-package it.unibo.crabinv.view;
+package it.unibo.crabinv.view
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.crabinv.SceneManager;
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.core.i18n.LocalizationController;
-import it.unibo.crabinv.controller.core.save.SaveControllerImpl;
-import it.unibo.crabinv.model.core.audio.SFXTracks;
-import it.unibo.crabinv.model.core.i18n.TextKeys;
-import it.unibo.crabinv.model.powerups.PowerUp;
-import it.unibo.crabinv.model.powerups.PowerUpType;
-import it.unibo.crabinv.model.powerups.Shop;
-import it.unibo.crabinv.model.powerups.ShopLogic;
-import it.unibo.crabinv.model.core.save.Save;
-import it.unibo.crabinv.model.core.save.UserProfile;
-import it.unibo.crabinv.core.persistence.repository.SaveRepository;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import java.io.IOException;
-import java.util.List;
+import it.unibo.crabinv.SceneManager
+import it.unibo.crabinv.controller.core.audio.AudioController
+import it.unibo.crabinv.controller.core.i18n.LocalizationController
+import it.unibo.crabinv.controller.core.save.SaveControllerImpl
+import it.unibo.crabinv.core.persistence.repository.SaveRepository
+import it.unibo.crabinv.model.core.audio.SFXTracks
+import it.unibo.crabinv.model.core.i18n.TextKeys
+import it.unibo.crabinv.model.core.save.Save
+import it.unibo.crabinv.model.core.save.UserProfile
+import it.unibo.crabinv.model.powerups.PowerUp
+import it.unibo.crabinv.model.powerups.Shop
+import it.unibo.crabinv.model.powerups.ShopLogic
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
+import javafx.geometry.Insets
+import javafx.geometry.Pos
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.layout.FlowPane
+import javafx.scene.layout.Pane
+import javafx.scene.layout.StackPane
+import javafx.scene.layout.VBox
+import java.io.IOException
 
 /**
  * It's the view of the Shop Menu that makes the player purchase the power up.
  * Part of this was adapted from LLM by Mosè Barbieri
+ * @param sceneManager the scene manager needed to go to specific screens
+ * @param loc the local variable needed for the localization
+ * @param audio the audio needed for the sounds of the buttons
+ * @param save the save needed to save all the purchases
+ * @param repo the repository of the save
+ * @param powerUps the powerUps to see which ones are available
  */
-public final class ShopMenu {
-    private final SceneManager sceneManager;
-    private final LocalizationController loc;
-    private final AudioController audio;
-    private final Save save;
-    private final SaveRepository repo;
-    private final UserProfile profile;
-    private final Shop shop = new ShopLogic();
-    private final List<PowerUp> powerUps;
-    private final Label currencyLabel = new Label();
+class ShopMenu(
+    private val sceneManager: SceneManager,
+    private val loc: LocalizationController,
+    private val audio: AudioController,
+    private val save: Save,
+    private val repo: SaveRepository?,
+    private val powerUps: MutableList<PowerUp>,
+) {
+    private val profile: UserProfile = save.getUserProfile()
+    private val shop: Shop = ShopLogic()
+    private val currencyLabel = Label()
 
-    /**
-     * It's the constructor of the ShopMenu.
-     *
-     * @param sceneManager the scene manager needed to go to specific screens
-     * @param loc the local variable needed for the localization
-     * @param audio the audio needed for the sounds of the buttons
-     * @param save the save needed to save all the purchases
-     * @param repo the repository of the save
-     * @param powerUps the powerUps to see which ones are available
-     */
-    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
-    public ShopMenu(final SceneManager sceneManager,
-                    final LocalizationController loc,
-                    final AudioController audio,
-                    final Save save,
-                    final SaveRepository repo,
-                    final List<PowerUp> powerUps) {
+    val view: Pane
+        /**
+         * It's the getter of the view of the shop.
+         * @return the view of the shop
+         */
+        get() {
+            val root = StackPane()
+            val mainColumn =
+                VBox(ViewParameters.DEFAULT_SPACING.toDouble())
+            mainColumn.alignment = Pos.CENTER
+            mainColumn.padding = Insets(ViewParameters.DEFAULT_INSETS_PANE.toDouble())
 
-        this.sceneManager = sceneManager;
-        this.loc = loc;
-        this.audio = audio;
-        this.save = save;
-        this.repo = repo;
-        this.profile = save.getUserProfile();
-        this.powerUps = powerUps;
-    }
+            val title = Label(loc.getString(TextKeys.SHOP))
+            title.styleClass.add("menu-title")
 
-    /**
-     * It's the getter of the view of the shop.
-     *
-     * @return the view of the shop
-     */
-    public Pane getView() {
-        final StackPane root = new StackPane();
-        final VBox mainColumn = new VBox(ViewParameters.DEFAULT_SPACING);
-        mainColumn.setAlignment(Pos.CENTER);
-        mainColumn.setPadding(new Insets(ViewParameters.DEFAULT_INSETS_PANE));
+            val descriptionLabel = Label()
+            descriptionLabel.isWrapText = true
+            descriptionLabel.styleClass.add("shop-description")
 
-        final Label title = new Label(loc.getString(TextKeys.SHOP));
-        title.getStyleClass().add("menu-title");
+            val descriptionBox = VBox(descriptionLabel)
+            descriptionBox.padding = Insets(ViewParameters.DEFAULT_INSETS_DESCRIPTION.toDouble())
+            descriptionBox.alignment = Pos.CENTER
+            descriptionBox.styleClass.add("shop-description-box")
 
-        final Label descriptionLabel = new Label();
-        descriptionLabel.setWrapText(true);
-        descriptionLabel.getStyleClass().add("shop-description");
+            updateCurrency()
+            val powerUpsBox = FlowPane()
+            powerUpsBox.hgap = ViewParameters.DEFAULT_SPACING.toDouble()
+            powerUpsBox.vgap = ViewParameters.DEFAULT_SPACING.toDouble()
+            powerUpsBox.alignment = Pos.CENTER
+            powerUpsBox.prefWrapLength = ViewParameters.DEFAULT_WIDTH.toDouble()
 
-        final VBox descriptionBox = new VBox(descriptionLabel);
-        descriptionBox.setPadding(new Insets(ViewParameters.DEFAULT_INSETS_DESCRIPTION));
-        descriptionBox.setAlignment(Pos.CENTER);
-        descriptionBox.getStyleClass().add("shop-description-box");
+            val headerBox =
+                VBox(ViewParameters.DEFAULT_HEADER_SPACING.toDouble())
+            headerBox.alignment = Pos.CENTER
+            headerBox.children.addAll(title, descriptionBox, currencyLabel)
+            mainColumn.children.add(headerBox)
+            mainColumn.children.add(powerUpsBox)
+            for (p in powerUps) {
+                powerUpsBox.children.add(
+                    createPowerUpCard(p, descriptionLabel),
+                )
+            }
 
-        updateCurrency();
-        final FlowPane powerUpsBox = new FlowPane();
-        powerUpsBox.setHgap(ViewParameters.DEFAULT_SPACING);
-        powerUpsBox.setVgap(ViewParameters.DEFAULT_SPACING);
-        powerUpsBox.setAlignment(Pos.CENTER);
-        powerUpsBox.setPrefWrapLength(ViewParameters.DEFAULT_WIDTH);
+            val backButton =
+                createMenuButton(
+                    TextKeys.RETURN,
+                ) { sceneManager.showMainMenu() }
 
-        final VBox headerBox = new VBox(ViewParameters.DEFAULT_HEADER_SPACING);
-        headerBox.setAlignment(Pos.CENTER);
-        headerBox.getChildren().addAll(title, descriptionBox, currencyLabel);
-        mainColumn.getChildren().add(headerBox);
-        mainColumn.getChildren().add(powerUpsBox);
-        for (final PowerUp p : powerUps) {
-            powerUpsBox.getChildren().add(
-                    createPowerUpCard(p, descriptionLabel)
-            );
+            mainColumn.children.add(backButton)
+
+            root.children.add(mainColumn)
+            return root
         }
 
-        final Button backButton = createMenuButton(
-                TextKeys.RETURN,
-                sceneManager::showMainMenu
-        );
+    private fun createPowerUpCard(
+        powerUp: PowerUp,
+        descriptionLabel: Label,
+    ): VBox {
+        val card = VBox(ViewParameters.DEFAULT_CARD_SPACING.toDouble())
+        card.alignment = Pos.CENTER
+        card.styleClass.add("powerup-card")
+        card.padding = Insets(ViewParameters.DEFAULT_INSETS_POWERUP_CARD.toDouble())
 
-        mainColumn.getChildren().add(backButton);
+        val type = powerUp.getPowerUpType()
 
-        root.getChildren().add(mainColumn);
-        return root;
-    }
+        val name =
+            Label(
+                loc.getString(TextKeys.valueOf(type.name)),
+            )
+        name.styleClass.add("powerup-title")
 
-    private VBox createPowerUpCard(final PowerUp powerUp, final Label descriptionLabel) {
-        final VBox card = new VBox(ViewParameters.DEFAULT_CARD_SPACING);
-        card.setAlignment(Pos.CENTER);
-        card.getStyleClass().add("powerup-card");
-        card.setPadding(new Insets(ViewParameters.DEFAULT_INSETS_POWERUP_CARD));
+        val level = Label()
+        val cost =
+            Label(
+                loc.getString(TextKeys.COST) + ": " + powerUp.getCost(),
+            )
+        cost.styleClass.add("powerup-cost")
 
-        final PowerUpType type = powerUp.getPowerUpType();
+        updateLevelLabel(level, powerUp)
 
-        final Label name = new Label(
-                loc.getString(TextKeys.valueOf(type.name()))
-        );
-        name.getStyleClass().add("powerup-title");
+        val buyButton = Button(loc.getString(TextKeys.BUY))
+        buyButton.styleClass.add("app-button-small")
 
-        final Label level = new Label();
-        final Label cost = new Label(
-                loc.getString(TextKeys.COST) + ": " + powerUp.getCost()
-        );
-        cost.getStyleClass().add("powerup-cost");
+        buyButton
+            .focusedProperty()
+            .addListener(
+                ChangeListener { _: ObservableValue<out Boolean>, _: Boolean, focused: Boolean ->
+                    if (focused) {
+                        audio.playSFX(SFXTracks.MENU_HOVER)
+                        descriptionLabel.text = loc.getString(type.description)
+                    }
+                },
+            )
 
-        updateLevelLabel(level, powerUp);
-
-        final Button buyButton = new Button(loc.getString(TextKeys.BUY));
-        buyButton.getStyleClass().add("app-button-small");
-
-        buyButton.focusedProperty().addListener((_, _, focused) -> {
-            if (focused) {
-                audio.playSFX(SFXTracks.MENU_HOVER);
-                descriptionLabel.setText(
-                        loc.getString(type.getDescription())
-                );
-            }
-        });
-
-        buyButton.setOnAction(_ -> {
-            audio.playSFX(SFXTracks.MENU_SELECT);
-            if (shop.purchase(profile, powerUp)) {
-                updateCurrency();
-                updateLevelLabel(level, powerUp);
-                try {
-                    new SaveControllerImpl(repo).updateSave(save);
-                } catch (final IOException e) {
-                    throw new IllegalCallerException(e);
+        buyButton.onAction =
+            EventHandler { `_`: ActionEvent? ->
+                audio.playSFX(SFXTracks.MENU_SELECT)
+                if (shop.purchase(profile, powerUp)) {
+                    updateCurrency()
+                    updateLevelLabel(level, powerUp)
+                    try {
+                        SaveControllerImpl(repo).updateSave(save)
+                    } catch (e: IOException) {
+                        throw IllegalCallerException(e)
+                    }
                 }
             }
-        });
 
-        card.getChildren().addAll(name, level, cost, buyButton);
-        return card;
+        card.children.addAll(name, level, cost, buyButton)
+        return card
     }
 
-    private Button createMenuButton(final TextKeys key, final Runnable action) {
-        final Button button = new Button(loc.getString(key));
-        button.getStyleClass().add("app-button");
+    private fun createMenuButton(
+        key: TextKeys,
+        action: Runnable,
+    ): Button {
+        val button = Button(loc.getString(key))
+        button.styleClass.add("app-button")
 
-        button.focusedProperty().addListener((_, _, focused) -> {
-            if (focused) {
-                audio.playSFX(SFXTracks.MENU_HOVER);
+        button
+            .focusedProperty()
+            .addListener(
+                ChangeListener { _: ObservableValue<out Boolean>, _: Boolean, focused: Boolean ->
+                    if (focused) {
+                        audio.playSFX(SFXTracks.MENU_HOVER)
+                    }
+                },
+            )
+
+        button.onAction =
+            EventHandler { `_`: ActionEvent? ->
+                audio.playSFX(SFXTracks.MENU_SELECT)
+                action.run()
             }
-        });
 
-        button.setOnAction(_ -> {
-            audio.playSFX(SFXTracks.MENU_SELECT);
-            action.run();
-        });
-
-        return button;
+        return button
     }
 
-    private void updateCurrency() {
-        currencyLabel.setText(
-                loc.getString(TextKeys.CURRENCY) + ": " + profile.getCurrency()
-        );
+    private fun updateCurrency() {
+        currencyLabel.text = loc.getString(TextKeys.CURRENCY) + ": " + profile.getCurrency()
     }
 
-    private void updateLevelLabel(final Label label, final PowerUp p) {
-        final int lvl = profile.getPowerUpLevel(p.getPowerUpType());
-        label.setText("Lv " + lvl + " / " + p.getMaxLevel());
+    private fun updateLevelLabel(
+        label: Label,
+        p: PowerUp,
+    ) {
+        val lvl = profile.getPowerUpLevel(p.getPowerUpType())
+        label.text = "Lv " + lvl + " / " + p.getMaxLevel()
     }
 }
