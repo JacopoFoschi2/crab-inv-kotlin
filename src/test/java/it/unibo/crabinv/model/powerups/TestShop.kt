@@ -17,7 +17,7 @@ internal class TestShop {
 
         Assertions.assertTrue(result)
         Assertions.assertEquals(MAGIC_NUMBER_50, profile.getCurrency())
-        Assertions.assertEquals(2, profile.getPowerUpLevel(powerUp.getPowerUpType()))
+        Assertions.assertEquals(2, profile.getPowerUpLevel(powerUp.powerUpType))
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class TestShop {
         Assertions.assertFalse(result)
 
         Assertions.assertEquals(MAGIC_NUMBER_20, profile.getCurrency())
-        Assertions.assertEquals(1, profile.getPowerUpLevel(powerUp.getPowerUpType()))
+        Assertions.assertEquals(1, profile.getPowerUpLevel(powerUp.powerUpType))
     }
 
     @Test
@@ -42,13 +42,13 @@ internal class TestShop {
         val powerUp: PowerUp = PowerUpLogic(PowerUpType.HEALTH_UP, MAGIC_NUMBER_50, 3)
 
         profile.addCurrency(100)
-        profile.updatePowerUp(powerUp.getPowerUpType(), 3)
+        profile.updatePowerUp(powerUp.powerUpType, 3)
 
         val result = shop.purchase(profile, powerUp)
 
         Assertions.assertFalse(result)
         Assertions.assertEquals(100, profile.getCurrency())
-        Assertions.assertEquals(3, profile.getPowerUpLevel(powerUp.getPowerUpType()))
+        Assertions.assertEquals(3, profile.getPowerUpLevel(powerUp.powerUpType))
     }
 
     companion object {

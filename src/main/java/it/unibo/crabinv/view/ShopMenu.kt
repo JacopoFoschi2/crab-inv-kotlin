@@ -111,7 +111,7 @@ class ShopMenu(
         card.styleClass.add("powerup-card")
         card.padding = Insets(ViewParameters.DEFAULT_INSETS_POWERUP_CARD.toDouble())
 
-        val type = powerUp.getPowerUpType()
+        val type = powerUp.powerUpType
 
         val name =
             Label(
@@ -122,7 +122,7 @@ class ShopMenu(
         val level = Label()
         val cost =
             Label(
-                loc.getString(TextKeys.COST) + ": " + powerUp.getCost(),
+                loc.getString(TextKeys.COST) + ": " + powerUp.cost,
             )
         cost.styleClass.add("powerup-cost")
 
@@ -194,7 +194,7 @@ class ShopMenu(
         label: Label,
         p: PowerUp,
     ) {
-        val lvl = profile.getPowerUpLevel(p.getPowerUpType())
-        label.text = "Lv " + lvl + " / " + p.getMaxLevel()
+        val lvl = profile.getPowerUpLevel(p.powerUpType)
+        label.text = "Lv " + lvl + " / " + p.maxLevel
     }
 }
