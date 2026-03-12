@@ -23,6 +23,7 @@ import it.unibo.crabinv.model.core.save.GameSession;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Constructor for the {@link GameEngine}.
@@ -272,7 +273,7 @@ public class GameEngineImpl implements GameEngine {
      */
     private void enemyToGroundCheck() {
         final double eps = 0.01;
-        final List<Enemy> enemyList = this.level.getCurrentWave().getAliveEnemies();
+        final List<Enemy> enemyList = Objects.requireNonNull(this.level.getCurrentWave()).getAliveEnemies();
         for (final Enemy enemy : enemyList) {
             if (Math.abs(enemy.getY() - this.player.getY()) < eps) {
                 this.gameSession.subPlayerHealth(1);
@@ -296,7 +297,7 @@ public class GameEngineImpl implements GameEngine {
      */
     private void checkWin() {
         if (this.getEnemyList().isEmpty()
-                && this.level.getCurrentWave().isWaveFinished()
+                && Objects.requireNonNull(this.level.getCurrentWave()).isWaveFinished()
                 && this.gameSession.getPlayerHealth() > 0) {
             winGame();
         }
@@ -322,7 +323,7 @@ public class GameEngineImpl implements GameEngine {
         final List<Entity> allEntities = new ArrayList<>();
         allEntities.add(player);
         if (level.getCurrentWave() != null) {
-            allEntities.addAll(level.getCurrentWave().getAliveEnemies());
+            allEntities.addAll(Objects.requireNonNull(level.getCurrentWave()).getAliveEnemies());
         }
         allEntities.addAll(activeBullets);
         collisionController.resolve(allEntities);
