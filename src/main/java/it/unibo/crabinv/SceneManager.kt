@@ -77,7 +77,7 @@ class SceneManager(
                 save,
                 repo,
                 PowerUpFactory.createShopPowerUps(),
-            ).getView(),
+            ).view,
         )
     }
 
@@ -85,22 +85,22 @@ class SceneManager(
      * Sets the memorial screen as the shown one.
      */
     fun showMemorial() {
-        root.children.setAll(MemorialScreen(this, loc, audio, save).getView())
+        root.children.setAll(MemorialScreen(this, loc, audio, save).view)
     }
 
     /**
      * Sets the settings screen as the shown one.
      */
     fun showSettings() {
-        root.children.setAll(Settings(this, loc, audio).getView())
+        root.children.setAll(Settings(this, loc, audio).view)
     }
 
     /**
      * Sets the gameOver screen as the shown one.
      * @param message the type of message to be displayed, either game over or victory
      */
-    fun showGameOver(message: MessageTypes?) {
-        root.children.setAll(GameOver(this, loc, audio, message).getView())
+    fun showGameOver(message: MessageTypes) {
+        root.children.setAll(GameOver(this, loc, audio, message).view)
     }
 
     /**
@@ -108,8 +108,8 @@ class SceneManager(
      */
     fun showGame() {
         val gameScreen = GameScreen(this, loc, save, repo)
-        val gameView = gameScreen.getView()
-        pauseMenu = PauseMenu(this, loc, audio, gameScreen.resume, gameScreen.gameOver).getView()
+        val gameView = gameScreen.view
+        pauseMenu = PauseMenu(this, loc, audio, gameScreen.resume, gameScreen.gameOver).view
         pauseMenu!!.isVisible = false
         root.children.setAll(gameView, pauseMenu)
         audio.playBGM(BGMTracks.LEVEL)
