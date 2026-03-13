@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 internal class TestPlayerController {
@@ -15,10 +16,10 @@ internal class TestPlayerController {
     private var playerController: PlayerController? = null
 
     @Mock
-    private val audioMock: AudioController? = null
+    private val audioMock: AudioController = Mockito.mock(AudioController::class.java)
 
     @Mock
-    private val engineMock: GameEngine? = null
+    private val engineMock: GameEngine = Mockito.mock(GameEngine::class.java)
 
     @BeforeEach
     fun setup() {
