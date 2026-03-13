@@ -1,50 +1,46 @@
-package it.unibo.crabinv.controller.core.gameloop;
+package it.unibo.crabinv.controller.core.gameloop
 
-import it.unibo.crabinv.model.core.engine.GameEngine;
-import it.unibo.crabinv.model.core.snapshot.GameSnapshot;
+import it.unibo.crabinv.model.core.snapshot.GameSnapshot
 
 /**
- * Controls the passing of time and creates the {@link GameSnapshot} to be rendered.
+ * Controls the passing of time and creates the [GameSnapshot] to be rendered.
  */
-public interface GameLoopController {
+interface GameLoopController {
     /**
      * @return the duration in milliseconds of a tick.
      */
-    long getTickDurationMillis();
+    val tickDurationMillis: Long
 
     /**
      * @return the currently total accumulated milliseconds, needed to calculate the next step.
      */
-    long getAccumulatedMillis();
+    val accumulatedMillis: Long
 
     /**
      * @return the total of ticks since the start of the engine.
      */
-    long getTotalElapsedTicks();
+    val totalElapsedTicks: Long
 
     /**
-     * Calculates the game engine next step {@link GameSnapshot} to be passed onto the renderer.
+     * Calculates the game engine next step [GameSnapshot] to be passed onto the renderer.
      * Advances the game logic by the calculated step.
-     *
      * @param frameElapsedMillis the milliseconds accumulated between two frames, must be positive.
-     * @return the calculated {@link GameSnapshot}
+     * @return the calculated [GameSnapshot]
      */
-    GameSnapshot step(long frameElapsedMillis);
+    fun step(frameElapsedMillis: Long): GameSnapshot?
 
     /**
-     * Returns the {@link GameSnapshot} to be rendered, does not advance the game logic.
-     *
-     * @return the latest {@link GameSnapshot}
+     * @return the latest [GameSnapshot]
      */
-    GameSnapshot getLatestSnapshot();
+    val latestSnapshot: GameSnapshot?
 
     /**
-     * Requests the {@link GameEngine} to pause the game.
+     * Requests the [it.unibo.crabinv.model.core.engine.GameEngine] to pause the game.
      */
-    void pause();
+    fun pause()
 
     /**
-     * Requests the {@link GameEngine} to resume the game.
+     * Requests the [it.unibo.crabinv.model.core.engine.GameEngine] to resume the game.
      */
-    void resume();
+    fun resume()
 }
