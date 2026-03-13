@@ -1,87 +1,71 @@
-package it.unibo.crabinv.controller.entities.enemy;
+package it.unibo.crabinv.controller.entities.enemy
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
-import it.unibo.crabinv.controller.entities.entity.EntityNotCapableOfInputController;
-import it.unibo.crabinv.model.core.engine.GameEngine;
-import it.unibo.crabinv.model.core.audio.SFXTracks;
-import it.unibo.crabinv.model.entities.enemies.Enemy;
-import it.unibo.crabinv.model.entities.entity.Delta;
-
-import java.util.Random;
+import it.unibo.crabinv.controller.core.audio.AudioController
+import it.unibo.crabinv.controller.entities.entity.AbstractEntityController
+import it.unibo.crabinv.controller.entities.entity.EntityNotCapableOfInputController
+import it.unibo.crabinv.model.core.audio.SFXTracks
+import it.unibo.crabinv.model.core.engine.GameEngine
+import it.unibo.crabinv.model.entities.enemies.Enemy
+import it.unibo.crabinv.model.entities.entity.Delta
+import java.util.Random
 
 /**
  * It's the EnemyController, should control each enemy.
+ * @param enemy the enemy to be created.
+ * @param audio the audio that it's needed in the class.
+ * @param engine the game engine.
  */
-public final class EnemyController extends AbstractEntityController<Enemy> implements EntityNotCapableOfInputController {
-    private static final double ENEMY_SHOOTING_CHANCE = 0.007;
-    private final AudioController audio;
-    private final GameEngine engine;
-    private final Random rand = new Random();
+class EnemyController(
+    enemy: Enemy?,
+    private val audio: AudioController,
+    private val engine: GameEngine,
+) : AbstractEntityController<Enemy?>(enemy),
+    EntityNotCapableOfInputController {
+    private val rand = Random()
 
-    /**
-     * It's the enemyController, it needs the enemy, audio, and game engine to work.
-     *
-     * @param enemy the enemy to be created.
-     * @param audio the audio that it's needed in the class.
-     * @param engine the game engine.
-     */
-    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
-    public EnemyController(final Enemy enemy,
-                           final AudioController audio,
-                           final GameEngine engine) {
-        super(enemy);
-        this.audio = audio;
-        this.engine = engine;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Delta delta) {
-        tick();
-        move(delta);
+    override fun update(delta: Delta) {
+        tick()
+        move(delta)
 
         if (rand.nextDouble() < ENEMY_SHOOTING_CHANCE) {
-            shoot();
+            shoot()
         }
     }
 
-    /**
-     * Gives the speed of the enemy.
-     *
-     * @return the speed of the enemy
-     */
-    public double getSpeed() {
-        return super.getEntity().getSpeed();
-    }
+    val speed: Double
+        /**
+         * Gives the speed of the enemy.
+         * @return the speed of the enemy
+         */
+        get() = super.entity!!.getSpeed()
 
     /**
      * Tells the enemy to go to a specific direction for 1 tick.
-     *
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private void move(final Delta delta) {
-        super.getEntity().move(delta);
+    private fun move(delta: Delta?) {
+        super.entity!!.move(delta)
     }
 
     /**
      * Makes the enemy shoot if it can.
      */
-    private void shoot() {
-        if (super.getEntity().isAbleToShoot()) {
-            super.getEntity().shoot();
-            engine.spawnEnemyBullet(super.getEntity());
-            audio.playSFX(SFXTracks.SHOT_ENEMY);
+    private fun shoot() {
+        if (super.entity!!.isAbleToShoot()) {
+            super.entity!!.shoot()
+            engine.spawnEnemyBullet(super.entity)
+            audio.playSFX(SFXTracks.SHOT_ENEMY)
         }
     }
 
     /**
      * Updates the status for the tick.
      */
-    private void tick() {
-        super.getEntity().tick();
+    private fun tick() {
+        super.entity!!.tick()
+    }
+
+    companion object {
+        private const val ENEMY_SHOOTING_CHANCE = 0.007
     }
 }
