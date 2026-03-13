@@ -1,51 +1,33 @@
-package it.unibo.crabinv.controller.core.input;
+package it.unibo.crabinv.controller.core.input
 
-import it.unibo.crabinv.model.entities.entity.Delta;
+import it.unibo.crabinv.controller.core.input.KeyCodeKeyboard.Companion.findKeyCode
+import it.unibo.crabinv.model.entities.entity.Delta
 
 /**
- * {@inheritDoc}
- *
- * <p>Uses {@link KeyCodeKeyboard} to bind keyboard keypresses to actions.
+ * Uses [KeyCodeKeyboard] to bind keyboard keypresses to actions.
  */
-public class InputMapperImpl implements InputMapper {
-
-    @Override
-    public final Delta mapToXDelta(final int inputCode) {
-        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
-        if (key == null) {
-            return Delta.NO_ACTION;
+class InputMapperImpl : InputMapper {
+    override fun mapToXDelta(inputCode: Int): Delta? {
+        val key = findKeyCode(inputCode) ?: return Delta.NO_ACTION
+        return when (key) {
+            KeyCodeKeyboard.LEFT -> Delta.DECREASE
+            KeyCodeKeyboard.RIGHT -> Delta.INCREASE
+            else -> Delta.NO_ACTION
         }
-        return switch (key) {
-            case LEFT -> Delta.DECREASE;
-            case RIGHT -> Delta.INCREASE;
-            default -> Delta.NO_ACTION;
-        };
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final boolean mapToShoot(final int inputCode) {
-        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
-        return key == KeyCodeKeyboard.SHOOT;
+    override fun mapToShoot(inputCode: Int): Boolean {
+        val key = findKeyCode(inputCode)
+        return key == KeyCodeKeyboard.SHOOT
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final boolean mapToPause(final int inputCode) {
-        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
-        return key == KeyCodeKeyboard.PAUSE;
+    override fun mapToPause(inputCode: Int): Boolean {
+        val key = findKeyCode(inputCode)
+        return key == KeyCodeKeyboard.PAUSE
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final boolean mapToUnPause(final int inputCode) {
-        final KeyCodeKeyboard key = KeyCodeKeyboard.findKeyCode(inputCode);
-        return key == KeyCodeKeyboard.UNPAUSE;
+    override fun mapToUnPause(inputCode: Int): Boolean {
+        val key = findKeyCode(inputCode)
+        return key == KeyCodeKeyboard.UNPAUSE
     }
 }
