@@ -12,12 +12,12 @@ internal class TestInputRegistration {
     fun pressingRightRegistersIncreaseAndReleaseClearsIt() {
         val controller: InputController = InputControllerPlayer(InputMapperImpl())
 
-        Assertions.assertEquals(Delta.NO_ACTION, controller.getInputState().getXMovementDelta())
+        Assertions.assertEquals(Delta.NO_ACTION, controller.inputState?.getXMovementDelta())
 
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
-        Assertions.assertEquals(Delta.INCREASE, controller.getInputState().getXMovementDelta())
+        Assertions.assertEquals(Delta.INCREASE, controller.inputState?.getXMovementDelta())
 
         controller.onKeyReleased(KeyCodeKeyboard.RIGHT.keyCode)
-        Assertions.assertEquals(Delta.NO_ACTION, controller.getInputState().getXMovementDelta())
+        Assertions.assertEquals(Delta.NO_ACTION, controller.inputState?.getXMovementDelta())
     }
 }
