@@ -1,48 +1,33 @@
-package it.unibo.crabinv.controller.entities.bullets;
+package it.unibo.crabinv.controller.entities.bullets
 
-import it.unibo.crabinv.controller.entities.entity.AbstractEntityController;
-import it.unibo.crabinv.model.entities.bullets.BulletEnemy;
-import it.unibo.crabinv.model.entities.entity.Delta;
+import it.unibo.crabinv.controller.entities.entity.AbstractEntityController
+import it.unibo.crabinv.model.entities.bullets.BulletEnemy
+import it.unibo.crabinv.model.entities.entity.Delta
 
 /**
  * It's the EnemyBulletController and it handles the enemyBullets.
+ * @param entity it's the entity needed to modify it
  */
-public final class EnemyBulletController extends AbstractEntityController<BulletEnemy> implements BulletController {
-
-    /**
-     * It's the constructor of the EnemyBulletController.
-     *
-     * @param entity it's the entity needed to modify it
-     */
-    public EnemyBulletController(final BulletEnemy entity) {
-        super(entity);
+class EnemyBulletController(
+    entity: BulletEnemy?,
+) : AbstractEntityController<BulletEnemy?>(entity),
+    BulletController {
+    override fun update(delta: Delta) {
+        move(delta)
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
-     */
-    @Override
-    public void update(final Delta delta) {
-        move(delta);
-    }
-
-    /**
-     * Gives the speed of the bullet.
-     *
-     * @return the speed of the bullet
-     */
-    public double getSpeed() {
-        return super.getEntity().getSpeed();
-    }
+    val speed: Double
+        /**
+         * Gives the speed of the bullet.
+         * @return the speed of the bullet
+         */
+        get() = super.entity!!.speed
 
     /**
      * Tells the bullet to go to a specific direction for 1 tick.
-     *
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private void move(final Delta delta) {
-        super.getEntity().move(delta);
+    private fun move(delta: Delta) {
+        super.entity!!.move(delta)
     }
 }
