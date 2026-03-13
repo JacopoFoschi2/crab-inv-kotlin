@@ -70,20 +70,20 @@ class GameScreen(
             metaGameController = MetaGameControllerImpl(sessionController, repo)
             this.gameRenderer = GameRenderer(canvas.graphicsContext2D)
             metaGameController!!.startGame()
-            metaGameController!!.getInputController()
-            this.lastEngineState = metaGameController!!.getGameEngineState()
+            metaGameController!!.inputController
+            this.lastEngineState = metaGameController!!.gameEngineState
             canvas.isFocusTraversable = true
             canvas.onKeyPressed =
                 EventHandler { e: KeyEvent? ->
-                    metaGameController!!.getInputController().onKeyPressed(e!!.code.getCode())
-                    if (e.code == KeyCode.ESCAPE) {
+                    metaGameController!!.inputController?.onKeyPressed(e!!.code.getCode())
+                    if (e?.code == KeyCode.ESCAPE) {
                         sceneManager.showPauseMenu()
-                        metaGameController!!.getGameLoopController().resume()
+                        metaGameController!!.gameLoopController?.resume()
                     }
                 }
             canvas.onKeyReleased =
                 EventHandler { e: KeyEvent? ->
-                    metaGameController!!.getInputController().onKeyReleased(e!!.code.getCode())
+                    metaGameController!!.inputController?.onKeyReleased(e!!.code.getCode())
                 }
             this.timer =
                 object : AnimationTimer() {
@@ -102,7 +102,7 @@ class GameScreen(
                         } catch (error: IOException) {
                             throw UncheckedIOException(error)
                         }
-                        val currentEngineState = metaGameController!!.getGameEngineState()
+                        val currentEngineState = metaGameController!!.gameEngineState
                         if (currentEngineState != lastEngineState) {
                             lastEngineState = currentEngineState
                             engineStatusTrigger(currentEngineState)
@@ -140,7 +140,7 @@ class GameScreen(
          * Exposes the resume method of the gameLoop to be used by the resume menu.
          * @return the runnable of the resume method
          */
-        get() = Runnable { metaGameController!!.getGameLoopController().resume() }
+        get() = Runnable { metaGameController!!.gameLoopController?.resume() }
 
     /**
      * Executes the first part of closing procedures for the [it.unibo.crabinv.model.core.engine.GameEngine].
