@@ -53,7 +53,7 @@ internal class SavePersistenceFlowTest {
 
         // Mutate session a bit to have meaningful values
         val addCurrency = 42
-        gameSession!!.advanceLevel()
+        gameSession.advanceLevel()
         gameSession.addCurrency(addCurrency)
 
         val sessionStartTs = gameSession.getStartingTimeStamp()

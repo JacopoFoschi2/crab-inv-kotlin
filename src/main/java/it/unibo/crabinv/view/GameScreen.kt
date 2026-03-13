@@ -94,8 +94,8 @@ class GameScreen(
                             lastNow = now
                             return
                         }
-                        hp.text = health + ": " + sessionController.getGameSession().getPlayerHealth()
-                        money.text = currency + ": " + sessionController.getGameSession().getCurrency()
+                        hp.text = health + ": " + sessionController.gameSession.getPlayerHealth()
+                        money.text = currency + ": " + sessionController.gameSession.getCurrency()
                         val frameElapsedMillis = max(0L, (now - lastNow) / 1000000L)
                         try {
                             gameRenderer!!.render(metaGameController!!.stepCheck(frameElapsedMillis))
