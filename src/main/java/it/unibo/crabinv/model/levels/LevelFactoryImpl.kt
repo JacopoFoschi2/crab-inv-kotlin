@@ -1,59 +1,65 @@
-package it.unibo.crabinv.model.levels;
+package it.unibo.crabinv.model.levels
 
-import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
-import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
-import it.unibo.crabinv.model.entities.enemies.wave.Wave;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveComposite;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider;
-import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence;
-import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveAlpha;
-import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveBeta;
-
-import java.util.List;
-import java.util.Objects;
+import it.unibo.crabinv.model.entities.enemies.EnemyFactory
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService
+import it.unibo.crabinv.model.entities.enemies.wave.Wave
+import it.unibo.crabinv.model.entities.enemies.wave.WaveComposite
+import it.unibo.crabinv.model.entities.enemies.wave.WaveProvider
+import it.unibo.crabinv.model.entities.enemies.wave.WaveSequence
+import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveAlpha
+import it.unibo.crabinv.model.entities.enemies.wavetypes.WaveBeta
+import java.util.Objects
 
 /**
- * Implementation of {@link LevelFactory}.
+ * Implementation of [LevelFactory].
  */
-public final class LevelFactoryImpl implements LevelFactory {
-    private static final double SPAWN_STEP = 0.05;
-    private static final double DEFAULT_TOP_MARGIN = 0.05;
-    private static final double DEFAULT_BOT_MARGIN = 0.90;
-    private static final int MAX_SLOTS = 12;
+class LevelFactoryImpl : LevelFactory {
+    override fun createLevel(
+        levelId: Int,
+        enemyFactory: EnemyFactory?,
+        rewardsService: RewardsService?,
+    ): Level {
+        require(levelId > 0) { "levelNumber must be > 0" }
+        Objects.requireNonNull<EnemyFactory?>(enemyFactory, "enemyFactory cannot be null")
+        Objects.requireNonNull<RewardsService?>(rewardsService, "rewardsService cannot be null")
+        val initWaves =
+            when (levelId) {
+                1 ->
+                    listOf<Wave?>(
+                        WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    )
 
-    @Override
-    public Level createLevel(final int levelId,
-                             final EnemyFactory enemyFactory,
-                             final RewardsService rewardsService) {
-        if (levelId <= 0) {
-            throw new IllegalArgumentException("levelNumber must be > 0");
-        }
-        Objects.requireNonNull(enemyFactory, "enemyFactory cannot be null");
-        Objects.requireNonNull(rewardsService, "rewardsService cannot be null");
-        final List<Wave> initWaves = switch (levelId) {
-            case 1 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
-            );
-            case 2 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
-            );
-            case 3 -> List.of(
-                    new WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
-                    new WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS)
-            );
-            default -> List.of();
-        };
-        final List<Wave> waves = initWaves.stream()
-                .peek((Wave wave) -> {
-                    final int i = initWaves.indexOf(wave);
-                    wave.setSpawnY(SPAWN_STEP * i + DEFAULT_TOP_MARGIN);
-                })
-                .toList();
-        final Wave allWaves = new WaveComposite(waves);
-        final WaveProvider provider = new WaveSequence(List.of(allWaves));
-        return new LevelImpl(provider);
+                2 ->
+                    listOf<Wave?>(
+                        WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                        WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    )
+
+                3 ->
+                    listOf<Wave?>(
+                        WaveAlpha(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                        WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                        WaveBeta(enemyFactory, rewardsService, DEFAULT_TOP_MARGIN, DEFAULT_BOT_MARGIN, MAX_SLOTS),
+                    )
+
+                else -> mutableListOf()
+            }
+        val waves =
+            initWaves
+                .stream()
+                .peek { wave: Wave? ->
+                    val i = initWaves.indexOf(wave)
+                    wave!!.setSpawnY(SPAWN_STEP * i + DEFAULT_TOP_MARGIN)
+                }.toList()
+        val allWaves: Wave = WaveComposite(waves)
+        val provider: WaveProvider = WaveSequence(listOf<Wave?>(allWaves))
+        return LevelImpl(provider)
+    }
+
+    companion object {
+        private const val SPAWN_STEP = 0.05
+        private const val DEFAULT_TOP_MARGIN = 0.05
+        private const val DEFAULT_BOT_MARGIN = 0.90
+        private const val MAX_SLOTS = 12
     }
 }
-
