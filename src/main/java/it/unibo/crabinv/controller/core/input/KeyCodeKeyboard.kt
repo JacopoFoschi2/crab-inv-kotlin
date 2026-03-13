@@ -1,49 +1,37 @@
-package it.unibo.crabinv.controller.core.input;
+package it.unibo.crabinv.controller.core.input
 
 /**
- * Enum of keyboard key to be used by the {@link InputMapper} and the {@link InputController}.
+ * Enum of keyboard key to be used by the [InputMapper] and the [InputController].
+ * @param keyCode the keyCode of the key
  */
-public enum KeyCodeKeyboard {
+enum class KeyCodeKeyboard(
+    /**
+     * @return the keycode associated with the enum constant
+     */
+    val keyCode: Int,
+) {
     LEFT(37),
     RIGHT(39),
     UP(38),
     DOWN(40),
-    SHOOT(32), //SPACEBAR
-    PAUSE(27), //ESC
-    UNPAUSE(8); //BACKSPACE
+    SHOOT(32), // SPACEBAR
+    PAUSE(27), // ESC
+    UNPAUSE(8), ; // BACKSPACE
 
-    private final int keyCode;
-
-    /**
-     * Creates a {@link KeyCodeKeyboard} constant with the key.
-     *
-     * @param keyCode the keyCode of the key
-     */
-    KeyCodeKeyboard(final int keyCode) {
-        this.keyCode = keyCode;
-    }
-
-    /**
-     * Returns the {@link KeyCodeKeyboard} associated with the key code input.
-     *
-     * @param code the KeyCode of the key to look up
-     * @return the corresponding {@link KeyCodeKeyboard} or null if it doesn't exist
-     */
-    public static KeyCodeKeyboard findKeyCode(final int code) {
-        for (final KeyCodeKeyboard k : values()) {
-            if (k.keyCode == code) {
-                return k;
+    companion object {
+        /**
+         * Returns the [KeyCodeKeyboard] associated with the key code input.
+         * @param code the KeyCode of the key to look up
+         * @return the corresponding [KeyCodeKeyboard] or null if it doesn't exist
+         */
+        @JvmStatic
+        fun findKeyCode(code: Int): KeyCodeKeyboard? {
+            for (k in entries) {
+                if (k.keyCode == code) {
+                    return k
+                }
             }
+            return null
         }
-        return null;
-    }
-
-    /**
-     * Returns the keyCode associated with the enum constant.
-     *
-     * @return the keycode associated with the enum constant
-     */
-    public int getKeyCode() {
-        return keyCode;
     }
 }
