@@ -1,20 +1,22 @@
-package it.unibo.crabinv.model.levels;
+package it.unibo.crabinv.model.levels
 
-import it.unibo.crabinv.model.entities.enemies.EnemyFactory;
-import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService;
+import it.unibo.crabinv.model.entities.enemies.EnemyFactory
+import it.unibo.crabinv.model.entities.enemies.rewardservice.RewardsService
 
 /**
  * It's the interface that makes the factory method.
  */
-@FunctionalInterface
-public interface LevelFactory {
+fun interface LevelFactory {
     /**
      * It's the method which creates the level.
-     *
      * @param levelId the level id
      * @param enemyFactory the enemy factory that populates it
      * @param rewardsService the service that gives the player the currency
      * @return Level: the instance of the level that you want
      */
-    Level createLevel(int levelId, EnemyFactory enemyFactory, RewardsService rewardsService);
+    fun createLevel(
+        levelId: Int,
+        enemyFactory: EnemyFactory?,
+        rewardsService: RewardsService?,
+    ): Level?
 }
