@@ -1,37 +1,28 @@
-package it.unibo.crabinv.model.core.input;
+package it.unibo.crabinv.model.core.input
 
-import it.unibo.crabinv.model.entities.entity.Delta;
+import it.unibo.crabinv.model.entities.entity.Delta
 
 /**
  * Defines the input state at a tick.
  */
-public interface InputSnapshot {
-
+interface InputSnapshot {
     /**
-     * Flag for the shoot action.
-     *
      * @return true if the shoot action is requested
      */
-    boolean isShooting();
+    val isShooting: Boolean
 
     /**
-     * Return the {@link Delta} of the X-Axis.
-     *
-     * @return the {@link Delta} of the X-Axis
+     * @return the [Delta] of the X-Axis
      */
-    Delta getXMovementDelta();
+    val xMovementDelta: Delta?
 
     /**
-     * Flag for the pause request.
-     *
      * @return true if pause is requested
      */
-    boolean isPause();
+    val isPause: Boolean
 
     /**
-     * Flag for the resume request.
-     *
      * @return true if resume is requested
      */
-    boolean isUnpause();
+    val isUnpause: Boolean
 }
