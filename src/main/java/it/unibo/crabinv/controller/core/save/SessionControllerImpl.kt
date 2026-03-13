@@ -1,75 +1,50 @@
-package it.unibo.crabinv.controller.core.save;
+package it.unibo.crabinv.controller.core.save
 
-import it.unibo.crabinv.model.core.save.GameSession;
-import it.unibo.crabinv.model.core.save.PlayerMemorial;
-import it.unibo.crabinv.model.core.save.Save;
-import it.unibo.crabinv.model.core.save.SessionRecord;
-import it.unibo.crabinv.model.core.save.SessionRecordImpl;
+import it.unibo.crabinv.model.core.save.GameSession
+import it.unibo.crabinv.model.core.save.Save
+import it.unibo.crabinv.model.core.save.SessionRecord
+import it.unibo.crabinv.model.core.save.SessionRecordImpl
 
 /**
- * Implementation of {@link SessionController}.
- *
- * @param save the {@link Save} used by the {@link SessionControllerImpl}
+ * Implementation of [SessionController].
+ * @param save the [Save] used by the [SessionControllerImpl]
  */
-public record SessionControllerImpl(Save save) implements SessionController {
+@JvmRecord
+data class SessionControllerImpl(
+    override val save: Save,
+) : SessionController {
+    override val gameSession: GameSession
+        get() = this.save.getGameSession()
 
-    /**
-     * Constructor for the {@link SessionControllerImpl}.
-     *
-     * @param save the saved managed by the {@link SessionControllerImpl}
-     */
-    public SessionControllerImpl {
+    override fun newGameSession(): GameSession {
+        this.save.closeGameSession()
+        this.save.newGameSession()
+        return this.save.getGameSession()
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Save save() {
-        return this.save;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameSession getGameSession() {
-        return this.save.getGameSession();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameSession newGameSession() {
-        this.save.closeGameSession();
-        this.save.newGameSession();
-        return this.save.getGameSession();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void gameOverGameSession() {
-        final GameSession gameSession = save.getGameSession();
-        final PlayerMemorial playerMemorial = save.getPlayerMemorial();
-        final SessionRecord sessionRecord = new SessionRecordImpl(
+    override fun gameOverGameSession() {
+        val gameSession = save.getGameSession()
+        val playerMemorial = save.getPlayerMemorial()
+        val sessionRecord: SessionRecord =
+            SessionRecordImpl(
                 gameSession.getStartingTimeStamp(),
                 gameSession.getCurrentLevel(),
                 gameSession.getCurrency(),
-                gameSession.isGameWon());
+                gameSession.isGameWon(),
+            )
         if (sessionRecord.isGameWon()) {
-            final SessionRecord winSessionRecord = new SessionRecordImpl(
+            val winSessionRecord: SessionRecord =
+                SessionRecordImpl(
                     gameSession.getStartingTimeStamp(),
                     gameSession.getCurrentLevel() - 1,
                     gameSession.getCurrency(),
-                    gameSession.isGameWon());
-            playerMemorial.addMemorialRecord(winSessionRecord);
+                    gameSession.isGameWon(),
+                )
+            playerMemorial.addMemorialRecord(winSessionRecord)
         } else {
-            playerMemorial.addMemorialRecord(sessionRecord);
+            playerMemorial.addMemorialRecord(sessionRecord)
         }
-        this.save.getUserProfile().addCurrency(gameSession.getCurrency());
-        this.save.closeGameSession();
+        this.save.getUserProfile().addCurrency(gameSession.getCurrency())
+        this.save.closeGameSession()
     }
 }

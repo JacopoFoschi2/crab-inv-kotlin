@@ -74,7 +74,7 @@ class MetaGameControllerImpl(
     override fun stepCheck(frameElapsedMillis: Long): GameSnapshot? {
         checkNotNull(gameLoopController) { "No Game is currently active" }
         val gameSnapshot = this.gameLoopController!!.step(frameElapsedMillis)
-        val gameSession = this.sessionController.gameSession ?: return gameSnapshot
+        val gameSession = this.sessionController.gameSession
         checkAndManageGameEnd(gameSession)
         return gameSnapshot
     }
@@ -88,7 +88,7 @@ class MetaGameControllerImpl(
 
     @Throws(IOException::class)
     override fun updateSave() {
-        SaveControllerImpl(saveRepository).updateSave(this.sessionController.save())
+        SaveControllerImpl(saveRepository).updateSave(this.sessionController.save)
     }
 
     /**

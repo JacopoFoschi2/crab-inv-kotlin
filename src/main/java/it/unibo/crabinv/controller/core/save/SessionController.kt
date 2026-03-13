@@ -10,7 +10,7 @@ interface SessionController {
     /**
      * @return the Save used by the SessionController
      */
-    fun save(): Save
+    val save: Save
 
     /**
      * @return the current GameSession, can return null
