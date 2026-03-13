@@ -1,150 +1,108 @@
-package it.unibo.crabinv.controller.core.metagame;
+package it.unibo.crabinv.controller.core.metagame
 
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.core.collision.CollisionController;
-import it.unibo.crabinv.controller.core.gameloop.GameLoopController;
-import it.unibo.crabinv.controller.core.gameloop.GameLoopControllerImpl;
-import it.unibo.crabinv.controller.entities.player.PlayerController;
-import it.unibo.crabinv.controller.core.input.InputController;
-import it.unibo.crabinv.controller.core.input.InputControllerPlayer;
-import it.unibo.crabinv.controller.core.input.InputMapperImpl;
-import it.unibo.crabinv.controller.core.save.SaveControllerImpl;
-import it.unibo.crabinv.controller.core.save.SessionController;
-import it.unibo.crabinv.model.core.engine.GameEngine;
-import it.unibo.crabinv.model.core.engine.GameEngineImpl;
-import it.unibo.crabinv.model.core.engine.GameEngineState;
-import it.unibo.crabinv.model.core.snapshot.GameSnapshot;
-import it.unibo.crabinv.model.core.audio.JavaFXSoundManager;
-import it.unibo.crabinv.model.entities.enemies.BaseEnemyFactoryLogic;
-import it.unibo.crabinv.model.entities.enemies.rewardservice.EnemyRewardService;
-import it.unibo.crabinv.model.levels.LevelFactoryImpl;
-import it.unibo.crabinv.model.core.save.GameSession;
-import it.unibo.crabinv.core.persistence.repository.SaveRepository;
-
-import java.io.IOException;
-import java.util.Objects;
+import it.unibo.crabinv.controller.core.audio.AudioController
+import it.unibo.crabinv.controller.core.collision.CollisionController
+import it.unibo.crabinv.controller.core.gameloop.GameLoopController
+import it.unibo.crabinv.controller.core.gameloop.GameLoopControllerImpl
+import it.unibo.crabinv.controller.core.input.InputController
+import it.unibo.crabinv.controller.core.input.InputControllerPlayer
+import it.unibo.crabinv.controller.core.input.InputMapperImpl
+import it.unibo.crabinv.controller.core.save.SaveControllerImpl
+import it.unibo.crabinv.controller.core.save.SessionController
+import it.unibo.crabinv.controller.entities.player.PlayerController
+import it.unibo.crabinv.core.persistence.repository.SaveRepository
+import it.unibo.crabinv.model.core.audio.JavaFXSoundManager
+import it.unibo.crabinv.model.core.engine.GameEngine
+import it.unibo.crabinv.model.core.engine.GameEngineImpl
+import it.unibo.crabinv.model.core.engine.GameEngineState
+import it.unibo.crabinv.model.core.save.GameSession
+import it.unibo.crabinv.model.core.snapshot.GameSnapshot
+import it.unibo.crabinv.model.entities.enemies.BaseEnemyFactoryLogic
+import it.unibo.crabinv.model.entities.enemies.rewardservice.EnemyRewardService
+import it.unibo.crabinv.model.levels.LevelFactoryImpl
+import java.io.IOException
+import java.util.Objects
 
 /**
- * Implementation of {@link MetaGameController}.
+ * Implementation of [MetaGameController].
+ * @param sessionController the [SessionController] used by the [MetaGameControllerImpl]
+ * @param saveRepository    the [SaveRepository] used by the [MetaGameControllerImpl]
  */
-public class MetaGameControllerImpl implements MetaGameController {
+class MetaGameControllerImpl(
+    sessionController: SessionController?,
+    saveRepository: SaveRepository?,
+) : MetaGameController {
+    private val sessionController: SessionController =
+        Objects
+            .requireNonNull<SessionController>(sessionController, "SessionController cannot be null")
+    private val saveRepository: SaveRepository =
+        Objects
+            .requireNonNull<SaveRepository>(saveRepository, "SaveRepository cannot be null")
+    private val gameEngine: GameEngine = GameEngineImpl()
+    override var inputController: InputController? = null
+    override var gameLoopController: GameLoopController? = null
 
-    private final SessionController sessionController;
-    private final SaveRepository saveRepository;
-    private final GameEngine gameEngine;
-    private InputController inputController;
-    private GameLoopController gameLoopController;
-
-    /**
-     * Constructor of {@link MetaGameControllerImpl}.
-     *
-     * @param sessionController the {@link SessionController} used by the {@link MetaGameControllerImpl}
-     * @param saveRepository    the {@link SaveRepository} used by the {@link MetaGameControllerImpl}
-     */
-    public MetaGameControllerImpl(final SessionController sessionController, final SaveRepository saveRepository) {
-        this.sessionController = Objects.requireNonNull(sessionController, "SessionController cannot be null");
-        this.saveRepository = Objects.requireNonNull(saveRepository, "SaveRepository cannot be null");
-        this.gameEngine = new GameEngineImpl();
-        this.gameLoopController = null;
-        this.inputController = null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void startGame() {
-        final GameSession gameSession = Objects.requireNonNull(
+    override fun startGame() {
+        val gameSession =
+            Objects.requireNonNull<GameSession>(
                 this.sessionController.newGameSession(),
-                "GameSession cannot be null");
-        final AudioController sharedAudio = new AudioController(new JavaFXSoundManager());
+                "GameSession cannot be null",
+            )
+        val sharedAudio = AudioController(JavaFXSoundManager())
         this.gameEngine.init(
-                gameSession,
-                new LevelFactoryImpl(),
-                new BaseEnemyFactoryLogic(),
-                new EnemyRewardService(gameSession),
-                new CollisionController(sharedAudio)
-        );
-        this.inputController = new InputControllerPlayer(new InputMapperImpl());
-        this.gameLoopController = new GameLoopControllerImpl(
+            gameSession,
+            LevelFactoryImpl(),
+            BaseEnemyFactoryLogic(),
+            EnemyRewardService(gameSession),
+            CollisionController(sharedAudio),
+        )
+        this.inputController = InputControllerPlayer(InputMapperImpl())
+        this.gameLoopController =
+            GameLoopControllerImpl(
                 gameEngine,
-                this.inputController,
-                new PlayerController(
-                        gameEngine.getPlayer(),
-                        sharedAudio,
-                        this.gameEngine),
-                sharedAudio);
+                this.inputController!!,
+                PlayerController(
+                    gameEngine.getPlayer(),
+                    sharedAudio,
+                    this.gameEngine,
+                ),
+                sharedAudio,
+            )
+    }
+
+    @Throws(IOException::class)
+    override fun stepCheck(frameElapsedMillis: Long): GameSnapshot? {
+        checkNotNull(gameLoopController) { "No Game is currently active" }
+        val gameSnapshot = this.gameLoopController!!.step(frameElapsedMillis)
+        val gameSession = this.sessionController.getGameSession() ?: return gameSnapshot
+        checkAndManageGameEnd(gameSession)
+        return gameSnapshot
+    }
+
+    override val gameEngineState: GameEngineState?
+        get() = this.gameEngine.getGameState()
+
+    override fun endGame() {
+        this.gameEngine.gameOver()
+    }
+
+    @Throws(IOException::class)
+    override fun updateSave() {
+        SaveControllerImpl(saveRepository).updateSave(this.sessionController.save())
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final GameSnapshot stepCheck(final long frameElapsedMillis) throws IOException {
-        if (gameLoopController == null) {
-            throw new IllegalStateException("No Game is currently active");
-        }
-        final GameSnapshot gameSnapshot = this.gameLoopController.step(frameElapsedMillis);
-        final GameSession gameSession = this.sessionController.getGameSession();
-        if (gameSession == null) {
-            return gameSnapshot;
-        }
-        checkAndManageGameEnd(gameSession);
-        return gameSnapshot;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final InputController getInputController() {
-        return Objects.requireNonNull(this.inputController, "inputController cannot be null");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final GameLoopController getGameLoopController() {
-        return Objects.requireNonNull(this.gameLoopController, "GameLoopController cannot be null");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final GameEngineState getGameEngineState() {
-        return this.gameEngine.getGameState();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void endGame() {
-        this.gameEngine.gameOver();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void updateSave() throws IOException {
-        new SaveControllerImpl(saveRepository).updateSave(this.sessionController.save());
-    }
-
-    /**
-     * Checks if the {@link GameSession} has a Game over or win status.
-     *
-     * @param gameSession the {@link GameSession} to check
+     * Checks if the [GameSession] has a Game over or win status.
+     * @param gameSession the [GameSession] to check
      * @throws IOException if an IO error occurs
      */
-    private void checkAndManageGameEnd(final GameSession gameSession) throws IOException {
+    @Throws(IOException::class)
+    private fun checkAndManageGameEnd(gameSession: GameSession) {
         if (gameSession.isGameOver() || gameSession.isGameWon()) {
-            this.sessionController.gameOverGameSession();
-            this.gameLoopController = null;
-            this.inputController = null;
-            updateSave();
+            this.sessionController.gameOverGameSession()
+            this.gameLoopController = null
+            this.inputController = null
+            updateSave()
         }
     }
 }
