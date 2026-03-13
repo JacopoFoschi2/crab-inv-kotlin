@@ -13,6 +13,6 @@ fun interface EntityCapableOfInputController {
      */
     fun update(
         firePressed: Boolean,
-        delta: Delta?,
+        delta: Delta,
     )
 }

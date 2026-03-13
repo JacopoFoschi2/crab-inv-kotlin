@@ -11,5 +11,5 @@ fun interface EntityNotCapableOfInputController {
      * and therefore has constant movement.
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    fun update(delta: Delta?)
+    fun update(delta: Delta)
 }
