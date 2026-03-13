@@ -1,21 +1,14 @@
-package it.unibo.crabinv.model.core.snapshot;
+package it.unibo.crabinv.model.core.snapshot
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.crabinv.model.core.engine.GameEngine;
-import it.unibo.crabinv.model.core.save.GameSession;
-
-import java.util.List;
+import it.unibo.crabinv.model.core.save.GameSession
 
 /**
- * Contains the data produced by the {@link GameEngine} that needs to be exposed.
- *
+ * Contains the data produced by the [GameEngine] that needs to be exposed.
  * @param renderObjects the list of all game objects to be renderer
- * @param session the {@link GameSession} of the snapshot
+ * @param session the [GameSession] of the snapshot
  */
-@SuppressFBWarnings({"EI_EXPOSE_REP2", "EI_EXPOSE"})
-//dependencies are injected and owned by caller,
-//exposes internal representation by design
-public record GameSnapshot(
-        List<RenderObjectSnapshot> renderObjects,
-        GameSession session) {
-}
+@JvmRecord
+data class GameSnapshot(
+    val renderObjects: MutableList<RenderObjectSnapshot>,
+    val session: GameSession?,
+)
