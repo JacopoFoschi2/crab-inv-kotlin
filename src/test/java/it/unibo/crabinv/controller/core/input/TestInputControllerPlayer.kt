@@ -14,8 +14,8 @@ internal class TestInputControllerPlayer {
 
         val snap = controller.inputState
 
-        Assertions.assertFalse(snap.isShooting())
-        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
+        Assertions.assertFalse(snap.isShooting)
+        Assertions.assertEquals(Delta.NO_ACTION, snap.xMovementDelta)
     }
 
     @Test
@@ -25,8 +25,8 @@ internal class TestInputControllerPlayer {
         controller.onKeyPressed(KeyCodeKeyboard.LEFT.keyCode)
         val snap = controller.inputState
 
-        Assertions.assertEquals(Delta.DECREASE, snap.getXMovementDelta())
-        Assertions.assertFalse(snap.isShooting())
+        Assertions.assertEquals(Delta.DECREASE, snap.xMovementDelta)
+        Assertions.assertFalse(snap.isShooting)
     }
 
     @Test
@@ -36,8 +36,8 @@ internal class TestInputControllerPlayer {
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
         val snap = controller.inputState
 
-        Assertions.assertEquals(Delta.INCREASE, snap.getXMovementDelta())
-        Assertions.assertFalse(snap.isShooting())
+        Assertions.assertEquals(Delta.INCREASE, snap.xMovementDelta)
+        Assertions.assertFalse(snap.isShooting)
     }
 
     @Test
@@ -48,7 +48,7 @@ internal class TestInputControllerPlayer {
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
         val snap = controller.inputState
 
-        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
+        Assertions.assertEquals(Delta.NO_ACTION, snap.xMovementDelta)
     }
 
     @Test
@@ -57,10 +57,10 @@ internal class TestInputControllerPlayer {
 
         controller.onKeyPressed(KeyCodeKeyboard.LEFT.keyCode)
         controller.onKeyPressed(KeyCodeKeyboard.RIGHT.keyCode)
-        Assertions.assertEquals(Delta.NO_ACTION, controller.inputState.getXMovementDelta())
+        Assertions.assertEquals(Delta.NO_ACTION, controller.inputState.xMovementDelta)
 
         controller.onKeyReleased(KeyCodeKeyboard.RIGHT.keyCode)
-        Assertions.assertEquals(Delta.DECREASE, controller.inputState.getXMovementDelta())
+        Assertions.assertEquals(Delta.DECREASE, controller.inputState.xMovementDelta)
     }
 
     @Test
@@ -68,10 +68,10 @@ internal class TestInputControllerPlayer {
         val controller: InputControllerPlayer = newController()
 
         controller.onKeyPressed(KeyCodeKeyboard.SHOOT.keyCode)
-        Assertions.assertTrue(controller.inputState.isShooting())
+        Assertions.assertTrue(controller.inputState.isShooting)
 
         controller.onKeyReleased(KeyCodeKeyboard.SHOOT.keyCode)
-        Assertions.assertFalse(controller.inputState.isShooting())
+        Assertions.assertFalse(controller.inputState.isShooting)
     }
 
     @Test
@@ -82,8 +82,8 @@ internal class TestInputControllerPlayer {
         controller.onKeyPressed(unmappedKeyCode)
 
         val snap = controller.inputState
-        Assertions.assertFalse(snap.isShooting())
-        Assertions.assertEquals(Delta.NO_ACTION, snap.getXMovementDelta())
+        Assertions.assertFalse(snap.isShooting)
+        Assertions.assertEquals(Delta.NO_ACTION, snap.xMovementDelta)
     }
 
     companion object {

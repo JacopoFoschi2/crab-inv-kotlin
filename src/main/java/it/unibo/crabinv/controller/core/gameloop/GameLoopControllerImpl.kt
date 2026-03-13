@@ -72,7 +72,7 @@ class GameLoopControllerImpl(
      */
     private fun checkResume() {
         if (this.gameEngine.getGameState() == GameEngineState.PAUSED &&
-            inputController.inputState!!.isUnpause()
+            inputController.inputState!!.isUnpause
         ) {
             resume()
         }
@@ -82,7 +82,7 @@ class GameLoopControllerImpl(
      * Controls if the game is in the correct state to be paused.
      */
     private fun checkPause() {
-        if (inputController.inputState!!.isPause() &&
+        if (inputController.inputState!!.isPause &&
             this.gameEngine.getGameState() == GameEngineState.RUNNING
         ) {
             pause()
@@ -120,7 +120,10 @@ class GameLoopControllerImpl(
      */
     private fun playerUpdate() {
         val inputSnapshot: InputSnapshot = inputController.inputState!!
-        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta())
+        this.playerController.update(
+            inputSnapshot.isShooting,
+            inputSnapshot.xMovementDelta!!,
+        )
     }
 
     /**
