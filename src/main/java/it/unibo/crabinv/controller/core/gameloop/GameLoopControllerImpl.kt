@@ -1,204 +1,168 @@
-package it.unibo.crabinv.controller.core.gameloop;
+package it.unibo.crabinv.controller.core.gameloop
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.crabinv.controller.core.audio.AudioController;
-import it.unibo.crabinv.controller.entities.enemy.EnemyController;
-import it.unibo.crabinv.controller.entities.player.PlayerController;
-import it.unibo.crabinv.controller.core.input.InputController;
-import it.unibo.crabinv.model.core.engine.GameEngine;
-import it.unibo.crabinv.model.core.engine.GameEngineState;
-import it.unibo.crabinv.model.core.snapshot.GameSnapshot;
-import it.unibo.crabinv.model.entities.enemies.Enemy;
-import it.unibo.crabinv.model.entities.entity.Delta;
-import it.unibo.crabinv.model.core.input.InputSnapshot;
-
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
+import it.unibo.crabinv.controller.core.audio.AudioController
+import it.unibo.crabinv.controller.core.input.InputController
+import it.unibo.crabinv.controller.entities.enemy.EnemyController
+import it.unibo.crabinv.controller.entities.player.PlayerController
+import it.unibo.crabinv.model.core.engine.GameEngine
+import it.unibo.crabinv.model.core.engine.GameEngineState
+import it.unibo.crabinv.model.core.input.InputSnapshot
+import it.unibo.crabinv.model.core.snapshot.GameSnapshot
+import it.unibo.crabinv.model.entities.enemies.Enemy
+import it.unibo.crabinv.model.entities.entity.Delta
+import java.util.IdentityHashMap
+import kotlin.math.min
 
 /**
- * Implementation of {@link GameLoopController}.
+ * Implementation of [GameLoopController].
+ * @param gameEngine the [GameEngine] used by the [GameLoopControllerImpl]
+ * @param inputController the [GameEngine] used by the [GameLoopControllerImpl]
+ * @param playerController the [GameEngine] used by the [GameLoopControllerImpl]
+ * @param audioController the [GameEngine] used by the [GameLoopControllerImpl]
  */
-public class GameLoopControllerImpl implements GameLoopController {
+class GameLoopControllerImpl(
+    private val gameEngine: GameEngine,
+    private val inputController: InputController,
+    private val playerController: PlayerController,
+    private val audioController: AudioController,
+) : GameLoopController {
+    override val tickDurationMillis: Long = STANDARD_TICK_MILLIS
+    private val maxTicksPerFrame: Int = STANDARD_MAX_TICKS_PER_FRAME
+    private val enemyControllerMap: MutableMap<Enemy?, EnemyController?> = IdentityHashMap<Enemy?, EnemyController?>()
+    override var accumulatedMillis: Long = 0
+        private set
+    override var totalElapsedTicks: Long = 0
+        private set
+    override var latestSnapshot: GameSnapshot?
+        private set
 
-    private static final long STANDARD_TICK_MILLIS = 16;
-    private static final int STANDARD_MAX_TICKS_PER_FRAME = 5;
-
-    private final long tickDurationMillis;
-    private final int maxTicksPerFrame;
-    private final GameEngine gameEngine;
-    private final InputController inputController;
-    private final PlayerController playerController;
-    private final AudioController audioController;
-    private final Map<Enemy, EnemyController> enemyControllerMap;
-    private long accumulatedMillis;
-    private long totalElapsedTicks;
-    private GameSnapshot latestSnapshot;
-
-    /**
-     * Constructor for the {@link GameLoopControllerImpl}.
-     *
-     * @param gameEngine       the {@link GameEngine} used by the {@link GameLoopControllerImpl}
-     * @param inputController  the {@link GameEngine} used by the {@link GameLoopControllerImpl}
-     * @param playerController the {@link GameEngine} used by the {@link GameLoopControllerImpl}
-     * @param audioController  the {@link GameEngine} used by the {@link GameLoopControllerImpl}
-     */
-    @SuppressFBWarnings("EI_EXPOSE_REP2") //dependencies are injected and owned by caller
-    public GameLoopControllerImpl(final GameEngine gameEngine,
-                                  final InputController inputController,
-                                  final PlayerController playerController,
-                                  final AudioController audioController) {
-
-        this.tickDurationMillis = STANDARD_TICK_MILLIS;
-        this.maxTicksPerFrame = STANDARD_MAX_TICKS_PER_FRAME;
-        this.accumulatedMillis = 0;
-        this.totalElapsedTicks = 0;
-        this.gameEngine = gameEngine;
-        this.inputController = inputController;
-        this.playerController = playerController;
-        this.audioController = audioController;
-        this.enemyControllerMap = new IdentityHashMap<>();
-        tickUpdate();
-        this.latestSnapshot = this.gameEngine.snapshot();
+    init {
+        tickUpdate()
+        this.latestSnapshot = this.gameEngine.snapshot()
     }
 
-    @Override
-    public final GameSnapshot step(final long frameElapsedMillis) {
-        checkPause();
-        checkResume();
+    override fun step(frameElapsedMillis: Long): GameSnapshot? {
+        checkPause()
+        checkResume()
         if (this.gameEngine.getGameState() == GameEngineState.GAME_OVER) {
-            return latestSnapshot;
+            return latestSnapshot
         }
 
         if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-            accumulateTime(frameElapsedMillis);
-            final int nextStepTicks = calculateTicks();
-            executeTicks(nextStepTicks);
+            accumulateTime(frameElapsedMillis)
+            val nextStepTicks = calculateTicks()
+            executeTicks(nextStepTicks)
             if (this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-                updateSnapshot(nextStepTicks);
+                updateSnapshot(nextStepTicks)
             }
         }
-        return latestSnapshot;
+        return latestSnapshot
     }
 
-    @Override
-    public final long getTickDurationMillis() {
-        return tickDurationMillis;
+    override fun pause() {
+        this.gameEngine.pauseGame()
     }
 
-    @Override
-    public final long getAccumulatedMillis() {
-        return accumulatedMillis;
-    }
-
-    @Override
-    public final long getTotalElapsedTicks() {
-        return totalElapsedTicks;
-    }
-
-    @Override
-    public final GameSnapshot getLatestSnapshot() {
-        return this.latestSnapshot;
-    }
-
-    @Override
-    public final void pause() {
-        this.gameEngine.pauseGame();
-    }
-
-    @Override
-    public final void resume() {
-        this.gameEngine.resumeGame();
+    override fun resume() {
+        this.gameEngine.resumeGame()
     }
 
     /**
      * Controls if the game is in the correct state to be resumed.
      */
-    private void checkResume() {
-        if (this.gameEngine.getGameState() == GameEngineState.PAUSED
-                && inputController.getInputState().isUnpause()) {
-                resume();
+    private fun checkResume() {
+        if (this.gameEngine.getGameState() == GameEngineState.PAUSED &&
+            inputController.inputState!!.isUnpause()
+        ) {
+            resume()
         }
     }
 
     /**
      * Controls if the game is in the correct state to be paused.
      */
-    private void checkPause() {
-        if (inputController.getInputState().isPause()
-                && this.gameEngine.getGameState() == GameEngineState.RUNNING) {
-                pause();
+    private fun checkPause() {
+        if (inputController.inputState!!.isPause() &&
+            this.gameEngine.getGameState() == GameEngineState.RUNNING
+        ) {
+            pause()
         }
     }
 
     /**
      * Adds the milliseconds of the last frame to the accumulated milliseconds.
-     *
      * @param frameElapsedMillis the milliseconds to add.
      */
-    private void accumulateTime(final long frameElapsedMillis) {
-        this.accumulatedMillis += frameElapsedMillis;
+    private fun accumulateTime(frameElapsedMillis: Long) {
+        this.accumulatedMillis += frameElapsedMillis
     }
 
-    private int calculateTicks() {
-        final long ticks = this.accumulatedMillis / this.tickDurationMillis;
-        final long cappedTicks = Math.min(ticks, maxTicksPerFrame);
-        return (int) cappedTicks;
+    private fun calculateTicks(): Int {
+        val ticks = this.accumulatedMillis / this.tickDurationMillis
+        val cappedTicks = min(ticks, maxTicksPerFrame.toLong())
+        return cappedTicks.toInt()
     }
 
     /**
      * Requests the GameEngine to calculate the game logic for the number of ticks.
-     *
      * @param nextStepTicks the ticks the Game Engine must calculate.
      */
-    private void executeTicks(final int nextStepTicks) {
-        for (int i = 0; i < nextStepTicks; i++) {
-            playerUpdate();
-            enemyUpdate();
-            tickUpdate();
+    private fun executeTicks(nextStepTicks: Int) {
+        for (i in 0..<nextStepTicks) {
+            playerUpdate()
+            enemyUpdate()
+            tickUpdate()
         }
     }
 
     /**
      * Updates the Player input data.
      */
-    private void playerUpdate() {
-        final InputSnapshot inputSnapshot = inputController.getInputState();
-        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta());
+    private fun playerUpdate() {
+        val inputSnapshot: InputSnapshot = inputController.inputState!!
+        this.playerController.update(inputSnapshot.isShooting(), inputSnapshot.getXMovementDelta())
     }
 
     /**
      * Updates the Active enemies' data.
      */
-    private void enemyUpdate() {
-        final List<Enemy> enemyList = this.gameEngine.getEnemyList();
-        for (final Enemy enemy : enemyList) {
-            enemyControllerMap.computeIfAbsent(enemy, e -> new EnemyController(e, this.audioController, gameEngine));
-        }
-        for (final Enemy enemy : enemyList) {
-            final EnemyController enemyController = enemyControllerMap.get(enemy);
-            if (enemyController != null) {
-                enemyController.update(Delta.INCREASE);
+    private fun enemyUpdate() {
+        val enemyList = this.gameEngine.getEnemyList()
+        for (enemy in enemyList) {
+            enemyControllerMap.computeIfAbsent(enemy) { e: Enemy? ->
+                EnemyController(
+                    e,
+                    this.audioController,
+                    gameEngine,
+                )
             }
         }
-        enemyControllerMap.keySet().removeIf(e -> !e.isAlive() || !enemyList.contains(e));
+        for (enemy in enemyList) {
+            val enemyController = enemyControllerMap[enemy]
+            enemyController?.update(Delta.INCREASE)
+        }
+        enemyControllerMap.keys.removeIf { e: Enemy? -> !e!!.isAlive() || !enemyList.contains(e) }
     }
 
     /**
-     * Calls the {@link GameEngine} to execute the ticks.
+     * Calls the [GameEngine] to execute the ticks.
      */
-    private void tickUpdate() {
-        this.gameEngine.tick();
-        totalElapsedTicks++;
+    private fun tickUpdate() {
+        this.gameEngine.tick()
+        totalElapsedTicks++
     }
 
     /**
-     * Calls the {@link GameEngine} to update its snapshot.
-     *
+     * Calls the [GameEngine] to update its snapshot.
      * @param nextStepTicks the ticks for the next step.
      */
-    private void updateSnapshot(final int nextStepTicks) {
-        this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis;
-        this.latestSnapshot = this.gameEngine.snapshot();
+    private fun updateSnapshot(nextStepTicks: Int) {
+        this.accumulatedMillis -= nextStepTicks * this.tickDurationMillis
+        this.latestSnapshot = this.gameEngine.snapshot()
+    }
+
+    companion object {
+        private const val STANDARD_TICK_MILLIS: Long = 16
+        private const val STANDARD_MAX_TICKS_PER_FRAME = 5
     }
 }
