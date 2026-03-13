@@ -30,7 +30,7 @@ internal class SavePersistenceFlowTest {
 
         // Assert: save created correctly
         Assertions.assertNotNull(save, "Save must be created")
-        Assertions.assertNotNull(save!!.getSaveId(), "Save UUID must not be null")
+        Assertions.assertNotNull(save.getSaveId(), "Save UUID must not be null")
         Assertions.assertTrue(save.getCreationTimeStamp() > 0, "Save creation timestamp must be > 0")
         Assertions.assertNotNull(save.getUserProfile(), "UserProfile must not be null")
         Assertions.assertNotNull(save.getPlayerMemorial(), "PlayerMemorial must not be null")
