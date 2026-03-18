@@ -37,13 +37,13 @@ class EnemyController(
          * Gives the speed of the enemy.
          * @return the speed of the enemy
          */
-        get() = super.entity!!.getSpeed()
+        get() = super.entity!!.speed
 
     /**
      * Tells the enemy to go to a specific direction for 1 tick.
      * @param delta either -1, 0 or 1, the former moves to the left, the latter moves to the right
      */
-    private fun move(delta: Delta?) {
+    private fun move(delta: Delta) {
         super.entity!!.move(delta)
     }
 
@@ -51,7 +51,7 @@ class EnemyController(
      * Makes the enemy shoot if it can.
      */
     private fun shoot() {
-        if (super.entity!!.isAbleToShoot()) {
+        if (super.entity!!.isAbleToShoot) {
             super.entity!!.shoot()
             engine.spawnEnemyBullet(super.entity)
             audio.playSFX(SFXTracks.SHOT_ENEMY)
