@@ -1,25 +1,23 @@
-package it.unibo.crabinv.model.entities.entity;
+package it.unibo.crabinv.model.entities.entity
 
 /**
  * Provides the basic methods that a shooter entity should implement.
  */
-public interface Shooter {
+interface Shooter {
     /**
      * Checks if the entity is currently able to shoot.
-     *
      * @return true if it can shoot, false if it can't
      */
-    boolean isAbleToShoot();
+    val isAbleToShoot: Boolean
 
     /**
      * Returns the fireRate of the entity.
-     *
      * @return the amount of ticks needed between two shots
      */
-    int getFireRate();
+    val fireRate: Int
 
     /**
      * Tells the model that it has shot, prompting it to handle the isAbleToShoot pipeline.
      */
-    void shoot();
+    fun shoot()
 }
