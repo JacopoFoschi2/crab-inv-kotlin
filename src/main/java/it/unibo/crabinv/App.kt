@@ -25,11 +25,15 @@ class App : Application() {
 
     @Throws(IOException::class)
     override fun start(mainStage: Stage) {
-        // Tweaks the initial config of the stage
-        mainStage.initStyle(StageStyle.UNDECORATED)
-        mainStage.isMaximized = true
         // The bounds of the screen
         val bounds = Screen.getPrimary().visualBounds
+        mainStage.apply {
+            initStyle(StageStyle.UNDECORATED)
+            x = bounds.minX
+            y = bounds.minY
+            width = bounds.width
+            height = bounds.height
+        }
         val mainScene: Scene
         val root = StackPane()
         mainScene = Scene(root)
