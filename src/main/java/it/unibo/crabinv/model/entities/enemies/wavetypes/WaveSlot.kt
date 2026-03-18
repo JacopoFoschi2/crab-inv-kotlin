@@ -1,11 +1,15 @@
-package it.unibo.crabinv.model.entities.enemies.wavetypes;
-
-import it.unibo.crabinv.model.entities.enemies.wave.Wave;
+package it.unibo.crabinv.model.entities.enemies.wavetypes
 
 /**
- * Contains the available spawn slots for the {@link Wave} spawn.
+ * Contains the available spawn slots for the [Wave] spawn.
+ * @param waveSlot value of the slot constant
  */
-public enum WaveSlot {
+enum class WaveSlot(
+    /**
+     * @return the corresponding slot number.
+     */
+    val waveSlot: Int,
+) {
     S1(1),
     S2(2),
     S3(3),
@@ -17,25 +21,5 @@ public enum WaveSlot {
     S9(9),
     S10(10),
     S11(11),
-    S12(12);
-
-    private final int waveSlot;
-
-    /**
-     * Constructor of {@link WaveSlot}.
-     *
-     * @param waveSlot value of the slot constant
-     */
-    WaveSlot(final int waveSlot) {
-        this.waveSlot = waveSlot;
-    }
-
-    /**
-     * Returns the corresponding slot number.
-     *
-     * @return the corresponding slot number.
-     */
-    public int getWaveSlot() {
-        return waveSlot;
-    }
+    S12(12),
 }
