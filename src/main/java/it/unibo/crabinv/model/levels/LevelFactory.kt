@@ -16,7 +16,7 @@ fun interface LevelFactory {
      */
     fun createLevel(
         levelId: Int,
-        enemyFactory: EnemyFactory?,
-        rewardsService: RewardsService?,
+        enemyFactory: EnemyFactory,
+        rewardsService: RewardsService,
     ): Level?
 }

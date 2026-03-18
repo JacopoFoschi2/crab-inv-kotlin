@@ -16,12 +16,12 @@ import java.util.Objects
 class LevelFactoryImpl : LevelFactory {
     override fun createLevel(
         levelId: Int,
-        enemyFactory: EnemyFactory?,
-        rewardsService: RewardsService?,
+        enemyFactory: EnemyFactory,
+        rewardsService: RewardsService,
     ): Level {
         require(levelId > 0) { "levelNumber must be > 0" }
-        Objects.requireNonNull<EnemyFactory?>(enemyFactory, "enemyFactory cannot be null")
-        Objects.requireNonNull<RewardsService?>(rewardsService, "rewardsService cannot be null")
+        Objects.requireNonNull<EnemyFactory>(enemyFactory, "enemyFactory cannot be null")
+        Objects.requireNonNull<RewardsService>(rewardsService, "rewardsService cannot be null")
         val initWaves =
             when (levelId) {
                 1 ->
