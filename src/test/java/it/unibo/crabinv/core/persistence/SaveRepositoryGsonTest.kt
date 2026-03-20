@@ -53,7 +53,7 @@ internal class SaveRepositoryGsonTest {
 
         Assertions.assertEquals(
             originalSave.getSaveId(),
-            loadedSave!!.getSaveId(),
+            loadedSave.getSaveId(),
             "UUIDs must be identical",
         )
         Assertions.assertEquals(

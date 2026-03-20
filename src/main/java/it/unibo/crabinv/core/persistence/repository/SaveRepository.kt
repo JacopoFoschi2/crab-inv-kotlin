@@ -1,67 +1,63 @@
-package it.unibo.crabinv.core.persistence.repository;
+package it.unibo.crabinv.core.persistence.repository
 
-import it.unibo.crabinv.model.core.save.Save;
-import it.unibo.crabinv.model.core.save.SaveFactory;
-
-import java.nio.file.Path;
-import java.util.List;
+import it.unibo.crabinv.model.core.save.Save
+import it.unibo.crabinv.model.core.save.SaveFactory
+import java.io.IOException
+import java.nio.file.Path
+import java.util.UUID
 
 /**
- * Contract for the management and persistence of {@link Save}.
+ * Contract for the management and persistence of [Save].
  */
-public interface SaveRepository {
-
+interface SaveRepository {
     /**
-     * Retrieves the directory in use for the management of {@link Save} files.
-     *
+     * Retrieves the directory in use for the management of [Save] files.
      * @return the directory in use
      */
-    Path getSaveDirectory();
+    val saveDirectory: Path
 
     /**
      * Retrieves the SaveFactory used for the save file actions.
-     *
      * @return the SaveFactory in use
      */
-    SaveFactory getSaveFactory();
+    val saveFactory: SaveFactory
 
     /**
-     * Creates and returns a {@link Save}.
-     *
-     * @return the newly created {@link Save}
+     * Creates and returns a [Save].
+     * @return the newly created [Save]
      */
-    Save newSave();
+    fun newSave(): Save
 
     /**
      * Saves (Persists) the Save specified.
-     *
-     * @param save the {@link Save} to save
-     * @throws java.io.IOException if an I/O error occurs
+     * @param save the [Save] to save
+     * @throws IOException if an I/O error occurs
      */
-    void saveSaveFile(Save save) throws java.io.IOException;
+    @Throws(IOException::class)
+    fun saveSaveFile(save: Save)
 
     /**
-     * Lists all the {@link Save} objects found.
-     *
-     * @return the list of all {@link Save} objects found
-     * @throws java.io.IOException if an I/O error occurs
+     * Lists all the [Save] objects found.
+     * @return the list of all [Save] objects found
+     * @throws IOException if an I/O error occurs
      */
-    List<Save> list() throws java.io.IOException;
+    @Throws(IOException::class)
+    fun list(): MutableList<Save>
 
     /**
      * Load the Save specified by the UUID passed.
-     *
-     * @param saveUUID the identifier to select the {@link Save}
-     * @return the {@link Save} identified
-     * @throws java.io.IOException if an I/O error occurs
+     * @param saveUUID the identifier to select the [Save]
+     * @return the [Save] identified
+     * @throws IOException if an I/O error occurs
      */
-    Save loadSaveFile(java.util.UUID saveUUID) throws java.io.IOException;
+    @Throws(IOException::class)
+    fun loadSaveFile(saveUUID: UUID): Save
 
     /**
-     * Deletes the {@link Save} specified by the UUID passed.
-     *
-     * @param saveUUID the identifier to select the {@link Save}
-     * @throws java.io.IOException if an I/O error occurs
+     * Deletes the [Save] specified by the UUID passed.
+     * @param saveUUID the identifier to select the [Save]
+     * @throws IOException if an I/O error occurs
      */
-    void delete(java.util.UUID saveUUID) throws java.io.IOException;
+    @Throws(IOException::class)
+    fun delete(saveUUID: UUID)
 }
