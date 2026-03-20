@@ -1,32 +1,16 @@
-package it.unibo.crabinv.model.core.save;
-
-import it.unibo.crabinv.model.entities.player.Player;
+package it.unibo.crabinv.model.core.save
 
 /**
- * {@code enum} of the starting values of the {@link GameSession}'s {@link Player}.
+ * `enum` of the starting values of the [GameSession]'s [Player].
+ * @param intValue the value to associate with the constant
  */
-public enum StartingSaveValues {
-    LEVEL(1),
-    CURRENCY(0),
-    BASE_LEVEL_POWER_UP(1);
-
-    private final int value;
-
+enum class StartingSaveValues(
     /**
-     * Creates the enum constant.
-     *
-     * @param value the value to associate with the constant
-     */
-    StartingSaveValues(final int value) {
-        this.value = value;
-    }
-
-    /**
-     * Returns the value of the selected constant.
-     *
      * @return the value of the selected constant.
      */
-    public int getIntValue() {
-        return value;
-    }
+    val intValue: Int,
+) {
+    LEVEL(1),
+    CURRENCY(0),
+    BASE_LEVEL_POWER_UP(1),
 }
