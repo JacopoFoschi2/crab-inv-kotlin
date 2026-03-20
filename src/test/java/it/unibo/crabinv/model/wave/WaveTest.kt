@@ -52,14 +52,14 @@ internal class WaveTest {
             )
 
         wave.tickUpdate()
-        Assertions.assertFalse(wave.isWaveFinished())
-        Assertions.assertEquals(1, wave.getAliveEnemies().size)
+        Assertions.assertFalse(wave.isWaveFinished)
+        Assertions.assertEquals(1, wave.aliveEnemies.size)
 
         alive.set(false)
 
         wave.tickUpdate()
-        Assertions.assertTrue(wave.isWaveFinished())
-        Assertions.assertTrue(wave.getAliveEnemies().isEmpty())
+        Assertions.assertTrue(wave.isWaveFinished)
+        Assertions.assertTrue(wave.aliveEnemies.isEmpty())
 
         Mockito.verify(rewardsService, Mockito.times(1)).rewardEnemyDeath(enemy)
     }

@@ -18,8 +18,8 @@ internal class LevelWaveAdvancementTest {
         val w1 = Mockito.mock(Wave::class.java)
         val w2 = Mockito.mock(Wave::class.java)
 
-        Mockito.`when`(w1.isWaveFinished()).thenReturn(true)
-        Mockito.`when`(w2.isWaveFinished()).thenReturn(false)
+        Mockito.`when`(w1.isWaveFinished).thenReturn(true)
+        Mockito.`when`(w2.isWaveFinished).thenReturn(false)
 
         val provider: WaveProvider = WaveSequence(listOf<Wave?>(w1, w2))
         val level: Level = LevelImpl(provider)
@@ -30,7 +30,7 @@ internal class LevelWaveAdvancementTest {
 
         Assertions.assertSame(w2, level.currentWave, "After the first wave finishes, the second should start")
         Mockito.verify(w1, Mockito.atLeastOnce()).tickUpdate()
-        Mockito.verify(w1, Mockito.atLeastOnce()).isWaveFinished()
+        Mockito.verify(w1, Mockito.atLeastOnce()).isWaveFinished
     }
 
     @Test
@@ -38,8 +38,8 @@ internal class LevelWaveAdvancementTest {
         val w1 = Mockito.mock(Wave::class.java)
         val w2 = Mockito.mock(Wave::class.java)
 
-        Mockito.`when`(w1.isWaveFinished()).thenReturn(true)
-        Mockito.`when`(w2.isWaveFinished()).thenReturn(true)
+        Mockito.`when`(w1.isWaveFinished).thenReturn(true)
+        Mockito.`when`(w2.isWaveFinished).thenReturn(true)
 
         val provider: WaveProvider = WaveSequence(listOf<Wave?>(w1, w2))
         val level: Level = LevelImpl(provider)
@@ -64,7 +64,7 @@ internal class LevelWaveAdvancementTest {
                 val currentWave = level.currentWave
                 if (currentWave != null) {
                     currentWave.tickUpdate()
-                    if (currentWave.isWaveFinished()) {
+                    if (currentWave.isWaveFinished) {
                         level.advanceWave()
                     }
                 }
