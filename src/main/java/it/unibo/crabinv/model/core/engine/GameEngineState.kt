@@ -1,11 +1,11 @@
-package it.unibo.crabinv.model.core.engine;
+package it.unibo.crabinv.model.core.engine
 
 /**
- * List of the admissible States of the {@link GameEngine}.
+ * List of the admissible States of the [GameEngine].
  */
-public enum GameEngineState {
+enum class GameEngineState {
     RUNNING,
     PAUSED,
     GAME_OVER,
-    WIN
+    WIN,
 }
