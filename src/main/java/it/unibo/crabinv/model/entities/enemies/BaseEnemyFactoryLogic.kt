@@ -1,32 +1,35 @@
-package it.unibo.crabinv.model.entities.enemies;
+package it.unibo.crabinv.model.entities.enemies
 
-import it.unibo.crabinv.model.entities.entity.EntitySprites;
+import it.unibo.crabinv.model.entities.entity.EntitySprites
 
 /**
  * It's the implementation of the Enemy factory.
  */
-public final class BaseEnemyFactoryLogic implements EnemyFactory {
-    private static final int ENEMY_MAX_HEALTH = 1;
-    private static final double ENEMY_RADIUS = 0.015;
-    private static final double ENEMY_SPEED = 0.000_85;
-    private static final int ENEMY_FIRERATE = 30;
+class BaseEnemyFactoryLogic : EnemyFactory {
+    override fun createEnemy(
+        type: EnemyType?,
+        x: Double,
+        y: Double,
+        minBound: Double,
+        maxBound: Double,
+    ): Enemy =
+        EnemyImpl(
+            x,
+            y,
+            ENEMY_MAX_HEALTH,
+            ENEMY_RADIUS,
+            type,
+            ENEMY_FIRERATE,
+            ENEMY_SPEED,
+            minBound,
+            maxBound,
+            EntitySprites.ENEMY_SERVANT,
+        )
 
-    @Override
-    public Enemy createEnemy(final EnemyType type,
-                             final double x,
-                             final double y,
-                             final double minBound,
-                             final double maxBound) {
-        return new EnemyImpl(
-                x,
-                y,
-                ENEMY_MAX_HEALTH,
-                ENEMY_RADIUS,
-                type,
-                ENEMY_FIRERATE,
-                ENEMY_SPEED,
-                minBound,
-                maxBound,
-                EntitySprites.ENEMY_SERVANT);
+    companion object {
+        private const val ENEMY_MAX_HEALTH = 1
+        private const val ENEMY_RADIUS = 0.015
+        private const val ENEMY_SPEED = 0.00085
+        private const val ENEMY_FIRERATE = 30
     }
 }
