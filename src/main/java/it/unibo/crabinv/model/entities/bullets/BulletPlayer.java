@@ -34,13 +34,4 @@ public final class BulletPlayer extends AbstractBullet {
                 EntitySprites.PLAYER_BULLET);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return the sprite of the entity
-     */
-    @Override
-    public EntitySprites getSprites() {
-        return EntitySprites.PLAYER_BULLET;
-    }
 }

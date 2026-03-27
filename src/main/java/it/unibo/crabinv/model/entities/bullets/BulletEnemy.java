@@ -40,13 +40,4 @@ public final class BulletEnemy extends AbstractBullet {
                 EntitySprites.ENEMY_BULLET);
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @return the image path got from EntitySprites
-     */
-    @Override
-    public EntitySprites getSprites() {
-        return EntitySprites.ENEMY_BULLET;
-    }
 }
