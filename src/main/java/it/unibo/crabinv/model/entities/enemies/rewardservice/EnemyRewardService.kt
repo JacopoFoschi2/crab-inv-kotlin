@@ -11,6 +11,6 @@ class EnemyRewardService(
     private val profile: GameSession,
 ) : RewardsService {
     override fun rewardEnemyDeath(enemy: Enemy) {
-        profile.addCurrency(enemy.getReward())
+        profile.addCurrency(enemy.reward)
     }
 }
